@@ -68,9 +68,12 @@ void pml::auton_selector::do_selection() {
 
 	// Wait for user to be done or for match to start
 	while (!selection_done) {
-		if (pros::competition::is_connected() && !pros::competition::is_disabled()) break;
+		if (pros::competition::is_connected() && !pros::competition::is_disabled())
+			selection_done = true;
 		pros::delay(100);
 	}
+
+	selection_done = false; // Set back to false if want to re-select
 
 	lv_obj_del(select_win);
 }
