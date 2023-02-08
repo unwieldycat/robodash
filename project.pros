@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "CalioLib",
+    "project_name": "UiLib",
     "target": "v5",
     "templates": {
       "kernel": {
@@ -167,7 +167,8 @@
       }
     },
     "upload_options": {
-      "description": "CalicoLib project template"
+      "description": "UiLib",
+      "slot": 3
     }
   }
 }
