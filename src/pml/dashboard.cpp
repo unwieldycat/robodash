@@ -1,10 +1,10 @@
-#include "uilib/dashboard.hpp"
-#include "uilib/auton_selector.hpp"
+#include "pml/dashboard.hpp"
+#include "pml/auton_selector.hpp"
 
 lv_obj_t *dashboard;
 
 lv_res_t auton_btn_action(lv_obj_t *obj) {
-	uilib::auton_selector::do_selection();
+	pml::auton_selector::do_selection();
 	return LV_RES_OK;
 }
 
@@ -25,4 +25,4 @@ void create_dashboard() {
 	lv_obj_set_free_num(auton_sel_btn, 0);
 }
 
-void uilib::dashboard::initialize() { create_dashboard(); }
+void pml::dashboard::initialize() { create_dashboard(); }

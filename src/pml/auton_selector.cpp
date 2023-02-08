@@ -3,7 +3,7 @@
 
 // =============================== Variables =============================== //
 
-std::vector<uilib::auton_selector::Routine> routines;
+std::vector<pml::auton_selector::Routine> routines;
 int selected_auton;
 
 // =============================== Selection =============================== //
@@ -22,7 +22,7 @@ lv_res_t done_act(lv_obj_t *obj) {
 	return LV_RES_OK;
 }
 
-void uilib::auton_selector::do_selection() {
+void pml::auton_selector::do_selection() {
 	// Style to remove padding from window background
 	lv_style_t win_style;
 	lv_style_copy(&win_style, &lv_style_transp);
@@ -73,11 +73,11 @@ void uilib::auton_selector::do_selection() {
 
 // ============================= Other Methods ============================= //
 
-void uilib::auton_selector::add_autons(std::vector<uilib::auton_selector::Routine> new_routines) {
+void pml::auton_selector::add_autons(std::vector<pml::auton_selector::Routine> new_routines) {
 	routines.insert(routines.end(), new_routines.begin(), new_routines.end());
 }
 
-void uilib::auton_selector::do_auton() {
-	uilib::auton_selector::Routine routine = routines.at(selected_auton);
+void pml::auton_selector::do_auton() {
+	pml::auton_selector::Routine routine = routines.at(selected_auton);
 	routine.action();
 }

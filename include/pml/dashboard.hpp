@@ -1,7 +1,7 @@
 #pragma once
 #include "../display/lvgl.h"
 
-namespace uilib {
+namespace pml {
 namespace dashboard {
 
 /**
@@ -10,4 +10,4 @@ namespace dashboard {
 void initialize();
 
 } // namespace dashboard
-} // namespace uilib
+} // namespace pml

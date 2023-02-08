@@ -1,9 +1,10 @@
 #pragma once
 #include "../api.h"
+#include "../display/lvgl.h"
 #include <functional>
 #include <string>
 
-namespace uilib {
+namespace pml {
 namespace auton_selector {
 
 /**
@@ -46,4 +47,4 @@ void do_selection();
 void do_auton();
 
 } // namespace auton_selector
-} // namespace uilib
+} // namespace pml
