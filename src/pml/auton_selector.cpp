@@ -54,6 +54,10 @@ void pml::auton_selector::do_selection() {
 		r_index++;
 	}
 
+	lv_obj_t *nothing_btn = lv_list_add(routine_list, NULL, "Nothing", r_select_act);
+	lv_obj_set_free_num(nothing_btn, -1);
+	lv_btn_set_action(nothing_btn, LV_BTN_ACTION_CLICK, &r_select_act);
+
 	lv_obj_t *done_btn = lv_btn_create(select_win, NULL);
 	lv_obj_align(done_btn, NULL, LV_ALIGN_IN_BOTTOM_LEFT, 8, 8);
 	lv_obj_set_pos(done_btn, 0, 176);
@@ -78,6 +82,7 @@ void pml::auton_selector::add_autons(std::vector<pml::auton_selector::Routine> n
 }
 
 void pml::auton_selector::do_auton() {
+	if (selected_auton == -1) return; // If commanded to do nothing then return
 	pml::auton_selector::Routine routine = routines.at(selected_auton);
 	routine.action();
 }
