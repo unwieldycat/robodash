@@ -1,9 +1,10 @@
 #pragma once
+#include "../api.h"
 #include <functional>
 #include <string>
 
 namespace uilib {
-namespace auton_manager {
+namespace auton_selector {
 
 /**
  * \brief Side of the field the autonomous routine starts on
@@ -32,12 +33,17 @@ struct Routine {
  * \brief Initialize autonomous manager
  * \param autons Vector of Routine objects
  */
-void initialize(std::vector<Routine> autons);
+void add_autons(std::vector<Routine> autons);
 
 /**
  * \brief Run auton selection
  */
-void run();
+void do_selection();
 
-} // namespace auton_manager
+/**
+ * \brief Run selected auton
+ */
+void do_auton();
+
+} // namespace auton_selector
 } // namespace uilib

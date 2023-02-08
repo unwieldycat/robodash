@@ -1,10 +1,10 @@
 #include "uilib/dashboard.hpp"
-#include "uilib/autonmanager.hpp"
+#include "uilib/auton_selector.hpp"
 
 lv_obj_t *dashboard;
 
 lv_res_t auton_btn_action(lv_obj_t *obj) {
-	uilib::auton_manager::run();
+	uilib::auton_selector::do_selection();
 	return LV_RES_OK;
 }
 
