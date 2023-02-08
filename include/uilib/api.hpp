@@ -5,4 +5,5 @@
 #define UILIB_VERSION_PATCH 0
 #define UILIB_VERSION_STRING "1.0.0"
 
-#include "init.hpp"
+#include "autonmanager.hpp"
+#include "dashboard.hpp"
