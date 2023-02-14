@@ -1,5 +1,4 @@
 #include "auton_selector.hpp"
-#include "dashboard.hpp"
 
 // =============================== Variables =============================== //
 
@@ -9,6 +8,7 @@ int selected_auton;
 // =============================== Selection =============================== //
 
 bool selection_done = false;
+bool selection_running = false;
 
 lv_res_t r_select_act(lv_obj_t *obj) {
 	int id = lv_obj_get_free_num(obj);
@@ -23,6 +23,9 @@ lv_res_t done_act(lv_obj_t *obj) {
 }
 
 void pml::auton_selector::do_selection() {
+	if (selection_running) return;
+	selection_running = true;
+
 	// Style to remove padding from window background
 	lv_style_t win_style;
 	lv_style_copy(&win_style, &lv_style_transp);
@@ -70,12 +73,13 @@ void pml::auton_selector::do_selection() {
 	while (!selection_done) {
 		if (pros::competition::is_connected() && !pros::competition::is_disabled())
 			selection_done = true;
+
 		pros::delay(100);
 	}
 
-	selection_done = false; // Set back to false if want to re-select
-
 	lv_obj_del(select_win);
+	selection_done = false; // Set back to false if want to re-select
+	selection_running = false;
 }
 
 // ============================= Other Methods ============================= //
