@@ -22,13 +22,18 @@ struct Routine {
 	 * \param name Name of routine
 	 * \param action Routine action
 	 */
-	Routine(std::string name, std::function<void()> action, StartPosition start_pos)
+	Routine(
+	    std::string name, std::function<void()> action,
+	    StartPosition start_pos = pml::auton_selector::StartPosition::Any
+	)
 	    : name(name), action(action), start_pos(start_pos) {}
 
 	std::string name;
 	std::function<void()> action;
 	StartPosition start_pos;
 };
+
+// TODO: make declaring autons less of a chore
 
 /**
  * \brief Initialize autonomous manager
