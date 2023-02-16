@@ -22,12 +22,14 @@ lv_res_t done_act(lv_obj_t *obj) {
 	return LV_RES_OK;
 }
 
+lv_style_t win_style;
 void pml::auton_selector::do_selection() {
 	if (selection_running) return;
 	selection_running = true;
 
+	// TODO: Fix lvgl window padding and sizing issues
+
 	// Style to remove padding from window background
-	lv_style_t win_style;
 	lv_style_copy(&win_style, &lv_style_transp);
 	win_style.body.padding.ver = 0;
 
