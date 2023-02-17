@@ -4,11 +4,13 @@
 
 std::vector<pml::auton_selector::Routine> routines;
 int selected_auton = -1; // Default -1 to do nothing
-
-// =============================== Selection =============================== //
-
 bool selection_done = false;
 bool selection_running = false;
+
+lv_style_t win_style;
+lv_obj_t *select_win;
+
+// =============================== Selection =============================== //
 
 lv_res_t r_select_act(lv_obj_t *obj) {
 	int id = lv_obj_get_free_num(obj);
@@ -21,9 +23,6 @@ lv_res_t done_act(lv_obj_t *obj) {
 	selection_done = true;
 	return LV_RES_OK;
 }
-
-lv_style_t win_style;
-lv_obj_t *select_win;
 
 void pml::auton_selector::do_selection() {
 	if (selection_running) return;
