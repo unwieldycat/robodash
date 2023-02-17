@@ -3,7 +3,7 @@
 // =============================== Variables =============================== //
 
 std::vector<pml::auton_selector::Routine> routines;
-int selected_auton;
+int selected_auton = -1; // Default -1 to do nothing
 
 // =============================== Selection =============================== //
 
@@ -23,6 +23,8 @@ lv_res_t done_act(lv_obj_t *obj) {
 }
 
 lv_style_t win_style;
+lv_obj_t *select_win;
+
 void pml::auton_selector::do_selection() {
 	if (selection_running) return;
 	selection_running = true;
@@ -33,7 +35,7 @@ void pml::auton_selector::do_selection() {
 	lv_style_copy(&win_style, &lv_style_transp);
 	win_style.body.padding.ver = 0;
 
-	lv_obj_t *select_win = lv_win_create(lv_scr_act(), NULL);
+	select_win = lv_win_create(lv_scr_act(), NULL);
 	lv_win_set_style(select_win, LV_WIN_STYLE_CONTENT_BG, &win_style);
 	lv_win_set_btn_size(select_win, 12);
 	lv_win_set_title(select_win, "Autonomous Selection");
@@ -92,17 +94,19 @@ void pml::auton_selector::do_selection() {
 	lv_obj_t *r_filter_label = lv_label_create(r_filter_btn, NULL);
 	lv_label_set_text(r_filter_label, "R");
 
-	// Wait for user to be done or for match to start
+	// Wait for user to be done
 	while (!selection_done) {
-		if (pros::competition::is_connected() && !pros::competition::is_disabled())
-			selection_done = true;
-
 		pros::delay(100);
 	}
 
 	lv_obj_del(select_win);
 	selection_done = false; // Set back to false if want to re-select
 	selection_running = false;
+}
+
+void pml::auton_selector::exit_selection() {
+	if (!selection_running) return;
+	lv_obj_del(select_win);
 }
 
 // ============================= Other Methods ============================= //

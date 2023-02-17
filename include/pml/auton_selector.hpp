@@ -47,6 +47,12 @@ void add_autons(std::vector<Routine> autons);
 void do_selection();
 
 /**
+ * \brief End selection if still running. Workaround since UI doesn't clear due to task being
+ * forcibly ended before the code can do it automatically
+ */
+void exit_selection();
+
+/**
  * \brief Run selected auton
  */
 void do_auton();
