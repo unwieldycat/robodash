@@ -6,9 +6,6 @@ Pros Multitool Library (PML) is a PROS library that does autonomous selection an
 
 ## Goals for release
 - [ ] Autonomous program selector
-- [ ] Console capture
-	- [ ] Save to SD card
-	- [ ] Show output in seperate window
-- [ ] Pluggable game ui
-- [ ] Pretty console output
+- [ ] Premade game UI (think llemu)
+- [ ] Theming
 
