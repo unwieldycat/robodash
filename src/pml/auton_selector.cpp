@@ -37,6 +37,7 @@ void pml::auton_selector::do_selection() {
 	lv_win_set_style(select_win, LV_WIN_STYLE_CONTENT_BG, &win_style);
 	lv_win_set_btn_size(select_win, 12);
 	lv_win_set_title(select_win, "Autonomous Selection");
+	lv_win_set_layout(select_win, LV_LAYOUT_OFF);
 	lv_obj_t *win_close_btn = lv_win_add_btn(select_win, SYMBOL_CLOSE, done_act);
 
 	lv_obj_t *title_label = lv_label_create(select_win, NULL);
@@ -64,12 +65,32 @@ void pml::auton_selector::do_selection() {
 	lv_btn_set_action(nothing_btn, LV_BTN_ACTION_CLICK, &r_select_act);
 
 	lv_obj_t *done_btn = lv_btn_create(select_win, NULL);
-	lv_obj_align(done_btn, NULL, LV_ALIGN_IN_BOTTOM_LEFT, 8, 8);
-	lv_obj_set_pos(done_btn, 0, 176);
+	lv_obj_set_pos(done_btn, 0, 184);
 	lv_obj_set_size(done_btn, 232, 30);
 	lv_btn_set_action(done_btn, LV_BTN_ACTION_CLICK, &done_act);
 	lv_obj_t *done_label = lv_label_create(done_btn, NULL);
 	lv_label_set_text(done_label, "Done");
+
+	// Filter buttons
+	// TODO: Implement filtering list
+
+	lv_obj_t *b_filter_btn = lv_btn_create(select_win, NULL);
+	lv_obj_set_size(b_filter_btn, 80, 32);
+	lv_obj_set_pos(b_filter_btn, 304, 184);
+	lv_obj_t *b_filter_label = lv_label_create(b_filter_btn, NULL);
+	lv_label_set_text(b_filter_label, "Both");
+
+	lv_obj_t *l_filter_btn = lv_btn_create(select_win, NULL);
+	lv_obj_set_size(l_filter_btn, 32, 32);
+	lv_obj_set_pos(l_filter_btn, 388, 184);
+	lv_obj_t *l_filter_label = lv_label_create(l_filter_btn, NULL);
+	lv_label_set_text(l_filter_label, "L");
+
+	lv_obj_t *r_filter_btn = lv_btn_create(select_win, NULL);
+	lv_obj_set_size(r_filter_btn, 32, 32);
+	lv_obj_set_pos(r_filter_btn, 426, 184);
+	lv_obj_t *r_filter_label = lv_label_create(r_filter_btn, NULL);
+	lv_label_set_text(r_filter_label, "R");
 
 	// Wait for user to be done or for match to start
 	while (!selection_done) {
