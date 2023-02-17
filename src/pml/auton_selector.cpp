@@ -25,7 +25,7 @@ lv_res_t done_act(lv_obj_t *obj) {
 }
 
 void pml::auton_selector::do_selection() {
-	if (selection_running) return;
+	if (selection_running || !pros::competition::is_disabled()) return;
 	selection_running = true;
 
 	// TODO: Fix lvgl window padding and sizing issues
@@ -94,7 +94,7 @@ void pml::auton_selector::do_selection() {
 	lv_label_set_text(r_filter_label, "R");
 
 	// Wait for user to be done
-	while (!selection_done) {
+	while (!selection_done || !pros::competition::is_disabled()) {
 		pros::delay(100);
 	}
 
