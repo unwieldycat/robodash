@@ -4,13 +4,17 @@
 
 std::vector<std::function<void()>> actions;
 
-lv_obj_t *console;
+lv_obj_t *dashboard;
 lv_obj_t *actions_list;
 
 // =============================== Dashboard =============================== //
 
 void pml::init() {
-	actions_list = lv_list_create(lv_scr_act(), NULL);
+	dashboard = lv_cont_create(lv_scr_act(), NULL);
+	lv_obj_set_size(dashboard, 240, 480);
+	lv_obj_align(dashboard, NULL, LV_ALIGN_CENTER, 0, 0);
+
+	actions_list = lv_list_create(dashboard, NULL);
 	lv_obj_set_size(actions_list, 128, 224);
 	lv_obj_align(actions_list, NULL, LV_ALIGN_IN_TOP_RIGHT, -8, 8);
 }
