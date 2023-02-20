@@ -1,5 +1,6 @@
 #include "dashboard.hpp"
 #include "display/lv_core/lv_obj.h"
+#include "display/lv_objx/lv_cont.h"
 
 // =============================== Variables =============================== //
 
@@ -7,6 +8,7 @@ std::vector<std::function<void()>> actions;
 
 lv_obj_t *dashboard;
 lv_obj_t *actions_list;
+lv_obj_t *console_cont;
 
 // =============================== Dashboard =============================== //
 
@@ -15,12 +17,17 @@ void pml::init() {
 	lv_obj_set_size(dashboard, 480, 240);
 	lv_obj_align(dashboard, NULL, LV_ALIGN_CENTER, 0, 0);
 
+	console_cont = lv_cont_create(dashboard, NULL);
+	lv_obj_set_size(console_cont, 464, 224);
+	lv_obj_align(console_cont, NULL, LV_ALIGN_IN_TOP_MID, 0, 8);
+
 	// FIXME: Children dont have same width or expand as much as possible
 	actions_list = lv_cont_create(dashboard, NULL);
 	lv_obj_set_height(actions_list, 32);
 	lv_cont_set_layout(actions_list, LV_LAYOUT_ROW_M);
 	lv_cont_set_fit(actions_list, true, false);
 	lv_obj_align(actions_list, NULL, LV_ALIGN_IN_BOTTOM_MID, 0, -8);
+	lv_obj_set_hidden(actions_list, true);
 }
 
 lv_res_t act_btn_action(_lv_obj_t *obj) {
@@ -30,7 +37,12 @@ lv_res_t act_btn_action(_lv_obj_t *obj) {
 }
 
 void pml::add_action_btn(std::string label, std::function<void()> action) {
+	// Unhide list and resize console view for buttons
+	lv_obj_set_hidden(actions_list, false);
+	lv_obj_set_height(console_cont, 184);
+
 	actions.push_back(action);
+
 	lv_obj_t *new_btn = lv_btn_create(actions_list, NULL);
 	lv_obj_set_size(new_btn, 96, 32);
 	lv_obj_set_free_num(new_btn, actions.size() - 1);
