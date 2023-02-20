@@ -12,6 +12,41 @@ lv_obj_t *console_cont;
 
 // =============================== Dashboard =============================== //
 
+int console_height = 0;
+void set_console_lines(int height) {
+
+	if (height < console_height) {
+		lv_obj_t *console_child = lv_obj_get_child(console_cont, NULL);
+
+		for (int i = 0; i < height; i++) {
+			console_child = lv_obj_get_child(console_cont, console_child);
+		}
+
+		std::vector<lv_obj_t *> children_to_delete;
+
+		while (console_child) {
+			children_to_delete.push_back(console_child);
+			console_child = lv_obj_get_child(console_cont, console_child);
+		}
+
+		for (lv_obj_t *child : children_to_delete) {
+			lv_obj_del(child);
+		}
+	}
+
+	for (int i = console_height; i < height; i++) {
+		lv_obj_t *console_line = lv_label_create(console_cont, NULL);
+		lv_obj_set_size(console_line, 448, 24);
+
+		// testing stuff, will remove eventually
+		char str[2];
+		sprintf(str, "%d", i);
+		lv_label_set_text(console_line, str);
+	}
+
+	console_height = height;
+}
+
 void pml::init() {
 	dashboard = lv_cont_create(lv_scr_act(), NULL);
 	lv_obj_set_size(dashboard, 480, 240);
@@ -20,6 +55,8 @@ void pml::init() {
 	console_cont = lv_cont_create(dashboard, NULL);
 	lv_obj_set_size(console_cont, 464, 224);
 	lv_obj_align(console_cont, NULL, LV_ALIGN_IN_TOP_MID, 0, 8);
+	lv_cont_set_layout(console_cont, LV_LAYOUT_COL_L);
+	set_console_lines(6);
 
 	// FIXME: Children dont have same width or expand as much as possible
 	actions_list = lv_cont_create(dashboard, NULL);
@@ -40,6 +77,7 @@ void pml::add_action_btn(std::string label, std::function<void()> action) {
 	// Unhide list and resize console view for buttons
 	lv_obj_set_hidden(actions_list, false);
 	lv_obj_set_height(console_cont, 184);
+	set_console_lines(5);
 
 	actions.push_back(action);
 
