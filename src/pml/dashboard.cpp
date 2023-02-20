@@ -5,14 +5,14 @@
 // =============================== Variables =============================== //
 
 std::vector<std::function<void()>> actions;
+int console_height = 0;
 
 lv_obj_t *dashboard;
 lv_obj_t *actions_list;
 lv_obj_t *console_cont;
 
-// =============================== Dashboard =============================== //
+// ================================ Console ================================ //
 
-int console_height = 0;
 void set_console_lines(int height) {
 
 	if (height < console_height) {
@@ -47,25 +47,7 @@ void set_console_lines(int height) {
 	console_height = height;
 }
 
-void pml::init() {
-	dashboard = lv_cont_create(lv_scr_act(), NULL);
-	lv_obj_set_size(dashboard, 480, 240);
-	lv_obj_align(dashboard, NULL, LV_ALIGN_CENTER, 0, 0);
-
-	console_cont = lv_cont_create(dashboard, NULL);
-	lv_obj_set_size(console_cont, 464, 224);
-	lv_obj_align(console_cont, NULL, LV_ALIGN_IN_TOP_MID, 0, 8);
-	lv_cont_set_layout(console_cont, LV_LAYOUT_COL_L);
-	set_console_lines(6);
-
-	// FIXME: Children dont have same width or expand as much as possible
-	actions_list = lv_cont_create(dashboard, NULL);
-	lv_obj_set_height(actions_list, 32);
-	lv_cont_set_layout(actions_list, LV_LAYOUT_ROW_M);
-	lv_cont_set_fit(actions_list, true, false);
-	lv_obj_align(actions_list, NULL, LV_ALIGN_IN_BOTTOM_MID, 0, -8);
-	lv_obj_set_hidden(actions_list, true);
-}
+// ============================== Actions List ============================== //
 
 lv_res_t act_btn_action(_lv_obj_t *obj) {
 	int act_id = lv_obj_get_free_num(obj);
@@ -89,4 +71,26 @@ void pml::add_action_btn(std::string label, std::function<void()> action) {
 	lv_obj_t *btn_label = lv_label_create(new_btn, NULL);
 	lv_label_set_text(btn_label, label.c_str());
 	lv_obj_align(actions_list, NULL, LV_ALIGN_IN_BOTTOM_MID, 0, -8);
+}
+
+// ============================= Initialization ============================= //
+
+void pml::init() {
+	dashboard = lv_cont_create(lv_scr_act(), NULL);
+	lv_obj_set_size(dashboard, 480, 240);
+	lv_obj_align(dashboard, NULL, LV_ALIGN_CENTER, 0, 0);
+
+	console_cont = lv_cont_create(dashboard, NULL);
+	lv_obj_set_size(console_cont, 464, 224);
+	lv_obj_align(console_cont, NULL, LV_ALIGN_IN_TOP_MID, 0, 8);
+	lv_cont_set_layout(console_cont, LV_LAYOUT_COL_L);
+	set_console_lines(6);
+
+	// FIXME: Children dont have same width or expand as much as possible
+	actions_list = lv_cont_create(dashboard, NULL);
+	lv_obj_set_height(actions_list, 32);
+	lv_cont_set_layout(actions_list, LV_LAYOUT_ROW_M);
+	lv_cont_set_fit(actions_list, true, false);
+	lv_obj_align(actions_list, NULL, LV_ALIGN_IN_BOTTOM_MID, 0, -8);
+	lv_obj_set_hidden(actions_list, true);
 }
