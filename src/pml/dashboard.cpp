@@ -22,17 +22,17 @@ lv_obj_t *console_cont;
 void set_console_lines(int height) {
 
 	if (height < console_height) {
-		lv_obj_t *console_child = lv_obj_get_child(console_cont, NULL);
+		lv_obj_t *console_child = lv_obj_get_child_back(console_cont, NULL);
 
 		for (int i = 0; i < height; i++) {
-			console_child = lv_obj_get_child(console_cont, console_child);
+			console_child = lv_obj_get_child_back(console_cont, console_child);
 		}
 
 		std::vector<lv_obj_t *> children_to_delete;
 
 		while (console_child) {
 			children_to_delete.push_back(console_child);
-			console_child = lv_obj_get_child(console_cont, console_child);
+			console_child = lv_obj_get_child_back(console_cont, console_child);
 		}
 
 		for (lv_obj_t *child : children_to_delete) {
@@ -43,14 +43,21 @@ void set_console_lines(int height) {
 	for (int i = console_height; i < height; i++) {
 		lv_obj_t *console_line = lv_label_create(console_cont, NULL);
 		lv_obj_set_size(console_line, 448, 24);
-
-		// testing stuff, will remove eventually
-		char str[2];
-		sprintf(str, "%d", i);
-		lv_label_set_text(console_line, str);
+		lv_label_set_text(console_line, "");
 	}
 
 	console_height = height;
+}
+
+void pml::set_text(int line, std::string text) {
+	if (line > console_height) return;
+
+	lv_obj_t *console_line = lv_obj_get_child_back(console_cont, NULL);
+	for (int i = 0; i < line - 1; i++) {
+		console_line = lv_obj_get_child_back(console_cont, console_line);
+	}
+
+	lv_label_set_text(console_line, text.c_str());
 }
 
 // ============================== Actions List ============================== //
@@ -65,7 +72,7 @@ void pml::add_action_btn(std::string label, std::function<void()> action) {
 	// Unhide list and resize console view for buttons
 	lv_obj_set_hidden(actions_list, false);
 	lv_obj_set_height(console_cont, 184);
-	set_console_lines(5);
+	set_console_lines(6);
 
 	actions.push_back(action);
 
@@ -97,18 +104,18 @@ void pml::init() {
 
 	lv_style_copy(&console_style, &lv_style_plain);
 	console_style.body.radius = 4;
-	console_style.body.main_color = lv_color_hex(0x00cc00);
-	console_style.body.grad_color = lv_color_hex(0x009900);
-	console_style.body.border.color = lv_color_hex(0x00cc00);
+	console_style.body.main_color = lv_color_hex(0x1a1a1a);
+	console_style.body.grad_color = lv_color_hex(0x1a1a1a);
+	console_style.body.border.color = lv_color_hex(0x404040);
 	console_style.body.border.width = 2;
-	console_style.text.color = lv_color_hex(0x000000);
+	console_style.text.color = lv_color_hex(0xffffff);
 
 	console_cont = lv_cont_create(dashboard, NULL);
 	lv_obj_set_style(console_cont, &console_style);
 	lv_obj_set_size(console_cont, 464, 224);
 	lv_obj_align(console_cont, NULL, LV_ALIGN_IN_TOP_MID, 0, 8);
 	lv_cont_set_layout(console_cont, LV_LAYOUT_COL_L);
-	set_console_lines(6);
+	set_console_lines(7);
 
 	lv_style_copy(&actions_list_style, &lv_style_transp);
 	lv_style_copy(&btn_style, &lv_style_plain);
