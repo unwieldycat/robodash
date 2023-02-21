@@ -46,8 +46,8 @@ void pml::auton_selector::do_selection() {
 	lv_obj_align(title_label, NULL, LV_ALIGN_IN_TOP_MID, 0, 4);
 
 	lv_obj_t *routine_list = lv_list_create(select_win, NULL);
+	lv_obj_set_size(routine_list, 232, 130);
 	lv_obj_align(routine_list, NULL, LV_ALIGN_IN_TOP_LEFT, 0, 48);
-	lv_obj_set_size(routine_list, 458, 130);
 
 	// Add routines to list
 	for (pml::Routine routine : routines) {
@@ -71,27 +71,6 @@ void pml::auton_selector::do_selection() {
 	lv_btn_set_action(done_btn, LV_BTN_ACTION_CLICK, &done_act);
 	lv_obj_t *done_label = lv_label_create(done_btn, NULL);
 	lv_label_set_text(done_label, "Done");
-
-	// Filter buttons
-	// TODO: Implement filtering list
-
-	lv_obj_t *b_filter_btn = lv_btn_create(select_win, NULL);
-	lv_obj_set_size(b_filter_btn, 80, 32);
-	lv_obj_set_pos(b_filter_btn, 304, 184);
-	lv_obj_t *b_filter_label = lv_label_create(b_filter_btn, NULL);
-	lv_label_set_text(b_filter_label, "Both");
-
-	lv_obj_t *l_filter_btn = lv_btn_create(select_win, NULL);
-	lv_obj_set_size(l_filter_btn, 32, 32);
-	lv_obj_set_pos(l_filter_btn, 388, 184);
-	lv_obj_t *l_filter_label = lv_label_create(l_filter_btn, NULL);
-	lv_label_set_text(l_filter_label, "L");
-
-	lv_obj_t *r_filter_btn = lv_btn_create(select_win, NULL);
-	lv_obj_set_size(r_filter_btn, 32, 32);
-	lv_obj_set_pos(r_filter_btn, 426, 184);
-	lv_obj_t *r_filter_label = lv_label_create(r_filter_btn, NULL);
-	lv_label_set_text(r_filter_label, "R");
 
 	// Wait for user to be done
 	while (!selection_done || !pros::competition::is_disabled()) {
