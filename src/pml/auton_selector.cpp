@@ -8,7 +8,8 @@ bool selection_done = false;
 bool selection_running = false;
 
 lv_style_t win_style;
-lv_obj_t *select_win;
+lv_obj_t *main_scr;
+lv_obj_t *select_scr;
 
 // =============================== Selection =============================== //
 
@@ -28,26 +29,24 @@ void pml::auton_selector::do_selection() {
 	if (selection_running || !pros::competition::is_disabled()) return;
 	selection_running = true;
 
-	// TODO: Fix lvgl window padding and sizing issues
+	main_scr = lv_scr_act();
+	select_scr = lv_obj_create(NULL, NULL);
+	lv_scr_load(select_scr);
 
-	// Style to remove padding from window background
-	lv_style_copy(&win_style, &lv_style_transp);
-	win_style.body.padding.ver = 0;
-
-	select_win = lv_win_create(lv_scr_act(), NULL);
-	lv_win_set_style(select_win, LV_WIN_STYLE_CONTENT_BG, &win_style);
-	lv_win_set_btn_size(select_win, 12);
-	lv_win_set_title(select_win, "Autonomous Selection");
-	lv_win_set_layout(select_win, LV_LAYOUT_OFF);
-	lv_obj_t *win_close_btn = lv_win_add_btn(select_win, SYMBOL_CLOSE, done_act);
-
-	lv_obj_t *title_label = lv_label_create(select_win, NULL);
+	lv_obj_t *title_label = lv_label_create(select_scr, NULL);
 	lv_label_set_text(title_label, "Select autonomous routine");
-	lv_obj_align(title_label, NULL, LV_ALIGN_IN_TOP_MID, 0, 4);
+	lv_label_set_align(title_label, LV_LABEL_ALIGN_CENTER);
+	lv_obj_set_width(title_label, 232);
+	lv_obj_align(title_label, NULL, LV_ALIGN_IN_TOP_LEFT, 8, 16);
 
-	lv_obj_t *routine_list = lv_list_create(select_win, NULL);
-	lv_obj_set_size(routine_list, 232, 130);
-	lv_obj_align(routine_list, NULL, LV_ALIGN_IN_TOP_LEFT, 0, 48);
+	lv_obj_t *routine_list = lv_list_create(select_scr, NULL);
+	lv_obj_set_size(routine_list, 232, 144);
+	lv_obj_align(routine_list, NULL, LV_ALIGN_IN_TOP_LEFT, 8, 48);
+
+	// TODO: Field
+	lv_obj_t *field_diagram = lv_obj_create(select_scr, NULL);
+	lv_obj_set_size(field_diagram, 224, 224);
+	lv_obj_align(field_diagram, NULL, LV_ALIGN_IN_TOP_RIGHT, -8, 8);
 
 	// Add routines to list
 	for (pml::Routine routine : routines) {
@@ -65,9 +64,9 @@ void pml::auton_selector::do_selection() {
 	lv_obj_set_free_num(nothing_btn, -1);
 	lv_btn_set_action(nothing_btn, LV_BTN_ACTION_CLICK, &r_select_act);
 
-	lv_obj_t *done_btn = lv_btn_create(select_win, NULL);
-	lv_obj_set_pos(done_btn, 0, 184);
-	lv_obj_set_size(done_btn, 232, 30);
+	lv_obj_t *done_btn = lv_btn_create(select_scr, NULL);
+	lv_obj_set_size(done_btn, 232, 32);
+	lv_obj_align(done_btn, NULL, LV_ALIGN_IN_BOTTOM_LEFT, 8, -8);
 	lv_btn_set_action(done_btn, LV_BTN_ACTION_CLICK, &done_act);
 	lv_obj_t *done_label = lv_label_create(done_btn, NULL);
 	lv_label_set_text(done_label, "Done");
@@ -77,14 +76,17 @@ void pml::auton_selector::do_selection() {
 		pros::delay(100);
 	}
 
-	lv_obj_del(select_win);
+	lv_scr_load(main_scr);
+	lv_obj_del(select_scr);
+
 	selection_done = false; // Set back to false if want to re-select
 	selection_running = false;
 }
 
 void pml::auton_selector::exit_selection() {
 	if (!selection_running) return;
-	lv_obj_del(select_win);
+	lv_scr_load(main_scr);
+	lv_obj_del(select_scr);
 }
 
 // ============================= Other Methods ============================= //
