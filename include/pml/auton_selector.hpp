@@ -5,12 +5,11 @@
 #include <string>
 
 namespace pml {
-namespace auton_selector {
 
 /**
- * \brief Side of the field the autonomous routine starts on
+ * \brief Routine start position
  */
-enum class StartPosition { Any, Left, Right };
+enum class StartPos { Any, Left, Right };
 
 /**
  * \brief Autonomous routine object
@@ -23,15 +22,16 @@ struct Routine {
 	 * \param action Routine action
 	 */
 	Routine(
-	    std::string name, std::function<void()> action,
-	    StartPosition start_pos = pml::auton_selector::StartPosition::Any
+	    std::string name, std::function<void()> action, pml::StartPos start_pos = pml::StartPos::Any
 	)
 	    : name(name), action(action), start_pos(start_pos) {}
 
 	std::string name;
 	std::function<void()> action;
-	StartPosition start_pos;
+	pml::StartPos start_pos;
 };
+
+namespace auton_selector {
 
 // TODO: make declaring autons less of a chore
 
@@ -39,7 +39,7 @@ struct Routine {
  * \brief Initialize autonomous manager
  * \param autons Vector of Routine objects
  */
-void add_autons(std::vector<Routine> autons);
+void add_autons(std::vector<pml::Routine> autons);
 
 /**
  * \brief Run auton selection

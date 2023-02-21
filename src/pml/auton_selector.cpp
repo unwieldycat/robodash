@@ -2,7 +2,7 @@
 
 // =============================== Variables =============================== //
 
-std::vector<pml::auton_selector::Routine> routines;
+std::vector<pml::Routine> routines;
 int selected_auton = -1; // Default -1 to do nothing
 bool selection_done = false;
 bool selection_running = false;
@@ -50,7 +50,7 @@ void pml::auton_selector::do_selection() {
 	lv_obj_set_size(routine_list, 458, 130);
 
 	// Add routines to list
-	for (auton_selector::Routine routine : routines) {
+	for (pml::Routine routine : routines) {
 		// Store current position in vector
 		static int r_index = 0;
 
@@ -110,12 +110,12 @@ void pml::auton_selector::exit_selection() {
 
 // ============================= Other Methods ============================= //
 
-void pml::auton_selector::add_autons(std::vector<pml::auton_selector::Routine> new_routines) {
+void pml::auton_selector::add_autons(std::vector<pml::Routine> new_routines) {
 	routines.insert(routines.end(), new_routines.begin(), new_routines.end());
 }
 
 void pml::auton_selector::do_auton() {
 	if (selected_auton == -1) return; // If commanded to do nothing then return
-	pml::auton_selector::Routine routine = routines.at(selected_auton);
+	pml::Routine routine = routines.at(selected_auton);
 	routine.action();
 }
