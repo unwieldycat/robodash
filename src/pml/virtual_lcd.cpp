@@ -1,6 +1,4 @@
-#include "dashboard.hpp"
-#include "display/lv_core/lv_obj.h"
-#include "display/lv_objx/lv_cont.h"
+#include "virtual_lcd.hpp"
 
 // =============================== Variables =============================== //
 
@@ -49,7 +47,7 @@ void set_console_lines(int height) {
 	console_height = height;
 }
 
-void pml::set_text(int line, std::string text) {
+void pml::virtual_lcd::set_text(int line, std::string text) {
 	if (line > console_height) return;
 
 	lv_obj_t *console_line = lv_obj_get_child_back(console_cont, NULL);
@@ -68,7 +66,7 @@ lv_res_t act_btn_action(_lv_obj_t *obj) {
 	return LV_RES_OK;
 }
 
-void pml::add_action_btn(std::string label, std::function<void()> action) {
+void pml::virtual_lcd::add_action_btn(std::string label, std::function<void()> action) {
 	// Unhide list and resize console view for buttons
 	lv_obj_set_hidden(actions_list, false);
 	lv_obj_set_height(console_cont, 184);
@@ -90,7 +88,7 @@ void pml::add_action_btn(std::string label, std::function<void()> action) {
 
 // ============================= Initialization ============================= //
 
-void pml::init() {
+void pml::virtual_lcd::init() {
 	lv_style_copy(&dashboard_style, &lv_style_plain);
 	dashboard_style.body.border.width = 0;
 	dashboard_style.body.radius = 0;

@@ -5,8 +5,10 @@
 #include <string>
 
 namespace pml {
+
+namespace virtual_lcd {
 /**
- * \brief Initialize GUI
+ * \brief Start virtual LCD on active screen
  */
 void init();
 
@@ -22,4 +24,6 @@ void add_action_btn(std::string label, std::function<void()> action);
  * \param text Text to display
  */
 void set_text(int line, std::string text);
+
+} // namespace virtual_lcd
 } // namespace pml
