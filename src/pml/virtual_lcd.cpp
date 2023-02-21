@@ -1,17 +1,12 @@
 #include "virtual_lcd.hpp"
+#include "internal/styles.hpp"
 
 // =============================== Variables =============================== //
 
 std::vector<std::function<void()>> actions;
 int console_height = 0;
 
-lv_style_t dashboard_style;
-lv_style_t actions_list_style;
-lv_style_t btn_style;
-lv_style_t btn_style_pressed;
-lv_style_t console_style;
-
-lv_obj_t *dashboard;
+lv_obj_t *bg;
 lv_obj_t *actions_list;
 lv_obj_t *console_cont;
 
@@ -75,8 +70,8 @@ void pml::virtual_lcd::add_action_btn(std::string label, std::function<void()> a
 	actions.push_back(action);
 
 	lv_obj_t *new_btn = lv_btn_create(actions_list, NULL);
-	lv_btn_set_style(new_btn, LV_BTN_STYLE_REL, &btn_style);
-	lv_btn_set_style(new_btn, LV_BTN_STYLE_PR, &btn_style_pressed);
+	lv_btn_set_style(new_btn, LV_BTN_STYLE_REL, &btn_style_rel);
+	lv_btn_set_style(new_btn, LV_BTN_STYLE_PR, &btn_style_pr);
 	lv_obj_set_size(new_btn, 96, 32);
 	lv_obj_set_free_num(new_btn, actions.size() - 1);
 	lv_btn_set_action(new_btn, LV_BTN_ACTION_CLICK, act_btn_action);
@@ -89,48 +84,23 @@ void pml::virtual_lcd::add_action_btn(std::string label, std::function<void()> a
 // ============================= Initialization ============================= //
 
 void pml::virtual_lcd::init() {
-	lv_style_copy(&dashboard_style, &lv_style_plain);
-	dashboard_style.body.border.width = 0;
-	dashboard_style.body.radius = 0;
-	dashboard_style.body.main_color = lv_color_hex(0x262626);
-	dashboard_style.body.grad_color = lv_color_hex(0x262626);
+	init_styles();
 
-	dashboard = lv_cont_create(lv_scr_act(), NULL);
-	lv_obj_set_style(dashboard, &dashboard_style);
-	lv_obj_set_size(dashboard, 480, 240);
-	lv_obj_align(dashboard, NULL, LV_ALIGN_CENTER, 0, 0);
+	bg = lv_cont_create(lv_scr_act(), NULL);
+	lv_obj_set_style(bg, &bg_style);
+	lv_obj_set_size(bg, 480, 240);
+	lv_obj_align(bg, NULL, LV_ALIGN_CENTER, 0, 0);
 
-	lv_style_copy(&console_style, &lv_style_plain);
-	console_style.body.radius = 4;
-	console_style.body.main_color = lv_color_hex(0x1a1a1a);
-	console_style.body.grad_color = lv_color_hex(0x1a1a1a);
-	console_style.body.border.color = lv_color_hex(0x404040);
-	console_style.body.border.width = 2;
-	console_style.text.color = lv_color_hex(0xffffff);
-
-	console_cont = lv_cont_create(dashboard, NULL);
-	lv_obj_set_style(console_cont, &console_style);
+	console_cont = lv_cont_create(bg, NULL);
+	lv_obj_set_style(console_cont, &cont_style);
 	lv_obj_set_size(console_cont, 464, 224);
 	lv_obj_align(console_cont, NULL, LV_ALIGN_IN_TOP_MID, 0, 8);
 	lv_cont_set_layout(console_cont, LV_LAYOUT_COL_L);
 	set_console_lines(7);
 
-	lv_style_copy(&actions_list_style, &lv_style_transp);
-	lv_style_copy(&btn_style, &lv_style_plain);
-	btn_style.body.radius = 4;
-	btn_style.body.border.width = 2;
-	btn_style.body.border.color = lv_color_hex(0x404040);
-	btn_style.body.main_color = lv_color_hex(0x404040);
-	btn_style.body.grad_color = lv_color_hex(0x595959);
-	btn_style.text.color = lv_color_hex(0xffffff);
-
-	lv_style_copy(&btn_style_pressed, &btn_style);
-	btn_style_pressed.body.main_color = lv_color_hex(0x404040);
-	btn_style_pressed.body.grad_color = lv_color_hex(0x404040);
-
 	// FIXME: Children dont have same width or expand as much as possible
-	actions_list = lv_cont_create(dashboard, NULL);
-	lv_obj_set_style(actions_list, &actions_list_style);
+	actions_list = lv_cont_create(bg, NULL);
+	lv_obj_set_style(actions_list, &lv_style_transp);
 	lv_obj_set_height(actions_list, 32);
 	lv_cont_set_layout(actions_list, LV_LAYOUT_ROW_M);
 	lv_cont_set_fit(actions_list, true, false);
