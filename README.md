@@ -4,6 +4,9 @@
 # Pros Multitool Library
 Pros Multitool Library (Name will change) is a PROS library that does autonomous selection and other UI things.
 
+## Why?
+This library was created for those who want a easy to use, elegant UI for VRC. It aims to do all the UI work for you, so you can focus on programming and tuning the important aspects of your robot (PID, Odometry, etc.). It is also designed to be a step-up from llemu, taking more advantage of the v5 brain's capabilties and looking a bit better.
+
 ## Roadmap 
 
 ### 1.0 (Initial release)
