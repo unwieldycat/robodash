@@ -16,16 +16,10 @@ Feature list:
 - [ ] Virtual LCD/console
 - [x] Action buttons
 - [ ] Elegant UI
-
-### 1.1 
-This release will focus on customization.
-Feature List:
-- [ ] Easy color theming
-- [ ] Custom fonts
+- [ ] Graphing functionality
 
 ### 2.0 
 The second major release will be compatible with versions of PROS where LVGL is not bundled, as well as VEXCode Pro V5.
 Feature list:
-- [ ] LVGL drivers for PROS (a template should be available for this)
-- [ ] LVGL drivers for VEXCode
+- [ ] Cross compatibility with VEXCode Pro V5
 - [ ] Vertical screen mode
