@@ -69,13 +69,21 @@ void pml::virtual_lcd::add_action_btn(std::string label, std::function<void()> a
 
 	actions.push_back(action);
 
+	int btn_count = actions.size();
+	int btn_size = (464 / btn_count) - 12; // FIXME: spacing issues
+	lv_obj_t *btn = lv_obj_get_child(actions_list, NULL);
+
+	while (btn) {
+		lv_obj_set_width(btn, btn_size);
+		btn = lv_obj_get_child(actions_list, btn);
+	}
+
 	lv_obj_t *new_btn = lv_btn_create(actions_list, NULL);
 	lv_btn_set_style(new_btn, LV_BTN_STYLE_REL, &btn_style_rel);
 	lv_btn_set_style(new_btn, LV_BTN_STYLE_PR, &btn_style_pr);
-	lv_obj_set_size(new_btn, 96, 32);
+	lv_obj_set_size(new_btn, btn_size, 32);
 	lv_obj_set_free_num(new_btn, actions.size() - 1);
 	lv_btn_set_action(new_btn, LV_BTN_ACTION_CLICK, act_btn_action);
-	lv_btn_set_fit(new_btn, true, false);
 	lv_obj_t *btn_label = lv_label_create(new_btn, NULL);
 	lv_label_set_text(btn_label, label.c_str());
 	lv_obj_align(actions_list, NULL, LV_ALIGN_IN_BOTTOM_MID, 0, -8);
@@ -98,12 +106,10 @@ void pml::virtual_lcd::init() {
 	lv_cont_set_layout(console_cont, LV_LAYOUT_COL_L);
 	set_console_lines(7);
 
-	// FIXME: Children dont have same width or expand as much as possible
 	actions_list = lv_cont_create(bg, NULL);
-	lv_obj_set_style(actions_list, &lv_style_transp);
-	lv_obj_set_height(actions_list, 32);
+	lv_cont_set_style(actions_list, &lv_style_transp);
+	lv_obj_set_size(actions_list, 464, 32);
 	lv_cont_set_layout(actions_list, LV_LAYOUT_ROW_M);
-	lv_cont_set_fit(actions_list, true, false);
 	lv_obj_align(actions_list, NULL, LV_ALIGN_IN_BOTTOM_MID, 0, -8);
 	lv_obj_set_hidden(actions_list, true);
 }
