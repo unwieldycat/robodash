@@ -43,11 +43,6 @@ void pml::auton_selector::do_selection() {
 	lv_obj_set_size(routine_list, 232, 144);
 	lv_obj_align(routine_list, NULL, LV_ALIGN_IN_TOP_LEFT, 8, 48);
 
-	// TODO: Field
-	lv_obj_t *field_diagram = lv_obj_create(select_scr, NULL);
-	lv_obj_set_size(field_diagram, 224, 224);
-	lv_obj_align(field_diagram, NULL, LV_ALIGN_IN_TOP_RIGHT, -8, 8);
-
 	// Add routines to list
 	for (pml::Routine routine : routines) {
 		// Store current position in vector
