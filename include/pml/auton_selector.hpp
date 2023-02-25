@@ -31,9 +31,7 @@ struct Routine {
 	pml::StartPos start_pos;
 };
 
-namespace auton_selector {
-
-// TODO: make declaring autons less of a chore
+namespace selector {
 
 /**
  * \brief Initialize autonomous manager
@@ -57,5 +55,5 @@ void exit_selection();
  */
 void do_auton();
 
-} // namespace auton_selector
+} // namespace selector
 } // namespace pml

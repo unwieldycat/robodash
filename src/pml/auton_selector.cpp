@@ -25,7 +25,7 @@ lv_res_t done_act(lv_obj_t *obj) {
 	return LV_RES_OK;
 }
 
-void pml::auton_selector::do_selection() {
+void pml::selector::do_selection() {
 	if (selection_running || !pros::competition::is_disabled()) return;
 	selection_running = true;
 
@@ -78,7 +78,7 @@ void pml::auton_selector::do_selection() {
 	selection_running = false;
 }
 
-void pml::auton_selector::exit_selection() {
+void pml::selector::exit_selection() {
 	if (!selection_running) return;
 	lv_scr_load(main_scr);
 	lv_obj_del(select_scr);
@@ -86,11 +86,11 @@ void pml::auton_selector::exit_selection() {
 
 // ============================= Other Methods ============================= //
 
-void pml::auton_selector::add_autons(std::vector<pml::Routine> new_routines) {
+void pml::selector::add_autons(std::vector<pml::Routine> new_routines) {
 	routines.insert(routines.end(), new_routines.begin(), new_routines.end());
 }
 
-void pml::auton_selector::do_auton() {
+void pml::selector::do_auton() {
 	if (selected_auton == -1) return; // If commanded to do nothing then return
 	pml::Routine routine = routines.at(selected_auton);
 	routine.action();

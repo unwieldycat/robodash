@@ -42,7 +42,7 @@ void set_console_lines(int height) {
 	console_height = height;
 }
 
-void pml::virtual_lcd::set_text(int line, std::string text) {
+void pml::lcd::set_text(int line, std::string text) {
 	if (line > console_height) return;
 
 	lv_obj_t *console_line = lv_obj_get_child_back(console_cont, NULL);
@@ -61,7 +61,7 @@ lv_res_t act_btn_action(_lv_obj_t *obj) {
 	return LV_RES_OK;
 }
 
-void pml::virtual_lcd::add_action_btn(std::string label, std::function<void()> action) {
+void pml::lcd::add_action_btn(std::string label, std::function<void()> action) {
 	// Unhide list and resize console view for buttons
 	lv_obj_set_hidden(actions_list, false);
 	lv_obj_set_height(console_cont, 184);
@@ -91,7 +91,7 @@ void pml::virtual_lcd::add_action_btn(std::string label, std::function<void()> a
 
 // ============================= Initialization ============================= //
 
-void pml::virtual_lcd::init() {
+void pml::lcd::init() {
 	init_styles();
 
 	bg = lv_cont_create(lv_scr_act(), NULL);
