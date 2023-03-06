@@ -53,6 +53,17 @@ void pml::lcd::print_ln(int line, std::string text) {
 	lv_label_set_text(console_line, text.c_str());
 }
 
+void pml::lcd::clear_ln(int line) {
+	if (line > console_height) return;
+
+	lv_obj_t *console_line = lv_obj_get_child_back(console_cont, NULL);
+	for (int i = 0; i < line - 1; i++) {
+		console_line = lv_obj_get_child_back(console_cont, console_line);
+	}
+
+	lv_label_set_text(console_line, "");
+}
+
 // ============================== Actions List ============================== //
 
 lv_res_t act_btn_action(_lv_obj_t *obj) {

@@ -18,12 +18,19 @@ void init();
 void add_action_btn(std::string label, std::function<void()> action);
 
 /**
- * \brief Print at specific line
+ * \brief Print to LCD
  *
  * \param line Line on console
  * \param text Text to display
  */
 void print_ln(int line, std::string text);
+
+/**
+ * \brief Clear line on LCD
+ *
+ * \param line Line on console
+ */
+void clear_ln(int line);
 
 } // namespace lcd
 } // namespace pml
