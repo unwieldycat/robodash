@@ -2,6 +2,7 @@
 #include "../display/lvgl.h"
 #include <functional>
 #include <map>
+#include <stdio.h>
 #include <string>
 
 namespace pml {
@@ -24,6 +25,16 @@ void add_action_btn(std::string label, std::function<void()> action);
  * \param text Text to display
  */
 void print_ln(int line, std::string text);
+
+/**
+ * \brief Print formatted string to LCD
+ *
+ * \param line Line on console
+ * \param text Text to display
+ * \param args Arguments for formatted string
+ */
+template <typename... T>
+void print_ln(int line, std::string text, std::tuple<T...> args);
 
 /**
  * \brief Clear line on LCD

@@ -53,6 +53,13 @@ void pml::lcd::print_ln(int line, std::string text) {
 	lv_label_set_text(console_line, text.c_str());
 }
 
+template <typename... T>
+void pml::lcd::print_ln(int line, std::string text, std::tuple<T...> args) {
+	char fstr[] = "";
+	sprintf(fstr, text.c_str(), args);
+	pml::lcd::print_ln(line, fstr);
+}
+
 void pml::lcd::clear_ln(int line) {
 	if (line > console_height) return;
 
