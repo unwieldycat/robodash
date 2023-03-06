@@ -42,7 +42,7 @@ void set_console_lines(int height) {
 	console_height = height;
 }
 
-void pml::lcd::set_text(int line, std::string text) {
+void pml::lcd::print_ln(int line, std::string text) {
 	if (line > console_height) return;
 
 	lv_obj_t *console_line = lv_obj_get_child_back(console_cont, NULL);
