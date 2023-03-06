@@ -7,3 +7,4 @@ ColumnLimit: 100
 AllowShortIfStatementsOnASingleLine: WithoutElse
 AlignAfterOpenBracket: BlockIndent
 AlwaysBreakTemplateDeclarations: "MultiLine"
+AlwaysBreakTemplateDeclarations: true
