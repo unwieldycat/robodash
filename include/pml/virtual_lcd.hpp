@@ -1,7 +1,6 @@
 #pragma once
 #include "../display/lvgl.h"
 #include <functional>
-#include <map>
 #include <stdio.h>
 #include <string>
 
@@ -33,8 +32,12 @@ void print_ln(int line, std::string text);
  * \param text Text to display
  * \param args Arguments for formatted string
  */
-template <typename... T>
-void print_ln(int line, std::string text, std::tuple<T...> args);
+template <typename... Params>
+void print_ln(int line, std::string text, Params... args) {
+	char fstr[sizeof(text) + sizeof...(args)];
+	sprintf(fstr, text.c_str(), args...);
+	pml::lcd::print_ln(line, fstr);
+}
 
 /**
  * \brief Clear line on LCD
