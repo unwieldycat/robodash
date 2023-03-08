@@ -1,4 +1,5 @@
 #include "virtual_lcd.hpp"
+#include "display/lv_core/lv_style.h"
 #include "internal/styles.hpp"
 
 // =============================== Variables =============================== //
@@ -81,7 +82,7 @@ void pml::lcd::add_action_btn(std::string label, std::function<void()> action) {
 	actions.push_back(action);
 
 	int btn_count = actions.size();
-	int btn_size = (464 / btn_count) - 12; // FIXME: spacing issues
+	int btn_size = (464 / btn_count) - 2;
 	lv_obj_t *btn = lv_obj_get_child(actions_list, NULL);
 
 	while (btn) {
@@ -117,8 +118,14 @@ void pml::lcd::init() {
 	lv_cont_set_layout(console_cont, LV_LAYOUT_COL_L);
 	set_console_lines(7);
 
+	static lv_style_t alist_style;
+	lv_style_copy(&alist_style, &lv_style_transp);
+	alist_style.body.padding.hor = 0;
+	alist_style.body.padding.ver = 0;
+	alist_style.body.padding.inner = 4;
+
 	actions_list = lv_cont_create(bg, NULL);
-	lv_cont_set_style(actions_list, &lv_style_transp);
+	lv_cont_set_style(actions_list, &alist_style);
 	lv_obj_set_size(actions_list, 464, 32);
 	lv_cont_set_layout(actions_list, LV_LAYOUT_ROW_M);
 	lv_obj_align(actions_list, NULL, LV_ALIGN_IN_BOTTOM_MID, 0, -8);
