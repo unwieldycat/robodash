@@ -30,6 +30,7 @@ bool comp_started() {
 	return (pros::competition::is_connected() && !pros::competition::is_disabled());
 }
 
+// TODO: Add SD card state saving, possibly protection against changes too
 void pml::selector::do_selection() {
 	if (selection_running || comp_started()) return;
 	selection_running = true;
