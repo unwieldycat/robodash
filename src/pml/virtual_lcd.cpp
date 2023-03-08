@@ -1,6 +1,6 @@
 #include "virtual_lcd.hpp"
+#include "common/styles.hpp"
 #include "display/lv_core/lv_style.h"
-#include "internal/styles.hpp"
 
 // =============================== Variables =============================== //
 
@@ -111,8 +111,17 @@ void pml::lcd::init() {
 	lv_obj_set_size(bg, 480, 240);
 	lv_obj_align(bg, NULL, LV_ALIGN_CENTER, 0, 0);
 
+	static lv_style_t console_style;
+	lv_style_copy(&console_style, &lv_style_plain);
+	console_style.body.radius = 4;
+	console_style.body.main_color = lv_color_hex(0x1a1a1a);
+	console_style.body.grad_color = lv_color_hex(0x1a1a1a);
+	console_style.body.border.color = lv_color_hex(0x404040);
+	console_style.body.border.width = 2;
+	console_style.text.color = LV_COLOR_WHITE;
+
 	console_cont = lv_cont_create(bg, NULL);
-	lv_obj_set_style(console_cont, &cont_style);
+	lv_obj_set_style(console_cont, &console_style);
 	lv_obj_set_size(console_cont, 464, 224);
 	lv_obj_align(console_cont, NULL, LV_ALIGN_IN_TOP_MID, 0, 8);
 	lv_cont_set_layout(console_cont, LV_LAYOUT_COL_L);

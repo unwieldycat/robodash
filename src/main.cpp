@@ -1,4 +1,5 @@
 #include "main.h"
+#include "pml/api.hpp"
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -6,7 +7,16 @@
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
-void initialize() {}
+void initialize() {
+	pml::lcd::init();
+	pml::lcd::add_action_btn("hi", [] {});
+
+	pml::lcd::print_ln(1, "this should dissapear in %d ms", 3000);
+	pros::delay(3000);
+	pml::lcd::clear_ln(1);
+	pml::lcd::add_action_btn("hweo", [] {});
+	pml::lcd::add_action_btn("hellooo", [] {});
+}
 
 /**
  * Runs while the robot is in the disabled state of Field Management System or
