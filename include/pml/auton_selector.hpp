@@ -2,6 +2,7 @@
 #include "../api.h"
 #include "../display/lvgl.h"
 #include <functional>
+#include <stdio.h>
 #include <string>
 
 namespace pml {

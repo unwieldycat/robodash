@@ -1,6 +1,5 @@
 #include "auton_selector.hpp"
 #include "common/styles.hpp"
-#include "pros/misc.hpp"
 
 // =============================== Variables =============================== //
 
@@ -40,7 +39,26 @@ lv_res_t done_act(lv_obj_t *obj) {
 }
 
 lv_res_t save_act(lv_obj_t *obj) {
-	// save auton to sd
+	if (!pros::usd::is_installed()) return LV_RES_OK; // silently fail
+
+	if (selected_auton == -1) {
+		remove("/usd/autoconf.txt");
+		return LV_RES_OK;
+	}
+
+	pml::Routine selected = routines.at(selected_auton);
+	std::string routine_name = selected.name;
+
+	// File format:
+	// [id] [name]
+	char file_data[sizeof(routine_name) + sizeof(selected_auton) + 1];
+	sprintf(file_data, "%d %s", selected_auton, routine_name.c_str());
+
+	FILE *save_file;
+	save_file = fopen("/usd/autoconf.txt", "w");
+	fputs(file_data, save_file);
+	fclose(save_file);
+
 	return LV_RES_OK;
 }
 
@@ -48,7 +66,6 @@ bool comp_started() {
 	return (pros::competition::is_connected() && !pros::competition::is_disabled());
 }
 
-// TODO: Add SD card state saving, possibly protection against changes too
 void pml::selector::do_selection() {
 	if (selection_running || comp_started()) return;
 	selection_running = true;
