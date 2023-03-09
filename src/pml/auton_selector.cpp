@@ -11,18 +11,36 @@ bool selection_running = false;
 
 lv_style_t win_style;
 lv_obj_t *select_cont;
+lv_obj_t *selected_label;
 
 // =============================== Selection =============================== //
 
 lv_res_t r_select_act(lv_obj_t *obj) {
 	int id = lv_obj_get_free_num(obj);
-	lv_obj_t *window = lv_obj_get_parent(obj);
+
+	if (id == -1) {
+		lv_label_set_text(selected_label, "No routine\nselected");
+		lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
+	} else {
+		pml::Routine selected = routines.at(id);
+		std::string routine_name = selected.name;
+		char label_str[sizeof(routine_name) + 20];
+		sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
+		lv_label_set_text(selected_label, label_str);
+		lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
+	}
+
 	selected_auton = id;
 	return LV_RES_OK;
 }
 
 lv_res_t done_act(lv_obj_t *obj) {
 	selection_done = true;
+	return LV_RES_OK;
+}
+
+lv_res_t save_act(lv_obj_t *obj) {
+	// save auton to sd
 	return LV_RES_OK;
 }
 
@@ -48,8 +66,13 @@ void pml::selector::do_selection() {
 	lv_obj_align(title_label, NULL, LV_ALIGN_IN_TOP_LEFT, 8, 16);
 
 	lv_obj_t *routine_list = lv_list_create(select_cont, NULL);
-	lv_obj_set_size(routine_list, 232, 144);
+	lv_obj_set_size(routine_list, 228, 184);
 	lv_obj_align(routine_list, NULL, LV_ALIGN_IN_TOP_LEFT, 8, 48);
+
+	selected_label = lv_label_create(select_cont, NULL);
+	lv_label_set_align(selected_label, LV_LABEL_ALIGN_CENTER);
+	lv_label_set_text(selected_label, "No routine\nselected");
+	lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
 
 	// Add routines to list
 	for (pml::Routine routine : routines) {
@@ -68,11 +91,23 @@ void pml::selector::do_selection() {
 	lv_btn_set_action(nothing_btn, LV_BTN_ACTION_CLICK, &r_select_act);
 
 	lv_obj_t *done_btn = lv_btn_create(select_cont, NULL);
-	lv_obj_set_size(done_btn, 232, 32);
-	lv_obj_align(done_btn, NULL, LV_ALIGN_IN_BOTTOM_LEFT, 8, -8);
+	lv_obj_set_size(done_btn, 224, 32);
+	lv_obj_align(done_btn, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -8, -8);
 	lv_btn_set_action(done_btn, LV_BTN_ACTION_CLICK, &done_act);
-	lv_obj_t *done_label = lv_label_create(done_btn, NULL);
-	lv_label_set_text(done_label, "Done");
+	lv_obj_t *done_img = lv_img_create(done_btn, NULL);
+	lv_img_set_src(done_img, SYMBOL_OK);
+
+	if (pros::usd::is_installed()) {
+		lv_obj_set_size(done_btn, 192, 32);
+		lv_obj_align(done_btn, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -8, -8);
+
+		lv_obj_t *save_btn = lv_btn_create(select_cont, NULL);
+		lv_obj_set_size(save_btn, 32, 32);
+		lv_obj_align(save_btn, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -204, -8);
+		lv_btn_set_action(save_btn, LV_BTN_ACTION_CLICK, &save_act);
+		lv_obj_t *save_img = lv_img_create(save_btn, NULL);
+		lv_img_set_src(save_img, SYMBOL_SAVE);
+	}
 
 	// Wait for user to be done
 	while (!selection_done || comp_started()) {
