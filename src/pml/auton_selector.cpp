@@ -39,24 +39,24 @@ lv_res_t done_act(lv_obj_t *obj) {
 }
 
 lv_res_t save_act(lv_obj_t *obj) {
-	if (selected_auton == -1) {
-		remove("/usd/autoconf.txt");
-		return LV_RES_OK;
-	}
-
-	pml::Routine selected = routines.at(selected_auton);
-	std::string routine_name = selected.name;
-
-	// File format:
-	// [id] [name]
-	char file_data[sizeof(routine_name) + sizeof(selected_auton) + 1];
-	sprintf(file_data, "%d %s", selected_auton, routine_name.c_str());
-
 	FILE *save_file;
 	save_file = fopen("/usd/autoconf.txt", "w");
-	fputs(file_data, save_file);
-	fclose(save_file);
 
+	if (selected_auton == -1) {
+		fputs("-1", save_file);
+	} else {
+		pml::Routine selected = routines.at(selected_auton);
+		std::string routine_name = selected.name;
+
+		// File format:
+		// [id] [name]
+		char file_data[sizeof(routine_name) + sizeof(selected_auton) + 1];
+		sprintf(file_data, "%d %s", selected_auton, routine_name.c_str());
+
+		fputs(file_data, save_file);
+	}
+
+	fclose(save_file);
 	return LV_RES_OK;
 }
 
@@ -76,23 +76,24 @@ void load_autoconf() {
 	fscanf(save_file, "%d %[^\n]", &saved_id, saved_name);
 	fclose(save_file);
 
-	// Verify that routine isnt differient
-	pml::Routine selected = routines.at(saved_id);
-	std::string routine_name = selected.name;
+	if (saved_id == -1) {
+		lv_label_set_text(selected_label, "No routine\nselected");
+		lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
+	} else {
+		pml::Routine selected = routines.at(saved_id);
+		std::string routine_name = selected.name;
 
-	// Delete if routine name is mismatched
-	if (saved_name != routine_name) {
-		remove("/usd/autoconf.txt");
-		return;
+		// Exit if routine name does not match
+		if (saved_name != routine_name) return;
+
+		// Update routine label
+		char label_str[sizeof(routine_name) + 20];
+		sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
+		lv_label_set_text(selected_label, label_str);
+		lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
 	}
 
 	selected_auton = saved_id;
-
-	// Update routine label
-	char label_str[sizeof(routine_name) + 20];
-	sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
-	lv_label_set_text(selected_label, label_str);
-	lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
 }
 
 bool comp_started() {
