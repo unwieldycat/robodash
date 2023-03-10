@@ -125,6 +125,14 @@ void pml::selector::do_selection() {
 	lv_label_set_text(selected_label, "No routine\nselected");
 	lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
 
+	static lv_style_t routine_btn_style_rel;
+	lv_style_copy(&routine_btn_style_rel, &btn_style_rel);
+	routine_btn_style_rel.body.radius = 0;
+
+	static lv_style_t routine_btn_style_pr;
+	lv_style_copy(&routine_btn_style_pr, &btn_style_pr);
+	routine_btn_style_rel.body.radius = 0;
+
 	// Add routines to list
 	for (pml::Routine routine : routines) {
 		// Store current position in vector
@@ -133,6 +141,8 @@ void pml::selector::do_selection() {
 		lv_obj_t *new_btn = lv_list_add(routine_list, NULL, routine.name.c_str(), r_select_act);
 		lv_obj_set_free_num(new_btn, r_index); // Set lvgl button number to index
 		lv_btn_set_action(new_btn, LV_BTN_ACTION_CLICK, &r_select_act);
+		lv_btn_set_style(new_btn, LV_BTN_STYLE_REL, &routine_btn_style_rel);
+		lv_btn_set_style(new_btn, LV_BTN_STYLE_PR, &routine_btn_style_pr);
 
 		r_index++;
 	}
