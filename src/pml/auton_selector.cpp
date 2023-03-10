@@ -1,6 +1,5 @@
 #include "auton_selector.hpp"
 #include "common/styles.hpp"
-#include <cstdio>
 
 // =============================== Variables =============================== //
 
@@ -40,8 +39,6 @@ lv_res_t done_act(lv_obj_t *obj) {
 }
 
 lv_res_t save_act(lv_obj_t *obj) {
-	if (!pros::usd::is_installed()) return LV_RES_OK; // silently fail
-
 	if (selected_auton == -1) {
 		remove("/usd/autoconf.txt");
 		return LV_RES_OK;
