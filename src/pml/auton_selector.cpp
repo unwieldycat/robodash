@@ -1,5 +1,6 @@
 #include "auton_selector.hpp"
 #include "common/styles.hpp"
+#include <cstdio>
 
 // =============================== Variables =============================== //
 
@@ -62,6 +63,41 @@ lv_res_t save_act(lv_obj_t *obj) {
 	return LV_RES_OK;
 }
 
+void load_autoconf() {
+	FILE *save_file;
+	save_file = fopen("/usd/autoconf.txt", "r");
+	if (!save_file) return;
+
+	// Get file size
+	fseek(save_file, 0L, SEEK_END);
+	int file_size = ftell(save_file);
+	rewind(save_file);
+
+	// Read contents
+	int saved_id;
+	char saved_name[1000];
+	fscanf(save_file, "%d %[^\n]", &saved_id, saved_name);
+	fclose(save_file);
+
+	// Verify that routine isnt differient
+	pml::Routine selected = routines.at(saved_id);
+	std::string routine_name = selected.name;
+
+	// Delete if routine name is mismatched
+	if (saved_name != routine_name) {
+		remove("/usd/autoconf.txt");
+		return;
+	}
+
+	selected_auton = saved_id;
+
+	// Update routine label
+	char label_str[sizeof(routine_name) + 20];
+	sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
+	lv_label_set_text(selected_label, label_str);
+	lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
+}
+
 bool comp_started() {
 	return (pros::competition::is_connected() && !pros::competition::is_disabled());
 }
@@ -115,6 +151,7 @@ void pml::selector::do_selection() {
 	lv_img_set_src(done_img, SYMBOL_OK);
 
 	if (pros::usd::is_installed()) {
+		load_autoconf();
 		lv_obj_set_size(done_btn, 192, 32);
 		lv_obj_align(done_btn, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -8, -8);
 
