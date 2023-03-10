@@ -137,6 +137,14 @@ void pml::selector::do_selection() {
 		r_index++;
 	}
 
+	static lv_style_t round_btn_style_rel;
+	lv_style_copy(&round_btn_style_rel, &btn_style_rel);
+	round_btn_style_rel.body.radius = 16;
+
+	static lv_style_t round_btn_style_pr;
+	lv_style_copy(&round_btn_style_pr, &btn_style_pr);
+	round_btn_style_pr.body.radius = 16;
+
 	lv_obj_t *nothing_btn = lv_list_add(routine_list, NULL, "Nothing", r_select_act);
 	lv_obj_set_free_num(nothing_btn, -1);
 	lv_btn_set_action(nothing_btn, LV_BTN_ACTION_CLICK, &r_select_act);
@@ -145,6 +153,8 @@ void pml::selector::do_selection() {
 	lv_obj_set_size(done_btn, 224, 32);
 	lv_obj_align(done_btn, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -8, -8);
 	lv_btn_set_action(done_btn, LV_BTN_ACTION_CLICK, &done_act);
+	lv_btn_set_style(done_btn, LV_BTN_STYLE_REL, &round_btn_style_rel);
+	lv_btn_set_style(done_btn, LV_BTN_STYLE_PR, &round_btn_style_pr);
 	lv_obj_t *done_img = lv_img_create(done_btn, NULL);
 	lv_img_set_src(done_img, SYMBOL_OK);
 
@@ -157,6 +167,8 @@ void pml::selector::do_selection() {
 		lv_obj_set_size(save_btn, 32, 32);
 		lv_obj_align(save_btn, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -204, -8);
 		lv_btn_set_action(save_btn, LV_BTN_ACTION_CLICK, &save_act);
+		lv_btn_set_style(save_btn, LV_BTN_STYLE_REL, &round_btn_style_rel);
+		lv_btn_set_style(save_btn, LV_BTN_STYLE_PR, &round_btn_style_pr);
 		lv_obj_t *save_img = lv_img_create(save_btn, NULL);
 		lv_img_set_src(save_img, SYMBOL_SAVE);
 	}
