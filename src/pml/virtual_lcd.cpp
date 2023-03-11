@@ -38,6 +38,7 @@ void set_console_lines(int height) {
 		lv_obj_t *console_line = lv_label_create(console_cont, NULL);
 		lv_obj_set_size(console_line, 448, 24);
 		lv_label_set_text(console_line, "");
+		lv_label_set_recolor(console_line, true);
 	}
 
 	console_height = height;
