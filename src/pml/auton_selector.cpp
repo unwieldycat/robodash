@@ -168,6 +168,15 @@ void pml::selector::do_selection() {
 	lv_obj_t *done_img = lv_img_create(done_btn, NULL);
 	lv_img_set_src(done_img, SYMBOL_OK);
 
+	static lv_style_t small_text;
+	small_text.text.font = &lv_font_dejavu_10;
+
+	lv_obj_t *remind_label = lv_label_create(select_cont, NULL);
+	lv_label_set_text(remind_label, "Selection will exit automatically\nwhen game begins");
+	lv_label_set_align(remind_label, LV_LABEL_ALIGN_CENTER);
+	lv_label_set_style(remind_label, &small_text);
+	lv_obj_align(remind_label, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -8, -48);
+
 	if (pros::usd::is_installed()) {
 		load_autoconf();
 		lv_obj_set_size(done_btn, 192, 32);
