@@ -13,6 +13,19 @@ namespace lcd {
 void init();
 
 /**
+ * \brief Checks if the virtual LCD is active
+ *
+ * \return true LCD is initialized
+ * \return false LCD is not initialized
+ */
+bool is_init();
+
+/**
+ * \brief Exit the virtual LCD
+ */
+void exit();
+
+/**
  * \brief Add an action button
  */
 void add_action_btn(std::string label, std::function<void()> action);
