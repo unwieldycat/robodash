@@ -3,7 +3,7 @@
 
 // =============================== Variables =============================== //
 
-bool initialized = false;
+bool lcd_initialized = false;
 std::vector<std::function<void()>> actions;
 int console_height = 0;
 
@@ -45,7 +45,7 @@ void set_console_lines(int height) {
 }
 
 void pml::lcd::print_ln(int line, std::string text) {
-	if (initialized) return;
+	if (lcd_initialized) return;
 	if (line > console_height) return;
 
 	lv_obj_t *console_line = lv_obj_get_child_back(console_cont, NULL);
@@ -57,7 +57,7 @@ void pml::lcd::print_ln(int line, std::string text) {
 }
 
 void pml::lcd::clear_ln(int line) {
-	if (!initialized) return;
+	if (!lcd_initialized) return;
 	if (line > console_height) return;
 
 	lv_obj_t *console_line = lv_obj_get_child_back(console_cont, NULL);
@@ -77,7 +77,7 @@ lv_res_t act_btn_action(_lv_obj_t *obj) {
 }
 
 void pml::lcd::add_action_btn(std::string label, std::function<void()> action) {
-	if (!initialized) return;
+	if (!lcd_initialized) return;
 
 	// Unhide list and resize console view for buttons
 	lv_obj_set_hidden(actions_list, false);
@@ -108,18 +108,18 @@ void pml::lcd::add_action_btn(std::string label, std::function<void()> action) {
 
 // ============================= Initialization ============================= //
 
-bool pml::lcd::is_init() { return initialized; }
+bool pml::lcd::is_init() { return lcd_initialized; }
 
 void pml::lcd::exit() {
-	if (!initialized) return;
+	if (!lcd_initialized) return;
 	lv_obj_del(bg);
 	actions.clear();
-	initialized = false;
+	lcd_initialized = false;
 }
 
 void pml::lcd::init() {
-	if (initialized) return;
-	initialized = true;
+	if (lcd_initialized) return;
+	lcd_initialized = true;
 	init_styles();
 
 	bg = lv_cont_create(lv_scr_act(), NULL);
