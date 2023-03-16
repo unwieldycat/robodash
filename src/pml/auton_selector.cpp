@@ -1,5 +1,8 @@
 #include "auton_selector.hpp"
 #include "common/styles.hpp"
+#include "display/lv_core/lv_obj.h"
+#include "display/lv_fonts/lv_font_builtin.h"
+#include "display/lv_objx/lv_list.h"
 
 // =============================== Variables =============================== //
 
@@ -116,22 +119,34 @@ void pml::selector::do_selection() {
 	lv_obj_set_width(title_label, 232);
 	lv_obj_align(title_label, NULL, LV_ALIGN_IN_TOP_LEFT, 8, 16);
 
+	static lv_style_t rlist_style;
+	rlist_style.body.border.color = lv_color_hex(0x595959);
+	rlist_style.body.border.width = 1;
+	rlist_style.body.border.opa = 1;
+
+	static lv_style_t routine_btn_style_rel;
+	lv_style_copy(&routine_btn_style_rel, &btn_style_rel);
+	routine_btn_style_rel.body.radius = 0;
+	routine_btn_style_rel.body.padding.ver = 16;
+	routine_btn_style_rel.text.color = lv_color_hex(0xffffff);
+
+	static lv_style_t routine_btn_style_pr;
+	lv_style_copy(&routine_btn_style_pr, &btn_style_pr);
+	routine_btn_style_pr.body.radius = 0;
+	routine_btn_style_pr.body.padding.ver = 16;
+	routine_btn_style_pr.text.color = lv_color_hex(0xffffff);
+
 	lv_obj_t *routine_list = lv_list_create(select_cont, NULL);
 	lv_obj_set_size(routine_list, 228, 184);
 	lv_obj_align(routine_list, NULL, LV_ALIGN_IN_TOP_LEFT, 8, 48);
+	lv_list_set_style(routine_list, LV_LIST_STYLE_BG, &rlist_style);
+	lv_list_set_style(routine_list, LV_LIST_STYLE_BTN_REL, &routine_btn_style_rel);
+	lv_list_set_style(routine_list, LV_LIST_STYLE_BTN_PR, &routine_btn_style_pr);
 
 	selected_label = lv_label_create(select_cont, NULL);
 	lv_label_set_align(selected_label, LV_LABEL_ALIGN_CENTER);
 	lv_label_set_text(selected_label, "No routine\nselected");
 	lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
-
-	static lv_style_t routine_btn_style_rel;
-	lv_style_copy(&routine_btn_style_rel, &btn_style_rel);
-	routine_btn_style_rel.body.radius = 0;
-
-	static lv_style_t routine_btn_style_pr;
-	lv_style_copy(&routine_btn_style_pr, &btn_style_pr);
-	routine_btn_style_rel.body.radius = 0;
 
 	// Add routines to list
 	for (pml::Routine routine : routines) {
@@ -141,8 +156,6 @@ void pml::selector::do_selection() {
 		lv_obj_t *new_btn = lv_list_add(routine_list, NULL, routine.name.c_str(), r_select_act);
 		lv_obj_set_free_num(new_btn, r_index); // Set lvgl button number to index
 		lv_btn_set_action(new_btn, LV_BTN_ACTION_CLICK, &r_select_act);
-		lv_btn_set_style(new_btn, LV_BTN_STYLE_REL, &routine_btn_style_rel);
-		lv_btn_set_style(new_btn, LV_BTN_STYLE_PR, &routine_btn_style_pr);
 
 		r_index++;
 	}
@@ -150,13 +163,21 @@ void pml::selector::do_selection() {
 	static lv_style_t round_btn_style_rel;
 	lv_style_copy(&round_btn_style_rel, &btn_style_rel);
 	round_btn_style_rel.body.radius = 16;
+	round_btn_style_rel.image.color.blue = 255;
+	round_btn_style_rel.image.color.red = 255;
+	round_btn_style_rel.image.color.green = 255;
 
 	static lv_style_t round_btn_style_pr;
 	lv_style_copy(&round_btn_style_pr, &btn_style_pr);
 	round_btn_style_pr.body.radius = 16;
+	round_btn_style_rel.image.color.blue = 255;
+	round_btn_style_rel.image.color.red = 255;
+	round_btn_style_rel.image.color.green = 255;
 
 	lv_obj_t *nothing_btn = lv_list_add(routine_list, NULL, "Nothing", r_select_act);
 	lv_obj_set_free_num(nothing_btn, -1);
+	lv_btn_set_style(nothing_btn, LV_BTN_STYLE_REL, &routine_btn_style_rel);
+	lv_btn_set_style(nothing_btn, LV_BTN_STYLE_PR, &routine_btn_style_pr);
 	lv_btn_set_action(nothing_btn, LV_BTN_ACTION_CLICK, &r_select_act);
 
 	lv_obj_t *done_btn = lv_btn_create(select_cont, NULL);
@@ -167,15 +188,6 @@ void pml::selector::do_selection() {
 	lv_btn_set_style(done_btn, LV_BTN_STYLE_PR, &round_btn_style_pr);
 	lv_obj_t *done_img = lv_img_create(done_btn, NULL);
 	lv_img_set_src(done_img, SYMBOL_OK);
-
-	static lv_style_t small_text;
-	small_text.text.font = &lv_font_dejavu_10;
-
-	lv_obj_t *remind_label = lv_label_create(select_cont, NULL);
-	lv_label_set_text(remind_label, "Selection will exit automatically\nwhen game begins");
-	lv_label_set_align(remind_label, LV_LABEL_ALIGN_CENTER);
-	lv_label_set_style(remind_label, &small_text);
-	lv_obj_align(remind_label, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -8, -48);
 
 	if (pros::usd::is_installed()) {
 		load_autoconf();
