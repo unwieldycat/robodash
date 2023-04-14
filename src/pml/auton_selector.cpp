@@ -1,7 +1,4 @@
 #include "auton_selector.hpp"
-#include "display/lv_core/lv_obj.h"
-#include "display/lv_fonts/lv_font_builtin.h"
-#include "display/lv_objx/lv_list.h"
 
 // =============================== Variables =============================== //
 
