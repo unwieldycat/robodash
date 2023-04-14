@@ -7,7 +7,6 @@ int selected_auton = -1; // Default -1 to do nothing
 bool selection_done = false;
 bool selection_running = false;
 
-lv_style_t win_style;
 lv_obj_t *select_cont;
 lv_obj_t *selected_label;
 
@@ -233,6 +232,8 @@ void selector::do_selection() {
 void selector::exit_selection() {
 	if (!selection_running) return;
 	lv_obj_del(select_cont);
+	selection_running = false;
+	selection_done = false;
 }
 
 // ============================= Other Methods ============================= //
