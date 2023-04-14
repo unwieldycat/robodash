@@ -1,5 +1,4 @@
 #include "auton_selector.hpp"
-#include "common/styles.hpp"
 #include "display/lv_core/lv_obj.h"
 #include "display/lv_fonts/lv_font_builtin.h"
 #include "display/lv_objx/lv_list.h"
@@ -107,7 +106,13 @@ void pml::selector::do_selection() {
 	if (selection_running || comp_started()) return;
 	selection_running = true;
 
-	init_styles();
+	static lv_style_t bg_style;
+	lv_style_copy(&bg_style, &lv_style_plain);
+	bg_style.body.border.width = 0;
+	bg_style.body.radius = 0;
+	bg_style.body.main_color = lv_color_hex(0x262626);
+	bg_style.body.grad_color = lv_color_hex(0x262626);
+	bg_style.text.color = LV_COLOR_WHITE;
 
 	select_cont = lv_cont_create(lv_scr_act(), NULL);
 	lv_obj_set_size(select_cont, 480, 240);
@@ -125,13 +130,20 @@ void pml::selector::do_selection() {
 	rlist_style.body.border.opa = 1;
 
 	static lv_style_t routine_btn_style_rel;
-	lv_style_copy(&routine_btn_style_rel, &btn_style_rel);
+	lv_style_copy(&routine_btn_style_rel, &lv_style_plain);
 	routine_btn_style_rel.body.radius = 0;
+	routine_btn_style_rel.body.border.width = 2;
+	routine_btn_style_rel.body.border.color = lv_color_hex(0x404040);
+	routine_btn_style_rel.body.main_color = lv_color_hex(0x404040);
+	routine_btn_style_rel.body.grad_color = lv_color_hex(0x595959);
+	routine_btn_style_rel.text.color = LV_COLOR_WHITE;
 	routine_btn_style_rel.body.padding.ver = 16;
 	routine_btn_style_rel.text.color = lv_color_hex(0xffffff);
 
 	static lv_style_t routine_btn_style_pr;
-	lv_style_copy(&routine_btn_style_pr, &btn_style_pr);
+	lv_style_copy(&routine_btn_style_pr, &routine_btn_style_rel);
+	routine_btn_style_pr.body.main_color = lv_color_hex(0x404040);
+	routine_btn_style_pr.body.grad_color = lv_color_hex(0x404040);
 	routine_btn_style_pr.body.radius = 0;
 	routine_btn_style_pr.body.padding.ver = 16;
 	routine_btn_style_pr.text.color = lv_color_hex(0xffffff);
@@ -161,14 +173,14 @@ void pml::selector::do_selection() {
 	}
 
 	static lv_style_t round_btn_style_rel;
-	lv_style_copy(&round_btn_style_rel, &btn_style_rel);
+	lv_style_copy(&round_btn_style_rel, &routine_btn_style_rel);
 	round_btn_style_rel.body.radius = 16;
 	round_btn_style_rel.image.color.blue = 255;
 	round_btn_style_rel.image.color.red = 255;
 	round_btn_style_rel.image.color.green = 255;
 
 	static lv_style_t round_btn_style_pr;
-	lv_style_copy(&round_btn_style_pr, &btn_style_pr);
+	lv_style_copy(&round_btn_style_pr, &routine_btn_style_pr);
 	round_btn_style_pr.body.radius = 16;
 	round_btn_style_rel.image.color.blue = 255;
 	round_btn_style_rel.image.color.red = 255;
