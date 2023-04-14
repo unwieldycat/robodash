@@ -108,6 +108,8 @@ void selector::do_selection() {
 	if (selection_running || comp_started()) return;
 	selection_running = true;
 
+	// Main object
+
 	static lv_style_t bg_style;
 	lv_style_copy(&bg_style, &lv_style_plain);
 	bg_style.body.border.width = 0;
@@ -120,11 +122,15 @@ void selector::do_selection() {
 	lv_obj_set_size(select_cont, 480, 240);
 	lv_obj_set_style(select_cont, &bg_style);
 
+	// View title
+
 	lv_obj_t *title_label = lv_label_create(select_cont, NULL);
 	lv_label_set_text(title_label, "Select autonomous routine");
 	lv_label_set_align(title_label, LV_LABEL_ALIGN_CENTER);
 	lv_obj_set_width(title_label, 232);
 	lv_obj_align(title_label, NULL, LV_ALIGN_IN_TOP_LEFT, 8, 16);
+
+	// Routine list
 
 	static lv_style_t rlist_style;
 	rlist_style.body.border.color = lv_color_hex(0x595959);
@@ -157,12 +163,15 @@ void selector::do_selection() {
 	lv_list_set_style(routine_list, LV_LIST_STYLE_BTN_REL, &routine_btn_style_rel);
 	lv_list_set_style(routine_list, LV_LIST_STYLE_BTN_PR, &routine_btn_style_pr);
 
+	// Selected routine label
+
 	selected_label = lv_label_create(select_cont, NULL);
 	lv_label_set_align(selected_label, LV_LABEL_ALIGN_CENTER);
 	lv_label_set_text(selected_label, "No routine\nselected");
 	lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
 
 	// Add routines to list
+
 	for (selector::Routine routine : routines) {
 		// Store current position in vector
 		static int r_index = 0;
@@ -173,6 +182,16 @@ void selector::do_selection() {
 
 		r_index++;
 	}
+
+	// Add empty routine to list
+
+	lv_obj_t *nothing_btn = lv_list_add(routine_list, NULL, "Nothing", r_select_act);
+	lv_obj_set_free_num(nothing_btn, -1);
+	lv_btn_set_style(nothing_btn, LV_BTN_STYLE_REL, &routine_btn_style_rel);
+	lv_btn_set_style(nothing_btn, LV_BTN_STYLE_PR, &routine_btn_style_pr);
+	lv_btn_set_action(nothing_btn, LV_BTN_ACTION_CLICK, &r_select_act);
+
+	// Create rounded button styles
 
 	static lv_style_t round_btn_style_rel;
 	lv_style_copy(&round_btn_style_rel, &routine_btn_style_rel);
@@ -188,11 +207,7 @@ void selector::do_selection() {
 	round_btn_style_rel.image.color.red = 255;
 	round_btn_style_rel.image.color.green = 255;
 
-	lv_obj_t *nothing_btn = lv_list_add(routine_list, NULL, "Nothing", r_select_act);
-	lv_obj_set_free_num(nothing_btn, -1);
-	lv_btn_set_style(nothing_btn, LV_BTN_STYLE_REL, &routine_btn_style_rel);
-	lv_btn_set_style(nothing_btn, LV_BTN_STYLE_PR, &routine_btn_style_pr);
-	lv_btn_set_action(nothing_btn, LV_BTN_ACTION_CLICK, &r_select_act);
+	// Make done & save button
 
 	lv_obj_t *done_btn = lv_btn_create(select_cont, NULL);
 	lv_obj_set_size(done_btn, 224, 32);
@@ -219,13 +234,15 @@ void selector::do_selection() {
 	}
 
 	// Wait for user to be done
+
 	while (!selection_done || comp_started()) {
 		pros::delay(100);
 	}
 
-	lv_obj_del(select_cont);
+	// Delete screen and reset variables to default
 
-	selection_done = false; // Set back to false if want to re-select
+	lv_obj_del(select_cont);
+	selection_done = false;
 	selection_running = false;
 }
 
