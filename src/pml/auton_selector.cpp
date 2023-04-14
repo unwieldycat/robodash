@@ -11,33 +11,9 @@ lv_style_t win_style;
 lv_obj_t *select_cont;
 lv_obj_t *selected_label;
 
-// =============================== Selection =============================== //
+// ============================= SD Card Saving ============================= //
 
-lv_res_t r_select_act(lv_obj_t *obj) {
-	int id = lv_obj_get_free_num(obj);
-
-	if (id == -1) {
-		lv_label_set_text(selected_label, "No routine\nselected");
-		lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
-	} else {
-		selector::Routine selected = routines.at(id);
-		std::string routine_name = selected.name;
-		char label_str[sizeof(routine_name) + 20];
-		sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
-		lv_label_set_text(selected_label, label_str);
-		lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
-	}
-
-	selected_auton = id;
-	return LV_RES_OK;
-}
-
-lv_res_t done_act(lv_obj_t *obj) {
-	selection_done = true;
-	return LV_RES_OK;
-}
-
-lv_res_t save_act(lv_obj_t *obj) {
+void sdconf_save() {
 	FILE *save_file;
 	save_file = fopen("/usd/autoconf.txt", "w");
 
@@ -56,10 +32,9 @@ lv_res_t save_act(lv_obj_t *obj) {
 	}
 
 	fclose(save_file);
-	return LV_RES_OK;
 }
 
-void load_autoconf() {
+void sdconf_load() {
 	FILE *save_file;
 	save_file = fopen("/usd/autoconf.txt", "r");
 	if (!save_file) return;
@@ -93,6 +68,37 @@ void load_autoconf() {
 	}
 
 	selected_auton = saved_id;
+}
+
+// =============================== Selection =============================== //
+
+lv_res_t r_select_act(lv_obj_t *obj) {
+	int id = lv_obj_get_free_num(obj);
+
+	if (id == -1) {
+		lv_label_set_text(selected_label, "No routine\nselected");
+		lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
+	} else {
+		selector::Routine selected = routines.at(id);
+		std::string routine_name = selected.name;
+		char label_str[sizeof(routine_name) + 20];
+		sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
+		lv_label_set_text(selected_label, label_str);
+		lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
+	}
+
+	selected_auton = id;
+	return LV_RES_OK;
+}
+
+lv_res_t done_act(lv_obj_t *obj) {
+	selection_done = true;
+	return LV_RES_OK;
+}
+
+lv_res_t save_act(lv_obj_t *obj) {
+	sdconf_save();
+	return LV_RES_OK;
 }
 
 bool comp_started() {
@@ -199,7 +205,7 @@ void selector::do_selection() {
 	lv_img_set_src(done_img, SYMBOL_OK);
 
 	if (pros::usd::is_installed()) {
-		load_autoconf();
+		sdconf_load();
 		lv_obj_set_size(done_btn, 192, 32);
 		lv_obj_align(done_btn, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -8, -8);
 
