@@ -1,6 +1,5 @@
 #include "main.h"
 #include "pml/api.hpp"
-#include "pml/auton_selector.hpp"
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -54,4 +53,4 @@ void autonomous() {}
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol() { pml::selector::do_selection(); }
+void opcontrol() {}
