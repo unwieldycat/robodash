@@ -5,7 +5,7 @@
 
 // =============================== Variables =============================== //
 
-std::vector<pml::Routine> routines;
+std::vector<selector::Routine> routines;
 int selected_auton = -1; // Default -1 to do nothing
 bool selection_done = false;
 bool selection_running = false;
@@ -23,7 +23,7 @@ lv_res_t r_select_act(lv_obj_t *obj) {
 		lv_label_set_text(selected_label, "No routine\nselected");
 		lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
 	} else {
-		pml::Routine selected = routines.at(id);
+		selector::Routine selected = routines.at(id);
 		std::string routine_name = selected.name;
 		char label_str[sizeof(routine_name) + 20];
 		sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
@@ -47,7 +47,7 @@ lv_res_t save_act(lv_obj_t *obj) {
 	if (selected_auton == -1) {
 		fputs("-1", save_file);
 	} else {
-		pml::Routine selected = routines.at(selected_auton);
+		selector::Routine selected = routines.at(selected_auton);
 		std::string routine_name = selected.name;
 
 		// File format:
@@ -82,7 +82,7 @@ void load_autoconf() {
 		lv_label_set_text(selected_label, "No routine\nselected");
 		lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
 	} else {
-		pml::Routine selected = routines.at(saved_id);
+		selector::Routine selected = routines.at(saved_id);
 		std::string routine_name = selected.name;
 
 		// Exit if routine name does not match
@@ -102,7 +102,7 @@ bool comp_started() {
 	return (pros::competition::is_connected() && !pros::competition::is_disabled());
 }
 
-void pml::selector::do_selection() {
+void selector::do_selection() {
 	if (selection_running || comp_started()) return;
 	selection_running = true;
 
@@ -161,7 +161,7 @@ void pml::selector::do_selection() {
 	lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
 
 	// Add routines to list
-	for (pml::Routine routine : routines) {
+	for (selector::Routine routine : routines) {
 		// Store current position in vector
 		static int r_index = 0;
 
@@ -227,19 +227,19 @@ void pml::selector::do_selection() {
 	selection_running = false;
 }
 
-void pml::selector::exit_selection() {
+void selector::exit_selection() {
 	if (!selection_running) return;
 	lv_obj_del(select_cont);
 }
 
 // ============================= Other Methods ============================= //
 
-void pml::selector::add_autons(std::vector<pml::Routine> new_routines) {
+void selector::add_autons(std::vector<selector::Routine> new_routines) {
 	routines.insert(routines.end(), new_routines.begin(), new_routines.end());
 }
 
-void pml::selector::do_auton() {
+void selector::do_auton() {
 	if (selected_auton == -1) return; // If commanded to do nothing then return
-	pml::Routine routine = routines.at(selected_auton);
+	selector::Routine routine = routines.at(selected_auton);
 	routine.action();
 }

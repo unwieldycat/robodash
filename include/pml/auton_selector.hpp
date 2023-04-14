@@ -6,12 +6,7 @@
 #include <stdio.h>
 #include <string>
 
-namespace pml {
-
-/**
- * \brief Routine start position
- */
-enum class StartPos { Any, Left, Right };
+namespace selector {
 
 /**
  * \brief Autonomous routine object
@@ -23,23 +18,17 @@ struct Routine {
 	 * \param name Name of routine
 	 * \param action Routine action
 	 */
-	Routine(
-	    std::string name, std::function<void()> action, pml::StartPos start_pos = pml::StartPos::Any
-	)
-	    : name(name), action(action), start_pos(start_pos) {}
+	Routine(std::string name, std::function<void()> action) : name(name), action(action) {}
 
 	std::string name;
 	std::function<void()> action;
-	pml::StartPos start_pos;
 };
-
-namespace selector {
 
 /**
  * \brief Initialize autonomous manager
  * \param autons Vector of Routine objects
  */
-void add_autons(std::vector<pml::Routine> autons);
+void add_autons(std::vector<Routine> autons);
 
 /**
  * \brief Run auton selection
@@ -58,4 +47,3 @@ void exit_selection();
 void do_auton();
 
 } // namespace selector
-} // namespace pml
