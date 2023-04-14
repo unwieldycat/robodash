@@ -132,36 +132,36 @@ void selector::do_selection() {
 
 	// Routine list
 
-	static lv_style_t rlist_style;
-	rlist_style.body.border.color = lv_color_hex(0x595959);
-	rlist_style.body.border.width = 1;
-	rlist_style.body.border.opa = 1;
+	static lv_style_t list_style;
+	list_style.body.border.color = lv_color_hex(0x595959);
+	list_style.body.border.width = 1;
+	list_style.body.border.opa = 1;
 
-	static lv_style_t routine_btn_style_rel;
-	lv_style_copy(&routine_btn_style_rel, &lv_style_plain);
-	routine_btn_style_rel.body.radius = 0;
-	routine_btn_style_rel.body.border.width = 2;
-	routine_btn_style_rel.body.border.color = lv_color_hex(0x404040);
-	routine_btn_style_rel.body.main_color = lv_color_hex(0x404040);
-	routine_btn_style_rel.body.grad_color = lv_color_hex(0x595959);
-	routine_btn_style_rel.text.color = LV_COLOR_WHITE;
-	routine_btn_style_rel.body.padding.ver = 16;
-	routine_btn_style_rel.text.color = lv_color_hex(0xffffff);
+	static lv_style_t list_btn_style_rel;
+	lv_style_copy(&list_btn_style_rel, &lv_style_plain);
+	list_btn_style_rel.body.radius = 0;
+	list_btn_style_rel.body.border.width = 2;
+	list_btn_style_rel.body.border.color = lv_color_hex(0x404040);
+	list_btn_style_rel.body.main_color = lv_color_hex(0x404040);
+	list_btn_style_rel.body.grad_color = lv_color_hex(0x595959);
+	list_btn_style_rel.text.color = LV_COLOR_WHITE;
+	list_btn_style_rel.body.padding.ver = 16;
+	list_btn_style_rel.text.color = lv_color_hex(0xffffff);
 
-	static lv_style_t routine_btn_style_pr;
-	lv_style_copy(&routine_btn_style_pr, &routine_btn_style_rel);
-	routine_btn_style_pr.body.main_color = lv_color_hex(0x404040);
-	routine_btn_style_pr.body.grad_color = lv_color_hex(0x404040);
-	routine_btn_style_pr.body.radius = 0;
-	routine_btn_style_pr.body.padding.ver = 16;
-	routine_btn_style_pr.text.color = lv_color_hex(0xffffff);
+	static lv_style_t list_btn_style_pr;
+	lv_style_copy(&list_btn_style_pr, &list_btn_style_rel);
+	list_btn_style_pr.body.main_color = lv_color_hex(0x404040);
+	list_btn_style_pr.body.grad_color = lv_color_hex(0x404040);
+	list_btn_style_pr.body.radius = 0;
+	list_btn_style_pr.body.padding.ver = 16;
+	list_btn_style_pr.text.color = lv_color_hex(0xffffff);
 
 	lv_obj_t *routine_list = lv_list_create(select_cont, NULL);
 	lv_obj_set_size(routine_list, 228, 184);
 	lv_obj_align(routine_list, NULL, LV_ALIGN_IN_TOP_LEFT, 8, 48);
-	lv_list_set_style(routine_list, LV_LIST_STYLE_BG, &rlist_style);
-	lv_list_set_style(routine_list, LV_LIST_STYLE_BTN_REL, &routine_btn_style_rel);
-	lv_list_set_style(routine_list, LV_LIST_STYLE_BTN_PR, &routine_btn_style_pr);
+	lv_list_set_style(routine_list, LV_LIST_STYLE_BG, &list_style);
+	lv_list_set_style(routine_list, LV_LIST_STYLE_BTN_REL, &list_btn_style_rel);
+	lv_list_set_style(routine_list, LV_LIST_STYLE_BTN_PR, &list_btn_style_pr);
 
 	// Selected routine label
 
@@ -187,21 +187,21 @@ void selector::do_selection() {
 
 	lv_obj_t *nothing_btn = lv_list_add(routine_list, NULL, "Nothing", r_select_act);
 	lv_obj_set_free_num(nothing_btn, -1);
-	lv_btn_set_style(nothing_btn, LV_BTN_STYLE_REL, &routine_btn_style_rel);
-	lv_btn_set_style(nothing_btn, LV_BTN_STYLE_PR, &routine_btn_style_pr);
+	lv_btn_set_style(nothing_btn, LV_BTN_STYLE_REL, &list_btn_style_rel);
+	lv_btn_set_style(nothing_btn, LV_BTN_STYLE_PR, &list_btn_style_pr);
 	lv_btn_set_action(nothing_btn, LV_BTN_ACTION_CLICK, &r_select_act);
 
 	// Create rounded button styles
 
 	static lv_style_t round_btn_style_rel;
-	lv_style_copy(&round_btn_style_rel, &routine_btn_style_rel);
+	lv_style_copy(&round_btn_style_rel, &list_btn_style_rel);
 	round_btn_style_rel.body.radius = 16;
 	round_btn_style_rel.image.color.blue = 255;
 	round_btn_style_rel.image.color.red = 255;
 	round_btn_style_rel.image.color.green = 255;
 
 	static lv_style_t round_btn_style_pr;
-	lv_style_copy(&round_btn_style_pr, &routine_btn_style_pr);
+	lv_style_copy(&round_btn_style_pr, &list_btn_style_pr);
 	round_btn_style_pr.body.radius = 16;
 	round_btn_style_rel.image.color.blue = 255;
 	round_btn_style_rel.image.color.red = 255;
