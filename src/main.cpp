@@ -1,5 +1,6 @@
 #include "main.h"
-#include "pml/api.hpp"
+
+void sup() {}
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -7,7 +8,11 @@
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
-void initialize() {}
+void initialize() {
+	selector::add_autons({selector::Routine("Left auton", sup)});
+	selector::add_autons({selector::Routine("Right auton", sup)});
+	selector::add_autons({selector::Routine("Spin around a lot", sup)});
+}
 
 /**
  * Runs while the robot is in the disabled state of Field Management System or
@@ -53,4 +58,4 @@ void autonomous() {}
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol() {}
+void opcontrol() { selector::do_selection(); }

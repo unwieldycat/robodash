@@ -1,4 +1,4 @@
-#include "auton_selector.hpp"
+#include "selector.hpp"
 
 #ifndef SELECTOR_HUE
 #define SELECTOR_HUE 200
