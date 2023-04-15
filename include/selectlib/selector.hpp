@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string>
 
+// FIXME: Redefining elsewhere doesn't change color, since source is already compiled elsewhere
 #ifndef SELECTOR_HUE
 #define SELECTOR_HUE 200
 #endif
