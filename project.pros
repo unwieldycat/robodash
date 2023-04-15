@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "PML",
+    "project_name": "Auton Selector",
     "target": "v5",
     "templates": {
       "kernel": {
@@ -167,7 +167,7 @@
       }
     },
     "upload_options": {
-      "description": "Pros Multitool Library",
+      "description": "Autonomous Selector Demo",
       "slot": 3
     }
   }
