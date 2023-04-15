@@ -13,12 +13,14 @@ lv_obj_t *saved_toast;
 
 // ============================== LVGL Styles ============================== //
 
-lv_color_t bg_color = lv_color_hsv_to_rgb(SELECTOR_HUE, 50, 15);
-lv_color_t border_color = lv_color_hsv_to_rgb(SELECTOR_HUE, 25, 50);
-lv_color_t shade_color = lv_color_hsv_to_rgb(SELECTOR_HUE, 50, 25);
-lv_color_t primary_color = lv_color_hsv_to_rgb(SELECTOR_HUE, 50, 100);
-lv_color_t primary_color_dark = lv_color_hsv_to_rgb(SELECTOR_HUE, 50, 50);
-lv_color_t text_color = lv_color_hsv_to_rgb(SELECTOR_HUE, 10, 100);
+int hue = 200;
+
+lv_color_t bg_color;
+lv_color_t border_color;
+lv_color_t shade_color;
+lv_color_t primary_color;
+lv_color_t primary_color_dark;
+lv_color_t text_color;
 
 lv_style_t bg_style;
 lv_style_t list_style;
@@ -30,9 +32,14 @@ lv_style_t outline_round_btn_style_rel;
 lv_style_t outline_round_btn_style_pr;
 lv_style_t small_text;
 
-bool styles_initialized;
 void init_styles() {
-	if (styles_initialized) return;
+	// Colors
+	bg_color = lv_color_hsv_to_rgb(hue, 50, 10);
+	border_color = lv_color_hsv_to_rgb(hue, 25, 50);
+	shade_color = lv_color_hsv_to_rgb(hue, 50, 25);
+	primary_color = lv_color_hsv_to_rgb(hue, 50, 100);
+	primary_color_dark = lv_color_hsv_to_rgb(hue, 50, 50);
+	text_color = lv_color_hsv_to_rgb(hue, 10, 100);
 
 	// Background style
 	lv_style_copy(&bg_style, &lv_style_plain);
@@ -107,8 +114,6 @@ void init_styles() {
 	small_text.text.opa = LV_OPA_COVER;
 	small_text.text.font = &lv_font_dejavu_10;
 	small_text.text.letter_space = 1;
-
-	styles_initialized = true;
 }
 
 // ============================= SD Card Saving ============================= //
@@ -312,3 +317,5 @@ void selector::do_auton() {
 	selector::Routine routine = routines.at(selected_auton);
 	routine.action();
 }
+
+void selector::set_hue(int h) { hue = h; }

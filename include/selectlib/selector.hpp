@@ -6,11 +6,6 @@
 #include <stdio.h>
 #include <string>
 
-// FIXME: Redefining elsewhere doesn't change color, since source is already compiled elsewhere
-#ifndef SELECTOR_HUE
-#define SELECTOR_HUE 200
-#endif
-
 namespace selector {
 
 /**
@@ -50,5 +45,12 @@ void exit_selection();
  * \brief Run selected auton
  */
 void do_auton();
+
+/**
+ * \brief Set the hue of the UI
+ *
+ * \param hue [0..359]
+ */
+void set_hue(int hue);
 
 } // namespace selector
