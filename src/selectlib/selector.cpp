@@ -37,8 +37,8 @@ void init_styles() {
 	bg_color = lv_color_hsv_to_rgb(hue, 50, 10);
 	border_color = lv_color_hsv_to_rgb(hue, 25, 50);
 	shade_color = lv_color_hsv_to_rgb(hue, 50, 25);
-	primary_color = lv_color_hsv_to_rgb(hue, 50, 100);
-	primary_color_dark = lv_color_hsv_to_rgb(hue, 50, 50);
+	primary_color = lv_color_hsv_to_rgb(hue, 75, 100);
+	primary_color_dark = lv_color_hsv_to_rgb(hue, 75, 50);
 	text_color = lv_color_hsv_to_rgb(hue, 10, 100);
 
 	// Background style
