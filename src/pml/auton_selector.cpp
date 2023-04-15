@@ -1,5 +1,9 @@
 #include "auton_selector.hpp"
 
+#ifndef SELECTOR_HUE
+#define SELECTOR_HUE 200
+#endif
+
 // =============================== Variables =============================== //
 
 std::vector<selector::Routine> routines;
@@ -9,6 +13,11 @@ bool selection_running = false;
 
 lv_obj_t *select_cont;
 lv_obj_t *selected_label;
+
+lv_color_t bg_color = lv_color_hsv_to_rgb(SELECTOR_HUE, 50, 15);
+lv_color_t border_color = lv_color_hsv_to_rgb(SELECTOR_HUE, 25, 50);
+lv_color_t primary_color = lv_color_hsv_to_rgb(SELECTOR_HUE, 50, 100);
+lv_color_t text_color = lv_color_hsv_to_rgb(SELECTOR_HUE, 5, 100);
 
 // ============================= SD Card Saving ============================= //
 
@@ -114,9 +123,9 @@ void selector::do_selection() {
 	lv_style_copy(&bg_style, &lv_style_plain);
 	bg_style.body.border.width = 0;
 	bg_style.body.radius = 0;
-	bg_style.body.main_color = lv_color_hex(0x262626);
-	bg_style.body.grad_color = lv_color_hex(0x262626);
-	bg_style.text.color = LV_COLOR_WHITE;
+	bg_style.body.main_color = bg_color;
+	bg_style.body.grad_color = bg_color;
+	bg_style.text.color = text_color;
 
 	select_cont = lv_cont_create(lv_scr_act(), NULL);
 	lv_obj_set_size(select_cont, 480, 240);
@@ -133,28 +142,35 @@ void selector::do_selection() {
 	// Routine list
 
 	static lv_style_t list_style;
-	list_style.body.border.color = lv_color_hex(0x595959);
+	lv_style_copy(&list_style, &lv_style_pretty);
+	list_style.body.border.color = border_color;
 	list_style.body.border.width = 1;
-	list_style.body.border.opa = 1;
+	list_style.body.border.opa = LV_OPA_COVER;
+	list_style.body.radius = 2;
+	list_style.body.grad_color = bg_color;
+	list_style.body.main_color = bg_color;
+	list_style.body.padding.ver = 0;
+	list_style.body.padding.hor = 8;
+	list_style.body.padding.inner = 0;
 
 	static lv_style_t list_btn_style_rel;
 	lv_style_copy(&list_btn_style_rel, &lv_style_plain);
+	list_btn_style_rel.body.border.width = 1;
+	list_btn_style_rel.body.border.color = border_color;
+	list_btn_style_rel.body.border.part = LV_BORDER_BOTTOM;
 	list_btn_style_rel.body.radius = 0;
-	list_btn_style_rel.body.border.width = 2;
-	list_btn_style_rel.body.border.color = lv_color_hex(0x404040);
-	list_btn_style_rel.body.main_color = lv_color_hex(0x404040);
-	list_btn_style_rel.body.grad_color = lv_color_hex(0x595959);
-	list_btn_style_rel.text.color = LV_COLOR_WHITE;
+	list_btn_style_rel.body.main_color = bg_color;
+	list_btn_style_rel.body.grad_color = bg_color;
 	list_btn_style_rel.body.padding.ver = 16;
-	list_btn_style_rel.text.color = lv_color_hex(0xffffff);
+	list_btn_style_rel.text.color = text_color;
 
 	static lv_style_t list_btn_style_pr;
 	lv_style_copy(&list_btn_style_pr, &list_btn_style_rel);
-	list_btn_style_pr.body.main_color = lv_color_hex(0x404040);
-	list_btn_style_pr.body.grad_color = lv_color_hex(0x404040);
+	list_btn_style_pr.body.main_color = bg_color;
+	list_btn_style_pr.body.grad_color = bg_color;
 	list_btn_style_pr.body.radius = 0;
 	list_btn_style_pr.body.padding.ver = 16;
-	list_btn_style_pr.text.color = lv_color_hex(0xffffff);
+	list_btn_style_pr.text.color = text_color;
 
 	lv_obj_t *routine_list = lv_list_create(select_cont, NULL);
 	lv_obj_set_size(routine_list, 228, 184);
@@ -194,18 +210,19 @@ void selector::do_selection() {
 	// Create rounded button styles
 
 	static lv_style_t round_btn_style_rel;
-	lv_style_copy(&round_btn_style_rel, &list_btn_style_rel);
+	lv_style_copy(&round_btn_style_rel, &lv_style_plain);
+	round_btn_style_rel.body.main_color = primary_color;
+	round_btn_style_rel.body.grad_color = primary_color;
+	round_btn_style_rel.text.color = bg_color;
 	round_btn_style_rel.body.radius = 16;
-	round_btn_style_rel.image.color.blue = 255;
-	round_btn_style_rel.image.color.red = 255;
-	round_btn_style_rel.image.color.green = 255;
+	round_btn_style_rel.image.color.full = bg_color.full;
 
 	static lv_style_t round_btn_style_pr;
 	lv_style_copy(&round_btn_style_pr, &list_btn_style_pr);
+	round_btn_style_pr.body.main_color = primary_color;
+	round_btn_style_pr.body.grad_color = primary_color;
 	round_btn_style_pr.body.radius = 16;
-	round_btn_style_rel.image.color.blue = 255;
-	round_btn_style_rel.image.color.red = 255;
-	round_btn_style_rel.image.color.green = 255;
+	round_btn_style_pr.image.color.full = bg_color.full;
 
 	// Make done & save button
 
