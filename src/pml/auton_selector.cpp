@@ -13,6 +13,7 @@ bool selection_running = false;
 
 lv_obj_t *select_cont;
 lv_obj_t *selected_label;
+lv_obj_t *saved_toast;
 
 lv_color_t bg_color = lv_color_hsv_to_rgb(SELECTOR_HUE, 50, 15);
 lv_color_t border_color = lv_color_hsv_to_rgb(SELECTOR_HUE, 25, 50);
@@ -108,6 +109,7 @@ lv_res_t done_act(lv_obj_t *obj) {
 
 lv_res_t save_act(lv_obj_t *obj) {
 	sdconf_save();
+	lv_obj_set_hidden(saved_toast, false);
 	return LV_RES_OK;
 }
 
@@ -251,10 +253,23 @@ void selector::do_selection() {
 	lv_obj_t *done_img = lv_img_create(done_btn, NULL);
 	lv_img_set_src(done_img, SYMBOL_OK);
 
+	lv_style_t small_text;
+	small_text.text.color = text_color;
+	small_text.text.opa = LV_OPA_COVER;
+	small_text.text.font = &lv_font_dejavu_10;
+	small_text.text.letter_space = 1;
+
 	if (pros::usd::is_installed()) {
 		sdconf_load();
 		lv_obj_set_size(done_btn, 160, 32);
 		lv_obj_align(done_btn, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -8, -8);
+
+		saved_toast = lv_label_create(select_cont, NULL);
+		lv_label_set_text(saved_toast, "Saved selection to SD card");
+		lv_label_set_align(saved_toast, LV_LABEL_ALIGN_CENTER);
+		lv_obj_align(saved_toast, NULL, LV_ALIGN_CENTER, 190, 70);
+		lv_label_set_style(saved_toast, &small_text);
+		lv_obj_set_hidden(saved_toast, true);
 
 		lv_obj_t *save_btn = lv_btn_create(select_cont, NULL);
 		lv_obj_set_size(save_btn, 64, 32);
