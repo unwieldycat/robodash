@@ -1,6 +1,8 @@
 #include "main.h"
 
-void sup() {}
+void auton0() {}
+void auton1() {}
+void auton2() {}
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -9,9 +11,14 @@ void sup() {}
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	selector::add_autons({selector::Routine("Left auton", sup)});
-	selector::add_autons({selector::Routine("Right auton", sup)});
-	selector::add_autons({selector::Routine("Spin around a lot", sup)});
+	// Disabling formatter since it makes this look bad
+	// clang-format off
+	selector::add_autons({
+		selector::Routine("Auton 0", auton0),
+	    selector::Routine("Auton 1", auton1), 
+		selector::Routine("Auton 2", auton2)
+	});
+	// clang-format on
 }
 
 /**
@@ -30,7 +37,7 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() { selector::do_selection(); }
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -43,7 +50,10 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+	selector::exit_selection();
+	selector::do_auton();
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -58,4 +68,4 @@ void autonomous() {}
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol() { selector::do_selection(); }
+void opcontrol() { selector::exit_selection(); }
