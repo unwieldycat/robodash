@@ -318,4 +318,4 @@ void selector::do_auton() {
 	routine.action();
 }
 
-void selector::set_hue(int h) { hue = h; }
+void selector::theme::set_hue(int h) { hue = h; }
