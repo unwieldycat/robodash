@@ -1,9 +1,5 @@
 #include "selector.hpp"
 
-#ifndef SELECTOR_HUE
-#define SELECTOR_HUE 200
-#endif
-
 // =============================== Variables =============================== //
 
 std::vector<selector::Routine> routines;

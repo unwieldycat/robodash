@@ -6,6 +6,10 @@
 #include <stdio.h>
 #include <string>
 
+#ifndef SELECTOR_HUE
+#define SELECTOR_HUE 200
+#endif
+
 namespace selector {
 
 /**
