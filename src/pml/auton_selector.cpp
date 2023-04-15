@@ -16,8 +16,10 @@ lv_obj_t *selected_label;
 
 lv_color_t bg_color = lv_color_hsv_to_rgb(SELECTOR_HUE, 50, 15);
 lv_color_t border_color = lv_color_hsv_to_rgb(SELECTOR_HUE, 25, 50);
+lv_color_t shade_color = lv_color_hsv_to_rgb(SELECTOR_HUE, 50, 25);
 lv_color_t primary_color = lv_color_hsv_to_rgb(SELECTOR_HUE, 50, 100);
-lv_color_t text_color = lv_color_hsv_to_rgb(SELECTOR_HUE, 5, 100);
+lv_color_t primary_color_dark = lv_color_hsv_to_rgb(SELECTOR_HUE, 50, 50);
+lv_color_t text_color = lv_color_hsv_to_rgb(SELECTOR_HUE, 10, 100);
 
 // ============================= SD Card Saving ============================= //
 
@@ -166,8 +168,8 @@ void selector::do_selection() {
 
 	static lv_style_t list_btn_style_pr;
 	lv_style_copy(&list_btn_style_pr, &list_btn_style_rel);
-	list_btn_style_pr.body.main_color = bg_color;
-	list_btn_style_pr.body.grad_color = bg_color;
+	list_btn_style_pr.body.main_color = shade_color;
+	list_btn_style_pr.body.grad_color = shade_color;
 	list_btn_style_pr.body.radius = 0;
 	list_btn_style_pr.body.padding.ver = 16;
 	list_btn_style_pr.text.color = text_color;
@@ -213,16 +215,30 @@ void selector::do_selection() {
 	lv_style_copy(&round_btn_style_rel, &lv_style_plain);
 	round_btn_style_rel.body.main_color = primary_color;
 	round_btn_style_rel.body.grad_color = primary_color;
-	round_btn_style_rel.text.color = bg_color;
 	round_btn_style_rel.body.radius = 16;
 	round_btn_style_rel.image.color.full = bg_color.full;
 
 	static lv_style_t round_btn_style_pr;
-	lv_style_copy(&round_btn_style_pr, &list_btn_style_pr);
-	round_btn_style_pr.body.main_color = primary_color;
-	round_btn_style_pr.body.grad_color = primary_color;
+	lv_style_copy(&round_btn_style_pr, &lv_style_plain);
+	round_btn_style_pr.body.main_color = primary_color_dark;
+	round_btn_style_pr.body.grad_color = primary_color_dark;
 	round_btn_style_pr.body.radius = 16;
 	round_btn_style_pr.image.color.full = bg_color.full;
+
+	static lv_style_t outline_round_btn_style_rel;
+	lv_style_copy(&outline_round_btn_style_rel, &lv_style_plain);
+	outline_round_btn_style_rel.body.border.color = border_color;
+	outline_round_btn_style_rel.body.border.opa = LV_OPA_COVER;
+	outline_round_btn_style_rel.body.border.width = 1;
+	outline_round_btn_style_rel.body.main_color = bg_color;
+	outline_round_btn_style_rel.body.grad_color = bg_color;
+	outline_round_btn_style_rel.body.radius = 16;
+	outline_round_btn_style_rel.image.color.full = text_color.full;
+
+	static lv_style_t outline_round_btn_style_pr;
+	lv_style_copy(&outline_round_btn_style_pr, &outline_round_btn_style_rel);
+	outline_round_btn_style_pr.body.main_color = shade_color;
+	outline_round_btn_style_pr.body.grad_color = shade_color;
 
 	// Make done & save button
 
@@ -237,15 +253,15 @@ void selector::do_selection() {
 
 	if (pros::usd::is_installed()) {
 		sdconf_load();
-		lv_obj_set_size(done_btn, 192, 32);
+		lv_obj_set_size(done_btn, 160, 32);
 		lv_obj_align(done_btn, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -8, -8);
 
 		lv_obj_t *save_btn = lv_btn_create(select_cont, NULL);
-		lv_obj_set_size(save_btn, 32, 32);
-		lv_obj_align(save_btn, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -204, -8);
+		lv_obj_set_size(save_btn, 64, 32);
+		lv_obj_align(save_btn, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -172, -8);
 		lv_btn_set_action(save_btn, LV_BTN_ACTION_CLICK, &save_act);
-		lv_btn_set_style(save_btn, LV_BTN_STYLE_REL, &round_btn_style_rel);
-		lv_btn_set_style(save_btn, LV_BTN_STYLE_PR, &round_btn_style_pr);
+		lv_btn_set_style(save_btn, LV_BTN_STYLE_REL, &outline_round_btn_style_rel);
+		lv_btn_set_style(save_btn, LV_BTN_STYLE_PR, &outline_round_btn_style_pr);
 		lv_obj_t *save_img = lv_img_create(save_btn, NULL);
 		lv_img_set_src(save_img, SYMBOL_SAVE);
 	}
