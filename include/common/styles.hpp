@@ -1,8 +1,6 @@
 #pragma once
 #include "../display/lvgl.h"
 
-extern void init_styles();
-
 extern lv_style_t bg_style;
 extern lv_style_t list_style;
 extern lv_style_t list_btn_style_rel;

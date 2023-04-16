@@ -1,6 +1,8 @@
 #pragma once
 #include "api.hpp"
 
+namespace sl {
+
 namespace selector {
 
 /**
@@ -42,3 +44,5 @@ void exit_selection();
 void do_auton();
 
 } // namespace selector
+
+} // namespace sl

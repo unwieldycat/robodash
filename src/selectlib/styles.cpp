@@ -1,5 +1,6 @@
 #include "common/styles.hpp"
-#include "theme.hpp"
+#include "common/init.hpp"
+#include "misc.hpp"
 
 // ================================= Colors ================================= //
 
@@ -110,7 +111,7 @@ void init_styles() {
 
 // ============================ Public Functions ============================ //
 
-void selector::theme::set_hue(int new_hue) {
+void sl::theme::set_hue(int new_hue) {
 	hue = new_hue;
 	init_styles();
 }

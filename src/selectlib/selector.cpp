@@ -3,7 +3,7 @@
 
 // =============================== Variables =============================== //
 
-std::vector<selector::Routine> routines;
+std::vector<sl::selector::Routine> routines;
 int selected_auton = -1; // Default -1 to do nothing
 bool selection_done = false;
 bool selection_running = false;
@@ -21,7 +21,7 @@ void sdconf_save() {
 	if (selected_auton == -1) {
 		fputs("-1", save_file);
 	} else {
-		selector::Routine selected = routines.at(selected_auton);
+		sl::selector::Routine selected = routines.at(selected_auton);
 		std::string routine_name = selected.name;
 
 		// File format:
@@ -55,7 +55,7 @@ void sdconf_load() {
 		lv_label_set_text(selected_label, "No routine\nselected");
 		lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
 	} else {
-		selector::Routine selected = routines.at(saved_id);
+		sl::selector::Routine selected = routines.at(saved_id);
 		std::string routine_name = selected.name;
 
 		// Exit if routine name does not match
@@ -80,7 +80,7 @@ lv_res_t r_select_act(lv_obj_t *obj) {
 		lv_label_set_text(selected_label, "No routine\nselected");
 		lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
 	} else {
-		selector::Routine selected = routines.at(id);
+		sl::selector::Routine selected = routines.at(id);
 		std::string routine_name = selected.name;
 		char label_str[sizeof(routine_name) + 20];
 		sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
@@ -107,11 +107,9 @@ bool comp_started() {
 	return (pros::competition::is_connected() && !pros::competition::is_disabled());
 }
 
-void selector::do_selection() {
+void sl::selector::do_selection() {
 	if (selection_running || comp_started()) return;
 	selection_running = true;
-
-	init_styles();
 
 	select_cont = lv_cont_create(lv_scr_act(), NULL);
 	lv_obj_set_size(select_cont, 480, 240);
@@ -195,7 +193,7 @@ void selector::do_selection() {
 	selection_running = false;
 }
 
-void selector::exit_selection() {
+void sl::selector::exit_selection() {
 	if (!selection_running) return;
 	lv_obj_del(select_cont);
 	selection_running = false;
@@ -204,11 +202,11 @@ void selector::exit_selection() {
 
 // ============================= Other Methods ============================= //
 
-void selector::add_autons(std::vector<selector::Routine> new_routines) {
+void sl::selector::add_autons(std::vector<selector::Routine> new_routines) {
 	routines.insert(routines.end(), new_routines.begin(), new_routines.end());
 }
 
-void selector::do_auton() {
+void sl::selector::do_auton() {
 	if (selected_auton == -1) return; // If commanded to do nothing then return
 	selector::Routine routine = routines.at(selected_auton);
 	routine.action();

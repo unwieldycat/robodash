@@ -1,7 +1,7 @@
 #pragma once
 #include "api.hpp"
 
-namespace selector {
+namespace sl {
 
 namespace theme {
 
@@ -14,4 +14,10 @@ void set_hue(int hue);
 
 } // namespace theme
 
-} // namespace selector
+/**
+ * @brief Initialize library
+ *
+ */
+void init();
+
+} // namespace sl
