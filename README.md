@@ -17,5 +17,6 @@ A game-agnostic autonomous selector for the VEX V5 platform
 1. Download the latest template from the releases tab
 2. Open download location and register the template by running `pros c fetch selectlib@x.x.x.zip`
 3. Open the project you wish to use the library in and run `pros c apply selectlib@x.x.x`
+4. `#include "selectlib/selector.hpp"` in your project's `main.h` file
 
 See `main.cpp` for a usage example.
