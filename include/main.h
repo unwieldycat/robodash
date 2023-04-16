@@ -38,7 +38,7 @@
  * Add includes here
  */
 #include "api.h"
-#include "selectlib/selector.hpp"
+#include "selectlib/api.hpp"
 
 /**
  * If you find doing pros::Motor() to be tedious and you'd prefer just to do
