@@ -1,4 +1,5 @@
 #include "main.h"
+#include "selectlib/selector.hpp"
 
 void auton0() {}
 void auton1() {}
@@ -11,6 +12,7 @@ void auton2() {}
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
+	selector::theme::set_hue(30);
 	// Disabling formatter since it makes this look bad
 	// clang-format off
 	selector::add_autons({
@@ -68,4 +70,4 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol() { selector::exit_selection(); }
+void opcontrol() { selector::do_selection(); }

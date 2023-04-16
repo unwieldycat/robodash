@@ -1,10 +1,5 @@
 #pragma once
-#include "../api.h"
-#include "../display/lvgl.h"
-#include <cstdio>
-#include <functional>
-#include <stdio.h>
-#include <string>
+#include "api.hpp"
 
 namespace selector {
 
@@ -45,16 +40,5 @@ void exit_selection();
  * @brief Run selected auton
  */
 void do_auton();
-
-namespace theme {
-
-/**
- * @brief Set the hue of the UI
- *
- * @param hue [0..359]
- */
-void set_hue(int hue);
-
-} // namespace theme
 
 } // namespace selector
