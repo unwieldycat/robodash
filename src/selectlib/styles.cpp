@@ -113,5 +113,8 @@ void init_styles() {
 
 void sl::theme::set_hue(int new_hue) {
 	hue = new_hue;
+
+	// Rebuild styles and notify lvgl to refresh all objects
 	init_styles();
+	lv_obj_report_style_mod(NULL);
 }
