@@ -79,13 +79,12 @@ void init_styles() {
 	round_btn_style_rel.body.grad_color = primary_color;
 	round_btn_style_rel.body.radius = 16;
 	round_btn_style_rel.image.color.full = bg_color.full;
+	round_btn_style_rel.text.color = text_color;
 
 	// Pressed rounded button style
-	lv_style_copy(&round_btn_style_pr, &lv_style_plain);
+	lv_style_copy(&round_btn_style_pr, &round_btn_style_rel);
 	round_btn_style_pr.body.main_color = primary_color_dark;
 	round_btn_style_pr.body.grad_color = primary_color_dark;
-	round_btn_style_pr.body.radius = 16;
-	round_btn_style_pr.image.color.full = bg_color.full;
 
 	// Released outline rounded button style
 	lv_style_copy(&outline_round_btn_style_rel, &lv_style_plain);
@@ -96,6 +95,7 @@ void init_styles() {
 	outline_round_btn_style_rel.body.grad_color = bg_color;
 	outline_round_btn_style_rel.body.radius = 16;
 	outline_round_btn_style_rel.image.color.full = text_color.full;
+	outline_round_btn_style_rel.text.color = text_color;
 
 	// Pressed outline rounded button style
 	lv_style_copy(&outline_round_btn_style_pr, &outline_round_btn_style_rel);
