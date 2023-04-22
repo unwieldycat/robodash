@@ -2,7 +2,7 @@
 
 // TODO: Implement screensaver
 
-void sl::screensaver::set_image(std::string path);
-void sl::screensaver::set_timeout(int time);
-void sl::screensaver::activate();
-void sl::screensaver::exit();
+void gui::screensaver::set_image(std::string path);
+void gui::screensaver::set_timeout(int time);
+void gui::screensaver::activate();
+void gui::screensaver::exit();

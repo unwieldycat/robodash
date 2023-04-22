@@ -111,7 +111,7 @@ void init_styles() {
 
 // ============================ Public Functions ============================ //
 
-void sl::theme::set_hue(int new_hue) {
+void gui::theme::set_hue(int new_hue) {
 	hue = new_hue;
 
 	// Rebuild styles and notify lvgl to refresh all objects

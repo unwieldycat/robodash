@@ -1,7 +1,7 @@
 #pragma once
 #include "api.hpp"
 
-namespace sl {
+namespace gui {
 
 namespace selector {
 
@@ -45,4 +45,4 @@ void do_auton();
 
 } // namespace selector
 
-} // namespace sl
+} // namespace gui

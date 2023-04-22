@@ -1,7 +1,7 @@
 #include "common/init.hpp"
 #include "misc.hpp"
 
-void sl::init() {
+void gui::initialize() {
 	init_styles();
 	init_dashboard();
 

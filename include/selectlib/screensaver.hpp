@@ -1,7 +1,7 @@
 #pragma once
 #include "api.hpp"
 
-namespace sl {
+namespace gui {
 
 namespace screensaver {
 
@@ -31,4 +31,4 @@ void exit();
 
 } // namespace screensaver
 
-} // namespace sl
+} // namespace gui

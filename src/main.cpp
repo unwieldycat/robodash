@@ -12,15 +12,14 @@ void auton2() {}
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	sl::theme::set_hue(30);
-	sl::init();
+	gui::initialize();
 
 	// Disabling formatter since it makes this look bad
 	// clang-format off
-	sl::selector::add_autons({
-		sl::selector::Routine("Auton 0", auton0),
-	    sl::selector::Routine("Auton 1", auton1), 
-		sl::selector::Routine("Auton 2", auton2)
+	gui::selector::add_autons({
+		gui::selector::Routine("Auton 0", auton0),
+	    gui::selector::Routine("Auton 1", auton1), 
+		gui::selector::Routine("Auton 2", auton2)
 	});
 	// clang-format on
 }
@@ -41,7 +40,7 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() { sl::selector::do_selection(); }
+void competition_initialize() { gui::selector::do_selection(); }
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -55,8 +54,8 @@ void competition_initialize() { sl::selector::do_selection(); }
  * from where it left off.
  */
 void autonomous() {
-	sl::selector::exit_selection();
-	sl::selector::do_auton();
+	gui::selector::exit_selection();
+	gui::selector::do_auton();
 }
 
 /**
@@ -72,4 +71,4 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol() { sl::selector::do_selection(); }
+void opcontrol() { gui::selector::do_selection(); }
