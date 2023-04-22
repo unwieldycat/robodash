@@ -3,7 +3,7 @@
 
 lv_obj_t *dashboard_cont;
 
-void create_dashboard() {
+void init_dashboard() {
 	dashboard_cont = lv_obj_create(lv_scr_act(), NULL);
 	lv_obj_set_size(dashboard_cont, 480, 240);
 	lv_obj_set_style(dashboard_cont, &bg_style);
@@ -22,3 +22,6 @@ void create_dashboard() {
 	lv_label_set_text(auton_btn_text, "Edit Auton");
 	lv_label_set_style(auton_btn_text, &small_text);
 }
+
+// TODO: Fully implement dashboard
+void dashboard_task() {}

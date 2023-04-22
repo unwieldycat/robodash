@@ -3,5 +3,7 @@
 
 void sl::init() {
 	init_styles();
-	create_dashboard();
+	init_dashboard();
+
+	pros::Task dashboard_task(dashboard_process);
 }
