@@ -2,6 +2,7 @@
 #include "api.hpp"
 
 namespace sl {
+
 namespace screensaver {
 
 /**
@@ -29,4 +30,5 @@ void activate();
 void exit();
 
 } // namespace screensaver
+
 } // namespace sl
