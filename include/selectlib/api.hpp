@@ -8,4 +8,5 @@
 #include <string>
 
 #include "misc.hpp"
+#include "screensaver.hpp"
 #include "selector.hpp"
