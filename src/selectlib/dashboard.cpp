@@ -1,7 +1,13 @@
+#include "dashboard.hpp"
 #include "common/init.hpp"
 #include "common/styles.hpp"
 
+// =============================== Variables =============================== //
+
 lv_obj_t *dashboard_cont;
+std::vector<pros::Motor> motors;
+
+// ============================= Initialization ============================= //
 
 void init_dashboard() {
 	dashboard_cont = lv_obj_create(lv_scr_act(), NULL);
@@ -23,5 +29,17 @@ void init_dashboard() {
 	lv_label_set_style(auton_btn_text, &small_text);
 }
 
-// TODO: Fully implement dashboard
-void dashboard_task() {}
+// ========================== Background Function ========================== //
+
+// TODO: Implement
+void dashboard_background() {}
+
+// ========================== Dashboard Functions ========================== //
+
+// TODO: Implement
+void gui::dashboard::add_action(std::string name, std::function<void()> fn) {}
+void gui::dashboard::add_toggle(std::string name, bool *var) {}
+
+void gui::dashboard::add_motors(std::vector<pros::Motor> mtrs) {
+	motors.insert(motors.end(), mtrs.begin(), mtrs.end());
+}
