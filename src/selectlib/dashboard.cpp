@@ -32,7 +32,11 @@ void init_dashboard() {
 // ========================== Background Function ========================== //
 
 // TODO: Implement
-void dashboard_background() {}
+[[noreturn]] void dashboard_background() {
+	while (true) {
+		// ...
+	}
+}
 
 // ========================== Dashboard Functions ========================== //
 
