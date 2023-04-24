@@ -1,4 +1,5 @@
 #include "screensaver.hpp"
+#include "common/init.hpp"
 #include "common/styles.hpp"
 
 bool ss_active;
