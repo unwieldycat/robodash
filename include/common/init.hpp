@@ -6,4 +6,5 @@ extern void init_dashboard();
 extern void init_ss();
 
 // Background functions
-extern void dashboard_process();
+[[noreturn]] extern void dashboard_background();
+[[noreturn]] extern void ss_background();
