@@ -4,6 +4,7 @@
 void gui::initialize() {
 	init_styles();
 	init_dashboard();
+	init_ss();
 
-	pros::Task dashboard_task(dashboard_process);
+	// pros::Task dashboard_task(dashboard_process);
 }
