@@ -36,7 +36,6 @@ void init_ss() {
 [[noreturn]] void ss_background() {
 	uint start_time;
 	uint time_diff;
-	bool scr_event; // TODO: If screen touch set to true
 
 	while (true) {
 		if (ss_active) {
@@ -48,7 +47,10 @@ void init_ss() {
 
 		do {
 			// Set start time to current time if interaction
-			if (scr_event) start_time = pros::millis();
+			if (pros::screen::touch_status().touch_status != pros::E_TOUCH_RELEASED) {
+				start_time = pros::millis();
+			}
+
 			time_diff = start_time - pros::millis();
 			pros::delay(30);
 		} while (time_diff > ss_timeout * 1000);
