@@ -26,7 +26,7 @@ void add_toggle(std::string name, bool *var);
  *
  * @param mtrs Motors to monitor
  */
-void add_motors(std::vector<pros::Motor> mtrs);
+void add_motors(std::vector<pros::Motor *> mtrs);
 
 } // namespace dashboard
 

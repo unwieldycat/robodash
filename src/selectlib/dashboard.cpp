@@ -5,7 +5,7 @@
 // =============================== Variables =============================== //
 
 lv_obj_t *dashboard_cont;
-std::vector<pros::Motor> motors;
+std::vector<pros::Motor *> motors;
 
 // ============================= Initialization ============================= //
 
@@ -44,6 +44,6 @@ void init_dashboard() {
 void gui::dashboard::add_action(std::string name, std::function<void()> fn) {}
 void gui::dashboard::add_toggle(std::string name, bool *var) {}
 
-void gui::dashboard::add_motors(std::vector<pros::Motor> mtrs) {
+void gui::dashboard::add_motors(std::vector<pros::Motor *> mtrs) {
 	motors.insert(motors.end(), mtrs.begin(), mtrs.end());
 }
