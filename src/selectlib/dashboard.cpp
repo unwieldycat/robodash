@@ -15,18 +15,19 @@ void init_dashboard() {
 	lv_obj_set_style(dashboard_cont, &bg_style);
 
 	lv_obj_t *auton_btn = lv_btn_create(dashboard_cont, NULL);
-	lv_obj_set_size(auton_btn, 64, 64);
-	lv_obj_align(auton_btn, NULL, LV_ALIGN_CENTER, -4, 0);
+	lv_obj_set_size(auton_btn, 232, 48);
+	lv_obj_align(auton_btn, NULL, LV_ALIGN_IN_TOP_LEFT, 8, 8);
 	lv_btn_set_style(auton_btn, LV_BTN_STYLE_REL, &outline_round_btn_style_rel);
 	lv_btn_set_style(auton_btn, LV_BTN_STYLE_PR, &outline_round_btn_style_pr);
-	lv_btn_set_layout(auton_btn, LV_LAYOUT_CENTER);
+	lv_btn_set_layout(auton_btn, LV_LAYOUT_OFF);
 
 	lv_obj_t *auton_btn_img = lv_img_create(auton_btn, NULL);
 	lv_img_set_src(auton_btn_img, SYMBOL_EDIT);
+	lv_obj_align(auton_btn_img, NULL, LV_ALIGN_IN_RIGHT_MID, -12, 0);
 
 	lv_obj_t *auton_btn_text = lv_label_create(auton_btn, NULL);
-	lv_label_set_text(auton_btn_text, "Edit Auton");
-	lv_label_set_style(auton_btn_text, &small_text);
+	lv_label_set_text(auton_btn_text, "Auton Name");
+	lv_obj_align(auton_btn_text, NULL, LV_ALIGN_IN_LEFT_MID, 12, 0);
 }
 
 // ========================== Background Function ========================== //
