@@ -6,6 +6,7 @@ void gui::initialize() {
 	init_dashboard();
 	init_ss();
 
-	pros::Task dashboard_task(dashboard_background);
-	pros::Task screensaver_task(ss_background);
+	// FIXME: Doesn't return, probably need to store variable
+	// pros::Task dashboard_task(dashboard_background);
+	// pros::Task screensaver_task(ss_background);
 }
