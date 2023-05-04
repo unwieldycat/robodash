@@ -6,26 +6,15 @@ namespace gui {
 namespace selector {
 
 /**
- * @brief Autonomous routine object
+ * @brief Autonomous routine meta type
  */
-struct Routine {
-	/**
-	 * @brief Construct a new Routine object
-	 *
-	 * @param name Name of routine
-	 * @param action Routine action
-	 */
-	Routine(std::string name, std::function<void()> action) : name(name), action(action) {}
-
-	std::string name;
-	std::function<void()> action;
-};
+typedef std::pair<std::string, std::function<void()>> routine_t;
 
 /**
  * @brief Initialize autonomous manager
  * @param autons Vector of Routine objects
  */
-void add_autons(std::vector<Routine> autons);
+void add_autons(std::vector<routine_t> autons);
 
 /**
  * @brief Run auton selection

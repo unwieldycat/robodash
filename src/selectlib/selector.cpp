@@ -3,7 +3,7 @@
 
 // =============================== Variables =============================== //
 
-std::vector<gui::selector::Routine> routines;
+std::vector<gui::selector::routine_t> routines;
 int selected_auton = -1; // Default -1 to do nothing
 bool selection_done = false;
 bool selection_running = false;
@@ -21,8 +21,8 @@ void sdconf_save() {
 	if (selected_auton == -1) {
 		fputs("-1", save_file);
 	} else {
-		gui::selector::Routine selected = routines.at(selected_auton);
-		std::string routine_name = selected.name;
+		gui::selector::routine_t selected = routines.at(selected_auton);
+		std::string routine_name = selected.first;
 
 		// File format:
 		// [id] [name]
@@ -55,8 +55,8 @@ void sdconf_load() {
 		lv_label_set_text(selected_label, "No routine\nselected");
 		lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
 	} else {
-		gui::selector::Routine selected = routines.at(saved_id);
-		std::string routine_name = selected.name;
+		gui::selector::routine_t selected = routines.at(saved_id);
+		std::string routine_name = selected.first;
 
 		// Exit if routine name does not match
 		if (saved_name != routine_name) return;
@@ -80,8 +80,8 @@ lv_res_t r_select_act(lv_obj_t *obj) {
 		lv_label_set_text(selected_label, "No routine\nselected");
 		lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
 	} else {
-		gui::selector::Routine selected = routines.at(id);
-		std::string routine_name = selected.name;
+		gui::selector::routine_t selected = routines.at(id);
+		std::string routine_name = selected.first;
 		char label_str[sizeof(routine_name) + 20];
 		sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
 		lv_label_set_text(selected_label, label_str);
@@ -134,11 +134,11 @@ void gui::selector::do_selection() {
 	lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
 
 	// Add routines to list
-	for (selector::Routine routine : routines) {
+	for (gui::selector::routine_t routine : routines) {
 		// Store current position in vector
 		static int r_index = 0;
 
-		lv_obj_t *new_btn = lv_list_add(routine_list, NULL, routine.name.c_str(), r_select_act);
+		lv_obj_t *new_btn = lv_list_add(routine_list, NULL, routine.first.c_str(), r_select_act);
 		lv_obj_set_free_num(new_btn, r_index); // Set lvgl button number to index
 		lv_btn_set_action(new_btn, LV_BTN_ACTION_CLICK, &r_select_act);
 
@@ -202,12 +202,12 @@ void gui::selector::exit_selection() {
 
 // ============================= Other Methods ============================= //
 
-void gui::selector::add_autons(std::vector<selector::Routine> new_routines) {
+void gui::selector::add_autons(std::vector<selector::routine_t> new_routines) {
 	routines.insert(routines.end(), new_routines.begin(), new_routines.end());
 }
 
 void gui::selector::do_auton() {
 	if (selected_auton == -1) return; // If commanded to do nothing then return
-	selector::Routine routine = routines.at(selected_auton);
-	routine.action();
+	selector::routine_t routine = routines.at(selected_auton);
+	routine.second();
 }

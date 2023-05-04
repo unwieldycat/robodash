@@ -13,14 +13,11 @@ void auton2() {}
 void initialize() {
 	gui::initialize();
 
-	// Disabling formatter since it makes this look bad
-	// clang-format off
 	gui::selector::add_autons({
-		gui::selector::Routine("Auton 0", auton0),
-	    gui::selector::Routine("Auton 1", auton1), 
-		gui::selector::Routine("Auton 2", auton2)
+	    {"Auton 0", auton0},
+	    {"Auton 1", auton1},
+	    {"Auton 2", auton2},
 	});
-	// clang-format on
 }
 
 /**
