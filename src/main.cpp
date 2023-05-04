@@ -1,5 +1,4 @@
 #include "main.h"
-#include "selectlib/selector.hpp"
 
 void auton0() {}
 void auton1() {}
@@ -71,4 +70,4 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol() { gui::selector::do_selection(); }
+void opcontrol() { gui::selector::exit_selection(); }
