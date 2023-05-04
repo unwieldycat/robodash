@@ -68,7 +68,7 @@ void init_dashboard() {
 // TODO: Implement
 [[noreturn]] void dashboard_background() {
 	while (true) {
-		// ...
+		pros::delay(500);
 	}
 }
 
