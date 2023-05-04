@@ -76,7 +76,6 @@ void init_dashboard() {
 
 // TODO: Implement
 void gui::dashboard::add_action(std::string name, std::function<void()> fn) {}
-void gui::dashboard::add_toggle(std::string name, bool *var) {}
 
 void gui::dashboard::add_motors(std::vector<pros::Motor *> mtrs) {
 	motors.insert(motors.end(), mtrs.begin(), mtrs.end());

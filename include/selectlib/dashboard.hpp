@@ -14,14 +14,6 @@ namespace dashboard {
 void add_action(std::string name, std::function<void()> fn);
 
 /**
- * @brief Add a toggle to the dashboard
- *
- * @param name Name of toggle
- * @param var Boolean variable to toggle
- */
-void add_toggle(std::string name, bool *var);
-
-/**
  * @brief Add motors to dashboard for monitoring
  *
  * @param mtrs Motors to monitor
