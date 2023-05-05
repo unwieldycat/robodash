@@ -2,7 +2,7 @@
 #include "common/init.hpp"
 #include "common/styles.hpp"
 
-bool ss_active;
+bool ss_active = false;
 int ss_timeout = 8;
 
 // ============================= Initialization ============================= //
