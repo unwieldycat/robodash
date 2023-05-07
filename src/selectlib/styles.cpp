@@ -1,5 +1,6 @@
 #include "common/styles.hpp"
 #include "common/init.hpp"
+#include "display/lv_misc/lv_color.h"
 #include "misc.hpp"
 
 // ================================= Colors ================================= //
@@ -24,6 +25,7 @@ lv_style_t round_btn_style_pr;
 lv_style_t outline_round_btn_style_rel;
 lv_style_t outline_round_btn_style_pr;
 lv_style_t small_text;
+lv_style_t transp_style;
 
 void init_styles() {
 	// Colors
@@ -107,6 +109,13 @@ void init_styles() {
 	small_text.text.opa = LV_OPA_COVER;
 	small_text.text.font = &lv_font_dejavu_10;
 	small_text.text.letter_space = 1;
+
+	// Transparent style
+	lv_style_copy(&transp_style, &lv_style_transp);
+	transp_style.text.color = text_color;
+	transp_style.text.opa = LV_OPA_COVER;
+	transp_style.image.color = text_color;
+	transp_style.image.opa = LV_OPA_COVER;
 }
 
 // ============================ Public Functions ============================ //
