@@ -5,10 +5,23 @@ MFLAGS=-mcpu=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=softfp -Os -g
 CPPFLAGS=-D_POSIX_THREADS -D_UNIX98_THREAD_MUTEX_ATTRIBUTES -D_POSIX_TIMERS -D_POSIX_MONOTONIC_CLOCK
 GCCFLAGS=-ffunction-sections -fdata-sections -fdiagnostics-color -funwind-tables
 
+# Check if the llemu files in libvgl exist. If they do, define macros that the
+# llemu headers in the kernel repo can use to conditionally include the libvgl
+# versions
+ifneq (,$(wildcard ./include/liblvgl/llemu.h))
+	CPPFLAGS += -D_PROS_INCLUDE_LIBLVGL_LLEMU_H
+endif
+ifneq (,$(wildcard ./include/liblvgl/llemu.hpp))
+	CPPFLAGS += -D_PROS_INCLUDE_LIBLVGL_LLEMU_HPP
+endif
+
 WARNFLAGS+=-Wno-psabi
 
 SPACE := $() $()
 COMMA := ,
+
+C_STANDARD?=gnu11
+CXX_STANDARD?=gnu++20
 
 DEPDIR := .d
 $(shell mkdir -p $(DEPDIR))
@@ -24,8 +37,8 @@ wlprefix=-Wl,$(subst $(SPACE),$(COMMA),$1)
 LNK_FLAGS=--gc-sections --start-group $(strip $(LIBRARIES)) -lgcc -lstdc++ --end-group -T$(FWDIR)/v5-common.ld
 
 ASMFLAGS=$(MFLAGS) $(WARNFLAGS)
-CFLAGS=$(MFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS) --std=gnu11
-CXXFLAGS=$(MFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS) --std=gnu++17
+CFLAGS=$(MFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS) --std=$(C_STANDARD)
+CXXFLAGS=$(MFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS) --std=$(CXX_STANDARD)
 LDFLAGS=$(MFLAGS) $(WARNFLAGS) -nostdlib $(GCCFLAGS)
 SIZEFLAGS=-d --common
 NUMFMTFLAGS=--to=iec --format %.2f --suffix=B
@@ -201,7 +214,7 @@ library: $(LIBAR)
 
 .PHONY: template
 template: clean-template $(LIBAR)
-	$Dprosv5 c create-template . $(LIBNAME) $(VERSION) $(foreach file,$(TEMPLATE_FILES) $(LIBAR),--system "$(file)") --target v5 $(CREATE_TEMPLATE_FLAGS)
+	$Dpros c create-template . $(LIBNAME) $(VERSION) $(foreach file,$(TEMPLATE_FILES) $(LIBAR),--system "$(file)") --target v5 $(CREATE_TEMPLATE_FLAGS)
 endif
 
 # if project is a library source, compile the archive and link output.elf against the archive rather than source objects
@@ -280,7 +293,7 @@ $(VV)mkdir -p $(dir $(LDTIMEOBJ))
 @# The shell command $$(($$(date +%s)+($$(date +%-z)/100*3600))) fetches the current
 @# unix timestamp, and then adds the UTC timezone offset to account for time zones.
 
-$(call test_output_2,Adding timestamp ,echo 'const int _PROS_COMPILE_TIMESTAMP_INT = $(shell echo $$(($$(date +%s)+($$(date +%-z)/100*3600)))); char const * const _PROS_COMPILE_TIMESTAMP = __DATE__ " " __TIME__; char const * const _PROS_COMPILE_DIRECTORY = "$(shell pwd | tail -c 23)";' | $(CC) -c -x c $(CFLAGS) $(EXTRA_CFLAGS) -o $(LDTIMEOBJ) -,$(OK_STRING))
+$(call test_output_2,Adding timestamp ,echo 'const int _PROS_COMPILE_TIMESTAMP_INT = $(shell echo $$(($$(date +%s)+($$(date +%-z)/100*3600)))); char const * const _PROS_COMPILE_TIMESTAMP = __DATE__ " " __TIME__; char const * const _PROS_COMPILE_DIRECTORY = "$(wildcard $(shell pwd | tail -c 23))";' | $(CC) -c -x c $(CFLAGS) $(EXTRA_CFLAGS) -o $(LDTIMEOBJ) -,$(OK_STRING))
 endef
 
 # these rules are for build-compile-commands, which just print out sysroot information

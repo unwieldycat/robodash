@@ -1,5 +1,5 @@
 #pragma once
-#include "../display/lvgl.h"
+#include "../liblvgl/lvgl.h"
 
 extern lv_style_t bg_style;
 extern lv_style_t list_style;
