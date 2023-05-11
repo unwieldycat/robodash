@@ -114,8 +114,7 @@ void init_styles() {
 	lv_style_copy(&transp_style, &lv_style_transp);
 	transp_style.text.color = text_color;
 	transp_style.text.opa = LV_OPA_COVER;
-	transp_style.image.color = text_color;
-	transp_style.image.opa = LV_OPA_COVER;
+	transp_style.image.color.full = text_color.full;
 }
 
 // ============================ Public Functions ============================ //
