@@ -1,6 +1,5 @@
 #include "common/styles.hpp"
 #include "common/init.hpp"
-#include "display/lv_misc/lv_color.h"
 #include "misc.hpp"
 
 // ================================= Colors ================================= //
@@ -36,6 +35,7 @@ void init_styles() {
 	primary_color_dark = lv_color_hsv_to_rgb(hue, 75, 50);
 	text_color = lv_color_hsv_to_rgb(hue, 10, 100);
 
+	/* FIXME: Update styles to new syntax
 	// Background style
 	lv_style_copy(&bg_style, &lv_style_plain);
 	bg_style.body.border.width = 0;
@@ -115,6 +115,7 @@ void init_styles() {
 	transp_style.text.color = text_color;
 	transp_style.text.opa = LV_OPA_COVER;
 	transp_style.image.color.full = text_color.full;
+	*/
 }
 
 // ============================ Public Functions ============================ //
@@ -124,5 +125,5 @@ void gui::theme::set_hue(int new_hue) {
 
 	// Rebuild styles and notify lvgl to refresh all objects
 	init_styles();
-	lv_obj_report_style_mod(NULL);
+	// FIXME: lv_obj_report_style_mod(NULL);
 }

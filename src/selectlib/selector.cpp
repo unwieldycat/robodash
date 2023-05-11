@@ -53,7 +53,7 @@ void sdconf_load() {
 
 	if (saved_id == -1) {
 		lv_label_set_text(selected_label, "No routine\nselected");
-		lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
+		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 	} else {
 		gui::selector::routine_t selected = routines.at(saved_id);
 		std::string routine_name = selected.first;
@@ -65,7 +65,7 @@ void sdconf_load() {
 		char label_str[sizeof(routine_name) + 20];
 		sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
 		lv_label_set_text(selected_label, label_str);
-		lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
+		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 	}
 
 	selected_auton = saved_id;
@@ -73,23 +73,27 @@ void sdconf_load() {
 
 // =============================== Selection =============================== //
 
+// FIXME: Obj free num is not a thin anymore
+
 lv_res_t r_select_act(lv_obj_t *obj) {
+	/*
 	int id = lv_obj_get_free_num(obj);
 
-	if (id == -1) {
-		lv_label_set_text(selected_label, "No routine\nselected");
-		lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
-	} else {
-		gui::selector::routine_t selected = routines.at(id);
-		std::string routine_name = selected.first;
-		char label_str[sizeof(routine_name) + 20];
-		sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
-		lv_label_set_text(selected_label, label_str);
-		lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
-	}
+	   if (id == -1) {
+	       lv_label_set_text(selected_label, "No routine\nselected");
+	       lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
+	   } else {
+	       gui::selector::routine_t selected = routines.at(id);
+	       std::string routine_name = selected.first;
+	       char label_str[sizeof(routine_name) + 20];
+	       sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
+	       lv_label_set_text(selected_label, label_str);
+	       lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
+	   }
 
-	selected_auton = id;
-	return LV_RES_OK;
+	   selected_auton = id;
+	   return LV_RES_OK;
+   */
 }
 
 lv_res_t done_act(lv_obj_t *obj) {
@@ -99,7 +103,7 @@ lv_res_t done_act(lv_obj_t *obj) {
 
 lv_res_t save_act(lv_obj_t *obj) {
 	sdconf_save();
-	lv_obj_set_hidden(saved_toast, false);
+	// lv_obj_set_hidden(saved_toast, false);
 	return LV_RES_OK;
 }
 
@@ -111,75 +115,81 @@ void gui::selector::do_selection() {
 	if (selection_running || comp_started()) return;
 	selection_running = true;
 
-	select_cont = lv_cont_create(lv_scr_act(), NULL);
+	select_cont = lv_obj_create(lv_scr_act());
 	lv_obj_set_size(select_cont, 480, 240);
-	lv_obj_set_style(select_cont, &bg_style);
+	// lv_obj_set_style(select_cont, &bg_style);
 
-	lv_obj_t *title_label = lv_label_create(select_cont, NULL);
+	lv_obj_t *title_label = lv_label_create(select_cont);
 	lv_label_set_text(title_label, "Select autonomous routine");
-	lv_label_set_align(title_label, LV_LABEL_ALIGN_CENTER);
+	// lv_label_set_align(title_label, LV_ALIGN_CENTER);
 	lv_obj_set_width(title_label, 232);
-	lv_obj_align(title_label, NULL, LV_ALIGN_IN_TOP_LEFT, 8, 16);
+	lv_obj_align(title_label, LV_ALIGN_TOP_LEFT, 8, 16);
 
-	lv_obj_t *routine_list = lv_list_create(select_cont, NULL);
+	lv_obj_t *routine_list = lv_list_create(select_cont);
 	lv_obj_set_size(routine_list, 228, 184);
-	lv_obj_align(routine_list, NULL, LV_ALIGN_IN_TOP_LEFT, 8, 48);
-	lv_list_set_style(routine_list, LV_LIST_STYLE_BG, &list_style);
-	lv_list_set_style(routine_list, LV_LIST_STYLE_BTN_REL, &list_btn_style_rel);
-	lv_list_set_style(routine_list, LV_LIST_STYLE_BTN_PR, &list_btn_style_pr);
+	lv_obj_align(routine_list, LV_ALIGN_TOP_LEFT, 8, 48);
+	// FIXME:
+	// lv_list_set_style(routine_list, LV_LIST_STYLE_BG, &list_style);
+	// lv_list_set_style(routine_list, LV_LIST_STYLE_BTN_REL, &list_btn_style_rel);
+	// lv_list_set_style(routine_list, LV_LIST_STYLE_BTN_PR, &list_btn_style_pr);
 
-	selected_label = lv_label_create(select_cont, NULL);
-	lv_label_set_align(selected_label, LV_LABEL_ALIGN_CENTER);
+	selected_label = lv_label_create(select_cont);
+	// lv_label_set_align(selected_label, LV_LABEL_ALIGN_CENTER);
 	lv_label_set_text(selected_label, "No routine\nselected");
-	lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
+	lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 
 	// Add routines to list
 	for (gui::selector::routine_t routine : routines) {
 		// Store current position in vector
 		static int r_index = 0;
 
+		// FIXME: LVGL list
+		/*
 		lv_obj_t *new_btn = lv_list_add(routine_list, NULL, routine.first.c_str(), r_select_act);
 		lv_obj_set_free_num(new_btn, r_index); // Set lvgl button number to index
 		lv_btn_set_action(new_btn, LV_BTN_ACTION_CLICK, &r_select_act);
+		*/
 
 		r_index++;
 	}
 
+	// FIXME: LVGL list
+	/*
 	lv_obj_t *nothing_btn = lv_list_add(routine_list, NULL, "Nothing", r_select_act);
-	lv_obj_set_free_num(nothing_btn, -1);
+	// lv_obj_set_free_num(nothing_btn, -1);
 	lv_btn_set_style(nothing_btn, LV_BTN_STYLE_REL, &list_btn_style_rel);
 	lv_btn_set_style(nothing_btn, LV_BTN_STYLE_PR, &list_btn_style_pr);
-	lv_btn_set_action(nothing_btn, LV_BTN_ACTION_CLICK, &r_select_act);
+	lv_btn_set_action(nothing_btn, LV_BTN_ACTION_CLICK, &r_select_act);*/
 
-	lv_obj_t *done_btn = lv_btn_create(select_cont, NULL);
+	lv_obj_t *done_btn = lv_btn_create(select_cont);
 	lv_obj_set_size(done_btn, 224, 32);
-	lv_obj_align(done_btn, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -8, -8);
-	lv_btn_set_action(done_btn, LV_BTN_ACTION_CLICK, &done_act);
-	lv_btn_set_style(done_btn, LV_BTN_STYLE_REL, &round_btn_style_rel);
-	lv_btn_set_style(done_btn, LV_BTN_STYLE_PR, &round_btn_style_pr);
-	lv_obj_t *done_img = lv_img_create(done_btn, NULL);
-	lv_img_set_src(done_img, SYMBOL_OK);
+	lv_obj_align(done_btn, LV_ALIGN_BOTTOM_RIGHT, -8, -8);
+	// lv_btn_set_action(done_btn, LV_BTN_ACTION_CLICK, &done_act);
+	// lv_btn_set_style(done_btn, LV_BTN_STYLE_REL, &round_btn_style_rel);
+	// lv_btn_set_style(done_btn, LV_BTN_STYLE_PR, &round_btn_style_pr);
+	lv_obj_t *done_img = lv_img_create(done_btn);
+	// lv_img_set_src(done_img, SYMBOL_OK);
 
 	if (pros::usd::is_installed()) {
 		sdconf_load();
 		lv_obj_set_size(done_btn, 160, 32);
-		lv_obj_align(done_btn, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -8, -8);
+		lv_obj_align(done_btn, LV_ALIGN_BOTTOM_RIGHT, -8, -8);
 
-		saved_toast = lv_label_create(select_cont, NULL);
+		saved_toast = lv_label_create(select_cont);
 		lv_label_set_text(saved_toast, "Saved selection to SD card");
-		lv_label_set_align(saved_toast, LV_LABEL_ALIGN_CENTER);
-		lv_obj_align(saved_toast, NULL, LV_ALIGN_CENTER, 190, 70);
-		lv_label_set_style(saved_toast, &small_text);
-		lv_obj_set_hidden(saved_toast, true);
+		// lv_label_set_align(saved_toast, LV_LABEL_ALIGN_CENTER);
+		lv_obj_align(saved_toast, LV_ALIGN_CENTER, 190, 70);
+		// lv_label_set_style(saved_toast, &small_text);
+		//  lv_obj_set_hidden(saved_toast, true);
 
-		lv_obj_t *save_btn = lv_btn_create(select_cont, NULL);
+		lv_obj_t *save_btn = lv_btn_create(select_cont);
 		lv_obj_set_size(save_btn, 64, 32);
-		lv_obj_align(save_btn, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -172, -8);
-		lv_btn_set_action(save_btn, LV_BTN_ACTION_CLICK, &save_act);
-		lv_btn_set_style(save_btn, LV_BTN_STYLE_REL, &outline_round_btn_style_rel);
-		lv_btn_set_style(save_btn, LV_BTN_STYLE_PR, &outline_round_btn_style_pr);
-		lv_obj_t *save_img = lv_img_create(save_btn, NULL);
-		lv_img_set_src(save_img, SYMBOL_SAVE);
+		lv_obj_align(save_btn, LV_ALIGN_BOTTOM_RIGHT, -172, -8);
+		// lv_btn_set_action(save_btn, LV_BTN_ACTION_CLICK, &save_act);
+		// lv_btn_set_style(save_btn, LV_BTN_STYLE_REL, &outline_round_btn_style_rel);
+		// lv_btn_set_style(save_btn, LV_BTN_STYLE_PR, &outline_round_btn_style_pr);
+		lv_obj_t *save_img = lv_img_create(save_btn);
+		// lv_img_set_src(save_img, SYMBOL_SAVE);
 	}
 
 	// Wait for user to be done or for match to start

@@ -10,25 +10,28 @@ int ss_timeout = 8;
 lv_obj_t *ss_cont;
 lv_obj_t *ss_img;
 
+// FIXME: LVGL Signal -> Event
+/*
 lv_res_t ss_cb(lv_obj_t *obj, lv_signal_t sign, void *param) {
-	if (sign == LV_SIGNAL_PRESSING) {
-		lv_obj_set_hidden(ss_cont, true);
-	}
+    if (sign == LV_SIGNAL_PRESSING) {
+        lv_obj_set_hidden(ss_cont, true);
+    }
 
-	return LV_RES_OK;
+    return LV_RES_OK;
 }
+*/
 
 void init_ss() {
-	ss_cont = lv_cont_create(lv_scr_act(), NULL);
+	ss_cont = lv_obj_create(lv_scr_act());
 	lv_obj_set_size(ss_cont, 480, 240);
-	lv_obj_set_signal_func(ss_cont, &ss_cb);
-	lv_obj_set_style(ss_cont, &bg_style);
-	lv_obj_set_hidden(ss_cont, true);
+	// lv_obj_set_signal_func(ss_cont, &ss_cb);
+	// lv_obj_set_style(ss_cont, &bg_style);
+	// lv_obj_set_hidden(ss_cont, true);
 
 	// FIXME: Check if screensaver file exists
-	ss_img = lv_img_create(ss_cont, NULL);
+	ss_img = lv_img_create(ss_cont);
 	lv_img_set_src(ss_img, "/usd/screensaver.bin");
-	lv_obj_align(ss_img, NULL, LV_ALIGN_CENTER, 0, 0);
+	lv_obj_align(ss_img, LV_ALIGN_CENTER, 0, 0);
 }
 
 // ========================== Background Function ========================== //
@@ -67,12 +70,12 @@ void gui::screensaver::set_timeout(int sec) { ss_timeout = sec; }
 
 void gui::screensaver::activate() {
 	if (ss_active) return;
-	lv_obj_set_hidden(ss_cont, false);
+	// lv_obj_set_hidden(ss_cont, false);
 	ss_active = true;
 }
 
 void gui::screensaver::exit() {
 	if (!ss_active) return;
-	lv_obj_set_hidden(ss_cont, true);
+	// lv_obj_set_hidden(ss_cont, true);
 	ss_active = false;
 }
