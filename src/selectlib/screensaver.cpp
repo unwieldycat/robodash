@@ -10,23 +10,17 @@ int ss_timeout = 8;
 lv_obj_t *ss_cont;
 lv_obj_t *ss_img;
 
-// FIXME: LVGL Signal -> Event
-/*
-lv_res_t ss_cb(lv_obj_t *obj, lv_signal_t sign, void *param) {
-    if (sign == LV_SIGNAL_PRESSING) {
-        lv_obj_set_hidden(ss_cont, true);
-    }
-
-    return LV_RES_OK;
+void ss_cb(lv_event_t *event) {
+	lv_obj_t *obj = event->target;
+	lv_obj_add_flag(ss_cont, LV_OBJ_FLAG_HIDDEN);
 }
-*/
 
 void init_ss() {
 	ss_cont = lv_obj_create(lv_scr_act());
 	lv_obj_set_size(ss_cont, 480, 240);
-	// lv_obj_set_signal_func(ss_cont, &ss_cb);
-	// lv_obj_set_style(ss_cont, &bg_style);
-	// lv_obj_set_hidden(ss_cont, true);
+	lv_obj_add_event_cb(ss_cont, &ss_cb, LV_EVENT_PRESSED, NULL);
+	lv_obj_add_style(ss_cont, &bg_style, 0);
+	lv_obj_clear_flag(ss_cont, LV_OBJ_FLAG_HIDDEN);
 
 	// FIXME: Check if screensaver file exists
 	ss_img = lv_img_create(ss_cont);
@@ -70,12 +64,12 @@ void gui::screensaver::set_timeout(int sec) { ss_timeout = sec; }
 
 void gui::screensaver::activate() {
 	if (ss_active) return;
-	// lv_obj_set_hidden(ss_cont, false);
+	lv_obj_clear_flag(ss_cont, LV_OBJ_FLAG_HIDDEN);
 	ss_active = true;
 }
 
 void gui::screensaver::exit() {
 	if (!ss_active) return;
-	// lv_obj_set_hidden(ss_cont, true);
+	lv_obj_add_flag(ss_cont, LV_OBJ_FLAG_HIDDEN);
 	ss_active = false;
 }
