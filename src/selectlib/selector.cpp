@@ -73,9 +73,7 @@ void sdconf_load() {
 
 // =============================== Selection =============================== //
 
-// FIXME: Obj free num is not a thin anymore
-
-static void r_select_act(lv_event_t *event) {
+void r_select_act(lv_event_t *event) {
 
 	lv_obj_t *obj = lv_event_get_target(event);
 	int *id = (int *)lv_event_get_user_data(event);
