@@ -1,5 +1,6 @@
 #include "selector.hpp"
 #include "common/styles.hpp"
+#include "liblvgl/core/lv_obj.h"
 
 // =============================== Variables =============================== //
 
@@ -93,15 +94,11 @@ void r_select_act(lv_event_t *event) {
 	selected_auton = *id;
 }
 
-lv_res_t done_act(lv_obj_t *obj) {
-	selection_done = true;
-	return LV_RES_OK;
-}
+void done_act(lv_event_t *event) { selection_done = true; }
 
-lv_res_t save_act(lv_obj_t *obj) {
+void save_act(lv_event_t *event) {
 	sdconf_save();
-	// lv_obj_set_hidden(saved_toast, false);
-	return LV_RES_OK;
+	lv_obj_clear_flag(saved_toast, LV_OBJ_FLAG_HIDDEN);
 }
 
 bool comp_started() {
@@ -114,7 +111,7 @@ void gui::selector::do_selection() {
 
 	select_cont = lv_obj_create(lv_scr_act());
 	lv_obj_set_size(select_cont, 480, 240);
-	// lv_obj_set_style(select_cont, &bg_style);
+	lv_obj_add_style(select_cont, &bg_style, 0);
 
 	lv_obj_t *title_label = lv_label_create(select_cont);
 	lv_label_set_text(title_label, "Select autonomous routine");
@@ -125,10 +122,8 @@ void gui::selector::do_selection() {
 	lv_obj_t *routine_list = lv_list_create(select_cont);
 	lv_obj_set_size(routine_list, 228, 184);
 	lv_obj_align(routine_list, LV_ALIGN_TOP_LEFT, 8, 48);
-	// FIXME:
-	// lv_list_set_style(routine_list, LV_LIST_STYLE_BG, &list_style);
-	// lv_list_set_style(routine_list, LV_LIST_STYLE_BTN_REL, &list_btn_style_rel);
-	// lv_list_set_style(routine_list, LV_LIST_STYLE_BTN_PR, &list_btn_style_pr);
+
+	lv_obj_add_style(routine_list, &list_style, 0);
 
 	selected_label = lv_label_create(select_cont);
 	// lv_label_set_align(selected_label, LV_LABEL_ALIGN_CENTER);
@@ -141,27 +136,29 @@ void gui::selector::do_selection() {
 		static int r_index = 0;
 
 		lv_obj_t *new_btn = lv_list_add_btn(routine_list, NULL, routine.first.c_str());
+		lv_obj_add_style(new_btn, &list_btn_style_rel, 0);
+		lv_obj_add_style(new_btn, &list_btn_style_pr, LV_STATE_PRESSED);
 		lv_obj_add_event_cb(new_btn, &r_select_act, LV_EVENT_PRESSED, &r_index);
 
 		r_index++;
 	}
 
-	// FIXME: LVGL list
-	/*
-	lv_obj_t *nothing_btn = lv_list_add(routine_list, NULL, "Nothing", r_select_act);
-	// lv_obj_set_free_num(nothing_btn, -1);
-	lv_btn_set_style(nothing_btn, LV_BTN_STYLE_REL, &list_btn_style_rel);
-	lv_btn_set_style(nothing_btn, LV_BTN_STYLE_PR, &list_btn_style_pr);
-	lv_btn_set_action(nothing_btn, LV_BTN_ACTION_CLICK, &r_select_act);*/
+	int nothing_id = -1; // bruh
+
+	lv_obj_t *nothing_btn = lv_list_add_btn(routine_list, NULL, "Nothing");
+	lv_obj_add_event_cb(nothing_btn, &r_select_act, LV_EVENT_PRESSED, &nothing_id);
+	lv_obj_add_style(nothing_btn, &list_btn_style_rel, 0);
+	lv_obj_add_style(nothing_btn, &list_btn_style_pr, LV_STATE_PRESSED);
 
 	lv_obj_t *done_btn = lv_btn_create(select_cont);
 	lv_obj_set_size(done_btn, 224, 32);
 	lv_obj_align(done_btn, LV_ALIGN_BOTTOM_RIGHT, -8, -8);
-	// lv_btn_set_action(done_btn, LV_BTN_ACTION_CLICK, &done_act);
-	// lv_btn_set_style(done_btn, LV_BTN_STYLE_REL, &round_btn_style_rel);
-	// lv_btn_set_style(done_btn, LV_BTN_STYLE_PR, &round_btn_style_pr);
+	lv_obj_add_event_cb(done_btn, &done_act, LV_EVENT_PRESSED, NULL);
+	lv_obj_add_style(done_btn, &round_btn_style_rel, 0);
+	lv_obj_add_style(done_btn, &round_btn_style_pr, LV_STATE_PRESSED);
+
 	lv_obj_t *done_img = lv_img_create(done_btn);
-	// lv_img_set_src(done_img, SYMBOL_OK);
+	lv_img_set_src(done_img, LV_SYMBOL_OK);
 
 	if (pros::usd::is_installed()) {
 		sdconf_load();
@@ -173,16 +170,17 @@ void gui::selector::do_selection() {
 		// lv_label_set_align(saved_toast, LV_LABEL_ALIGN_CENTER);
 		lv_obj_align(saved_toast, LV_ALIGN_CENTER, 190, 70);
 		// lv_label_set_style(saved_toast, &small_text);
-		//  lv_obj_set_hidden(saved_toast, true);
+		lv_obj_add_flag(saved_toast, LV_OBJ_FLAG_HIDDEN);
 
 		lv_obj_t *save_btn = lv_btn_create(select_cont);
 		lv_obj_set_size(save_btn, 64, 32);
 		lv_obj_align(save_btn, LV_ALIGN_BOTTOM_RIGHT, -172, -8);
-		// lv_btn_set_action(save_btn, LV_BTN_ACTION_CLICK, &save_act);
-		// lv_btn_set_style(save_btn, LV_BTN_STYLE_REL, &outline_round_btn_style_rel);
-		// lv_btn_set_style(save_btn, LV_BTN_STYLE_PR, &outline_round_btn_style_pr);
+		lv_obj_add_event_cb(save_btn, &save_act, LV_EVENT_PRESSED, NULL);
+		lv_obj_add_style(save_btn, &outline_round_btn_style_rel, 0);
+		lv_obj_add_style(save_btn, &outline_round_btn_style_pr, LV_STATE_PRESSED);
+
 		lv_obj_t *save_img = lv_img_create(save_btn);
-		// lv_img_set_src(save_img, SYMBOL_SAVE);
+		lv_img_set_src(save_img, LV_SYMBOL_SAVE);
 	}
 
 	// Wait for user to be done or for match to start
