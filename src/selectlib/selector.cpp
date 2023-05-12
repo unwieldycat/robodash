@@ -75,25 +75,24 @@ void sdconf_load() {
 
 // FIXME: Obj free num is not a thin anymore
 
-lv_res_t r_select_act(lv_obj_t *obj) {
-	/*
-	int id = lv_obj_get_free_num(obj);
+static void r_select_act(lv_event_t *event) {
 
-	   if (id == -1) {
-	       lv_label_set_text(selected_label, "No routine\nselected");
-	       lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
-	   } else {
-	       gui::selector::routine_t selected = routines.at(id);
-	       std::string routine_name = selected.first;
-	       char label_str[sizeof(routine_name) + 20];
-	       sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
-	       lv_label_set_text(selected_label, label_str);
-	       lv_obj_align(selected_label, NULL, LV_ALIGN_CENTER, 120, 0);
-	   }
+	lv_obj_t *obj = lv_event_get_target(event);
+	int *id = (int *)lv_event_get_user_data(event);
 
-	   selected_auton = id;
-	   return LV_RES_OK;
-   */
+	if (*id == -1) {
+		lv_label_set_text(selected_label, "No routine\nselected");
+		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
+	} else {
+		gui::selector::routine_t selected = routines.at(*id);
+		std::string routine_name = selected.first;
+		char label_str[sizeof(routine_name) + 20];
+		sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
+		lv_label_set_text(selected_label, label_str);
+		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
+	}
+
+	selected_auton = *id;
 }
 
 lv_res_t done_act(lv_obj_t *obj) {
@@ -143,12 +142,8 @@ void gui::selector::do_selection() {
 		// Store current position in vector
 		static int r_index = 0;
 
-		// FIXME: LVGL list
-		/*
-		lv_obj_t *new_btn = lv_list_add(routine_list, NULL, routine.first.c_str(), r_select_act);
-		lv_obj_set_free_num(new_btn, r_index); // Set lvgl button number to index
-		lv_btn_set_action(new_btn, LV_BTN_ACTION_CLICK, &r_select_act);
-		*/
+		lv_obj_t *new_btn = lv_list_add_btn(routine_list, NULL, routine.first.c_str());
+		lv_obj_add_event_cb(new_btn, &r_select_act, LV_EVENT_PRESSED, &r_index);
 
 		r_index++;
 	}
