@@ -1,5 +1,6 @@
 #include "common/styles.hpp"
 #include "common/init.hpp"
+#include "liblvgl/misc/lv_area.h"
 #include "misc.hpp"
 
 // ================================= Colors ================================= //
@@ -27,6 +28,8 @@ lv_style_t outline_round_btn_style_rel;
 lv_style_t outline_round_btn_style_pr;
 lv_style_t small_text;
 lv_style_t transp_style;
+
+lv_style_t text_centered;
 
 void init_styles() {
 	// Colors
@@ -108,6 +111,10 @@ void init_styles() {
 	lv_style_set_text_color(&transp_style, text_color);
 	lv_style_set_text_opa(&transp_style, LV_OPA_COVER);
 	lv_style_set_img_recolor(&transp_style, text_color);
+
+	// Text align
+	lv_style_init(&text_centered);
+	lv_style_set_text_align(&text_centered, LV_ALIGN_CENTER);
 }
 
 // ============================ Public Functions ============================ //
