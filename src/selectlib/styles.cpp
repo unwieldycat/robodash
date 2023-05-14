@@ -1,6 +1,7 @@
 #include "common/styles.hpp"
 #include "common/init.hpp"
 #include "liblvgl/misc/lv_area.h"
+#include "liblvgl/misc/lv_color.h"
 #include "misc.hpp"
 
 // ================================= Colors ================================= //
@@ -17,6 +18,7 @@ lv_color_t text_color;
 // ================================= Styles ================================= //
 
 lv_style_t style_bg;
+lv_style_t style_transp;
 
 lv_style_t style_list;
 lv_style_t style_list_btn;
@@ -125,6 +127,12 @@ void init_styles() {
 	// Text align
 	lv_style_init(&style_text_centered);
 	lv_style_set_text_align(&style_text_centered, LV_ALIGN_CENTER);
+
+	// Transparent
+	lv_style_init(&style_transp);
+	lv_style_set_bg_opa(&style_transp, LV_OPA_TRANSP);
+	lv_style_set_border_opa(&style_transp, LV_OPA_TRANSP);
+	lv_style_set_radius(&style_transp, 0);
 }
 
 // ============================ Public Functions ============================ //
