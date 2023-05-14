@@ -1,13 +1,19 @@
 #pragma once
 #include "../liblvgl/lvgl.h"
 
-extern lv_style_t bg_style;
-extern lv_style_t list_style;
-extern lv_style_t list_btn_style_rel;
-extern lv_style_t list_btn_style_pr;
-extern lv_style_t round_btn_style_rel;
-extern lv_style_t round_btn_style_pr;
-extern lv_style_t outline_round_btn_style_rel;
-extern lv_style_t outline_round_btn_style_pr;
-extern lv_style_t small_text;
-extern lv_style_t transp_style;
+extern lv_style_t style_bg;
+
+extern lv_style_t style_list;
+extern lv_style_t style_list_btn;
+extern lv_style_t style_list_btn_pr;
+
+extern lv_style_t style_btn;
+extern lv_style_t style_btn_primary;
+extern lv_style_t style_btn_primary_pr;
+extern lv_style_t style_btn_outline;
+extern lv_style_t style_btn_outline_pr;
+
+extern lv_style_t style_text_small;
+extern lv_style_t style_text_medium;
+extern lv_style_t style_text_large;
+extern lv_style_t style_text_centered;

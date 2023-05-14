@@ -16,20 +16,22 @@ lv_color_t text_color;
 
 // ================================= Styles ================================= //
 
-// TODO: Take advantage of cascading styles, seperate text styles from object styles
+lv_style_t style_bg;
 
-lv_style_t bg_style;
-lv_style_t list_style;
-lv_style_t list_btn_style_rel;
-lv_style_t list_btn_style_pr;
-lv_style_t round_btn_style_rel;
-lv_style_t round_btn_style_pr;
-lv_style_t outline_round_btn_style_rel;
-lv_style_t outline_round_btn_style_pr;
-lv_style_t small_text;
-lv_style_t transp_style;
+lv_style_t style_list;
+lv_style_t style_list_btn;
+lv_style_t style_list_btn_pr;
 
-lv_style_t text_centered;
+lv_style_t style_btn;
+lv_style_t style_btn_primary;
+lv_style_t style_btn_primary_pr;
+lv_style_t style_btn_outline;
+lv_style_t style_btn_outline_pr;
+
+lv_style_t style_text_small;
+lv_style_t style_text_medium;
+lv_style_t style_text_large;
+lv_style_t style_text_centered;
 
 void init_styles() {
 	// Colors
@@ -40,81 +42,89 @@ void init_styles() {
 	primary_color_dark = lv_color_hsv_to_rgb(hue, 75, 50);
 	text_color = lv_color_hsv_to_rgb(hue, 10, 100);
 
-	// Background style
-	lv_style_init(&bg_style);
-	lv_style_set_border_width(&bg_style, 0);
-	lv_style_set_radius(&bg_style, 0);
-	lv_style_set_bg_color(&bg_style, bg_color);
-	lv_style_set_text_color(&bg_style, text_color);
+	// Background
+	lv_style_init(&style_bg);
+	lv_style_set_border_width(&style_bg, 0);
+	lv_style_set_radius(&style_bg, 0);
+	lv_style_set_bg_color(&style_bg, bg_color);
+	lv_style_set_text_color(&style_bg, text_color);
 
-	// List style
-	lv_style_init(&list_style);
-	lv_style_set_border_color(&list_style, border_color);
-	lv_style_set_border_width(&list_style, 1);
-	lv_style_set_border_opa(&list_style, LV_OPA_COVER);
-	lv_style_set_bg_color(&bg_style, bg_color);
-	lv_style_set_pad_ver(&bg_style, 0);
-	lv_style_set_pad_hor(&bg_style, 8);
-	lv_style_set_pad_gap(&bg_style, 0);
+	// List
+	lv_style_init(&style_list);
+	lv_style_set_border_color(&style_list, border_color);
+	lv_style_set_border_width(&style_list, 1);
+	lv_style_set_border_opa(&style_list, LV_OPA_COVER);
+	lv_style_set_bg_color(&style_list, bg_color);
+	lv_style_set_pad_ver(&style_list, 0);
+	lv_style_set_pad_hor(&style_list, 8);
+	lv_style_set_pad_gap(&style_list, 0);
 
-	// List button released style
-	lv_style_init(&list_btn_style_rel);
-	lv_style_set_border_color(&list_btn_style_rel, border_color);
-	lv_style_set_border_width(&list_btn_style_rel, 1);
-	lv_style_set_border_opa(&list_btn_style_rel, LV_OPA_COVER);
-	lv_style_set_border_side(&list_btn_style_rel, LV_BORDER_SIDE_BOTTOM);
-	lv_style_set_text_color(&list_btn_style_rel, text_color);
-	lv_style_set_radius(&list_btn_style_rel, 0);
-	lv_style_set_bg_color(&list_btn_style_rel, bg_color);
-	lv_style_set_pad_ver(&list_btn_style_rel, 16);
+	// List button
+	lv_style_init(&style_list_btn);
+	lv_style_set_border_color(&style_list_btn, border_color);
+	lv_style_set_border_width(&style_list_btn, 1);
+	lv_style_set_border_opa(&style_list_btn, LV_OPA_COVER);
+	lv_style_set_border_side(&style_list_btn, LV_BORDER_SIDE_BOTTOM);
+	lv_style_set_text_color(&style_list_btn, text_color);
+	lv_style_set_radius(&style_list_btn, 0);
+	lv_style_set_bg_color(&style_list_btn, bg_color);
+	lv_style_set_pad_ver(&style_list_btn, 16);
 
-	// List button pressed style
-	lv_style_init(&list_btn_style_pr);
-	lv_style_set_bg_color(&list_btn_style_pr, shade_color);
-	lv_style_set_pad_ver(&list_btn_style_pr, 16);
-	lv_style_set_radius(&list_btn_style_pr, 0);
-	lv_style_set_text_color(&list_btn_style_pr, text_color);
+	// List button pressed
+	lv_style_init(&style_list_btn_pr);
+	lv_style_set_bg_color(&style_list_btn_pr, shade_color);
 
-	// Released rounded button style
-	lv_style_init(&round_btn_style_rel);
-	lv_style_set_bg_color(&round_btn_style_rel, primary_color);
-	lv_style_set_radius(&round_btn_style_rel, 16);
-	lv_style_set_img_recolor(&round_btn_style_rel, bg_color);
-	lv_style_set_text_color(&round_btn_style_rel, text_color);
+	// Base button
+	lv_style_init(&style_btn);
+	lv_style_set_radius(&style_btn, 16);
+	lv_style_set_img_recolor(&style_btn, bg_color);
+	lv_style_set_text_color(&style_btn, text_color);
 
-	// Pressed rounded button style
-	lv_style_init(&round_btn_style_pr);
-	lv_style_set_bg_color(&round_btn_style_pr, primary_color_dark);
+	// Primary button
+	lv_style_init(&style_btn_primary);
+	lv_style_set_bg_color(&style_btn_primary, primary_color);
 
-	// Released outline rounded button style
-	lv_style_init(&outline_round_btn_style_rel);
-	lv_style_set_border_color(&list_btn_style_rel, border_color);
-	lv_style_set_border_width(&list_btn_style_rel, 1);
-	lv_style_set_border_opa(&list_btn_style_rel, LV_OPA_COVER);
-	lv_style_set_bg_color(&round_btn_style_rel, bg_color);
-	lv_style_set_img_recolor(&outline_round_btn_style_rel, text_color);
-	lv_style_set_text_color(&outline_round_btn_style_rel, text_color);
+	// Pressed primary button
+	lv_style_init(&style_btn_primary_pr);
+	lv_style_set_bg_color(&style_btn_primary_pr, primary_color_dark);
 
-	// Pressed outline rounded button style
-	lv_style_init(&outline_round_btn_style_pr);
-	lv_style_set_bg_color(&round_btn_style_pr, shade_color);
+	// Outline button
+	lv_style_init(&style_btn_outline);
+	lv_style_set_border_color(&style_btn_outline, border_color);
+	lv_style_set_border_width(&style_btn_outline, 1);
+	lv_style_set_border_opa(&style_btn_outline, LV_OPA_COVER);
+	lv_style_set_bg_color(&style_btn_outline, bg_color);
+	lv_style_set_img_recolor(&style_btn_outline, text_color);
+	lv_style_set_text_color(&style_btn_outline, text_color);
 
-	// Small text style
-	lv_style_init(&small_text);
-	lv_style_set_text_color(&small_text, text_color);
-	lv_style_set_text_opa(&small_text, LV_OPA_COVER);
-	lv_style_set_text_font(&small_text, &lv_font_montserrat_14);
-	lv_style_set_text_letter_space(&small_text, 1);
+	// Pressed outline button
+	lv_style_init(&style_btn_outline_pr);
+	lv_style_set_bg_color(&style_btn_outline_pr, shade_color);
 
-	// Transparent style
-	lv_style_init(&transp_style);
-	lv_style_set_text_color(&transp_style, text_color);
-	lv_style_set_text_opa(&transp_style, LV_OPA_COVER);
-	lv_style_set_img_recolor(&transp_style, text_color);
+	// Small text
+	lv_style_init(&style_text_small);
+	lv_style_set_text_color(&style_text_small, text_color);
+	lv_style_set_text_opa(&style_text_small, LV_OPA_COVER);
+	lv_style_set_text_font(&style_text_small, &lv_font_montserrat_10);
+	lv_style_set_text_letter_space(&style_text_small, 1);
+
+	// Medium text
+	lv_style_init(&style_text_medium);
+	lv_style_set_text_color(&style_text_small, text_color);
+	lv_style_set_text_opa(&style_text_small, LV_OPA_COVER);
+	lv_style_set_text_font(&style_text_small, &lv_font_montserrat_14);
+	lv_style_set_text_letter_space(&style_text_small, 1);
+
+	// Large text
+	lv_style_init(&style_text_large);
+	lv_style_set_text_color(&style_text_small, text_color);
+	lv_style_set_text_opa(&style_text_small, LV_OPA_COVER);
+	lv_style_set_text_font(&style_text_small, &lv_font_montserrat_20);
+	lv_style_set_text_letter_space(&style_text_small, 1);
 
 	// Text align
-	lv_style_init(&text_centered);
-	lv_style_set_text_align(&text_centered, LV_ALIGN_CENTER);
+	lv_style_init(&style_text_centered);
+	lv_style_set_text_align(&style_text_centered, LV_ALIGN_CENTER);
 }
 
 // ============================ Public Functions ============================ //
