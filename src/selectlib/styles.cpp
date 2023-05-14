@@ -1,7 +1,5 @@
 #include "common/styles.hpp"
 #include "common/init.hpp"
-#include "liblvgl/misc/lv_area.h"
-#include "liblvgl/misc/lv_color.h"
 #include "misc.hpp"
 
 // ================================= Colors ================================= //

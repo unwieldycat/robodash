@@ -1,6 +1,5 @@
 #include "selector.hpp"
 #include "common/styles.hpp"
-#include "liblvgl/core/lv_obj.h"
 
 // =============================== Variables =============================== //
 
