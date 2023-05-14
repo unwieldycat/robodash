@@ -48,9 +48,9 @@ void init_ss() {
 				start_time = pros::millis();
 			}
 
-			time_diff = start_time - pros::millis();
+			time_diff = pros::millis() - start_time;
 			pros::delay(30);
-		} while (time_diff > ss_timeout * 1000);
+		} while (time_diff < ss_timeout * 1000);
 
 		gui::screensaver::activate();
 	}
