@@ -19,7 +19,7 @@ void init_ss() {
 	ss_cont = lv_obj_create(lv_scr_act());
 	lv_obj_set_size(ss_cont, 480, 240);
 	lv_obj_add_event_cb(ss_cont, &ss_cb, LV_EVENT_PRESSED, NULL);
-	lv_obj_add_style(ss_cont, &bg_style, 0);
+	lv_obj_add_style(ss_cont, &style_bg, 0);
 	lv_obj_clear_flag(ss_cont, LV_OBJ_FLAG_HIDDEN);
 
 	// FIXME: Check if screensaver file exists

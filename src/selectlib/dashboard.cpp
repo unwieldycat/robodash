@@ -12,13 +12,13 @@ std::vector<pros::Motor *> motors;
 void init_dashboard() {
 	dashboard_cont = lv_obj_create(lv_scr_act());
 	lv_obj_set_size(dashboard_cont, 480, 240);
-	lv_obj_add_style(dashboard_cont, &bg_style, 0);
+	lv_obj_add_style(dashboard_cont, &style_bg, 0);
 
 	// TODO: Refactor all of this
 	lv_obj_t *bat_cont = lv_obj_create(dashboard_cont);
 	lv_obj_set_size(bat_cont, 104, 32);
 	lv_obj_align(bat_cont, LV_ALIGN_TOP_RIGHT, -8, 8);
-	lv_obj_add_style(bat_cont, &transp_style, 0);
+	lv_obj_add_style(bat_cont, &style_transp, 0);
 	//  lv_btn_set_layout(bat_cont, LV_LAYOUT_OFF);
 
 	lv_obj_t *bat_label = lv_label_create(bat_cont);
