@@ -82,8 +82,11 @@ void r_select_act(lv_event_t *event) {
 		lv_label_set_text(selected_label, "No routine\nselected");
 		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 	} else {
-		gui::selector::routine_t selected = routines.at(*id);
-		std::string routine_name = selected.first;
+		std::cout << *id << std::endl;
+		// gui::selector::routine_t selected = routines.at(*id);
+		std::string routine_name = ""; // selected.first;
+		std::cout << routine_name << std::endl;
+
 		char label_str[sizeof(routine_name) + 20];
 		sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
 		lv_label_set_text(selected_label, label_str);
@@ -114,8 +117,8 @@ void gui::selector::do_selection() {
 
 	lv_obj_t *title_label = lv_label_create(select_cont);
 	lv_label_set_text(title_label, "Select autonomous routine");
-	lv_obj_add_style(title_label, &style_text_centered, 0);
-	lv_obj_set_width(title_label, 232);
+	lv_obj_add_style(title_label, &style_text_large, 0);
+	lv_obj_set_width(title_label, 464);
 	lv_obj_align(title_label, LV_ALIGN_TOP_LEFT, 8, 16);
 
 	lv_obj_t *routine_list = lv_list_create(select_cont);
@@ -124,14 +127,16 @@ void gui::selector::do_selection() {
 	lv_obj_add_style(routine_list, &style_list, 0);
 
 	selected_label = lv_label_create(select_cont);
-	lv_obj_add_style(selected_label, &style_text_centered, 0);
 	lv_label_set_text(selected_label, "No routine\nselected");
+	lv_obj_add_style(selected_label, &style_text_centered, 0);
 	lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 
 	// Add routines to list
 	for (gui::selector::routine_t routine : routines) {
 		// Store current position in vector
 		static int r_index = 0;
+
+		std::cout << routine.first << std::endl;
 
 		lv_obj_t *new_btn = lv_list_add_btn(routine_list, NULL, routine.first.c_str());
 		lv_obj_add_style(new_btn, &style_list_btn, 0);
@@ -158,6 +163,7 @@ void gui::selector::do_selection() {
 
 	lv_obj_t *done_img = lv_img_create(done_btn);
 	lv_img_set_src(done_img, LV_SYMBOL_OK);
+	lv_obj_set_align(done_img, LV_ALIGN_CENTER);
 
 	if (pros::usd::is_installed()) {
 		sdconf_load();
@@ -181,6 +187,7 @@ void gui::selector::do_selection() {
 
 		lv_obj_t *save_img = lv_img_create(save_btn);
 		lv_img_set_src(save_img, LV_SYMBOL_SAVE);
+		lv_obj_set_align(save_img, LV_ALIGN_CENTER);
 	}
 
 	// Wait for user to be done or for match to start

@@ -80,10 +80,12 @@ void init_styles() {
 	lv_style_set_radius(&style_btn, 16);
 	lv_style_set_img_recolor(&style_btn, bg_color);
 	lv_style_set_text_color(&style_btn, text_color);
+	lv_style_set_shadow_opa(&style_btn, LV_OPA_TRANSP);
 
 	// Primary button
 	lv_style_init(&style_btn_primary);
 	lv_style_set_bg_color(&style_btn_primary, primary_color);
+	lv_style_set_img_recolor(&style_btn_primary, bg_color);
 
 	// Pressed primary button
 	lv_style_init(&style_btn_primary_pr);
@@ -111,27 +113,28 @@ void init_styles() {
 
 	// Medium text
 	lv_style_init(&style_text_medium);
-	lv_style_set_text_color(&style_text_small, text_color);
-	lv_style_set_text_opa(&style_text_small, LV_OPA_COVER);
-	lv_style_set_text_font(&style_text_small, &lv_font_montserrat_14);
-	lv_style_set_text_letter_space(&style_text_small, 1);
+	lv_style_set_text_color(&style_text_medium, text_color);
+	lv_style_set_text_opa(&style_text_medium, LV_OPA_COVER);
+	lv_style_set_text_font(&style_text_medium, &lv_font_montserrat_14);
+	lv_style_set_text_letter_space(&style_text_medium, 1);
 
+	// FIXME: Enable large font
 	// Large text
 	lv_style_init(&style_text_large);
-	lv_style_set_text_color(&style_text_small, text_color);
-	lv_style_set_text_opa(&style_text_small, LV_OPA_COVER);
-	lv_style_set_text_font(&style_text_small, &lv_font_montserrat_20);
-	lv_style_set_text_letter_space(&style_text_small, 1);
+	lv_style_set_text_color(&style_text_large, text_color);
+	lv_style_set_text_opa(&style_text_large, LV_OPA_COVER);
+	lv_style_set_text_font(&style_text_large, &lv_font_montserrat_14);
 
 	// Text align
 	lv_style_init(&style_text_centered);
-	lv_style_set_text_align(&style_text_centered, LV_ALIGN_CENTER);
+	lv_style_set_text_align(&style_text_centered, LV_TEXT_ALIGN_CENTER);
 
 	// Transparent
 	lv_style_init(&style_transp);
 	lv_style_set_bg_opa(&style_transp, LV_OPA_TRANSP);
 	lv_style_set_border_opa(&style_transp, LV_OPA_TRANSP);
 	lv_style_set_radius(&style_transp, 0);
+	lv_style_set_pad_all(&style_transp, 0);
 }
 
 // ============================ Public Functions ============================ //
