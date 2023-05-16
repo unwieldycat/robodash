@@ -48,6 +48,7 @@ void init_styles() {
 	lv_style_set_radius(&style_bg, 0);
 	lv_style_set_bg_color(&style_bg, bg_color);
 	lv_style_set_text_color(&style_bg, text_color);
+	lv_style_set_pad_all(&style_bg, 0);
 
 	// List
 	lv_style_init(&style_list);
