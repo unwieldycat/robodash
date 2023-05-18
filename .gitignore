@@ -16,4 +16,4 @@ temp.errors
 *.ini
 .d/
 
-.DS_STORE
+.DS_Store
