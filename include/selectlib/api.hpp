@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../api.h"
-#include "../display/lvgl.h"
+#include "../liblvgl/lvgl.h"
 #include <cstdio>
 #include <functional>
 #include <stdio.h>
