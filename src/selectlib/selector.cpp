@@ -1,9 +1,20 @@
 #include "selector.hpp"
 #include "common/styles.hpp"
 
+// ============================= Routine Struct ============================= //
+
+typedef struct Routine {
+	Routine(int id, std::string name, std::function<void()> action)
+	    : id(id), name(name), action(action) {}
+
+	int id;
+	std::string name;
+	std::function<void()> action;
+} routine_t;
+
 // =============================== Variables =============================== //
 
-std::vector<gui::selector::routine_t> routines;
+std::vector<Routine> routines;
 int selected_auton = -1; // Default -1 to do nothing
 bool selection_done = false;
 bool selection_running = false;
@@ -21,8 +32,8 @@ void sdconf_save() {
 	if (selected_auton == -1) {
 		fputs("-1", save_file);
 	} else {
-		gui::selector::routine_t selected = routines.at(selected_auton);
-		std::string routine_name = selected.first;
+		Routine selected = routines.at(selected_auton);
+		std::string routine_name = selected.name;
 
 		// File format:
 		// [id] [name]
@@ -55,8 +66,8 @@ void sdconf_load() {
 		lv_label_set_text(selected_label, "No routine\nselected");
 		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 	} else {
-		gui::selector::routine_t selected = routines.at(saved_id);
-		std::string routine_name = selected.first;
+		Routine selected = routines.at(saved_id);
+		std::string routine_name = selected.name;
 
 		// Exit if routine name does not match
 		if (saved_name != routine_name) return;
@@ -82,9 +93,8 @@ void r_select_act(lv_event_t *event) {
 		lv_label_set_text(selected_label, "No routine\nselected");
 		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 	} else {
-		std::cout << *id << std::endl;
-		// gui::selector::routine_t selected = routines.at(*id);
-		std::string routine_name = ""; // selected.first;
+		routine_t selected = routines.at(*id);
+		std::string routine_name = selected.name;
 		std::cout << routine_name << std::endl;
 
 		char label_str[sizeof(routine_name) + 20];
@@ -132,18 +142,11 @@ void gui::selector::do_selection() {
 	lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 
 	// Add routines to list
-	for (gui::selector::routine_t routine : routines) {
-		// Store current position in vector
-		static int r_index = 0;
-
-		std::cout << routine.first << std::endl;
-
-		lv_obj_t *new_btn = lv_list_add_btn(routine_list, NULL, routine.first.c_str());
+	for (Routine &routine : routines) {
+		lv_obj_t *new_btn = lv_list_add_btn(routine_list, NULL, routine.name.c_str());
 		lv_obj_add_style(new_btn, &style_list_btn, 0);
 		lv_obj_add_style(new_btn, &style_list_btn_pr, LV_STATE_PRESSED);
-		lv_obj_add_event_cb(new_btn, &r_select_act, LV_EVENT_PRESSED, &r_index);
-
-		r_index++;
+		lv_obj_add_event_cb(new_btn, &r_select_act, LV_EVENT_PRESSED, &routine.id);
 	}
 
 	int nothing_id = -1; // bruh
@@ -211,11 +214,18 @@ void gui::selector::exit_selection() {
 // ============================= Other Methods ============================= //
 
 void gui::selector::add_autons(std::vector<selector::routine_t> new_routines) {
-	routines.insert(routines.end(), new_routines.begin(), new_routines.end());
+	for (gui::selector::routine_t routine : new_routines) {
+		static int r_index = 0;
+
+		Routine new_routine(r_index, routine.first, routine.second);
+		routines.push_back(new_routine);
+
+		r_index++;
+	}
 }
 
 void gui::selector::do_auton() {
 	if (selected_auton == -1) return; // If commanded to do nothing then return
-	selector::routine_t routine = routines.at(selected_auton);
-	routine.second();
+	Routine routine = routines.at(selected_auton);
+	routine.action();
 }
