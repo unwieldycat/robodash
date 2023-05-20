@@ -36,7 +36,7 @@ void init_ss() {
 
 	while (true) {
 		if (ss_active) {
-			pros::delay(100);
+			pros::delay(500);
 			continue;
 		}
 
@@ -53,6 +53,7 @@ void init_ss() {
 		} while (time_diff < ss_timeout * 1000);
 
 		gui::screensaver::activate();
+		pros::delay(1000);
 	}
 }
 
