@@ -17,7 +17,6 @@ void init_dashboard() {
 	lv_obj_set_size(dashboard_cont, 480, 240);
 	lv_obj_add_style(dashboard_cont, &style_bg, 0);
 
-	// TODO: Refactor all of this
 	lv_obj_t *bat_cont = lv_obj_create(dashboard_cont);
 	lv_obj_set_size(bat_cont, 104, 32);
 	lv_obj_align(bat_cont, LV_ALIGN_TOP_RIGHT, -8, 8);
@@ -39,10 +38,8 @@ void init_dashboard() {
 [[noreturn]] void dashboard_background() {
 	while (true) {
 		// Refresh battery level
-
-		int level = (int)pros::battery::get_capacity() / 100;
-
-		char level_str[4];
+		int level = pros::battery::get_capacity();
+		char level_str[sizeof(level) + 1];
 		sprintf(level_str, "%d%%", level);
 		lv_label_set_text(bat_label, level_str);
 
