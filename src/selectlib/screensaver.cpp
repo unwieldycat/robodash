@@ -10,10 +10,7 @@ int ss_timeout = 8;
 lv_obj_t *ss_cont;
 lv_obj_t *ss_img;
 
-void ss_cb(lv_event_t *event) {
-	lv_obj_t *obj = event->target;
-	lv_obj_add_flag(ss_cont, LV_OBJ_FLAG_HIDDEN);
-}
+void ss_cb(lv_event_t *event) { gui::screensaver::exit(); }
 
 void init_ss() {
 	ss_cont = lv_obj_create(lv_scr_act());
