@@ -1,6 +1,6 @@
 #include "common/styles.hpp"
 #include "common/init.hpp"
-#include "misc.hpp"
+#include "styles.hpp"
 
 // ================================= Colors ================================= //
 

@@ -8,6 +8,7 @@
 #include <string>
 
 #include "dashboard.hpp"
-#include "misc.hpp"
+#include "gui.hpp"
 #include "screensaver.hpp"
 #include "selector.hpp"
+#include "styles.hpp"
