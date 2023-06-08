@@ -25,33 +25,18 @@ void init_ss() {
 	lv_obj_align(ss_img, LV_ALIGN_CENTER, 0, 0);
 }
 
-// ========================== Background Function ========================== //
+// ============================ Refresh Function ============================ //
 
-[[noreturn]] void ss_background() {
-	uint start_time;
-	uint time_diff;
+uint start_time = pros::millis();
+uint time_diff;
 
-	while (true) {
-		if (ss_active) {
-			pros::delay(500);
-			continue;
-		}
-
+void refresh_ss() {
+	if (ss_active) return;
+	if (pros::screen::touch_status().touch_status != pros::E_TOUCH_RELEASED) {
 		start_time = pros::millis();
-
-		do {
-			// Set start time to current time if interaction
-			if (pros::screen::touch_status().touch_status != pros::E_TOUCH_RELEASED) {
-				start_time = pros::millis();
-			}
-
-			time_diff = pros::millis() - start_time;
-			pros::delay(30);
-		} while (time_diff < ss_timeout * 1000);
-
-		gui::screensaver::activate();
-		pros::delay(1000);
 	}
+	time_diff = pros::millis() - start_time;
+	if (time_diff > ss_timeout * 1000) gui::screensaver::activate();
 }
 
 // ============================ Other Functions ============================ //

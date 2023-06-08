@@ -29,6 +29,11 @@ void activate();
  */
 void exit();
 
+/**
+ * @brief Refresh screensaver state (This function is automatically called)
+ */
+void _refresh();
+
 } // namespace screensaver
 
 } // namespace gui

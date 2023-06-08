@@ -20,6 +20,11 @@ void add_action(std::string name, std::function<void()> fn);
  */
 void add_motors(std::vector<pros::Motor *> mtrs);
 
+/**
+ * @brief Refresh dashboard state (This function is automatically called)
+ */
+void _refresh();
+
 } // namespace dashboard
 
 } // namespace gui

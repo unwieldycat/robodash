@@ -1,10 +1,14 @@
 #include "gui.hpp"
 #include "common/init.hpp"
+#include "dashboard.hpp"
+#include "screensaver.hpp"
 
-void background() {
+[[noreturn]] void background() {
 	while (true) {
-		dashboard_background();
-		ss_background();
+		gui::dashboard::_refresh();
+		gui::screensaver::_refresh();
+
+		pros::delay(500);
 	}
 }
 
