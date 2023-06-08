@@ -2,7 +2,6 @@
 #include "api.hpp"
 
 namespace gui {
-
 namespace screensaver {
 
 /**
@@ -29,11 +28,17 @@ void activate();
  */
 void exit();
 
+// --------------------------- Internal Functions --------------------------- //
+
 /**
  * @brief Refresh screensaver state (This function is automatically called)
  */
 void _refresh();
 
-} // namespace screensaver
+/**
+ * @brief Initialize screensaver (This function is run internally)
+ */
+void _initialize();
 
+} // namespace screensaver
 } // namespace gui

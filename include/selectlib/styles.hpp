@@ -11,5 +11,12 @@ namespace theme {
  */
 void set_hue(int hue);
 
+// --------------------------- Internal Functions --------------------------- //
+
+/**
+ * @brief Initialize themes (Runs internally)
+ */
+void _initialize();
+
 } // namespace theme
 } // namespace gui

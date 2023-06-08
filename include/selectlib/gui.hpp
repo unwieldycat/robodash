@@ -5,7 +5,6 @@ namespace gui {
 
 /**
  * @brief Initialize library
- *
  */
 void initialize();
 

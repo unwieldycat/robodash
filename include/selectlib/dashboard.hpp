@@ -20,10 +20,17 @@ void add_action(std::string name, std::function<void()> fn);
  */
 void add_motors(std::vector<pros::Motor *> mtrs);
 
+// --------------------------- Internal Functions --------------------------- //
+
 /**
  * @brief Refresh dashboard state (This function is automatically called)
  */
 void _refresh();
+
+/**
+ * @brief Initialize screensaver (This function is run internally)
+ */
+void _initialize();
 
 } // namespace dashboard
 

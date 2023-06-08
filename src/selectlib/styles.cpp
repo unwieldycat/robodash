@@ -1,5 +1,4 @@
 #include "common/styles.hpp"
-#include "common/init.hpp"
 #include "styles.hpp"
 
 // ================================= Colors ================================= //
@@ -33,7 +32,7 @@ lv_style_t style_text_medium;
 lv_style_t style_text_large;
 lv_style_t style_text_centered;
 
-void init_styles() {
+void gui::theme::_initialize() {
 	// Colors
 	bg_color = lv_color_hsv_to_rgb(hue, 50, 10);
 	border_color = lv_color_hsv_to_rgb(hue, 25, 50);
@@ -137,12 +136,10 @@ void init_styles() {
 	lv_style_set_pad_all(&style_transp, 0);
 }
 
-// ============================ Public Functions ============================ //
-
 void gui::theme::set_hue(int new_hue) {
 	hue = new_hue;
 
 	// Rebuild styles and notify lvgl to refresh all objects
-	init_styles();
+	_initialize();
 	lv_obj_report_style_change(NULL);
 }

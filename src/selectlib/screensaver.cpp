@@ -1,5 +1,4 @@
 #include "screensaver.hpp"
-#include "common/init.hpp"
 #include "common/styles.hpp"
 
 bool ss_active = false;
@@ -12,7 +11,7 @@ lv_obj_t *ss_img;
 
 void ss_cb(lv_event_t *event) { gui::screensaver::exit(); }
 
-void init_ss() {
+void gui::screensaver::_initialize() {
 	ss_cont = lv_obj_create(lv_scr_act());
 	lv_obj_set_size(ss_cont, 480, 240);
 	lv_obj_add_event_cb(ss_cont, &ss_cb, LV_EVENT_PRESSED, NULL);

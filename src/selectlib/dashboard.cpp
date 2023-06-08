@@ -1,5 +1,4 @@
 #include "dashboard.hpp"
-#include "common/init.hpp"
 #include "common/styles.hpp"
 
 // =============================== Variables =============================== //
@@ -12,7 +11,7 @@ lv_obj_t *bat_img;
 
 // ============================= Initialization ============================= //
 
-void init_dashboard() {
+void gui::dashboard::_initialize() {
 	dashboard_cont = lv_obj_create(lv_scr_act());
 	lv_obj_set_size(dashboard_cont, 480, 240);
 	lv_obj_add_style(dashboard_cont, &style_bg, 0);

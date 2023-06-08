@@ -1,7 +1,7 @@
 #include "gui.hpp"
-#include "common/init.hpp"
 #include "dashboard.hpp"
 #include "screensaver.hpp"
+#include "styles.hpp"
 
 [[noreturn]] void background() {
 	while (true) {
@@ -13,9 +13,9 @@
 }
 
 void gui::initialize() {
-	init_styles();
-	init_dashboard();
-	init_ss();
+	gui::theme::_initialize();
+	gui::dashboard::_initialize();
+	gui::screensaver::_initialize();
 
 	pros::Task gui_task(background, "GUI Update Task");
 }
