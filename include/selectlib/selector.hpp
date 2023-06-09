@@ -2,7 +2,6 @@
 #include "api.hpp"
 
 namespace gui {
-
 namespace selector {
 
 /**
@@ -33,5 +32,4 @@ void exit_selection();
 void do_auton();
 
 } // namespace selector
-
 } // namespace gui

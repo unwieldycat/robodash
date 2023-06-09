@@ -2,7 +2,6 @@
 #include "api.hpp"
 
 namespace gui {
-
 namespace dashboard {
 
 /**
@@ -33,5 +32,4 @@ void _refresh();
 void _initialize();
 
 } // namespace dashboard
-
 } // namespace gui
