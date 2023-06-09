@@ -34,7 +34,7 @@ void gui::dashboard::_initialize() {
 
 // ============================ Refresh Function ============================ //
 
-void refresh_dashboard() {
+void gui::dashboard::_refresh() {
 	// Refresh battery level
 	int level = pros::battery::get_capacity();
 	char level_str[sizeof(level) + 1];

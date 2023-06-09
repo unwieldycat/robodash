@@ -29,7 +29,7 @@ void gui::screensaver::_initialize() {
 uint start_time = pros::millis();
 uint time_diff;
 
-void refresh_ss() {
+void gui::screensaver::_refresh() {
 	if (ss_active) return;
 	if (pros::screen::touch_status().touch_status != pros::E_TOUCH_RELEASED) {
 		start_time = pros::millis();
