@@ -5,32 +5,32 @@
 
 namespace gui {
 
-class Window {
+class View {
   public:
 	const int id = pros::millis();
 	std::string name;
 	lv_obj_t *obj;
 
-	Window(std::string name);
-	~Window();
+	View(std::string name);
+	~View();
 
 	virtual void refresh() = 0;
 	virtual void initialize() = 0;
 };
 
 /**
- * @brief Set the current window
+ * @brief Set the current view
  *
- * @param window
+ * @param view
  */
-void set_window(Window *window);
+void set_view(View *view);
 
 /**
- * @brief Get the current window
+ * @brief Get the current view
  *
- * @return Window*
+ * @return View*
  */
-Window *get_window();
+View *get_view();
 
 /**
  * @brief Initialize library

@@ -4,9 +4,9 @@
 
 namespace gui {
 
-class DevicesWindow : public Window {
+class DevicesView : public View {
   public:
-	DevicesWindow();
+	DevicesView();
 
 	/**
 	 * @brief Add motors to dashboard for monitoring

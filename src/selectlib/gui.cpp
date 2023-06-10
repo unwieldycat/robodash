@@ -5,57 +5,57 @@
 
 #define INFO_BAR_WIDTH 32
 
-lv_obj_t *window_cont;
+lv_obj_t *view_cont;
 lv_obj_t *info_bar;
-lv_obj_t *window_list;
+lv_obj_t *view_list;
 lv_obj_t *battery_label;
 lv_obj_t *battery_icon;
 
-std::map<int, gui::Window *> windows;
-gui::Window *current_window;
+std::map<int, gui::View *> views;
+gui::View *current_view;
 
 void list_refresh();
 
-// =========================== Base Window Class =========================== //
+// =========================== Base View Class =========================== //
 
-gui::Window::Window(std::string name) : name(name) {
-	this->obj = lv_obj_create(window_cont);
+gui::View::View(std::string name) : name(name) {
+	this->obj = lv_obj_create(view_cont);
 	lv_obj_set_size(this->obj, lv_pct(100), lv_pct(100));
 	lv_obj_add_flag(this->obj, LV_OBJ_FLAG_HIDDEN);
-	windows.emplace(this->id, this);
+	views.emplace(this->id, this);
 	list_refresh();
 }
 
-gui::Window::~Window() { lv_obj_del(this->obj); }
+gui::View::~View() { lv_obj_del(this->obj); }
 
-// =========================== Window Management =========================== //
+// =========================== View Management =========================== //
 
-void gui::set_window(Window *window) {
-	lv_obj_add_flag(current_window->obj, LV_OBJ_FLAG_HIDDEN);
-	current_window = window;
-	lv_obj_clear_flag(current_window->obj, LV_OBJ_FLAG_HIDDEN);
+void gui::set_view(View *view) {
+	lv_obj_add_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
+	current_view = view;
+	lv_obj_clear_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
 }
 
-gui::Window *gui::get_window() { return current_window; }
+gui::View *gui::get_view() { return current_view; }
 
 // ================================ Info Bar ================================ //
 
 void list_refresh() {
-	lv_dropdown_clear_options(window_list);
+	lv_dropdown_clear_options(view_list);
 
-	for (auto const &[id, window] : windows) {
-		lv_dropdown_add_option(window_list, window->name.c_str(), window->id);
-		if (id == current_window->id) lv_dropdown_set_selected(window_list, id);
+	for (auto const &[id, view] : views) {
+		lv_dropdown_add_option(view_list, view->name.c_str(), view->id);
+		if (id == current_view->id) lv_dropdown_set_selected(view_list, id);
 	}
 }
 
 void list_select_cb(lv_event_t *event) {
 	lv_obj_t *target = lv_event_get_target(event);
 	int idx = lv_dropdown_get_selected(target);
-	if (idx == current_window->id) return;
+	if (idx == current_view->id) return;
 
-	gui::Window *selected = windows.at(idx);
-	gui::set_window(selected);
+	gui::View *selected = views.at(idx);
+	gui::set_view(selected);
 }
 
 // ============================ Background Task ============================ //
@@ -81,8 +81,8 @@ void list_select_cb(lv_event_t *event) {
 			lv_img_set_src(battery_icon, LV_SYMBOL_BATTERY_EMPTY);
 		}
 
-		for (auto const &[id, window] : windows) {
-			window->refresh();
+		for (auto const &[id, view] : views) {
+			view->refresh();
 		}
 
 		gui::screensaver::_refresh();
@@ -96,28 +96,28 @@ void list_select_cb(lv_event_t *event) {
 void gui::initialize() {
 	gui::theme::_initialize();
 
-	window_cont = lv_obj_create(lv_scr_act());
-	lv_obj_set_size(window_cont, 480, 240 - INFO_BAR_WIDTH);
-	lv_obj_add_style(window_cont, &style_bg, 0);
+	view_cont = lv_obj_create(lv_scr_act());
+	lv_obj_set_size(view_cont, 480, 240 - INFO_BAR_WIDTH);
+	lv_obj_add_style(view_cont, &style_bg, 0);
 
 	info_bar = lv_obj_create(lv_scr_act());
 	lv_obj_set_size(info_bar, 480, INFO_BAR_WIDTH);
 	lv_obj_add_style(info_bar, &style_bar_bg, 0);
 	lv_obj_align(info_bar, LV_ALIGN_BOTTOM_MID, 0, 0);
 
-	window_list = lv_dropdown_create(info_bar);
-	lv_dropdown_clear_options(window_list);
-	lv_obj_set_size(window_list, 152, 32);
-	lv_obj_align(window_list, LV_ALIGN_TOP_LEFT, 0, 0);
-	lv_obj_add_style(window_list, &style_bar_button, 0);
-	lv_obj_add_style(window_list, &style_bar_button_pr, LV_STATE_PRESSED);
-	lv_dropdown_set_dir(window_list, LV_DIR_TOP);
-	lv_obj_add_event_cb(window_list, &list_select_cb, LV_EVENT_VALUE_CHANGED, NULL);
+	view_list = lv_dropdown_create(info_bar);
+	lv_dropdown_clear_options(view_list);
+	lv_obj_set_size(view_list, 152, 32);
+	lv_obj_align(view_list, LV_ALIGN_TOP_LEFT, 0, 0);
+	lv_obj_add_style(view_list, &style_bar_button, 0);
+	lv_obj_add_style(view_list, &style_bar_button_pr, LV_STATE_PRESSED);
+	lv_dropdown_set_dir(view_list, LV_DIR_TOP);
+	lv_obj_add_event_cb(view_list, &list_select_cb, LV_EVENT_VALUE_CHANGED, NULL);
 
 	lv_obj_add_event_cb(
-	    window_list,
+	    view_list,
 	    [](lv_event_t *event) {
-		    lv_obj_t *list = lv_dropdown_get_list(window_list);
+		    lv_obj_t *list = lv_dropdown_get_list(view_list);
 		    if (!list) return;
 		    lv_obj_add_style(list, &style_bar_list, LV_PART_MAIN);
 	    },
@@ -141,8 +141,8 @@ void gui::initialize() {
 
 	gui::screensaver::_initialize();
 
-	for (auto const &[id, window] : windows) {
-		window->initialize();
+	for (auto const &[id, view] : views) {
+		view->initialize();
 	}
 
 	pros::Task gui_task(background, "GUI Update Task");
