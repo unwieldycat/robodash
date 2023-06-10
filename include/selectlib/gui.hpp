@@ -44,4 +44,19 @@ View *get_view();
  */
 void initialize();
 
+namespace bar {
+
+typedef std::pair<std::string, std::function<void()>> action_t;
+
+/**
+ * @brief Add action to bar
+ */
+void add_action(std::string name, std::function<void()> action);
+
+/**
+ * @brief Add actions to bar
+ */
+void add_actions(std::vector<action_t> new_actions);
+
+} // namespace bar
 } // namespace gui

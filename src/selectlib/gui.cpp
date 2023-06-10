@@ -1,7 +1,15 @@
 #include "gui.hpp"
 #include "common/styles.hpp"
+#include "liblvgl/core/lv_event.h"
+#include "liblvgl/core/lv_obj.h"
+#include "liblvgl/font/lv_symbol_def.h"
+#include "liblvgl/widgets/lv_dropdown.h"
 #include "screensaver.hpp"
 #include "styles.hpp"
+
+// FIXME: ================================
+// FIXME: Events for dropdown dont trigger
+// FIXME: ================================
 
 #define INFO_BAR_WIDTH 32
 
@@ -10,11 +18,14 @@ lv_obj_t *info_bar;
 lv_obj_t *view_list;
 lv_obj_t *battery_label;
 lv_obj_t *battery_icon;
+lv_obj_t *run_list;
 
 std::map<int, gui::View *> views;
 gui::View *current_view;
 
-void list_refresh();
+std::vector<gui::bar::action_t> actions;
+
+void view_list_refresh();
 
 // =========================== Base View Class =========================== //
 
@@ -33,7 +44,7 @@ void gui::register_view(View *view) {
 	view->initialize();
 	views.emplace(view->id, view);
 	if (!current_view) gui::set_view(view);
-	list_refresh();
+	view_list_refresh();
 }
 
 void gui::set_view(View *view) {
@@ -46,7 +57,7 @@ gui::View *gui::get_view() { return current_view; }
 
 // ================================ Info Bar ================================ //
 
-void list_refresh() {
+void view_list_refresh() {
 	lv_dropdown_clear_options(view_list);
 
 	for (auto const &[id, view] : views) {
@@ -55,13 +66,47 @@ void list_refresh() {
 	}
 }
 
-void list_select_cb(lv_event_t *event) {
+void view_list_select_cb(lv_event_t *event) {
 	lv_obj_t *target = lv_event_get_target(event);
 	int idx = lv_dropdown_get_selected(target);
 	if (idx == current_view->id) return;
 
 	gui::View *selected = views.at(idx);
 	gui::set_view(selected);
+}
+
+void run_list_refresh() {
+	lv_dropdown_clear_options(run_list);
+
+	int idx = 0;
+	for (gui::bar::action_t action : actions) {
+		lv_dropdown_add_option(run_list, action.first.c_str(), idx);
+		idx++;
+	}
+}
+
+void run_list_select_cb(lv_event_t *event) {
+	lv_obj_t *target = lv_event_get_current_target(event);
+	int idx = lv_dropdown_get_selected(target);
+
+	gui::bar::action_t selected = actions.at(idx);
+	selected.second();
+}
+
+void gui::bar::add_action(std::string name, std::function<void()> action) {
+	actions.push_back({name, action});
+	if (!lv_obj_has_flag(run_list, LV_OBJ_FLAG_HIDDEN)) return;
+	lv_obj_clear_flag(run_list, LV_OBJ_FLAG_HIDDEN);
+
+	run_list_refresh();
+}
+
+void gui::bar::add_actions(std::vector<action_t> new_actions) {
+	actions.insert(actions.end(), new_actions.begin(), new_actions.end());
+	if (!lv_obj_has_flag(run_list, LV_OBJ_FLAG_HIDDEN)) return;
+	lv_obj_clear_flag(run_list, LV_OBJ_FLAG_HIDDEN);
+
+	run_list_refresh();
 }
 
 // ============================ Background Task ============================ //
@@ -118,12 +163,35 @@ void gui::initialize() {
 	lv_obj_add_style(view_list, &style_bar_button, 0);
 	lv_obj_add_style(view_list, &style_bar_button_pr, LV_STATE_PRESSED);
 	lv_dropdown_set_dir(view_list, LV_DIR_TOP);
-	lv_obj_add_event_cb(view_list, &list_select_cb, LV_EVENT_VALUE_CHANGED, NULL);
+	lv_obj_add_event_cb(view_list, &view_list_select_cb, LV_EVENT_VALUE_CHANGED, NULL);
 
 	lv_obj_add_event_cb(
 	    view_list,
 	    [](lv_event_t *event) {
 		    lv_obj_t *list = lv_dropdown_get_list(view_list);
+		    if (!list) return;
+		    lv_obj_add_style(list, &style_bar_list, LV_PART_MAIN);
+	    },
+	    LV_EVENT_FOCUSED, NULL
+	);
+
+	run_list = lv_dropdown_create(info_bar);
+	lv_dropdown_clear_options(run_list);
+	lv_dropdown_set_text(run_list, "Run");
+	lv_dropdown_set_symbol(run_list, LV_SYMBOL_CHARGE);
+	lv_dropdown_set_selected_highlight(run_list, false);
+	lv_dropdown_set_dir(run_list, LV_DIR_TOP);
+	lv_obj_set_size(run_list, 64, 32);
+	lv_obj_align(run_list, LV_ALIGN_TOP_LEFT, 152, 0);
+	lv_obj_add_style(run_list, &style_bar_button, 0);
+	lv_obj_add_style(run_list, &style_bar_button_pr, LV_STATE_PRESSED);
+	lv_obj_add_flag(run_list, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_event_cb(run_list, &run_list_select_cb, LV_EVENT_VALUE_CHANGED, NULL);
+
+	lv_obj_add_event_cb(
+	    run_list,
+	    [](lv_event_t *event) {
+		    lv_obj_t *list = lv_dropdown_get_list(run_list);
 		    if (!list) return;
 		    lv_obj_add_style(list, &style_bar_list, LV_PART_MAIN);
 	    },
