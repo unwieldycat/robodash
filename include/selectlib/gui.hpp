@@ -1,22 +1,21 @@
 #pragma once
 #include "api.hpp"
+#include "pros/rtos.hpp"
 
 namespace gui {
 
-typedef struct Window {
-	Window(std::string name);
-	~Window();
-	int id;
+class Window {
+  public:
+	const int id = pros::millis();
 	std::string name;
 	lv_obj_t *obj;
-} window_t;
 
-/**
- * @brief Register a window
- *
- * @param window
- */
-void register_window(Window *window);
+	Window(std::string name);
+	~Window();
+
+	virtual void refresh() = 0;
+	virtual void initialize() = 0;
+};
 
 /**
  * @brief Set the current window
@@ -31,13 +30,6 @@ void set_window(Window *window);
  * @return Window*
  */
 Window *get_window();
-
-/**
- * @brief Close a window
- *
- * @param window
- */
-void close_window(Window *window);
 
 /**
  * @brief Initialize library

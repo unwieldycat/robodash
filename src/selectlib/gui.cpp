@@ -9,69 +9,51 @@ lv_obj_t *window_list;
 lv_obj_t *battery_label;
 lv_obj_t *battery_icon;
 
-std::vector<gui::Window *> windows;
+std::map<int, gui::Window *> windows;
 gui::Window *current_window;
 
-// =========================== Window Management =========================== //
+void list_refresh();
 
-void repopulate_list() {
-	lv_dropdown_clear_options(window_list);
-	for (gui::Window *window : windows) {
-		lv_dropdown_add_option(window_list, window->name.c_str(), window->id);
-	}
-}
-
-void remove_window(int id) {
-	(void)std::remove_if(windows.begin(), windows.end(), [&id](gui::Window *win) {
-		return win->id == id;
-	});
-
-	repopulate_list();
-}
-
-void win_delete_cb(lv_event_t *event) {
-	int *deleted_id = (int *)lv_event_get_user_data(event);
-	remove_window(*deleted_id);
-}
-
-void update_window(lv_event_t *event) {
-	lv_obj_t *obj = lv_event_get_target(event);
-	int selected = lv_dropdown_get_selected(obj);
-	if (selected == current_window->id) return;
-
-	auto it = std::find_if(windows.begin(), windows.end(), [selected](gui::Window *win) {
-		return win->id == selected;
-	});
-	if (it == windows.end()) return;
-	int idx = it - windows.begin();
-
-	current_window = windows[idx];
-
-	// TODO: Actually change displayed window
-}
-
-int window_id = 0;
+// =========================== Base Window Class =========================== //
 
 gui::Window::Window(std::string name) : name(name) {
-	this->id = window_id;
 	this->obj = lv_obj_create(window_cont);
 	lv_obj_set_size(this->obj, lv_pct(100), lv_pct(100));
-	window_id++;
+	lv_obj_add_flag(this->obj, LV_OBJ_FLAG_HIDDEN);
+	windows.emplace(this->id, this);
+	list_refresh();
 }
 
 gui::Window::~Window() { lv_obj_del(this->obj); }
 
-void gui::register_window(Window *window) {
-	lv_obj_add_event_cb(window->obj, &win_delete_cb, LV_EVENT_DELETE, &window->id);
-	windows.push_back(window);
+// =========================== Window Management =========================== //
 
-	repopulate_list();
+void gui::set_window(Window *window) {
+	lv_obj_add_flag(current_window->obj, LV_OBJ_FLAG_HIDDEN);
+	current_window = window;
+	lv_obj_clear_flag(current_window->obj, LV_OBJ_FLAG_HIDDEN);
 }
 
-void gui::close_window(Window *window) {
-	remove_window(window->id);
-	if (current_window->id != window->id) return;
-	current_window = windows.back(); // FIXME: have a default window in case no windows
+gui::Window *gui::get_window() { return current_window; }
+
+// ================================ Info Bar ================================ //
+
+void list_refresh() {
+	lv_dropdown_clear_options(window_list);
+
+	for (auto const &[id, window] : windows) {
+		lv_dropdown_add_option(window_list, window->name.c_str(), window->id);
+		if (id == current_window->id) lv_dropdown_set_selected(window_list, id);
+	}
+}
+
+void list_select_cb(lv_event_t *event) {
+	lv_obj_t *target = lv_event_get_target(event);
+	int idx = lv_dropdown_get_selected(target);
+	if (idx == current_window->id) return;
+
+	gui::Window *selected = windows.at(idx);
+	gui::set_window(selected);
 }
 
 // ============================ Background Task ============================ //
@@ -125,7 +107,7 @@ void gui::initialize() {
 	lv_obj_add_style(window_list, &style_bar_button, 0);
 	lv_obj_add_style(window_list, &style_bar_button_pr, LV_STATE_PRESSED);
 	lv_dropdown_set_dir(window_list, LV_DIR_TOP);
-	lv_obj_add_event_cb(window_list, &update_window, LV_EVENT_VALUE_CHANGED, NULL);
+	lv_obj_add_event_cb(window_list, &list_select_cb, LV_EVENT_VALUE_CHANGED, NULL);
 
 	lv_obj_add_event_cb(
 	    window_list,
