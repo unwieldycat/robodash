@@ -1,6 +1,5 @@
 #include "dashboard.hpp"
 #include "common/styles.hpp"
-#include "gui.hpp"
 
 // =============================== Variables =============================== //
 

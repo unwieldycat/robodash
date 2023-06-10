@@ -1,5 +1,5 @@
 #pragma once
-#include "api.hpp"
+#include "../api.hpp"
 
 namespace gui {
 namespace dashboard {
