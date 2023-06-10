@@ -34,28 +34,7 @@ void gui::dashboard::_initialize() {
 
 // ============================ Refresh Function ============================ //
 
-void gui::dashboard::_refresh() {
-	// Refresh battery level
-	int level = pros::battery::get_capacity();
-	char level_str[sizeof(level) + 1];
-	sprintf(level_str, "%d%%", level);
-	lv_label_set_text(bat_label, level_str);
-
-	// yanderedev technique
-	if (level >= 80) {
-		lv_img_set_src(bat_img, LV_SYMBOL_BATTERY_FULL);
-	} else if (level < 80 && level >= 60) {
-		lv_img_set_src(bat_img, LV_SYMBOL_BATTERY_3);
-	} else if (level < 60 && level >= 40) {
-		lv_img_set_src(bat_img, LV_SYMBOL_BATTERY_2);
-	} else if (level < 40 && level >= 20) {
-		lv_img_set_src(bat_img, LV_SYMBOL_BATTERY_1);
-	} else if (level < 20 && level >= 0) {
-		lv_img_set_src(bat_img, LV_SYMBOL_BATTERY_EMPTY);
-	}
-
-	pros::delay(1000);
-}
+void gui::dashboard::_refresh() { pros::delay(1000); }
 
 // ========================== Dashboard Functions ========================== //
 
