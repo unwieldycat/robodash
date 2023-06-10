@@ -79,7 +79,10 @@ void list_select_cb(lv_event_t *event) {
 			lv_img_set_src(battery_icon, LV_SYMBOL_BATTERY_EMPTY);
 		}
 
-		gui::dashboard::_refresh();
+		for (auto const &[id, window] : windows) {
+			window->refresh();
+		}
+
 		gui::screensaver::_refresh();
 
 		pros::delay(500);
@@ -134,8 +137,11 @@ void gui::initialize() {
 	lv_obj_align(battery_icon, LV_ALIGN_RIGHT_MID, -12, 0);
 	lv_obj_add_style(battery_icon, &style_text_medium, 0);
 
-	gui::dashboard::_initialize();
 	gui::screensaver::_initialize();
+
+	for (auto const &[id, window] : windows) {
+		window->initialize();
+	}
 
 	pros::Task gui_task(background, "GUI Update Task");
 }
