@@ -1,7 +1,7 @@
 #include "selector.hpp"
 #include "common/styles.hpp"
 
-// ============================= Routine Struct ============================= //
+// ============================= Routine Class ============================= //
 
 class Routine {
   public:
@@ -16,7 +16,7 @@ class Routine {
 // =============================== Variables =============================== //
 
 std::vector<Routine> routines;
-int selected_auton = -1; // Default -1 to do nothing
+Routine *selected_routine = nullptr;
 bool selection_done = false;
 bool selection_running = false;
 
@@ -32,16 +32,16 @@ void sdconf_save() {
 	FILE *save_file;
 	save_file = fopen("/usd/autoconf.txt", "w");
 
-	if (selected_auton == -1) {
+	if (selected_routine == nullptr) {
 		fputs("-1", save_file);
 	} else {
-		Routine selected = routines.at(selected_auton);
-		std::string routine_name = selected.name;
+		std::string routine_name = selected_routine->name;
+		int routine_id = selected_routine->id;
 
 		// File format:
 		// [id] [name]
-		char file_data[sizeof(routine_name) + sizeof(selected_auton) + 1];
-		sprintf(file_data, "%d %s", selected_auton, routine_name.c_str());
+		char file_data[sizeof(routine_name) + sizeof(routine_id) + 1];
+		sprintf(file_data, "%d %s", routine_id, routine_name.c_str());
 
 		fputs(file_data, save_file);
 	}
@@ -68,6 +68,8 @@ void sdconf_load() {
 	if (saved_id == -1) {
 		lv_label_set_text(selected_label, "No routine\nselected");
 		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
+
+		selected_routine = nullptr;
 	} else {
 		Routine selected = routines.at(saved_id);
 		std::string routine_name = selected.name;
@@ -75,14 +77,14 @@ void sdconf_load() {
 		// Exit if routine name does not match
 		if (saved_name != routine_name) return;
 
+		selected_routine = &selected;
+
 		// Update routine label
 		char label_str[sizeof(routine_name) + 20];
 		sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
 		lv_label_set_text(selected_label, label_str);
 		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 	}
-
-	selected_auton = saved_id;
 }
 
 // =============================== Selection =============================== //
@@ -90,14 +92,13 @@ void sdconf_load() {
 void r_select_act(lv_event_t *event) {
 
 	lv_obj_t *obj = lv_event_get_target(event);
-	int *id = (int *)lv_event_get_user_data(event);
+	Routine *routine = (Routine *)lv_event_get_user_data(event);
 
-	if (*id == -1) {
+	if (routine == nullptr) {
 		lv_label_set_text(selected_label, "No routine\nselected");
 		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 	} else {
-		Routine selected = routines.at(*id);
-		std::string routine_name = selected.name;
+		std::string routine_name = routine->name;
 
 		char label_str[sizeof(routine_name) + 20];
 		sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
@@ -105,7 +106,7 @@ void r_select_act(lv_event_t *event) {
 		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 	}
 
-	selected_auton = *id;
+	routine = selected_routine;
 }
 
 void done_act(lv_event_t *event) { selection_done = true; }
@@ -136,10 +137,8 @@ void gui::SelectorView::initialize() {
 	lv_obj_add_style(selected_label, &style_text_centered, 0);
 	lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 
-	int nothing_id = -1; // bruh
-
 	lv_obj_t *nothing_btn = lv_list_add_btn(routine_list, NULL, "Nothing");
-	lv_obj_add_event_cb(nothing_btn, &r_select_act, LV_EVENT_PRESSED, &nothing_id);
+	lv_obj_add_event_cb(nothing_btn, &r_select_act, LV_EVENT_PRESSED, nullptr);
 	lv_obj_add_style(nothing_btn, &style_list_btn, 0);
 	lv_obj_add_style(nothing_btn, &style_list_btn_pr, LV_STATE_PRESSED);
 
@@ -193,18 +192,15 @@ void gui::SelectorView::add_autons(std::vector<routine_t> new_routines) {
 		r_index++;
 	}
 
-	/*
-	// why did lvgl remove free numberrrrr
 	for (Routine &routine : routines) {
-	    lv_obj_t *new_btn = lv_list_add_btn(routine_list, NULL, routine.name.c_str());
-	    lv_obj_add_style(new_btn, &style_list_btn, 0);
-	    lv_obj_add_style(new_btn, &style_list_btn_pr, LV_STATE_PRESSED);
-	    lv_obj_add_event_cb(new_btn, &r_select_act, LV_EVENT_PRESSED, &routine.id);
-	}*/
+		lv_obj_t *new_btn = lv_list_add_btn(routine_list, NULL, routine.name.c_str());
+		lv_obj_add_style(new_btn, &style_list_btn, 0);
+		lv_obj_add_style(new_btn, &style_list_btn_pr, LV_STATE_PRESSED);
+		lv_obj_add_event_cb(new_btn, &r_select_act, LV_EVENT_PRESSED, &routine);
+	}
 }
 
 void gui::SelectorView::do_auton() {
-	if (selected_auton == -1) return; // If commanded to do nothing then return
-	Routine routine = routines.at(selected_auton);
-	routine.action();
+	if (selected_routine == nullptr) return; // If commanded to do nothing then return
+	selected_routine->action();
 }
