@@ -30,6 +30,7 @@ gui::View::~View() { lv_obj_del(this->obj); }
 
 void gui::register_view(View *view) {
 	lv_obj_set_parent(view->obj, view_cont);
+	view->initialize();
 	views.emplace(view->id, view);
 	if (!current_view) gui::set_view(view);
 	list_refresh();
@@ -145,10 +146,6 @@ void gui::initialize() {
 	lv_obj_add_style(battery_icon, &style_text_medium, 0);
 
 	gui::screensaver::_initialize();
-
-	for (auto const &[id, view] : views) {
-		view->initialize();
-	}
 
 	pros::Task gui_task(background, "GUI Update Task");
 }
