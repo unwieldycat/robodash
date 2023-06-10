@@ -23,11 +23,20 @@ typedef struct Window {
 
 std::vector<Window> windows;
 
+void repopulate_list() {
+	lv_dropdown_clear_options(window_list);
+	for (Window window : windows) {
+		lv_dropdown_add_option(window_list, window.name.c_str(), window.id);
+	}
+}
+
 void win_delete_cb(lv_event_t *event) {
 	int *deleted_id = (int *)lv_event_get_user_data(event);
 	(void)std::remove_if(windows.begin(), windows.end(), [&deleted_id](Window win) {
 		return win.id == *deleted_id;
 	});
+
+	repopulate_list();
 }
 
 lv_obj_t *gui::create_window(std::string name) {
@@ -41,7 +50,7 @@ lv_obj_t *gui::create_window(std::string name) {
 	lv_obj_add_event_cb(window_obj, &win_delete_cb, LV_EVENT_DELETE, &window_meta.id);
 	windows.push_back(window_meta);
 
-	lv_dropdown_add_option(window_list, name.c_str(), LV_DROPDOWN_POS_LAST);
+	repopulate_list();
 
 	return window_obj;
 }
