@@ -42,21 +42,6 @@ lv_style_t style_bar_button_pr;
 lv_style_t style_bar_list;
 lv_style_t style_bar_bg;
 
-// lambda compatibility workaround
-lv_style_t *new_list_style;
-void add_dropdown_list_style(lv_obj_t *list, lv_style_t *style) {
-	new_list_style = style;
-	lv_obj_add_event_cb(
-	    list,
-	    [](lv_event_t *event) {
-		    lv_obj_t *list = lv_dropdown_get_list(list);
-		    if (!list) return;
-		    lv_obj_add_style(list, new_list_style, LV_PART_MAIN);
-	    },
-	    LV_EVENT_FOCUSED, NULL
-	);
-}
-
 void gui::theme::_initialize() {
 	// Colors
 	bg_color = lv_color_hsv_to_rgb(hue, 50, 10);

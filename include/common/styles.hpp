@@ -23,5 +23,3 @@ extern lv_style_t style_bar_button;
 extern lv_style_t style_bar_button_pr;
 extern lv_style_t style_bar_list;
 extern lv_style_t style_bar_bg;
-
-void add_dropdown_list_style(lv_obj_t *list, lv_style_t *style);
