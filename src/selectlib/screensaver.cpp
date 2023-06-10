@@ -14,9 +14,10 @@ void ss_cb(lv_event_t *event) { gui::screensaver::exit(); }
 void gui::screensaver::_initialize() {
 	ss_cont = lv_obj_create(lv_scr_act());
 	lv_obj_set_size(ss_cont, 480, 240);
+	lv_obj_set_style_bg_color(ss_cont, lv_color_hex(0x000000), 0);
 	lv_obj_add_event_cb(ss_cont, &ss_cb, LV_EVENT_PRESSED, NULL);
 	lv_obj_add_style(ss_cont, &style_bg, 0);
-	lv_obj_clear_flag(ss_cont, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_flag(ss_cont, LV_OBJ_FLAG_HIDDEN);
 
 	// FIXME: Check if screensaver file exists
 	ss_img = lv_img_create(ss_cont);
@@ -54,4 +55,5 @@ void gui::screensaver::exit() {
 	if (!ss_active) return;
 	lv_obj_add_flag(ss_cont, LV_OBJ_FLAG_HIDDEN);
 	ss_active = false;
+	start_time = pros::millis();
 }
