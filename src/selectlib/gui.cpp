@@ -34,6 +34,22 @@ void win_delete_cb(lv_event_t *event) {
 	remove_window(*deleted_id);
 }
 
+void update_window(lv_event_t *event) {
+	lv_obj_t *obj = lv_event_get_target(event);
+	int selected = lv_dropdown_get_selected(obj);
+	if (selected == current_window->id) return;
+
+	auto it = std::find_if(windows.begin(), windows.end(), [selected](gui::Window *win) {
+		return win->id == selected;
+	});
+	if (it == windows.end()) return;
+	int idx = it - windows.begin();
+
+	current_window = windows[idx];
+
+	// TODO: Actually change displayed window
+}
+
 int window_id = 0;
 
 gui::Window::Window(std::string name) : name(name) {
@@ -109,6 +125,7 @@ void gui::initialize() {
 	lv_obj_add_style(window_list, &style_bar_button, 0);
 	lv_obj_add_style(window_list, &style_bar_button_pr, LV_STATE_PRESSED);
 	lv_dropdown_set_dir(window_list, LV_DIR_TOP);
+	lv_obj_add_event_cb(window_list, &update_window, LV_EVENT_VALUE_CHANGED, NULL);
 
 	lv_obj_add_event_cb(
 	    window_list,
