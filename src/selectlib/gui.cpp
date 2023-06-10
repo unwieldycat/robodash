@@ -7,10 +7,6 @@
 #include "screensaver.hpp"
 #include "styles.hpp"
 
-// FIXME: ================================
-// FIXME: Events for dropdown dont trigger
-// FIXME: ================================
-
 #define INFO_BAR_WIDTH 32
 
 lv_obj_t *view_cont;
@@ -68,6 +64,9 @@ void view_list_refresh() {
 
 void view_list_select_cb(lv_event_t *event) {
 	lv_obj_t *target = lv_event_get_target(event);
+	lv_event_code_t code = lv_event_get_code(event);
+	if (code != LV_EVENT_VALUE_CHANGED) return;
+
 	int idx = lv_dropdown_get_selected(target);
 	if (idx == current_view->id) return;
 
@@ -87,8 +86,10 @@ void run_list_refresh() {
 
 void run_list_select_cb(lv_event_t *event) {
 	lv_obj_t *target = lv_event_get_current_target(event);
-	int idx = lv_dropdown_get_selected(target);
+	lv_event_code_t code = lv_event_get_code(event);
+	if (code != LV_EVENT_VALUE_CHANGED) return;
 
+	int idx = lv_dropdown_get_selected(target);
 	gui::bar::action_t selected = actions.at(idx);
 	selected.second();
 }
@@ -163,7 +164,7 @@ void gui::initialize() {
 	lv_obj_add_style(view_list, &style_bar_button, 0);
 	lv_obj_add_style(view_list, &style_bar_button_pr, LV_STATE_PRESSED);
 	lv_dropdown_set_dir(view_list, LV_DIR_TOP);
-	lv_obj_add_event_cb(view_list, &view_list_select_cb, LV_EVENT_VALUE_CHANGED, NULL);
+	lv_obj_add_event_cb(view_list, &view_list_select_cb, LV_EVENT_ALL, NULL);
 
 	lv_obj_add_event_cb(
 	    view_list,
@@ -186,7 +187,7 @@ void gui::initialize() {
 	lv_obj_add_style(run_list, &style_bar_button, 0);
 	lv_obj_add_style(run_list, &style_bar_button_pr, LV_STATE_PRESSED);
 	lv_obj_add_flag(run_list, LV_OBJ_FLAG_HIDDEN);
-	lv_obj_add_event_cb(run_list, &run_list_select_cb, LV_EVENT_VALUE_CHANGED, NULL);
+	lv_obj_add_event_cb(run_list, &run_list_select_cb, LV_EVENT_ALL, NULL);
 
 	lv_obj_add_event_cb(
 	    run_list,
