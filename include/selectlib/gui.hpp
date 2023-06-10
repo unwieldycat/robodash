@@ -3,13 +3,41 @@
 
 namespace gui {
 
+typedef struct Window {
+	Window(std::string name);
+	~Window();
+	int id;
+	std::string name;
+	lv_obj_t *obj;
+} window_t;
+
 /**
- * @brief Create a window
+ * @brief Register a window
  *
- * @param name Name of the window
- * @return lv_obj_t
+ * @param window
  */
-lv_obj_t *create_window(std::string name);
+void register_window(Window *window);
+
+/**
+ * @brief Set the current window
+ *
+ * @param window
+ */
+void set_window(Window *window);
+
+/**
+ * @brief Get the current window
+ *
+ * @return Window*
+ */
+Window *get_window();
+
+/**
+ * @brief Close a window
+ *
+ * @param window
+ */
+void close_window(Window *window);
 
 /**
  * @brief Initialize library

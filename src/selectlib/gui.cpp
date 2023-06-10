@@ -1,8 +1,5 @@
 #include "gui.hpp"
 #include "common/styles.hpp"
-#include "dashboard.hpp"
-#include "screensaver.hpp"
-#include "styles.hpp"
 
 #define INFO_BAR_WIDTH 32
 
@@ -12,47 +9,53 @@ lv_obj_t *window_list;
 lv_obj_t *battery_label;
 lv_obj_t *battery_icon;
 
+std::vector<gui::Window *> windows;
+gui::Window *current_window;
+
 // =========================== Window Management =========================== //
-
-typedef struct Window {
-	Window(int id, std::string name, lv_obj_t *obj) : id(id), name(name), obj(obj){};
-	int id;
-	std::string name;
-	lv_obj_t *obj;
-} window_t;
-
-std::vector<Window> windows;
 
 void repopulate_list() {
 	lv_dropdown_clear_options(window_list);
-	for (Window window : windows) {
-		lv_dropdown_add_option(window_list, window.name.c_str(), window.id);
+	for (gui::Window *window : windows) {
+		lv_dropdown_add_option(window_list, window->name.c_str(), window->id);
 	}
 }
 
-void win_delete_cb(lv_event_t *event) {
-	int *deleted_id = (int *)lv_event_get_user_data(event);
-	(void)std::remove_if(windows.begin(), windows.end(), [&deleted_id](Window win) {
-		return win.id == *deleted_id;
+void remove_window(int id) {
+	(void)std::remove_if(windows.begin(), windows.end(), [&id](gui::Window *win) {
+		return win->id == id;
 	});
 
 	repopulate_list();
 }
 
-lv_obj_t *gui::create_window(std::string name) {
-	static int window_id;
+void win_delete_cb(lv_event_t *event) {
+	int *deleted_id = (int *)lv_event_get_user_data(event);
+	remove_window(*deleted_id);
+}
+
+int window_id = 0;
+
+gui::Window::Window(std::string name) : name(name) {
+	this->id = window_id;
+	this->obj = lv_obj_create(window_cont);
+	lv_obj_set_size(this->obj, lv_pct(100), lv_pct(100));
 	window_id++;
+}
 
-	lv_obj_t *window_obj = lv_obj_create(window_cont);
-	lv_obj_set_size(window_obj, lv_pct(100), lv_pct(100));
+gui::Window::~Window() { lv_obj_del(this->obj); }
 
-	Window window_meta(window_id, name, window_obj);
-	lv_obj_add_event_cb(window_obj, &win_delete_cb, LV_EVENT_DELETE, &window_meta.id);
-	windows.push_back(window_meta);
+void gui::register_window(Window *window) {
+	lv_obj_add_event_cb(window->obj, &win_delete_cb, LV_EVENT_DELETE, &window->id);
+	windows.push_back(window);
 
 	repopulate_list();
+}
 
-	return window_obj;
+void gui::close_window(Window *window) {
+	remove_window(window->id);
+	if (current_window->id != window->id) return;
+	current_window = windows.back(); // FIXME: have a default window in case no windows
 }
 
 // ============================ Background Task ============================ //
