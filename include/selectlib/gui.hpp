@@ -19,6 +19,13 @@ class View {
 };
 
 /**
+ * @brief Register a view
+ *
+ * @param view
+ */
+void register_view(View *view);
+
+/**
  * @brief Set the current view
  *
  * @param view

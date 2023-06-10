@@ -19,19 +19,24 @@ void list_refresh();
 // =========================== Base View Class =========================== //
 
 gui::View::View(std::string name) : name(name) {
-	this->obj = lv_obj_create(view_cont);
+	this->obj = lv_obj_create(lv_scr_act());
 	lv_obj_set_size(this->obj, lv_pct(100), lv_pct(100));
 	lv_obj_add_flag(this->obj, LV_OBJ_FLAG_HIDDEN);
-	views.emplace(this->id, this);
-	list_refresh();
 }
 
 gui::View::~View() { lv_obj_del(this->obj); }
 
 // =========================== View Management =========================== //
 
+void gui::register_view(View *view) {
+	lv_obj_set_parent(view->obj, view_cont);
+	views.emplace(view->id, view);
+	if (!current_view) gui::set_view(view);
+	list_refresh();
+}
+
 void gui::set_view(View *view) {
-	lv_obj_add_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
+	if (current_view) lv_obj_add_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
 	current_view = view;
 	lv_obj_clear_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
 }
