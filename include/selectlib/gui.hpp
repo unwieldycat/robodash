@@ -1,6 +1,7 @@
 #pragma once
-#include "api.hpp"
-#include "pros/rtos.hpp"
+#include "api.h"
+#include "liblvgl/lvgl.h"
+#include <map>
 
 namespace gui {
 

@@ -1,5 +1,7 @@
 #pragma once
-#include "api.hpp"
+#include "api.h"
+#include "liblvgl/lvgl.h"
+#include <string>
 
 namespace gui {
 namespace screensaver {

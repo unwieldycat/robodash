@@ -1,5 +1,10 @@
 #pragma once
-#include "../api.hpp"
+#include "api.h"
+#include "liblvgl/lvgl.h"
+#include <functional>
+#include <iostream>
+#include <string>
+#include <vector>
 
 namespace gui {
 namespace selector {

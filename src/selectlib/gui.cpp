@@ -1,5 +1,7 @@
 #include "gui.hpp"
 #include "common/styles.hpp"
+#include "screensaver.hpp"
+#include "styles.hpp"
 
 #define INFO_BAR_WIDTH 32
 
