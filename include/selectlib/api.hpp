@@ -4,6 +4,7 @@
 #include "../liblvgl/lvgl.h"
 #include <cstdio>
 #include <functional>
+#include <map>
 #include <stdio.h>
 #include <string>
 
