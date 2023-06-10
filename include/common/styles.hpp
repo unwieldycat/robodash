@@ -18,3 +18,8 @@ extern lv_style_t style_text_small;
 extern lv_style_t style_text_medium;
 extern lv_style_t style_text_large;
 extern lv_style_t style_text_centered;
+
+extern lv_style_t style_bar_button;
+extern lv_style_t style_bar_button_pr;
+extern lv_style_t style_bar_list;
+extern lv_style_t style_bar_bg;

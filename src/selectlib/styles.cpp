@@ -1,4 +1,5 @@
 #include "common/styles.hpp"
+#include "liblvgl/misc/lv_style.h"
 #include "styles.hpp"
 
 // ================================= Colors ================================= //
@@ -11,6 +12,10 @@ lv_color_t shade_color;
 lv_color_t primary_color;
 lv_color_t primary_color_dark;
 lv_color_t text_color;
+
+lv_color_t bar_color;
+lv_color_t bar_color_dark;
+lv_color_t bar_outline_color;
 
 // ================================= Styles ================================= //
 
@@ -32,6 +37,11 @@ lv_style_t style_text_medium;
 lv_style_t style_text_large;
 lv_style_t style_text_centered;
 
+lv_style_t style_bar_button;
+lv_style_t style_bar_button_pr;
+lv_style_t style_bar_list;
+lv_style_t style_bar_bg;
+
 void gui::theme::_initialize() {
 	// Colors
 	bg_color = lv_color_hsv_to_rgb(hue, 50, 10);
@@ -40,6 +50,40 @@ void gui::theme::_initialize() {
 	primary_color = lv_color_hsv_to_rgb(hue, 75, 100);
 	primary_color_dark = lv_color_hsv_to_rgb(hue, 75, 50);
 	text_color = lv_color_hsv_to_rgb(hue, 10, 100);
+	bar_color = lv_color_hsv_to_rgb(hue, 50, 25);
+	bar_color_dark = lv_color_hsv_to_rgb(hue, 50, 15);
+	bar_outline_color = lv_color_hsv_to_rgb(hue, 10, 50);
+
+	// Bottom bar button
+	lv_style_init(&style_bar_button);
+	lv_style_set_pad_all(&style_bar_button, 8);
+	lv_style_set_bg_color(&style_bar_button, bar_color);
+	lv_style_set_border_color(&style_bar_button, bar_outline_color);
+	lv_style_set_border_side(&style_bar_button, LV_BORDER_SIDE_RIGHT);
+	lv_style_set_border_width(&style_bar_button, 1);
+	lv_style_set_text_color(&style_bar_button, text_color);
+	lv_style_set_img_recolor(&style_bar_button, text_color);
+	lv_style_set_radius(&style_bar_button, 0);
+
+	// Bottom bar button pressed
+	lv_style_init(&style_bar_button_pr);
+	lv_style_set_bg_color(&style_bar_button_pr, bar_color_dark);
+
+	// Bottom bar list
+	lv_style_init(&style_bar_list);
+	lv_style_set_text_color(&style_bar_list, text_color);
+	lv_style_set_border_color(&style_bar_list, border_color);
+	lv_style_set_border_width(&style_bar_list, 1);
+	lv_style_set_bg_color(&style_bar_list, bar_color);
+	lv_style_set_pad_all(&style_bar_list, 8);
+
+	// Bottom bar background
+	lv_style_init(&style_bar_bg);
+	lv_style_set_border_width(&style_bar_bg, 0);
+	lv_style_set_radius(&style_bar_bg, 0);
+	lv_style_set_bg_color(&style_bar_bg, bar_color);
+	lv_style_set_text_color(&style_bar_bg, text_color);
+	lv_style_set_pad_all(&style_bar_bg, 0);
 
 	// Background
 	lv_style_init(&style_bg);
