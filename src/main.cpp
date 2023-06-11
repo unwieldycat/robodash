@@ -1,7 +1,7 @@
 #include "main.h"
 #include "liblvgl/misc/lv_area.h"
 #include "liblvgl/widgets/lv_canvas.h"
-#include "selectlib/gui.hpp"
+#include "unwieldy-ui/gui.hpp"
 
 void auton0() {}
 void auton1() { std::cout << "Running auton "; }
@@ -20,7 +20,7 @@ void initialize() {
 
 	gui::initialize();
 	gui::bar::add_actions({{"Explode Robot", auton0}, {"Among us", auton1}});
-	// gui::register_view(&devices_view);
+	gui::register_view(&devices_view);
 	gui::register_view(&selector_view);
 
 	selector_view.add_autons(
