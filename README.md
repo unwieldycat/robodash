@@ -1,16 +1,21 @@
-# selectlib
-A game-agnostic autonomous selector for the VEX V5 platform
+# unwieldy-ui
 
-<details open>
-<summary><b>Preview</b></summary>
+An elegant, modular, and powerful UI solution for VEX V5
+
+<details closed>
+<summary>Preview</summary>
 <img src="./assets/selector.png">
 </details>
 
 ### Features
-- **Automatic selection** - loads previous selection from an SD card automatically
-- **Customizable UI** - Easily change the color theme with one color value
-- **Flexible** - Designed to work with any situation warranting a function selector
 
+- **Auton Selector** - An intuitive, game agnostic selector with SD card saving
+
+- **Quick Actions** - Run user-defined functions from the toolbar
+
+- **Customizable** - Customizable theme and splash screen
+
+- **Plugable** - Create your own pages
 
 ## Installation
 
