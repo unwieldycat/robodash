@@ -112,7 +112,7 @@ void gui::theme::_initialize() {
 	lv_style_set_text_color(&style_list_btn, text_color);
 	lv_style_set_radius(&style_list_btn, 0);
 	lv_style_set_bg_color(&style_list_btn, bg_color);
-	lv_style_set_pad_ver(&style_list_btn, 16);
+	lv_style_set_pad_ver(&style_list_btn, 12);
 
 	// List button pressed
 	lv_style_init(&style_list_btn_pr);
