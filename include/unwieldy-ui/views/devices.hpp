@@ -4,6 +4,8 @@
 
 namespace gui {
 
+typedef std::pair<std::string, pros::Motor *> motor_desc_t;
+
 class DevicesView : public View {
   public:
 	DevicesView();
@@ -13,7 +15,7 @@ class DevicesView : public View {
 	 *
 	 * @param mtrs Motors to monitor
 	 */
-	void add_motors(std::vector<pros::Motor *> mtrs);
+	void add_motors(std::vector<motor_desc_t> mtrs);
 
 	void refresh();
 	void initialize();
