@@ -1,8 +1,14 @@
 #include "main.h"
+#include "liblvgl/misc/lv_area.h"
+#include "liblvgl/widgets/lv_canvas.h"
+#include "selectlib/gui.hpp"
 
 void auton0() {}
-void auton1() {}
+void auton1() { std::cout << "Running auton "; }
 void auton2() {}
+
+gui::DevicesView devices_view;
+gui::SelectorView selector_view;
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -11,13 +17,15 @@ void auton2() {}
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	gui::initialize();
 
-	gui::selector::add_autons({
-	    {"Auton 0", auton0},
-	    {"Auton 1", auton1},
-	    {"Auton 2", auton2},
-	});
+	gui::initialize();
+	gui::bar::add_actions({{"Explode Robot", auton0}, {"Among us", auton1}});
+	// gui::register_view(&devices_view);
+	gui::register_view(&selector_view);
+
+	selector_view.add_autons(
+	    {{"Match load", auton0}, {"Score acorn", auton1}, {"Become sentient", auton2}}
+	);
 }
 
 /**
@@ -36,7 +44,7 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() { gui::selector::do_selection(); }
+void competition_initialize() {}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -49,10 +57,7 @@ void competition_initialize() { gui::selector::do_selection(); }
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {
-	gui::selector::exit_selection();
-	gui::selector::do_auton();
-}
+void autonomous() {}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -67,4 +72,4 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol() { gui::selector::exit_selection(); }
+void opcontrol() {}
