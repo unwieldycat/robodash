@@ -9,8 +9,6 @@ std::vector<pros::Motor *> motors;
 gui::DevicesView::DevicesView() : View("Devices"){};
 
 void gui::DevicesView::initialize() {
-	lv_obj_add_style(this->obj, &style_bg, 0);
-
 	lv_obj_t *label = lv_label_create(this->obj);
 	lv_label_set_text(label, "Test");
 	lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
