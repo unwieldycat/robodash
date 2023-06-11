@@ -19,7 +19,14 @@ void view_list_refresh();
 
 // =========================== Base View Class =========================== //
 
+int make_id() {
+	static int id;
+	id++;
+	return id;
+}
+
 gui::View::View(std::string name) : name(name) {
+	this->id = make_id();
 	this->obj = lv_obj_create(lv_scr_act());
 	lv_obj_set_size(this->obj, lv_pct(100), lv_pct(100));
 	lv_obj_add_flag(this->obj, LV_OBJ_FLAG_HIDDEN);

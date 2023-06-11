@@ -7,7 +7,7 @@ namespace gui {
 
 class View {
   public:
-	const int id = pros::millis();
+	int id;
 	std::string name;
 	lv_obj_t *obj;
 
