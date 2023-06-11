@@ -1,11 +1,5 @@
-#include "gui.hpp"
+#include "api.hpp"
 #include "common/styles.hpp"
-#include "liblvgl/core/lv_event.h"
-#include "liblvgl/core/lv_obj.h"
-#include "liblvgl/font/lv_symbol_def.h"
-#include "liblvgl/widgets/lv_dropdown.h"
-#include "screensaver.hpp"
-#include "styles.hpp"
 
 #define INFO_BAR_WIDTH 32
 
@@ -146,7 +140,16 @@ void gui::bar::add_actions(std::vector<action_t> new_actions) {
 
 // =============================== Initialize =============================== //
 
+void attribution() {
+	std::string banner =
+	    "\e[1;35m _  ___ __ _____ _  _ _     \n"
+	    "| || \\ V  V /___| || | |                GUI powered by unwieldy-ui\n"
+	    " \\_,_|\\_/\\_/     \\_,_|_|          \e[0mCopyright (C) Alex Y | Version %s\n";
+	printf(banner.c_str(), UWUI_VERSION);
+}
+
 void gui::initialize() {
+	attribution();
 	gui::theme::_initialize();
 
 	view_cont = lv_obj_create(lv_scr_act());
