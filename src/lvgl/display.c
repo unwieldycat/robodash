@@ -7,6 +7,7 @@
  */
 
 #include "api.h"
+#include "lvgl/filesystem.h"
 #include "lvgl/lvgl.h"
 #include "pros/optical.h"
 #include "pros/screen.h"
@@ -114,6 +115,8 @@ void display_initialize(void) {
 	if (lv_indev_drv_register(&touch_drv) == NULL) {
 		printf("Error initializing input driver\n");
 	}
+
+	filesystem_initialize();
 
 	// lv_theme_set_current(lv_theme_alien_init(40, NULL));
 	lv_obj_t *page = lv_obj_create(NULL);
