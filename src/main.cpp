@@ -1,6 +1,4 @@
 #include "main.h"
-#include "liblvgl/misc/lv_area.h"
-#include "liblvgl/widgets/lv_canvas.h"
 #include "unwieldy-ui/gui.hpp"
 
 void auton0() {}
