@@ -58,9 +58,6 @@
 /* Type of coordinates. Should be `int16_t` (or `int32_t` for extreme cases) */
 typedef int16_t lv_coord_t;
 
-/* Maximum buffer size to allocate for rotation. Only used if software rotation is enabled. */
-#define LV_DISP_ROT_MAX_BUF  (10U * 1024U)
-
 /* Adjust color mix functions rounding. GPUs might calculate color mix (blending) differently.
  * 0: round down, 64: round up from x.75, 128: round up from half, 192: round up from x.25, 254: round up */
 #define LV_COLOR_MIX_ROUND_OFS 0
@@ -212,7 +209,7 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
 
 /*Maximum buffer size to allocate for rotation.
  *Only used if software rotation is enabled in the display driver.*/
-#define LV_DISP_ROT_MAX_BUF (10*1024)
+#define LV_DISP_ROT_MAX_BUF (10U * 1024U)
 
 /*-------------
  * GPU
