@@ -23,6 +23,10 @@
    COLOR SETTINGS
  *====================*/
 
+/* Maximal horizontal and vertical resolution to support by the library.*/
+#define LV_HOR_RES_MAX          (480)
+#define LV_VER_RES_MAX          (240)
+
 /*Color depth: 1 (1 byte per pixel), 8 (RGB332), 16 (RGB565), 32 (ARGB8888)*/
 #define LV_COLOR_DEPTH 32
 
@@ -33,6 +37,29 @@
  *It's required if opa, and transform_* style properties are used.
  *Can be also used if the UI is above another layer, e.g. an OSD menu or video player.*/
 #define LV_COLOR_SCREEN_TRANSP 0
+
+/*Images pixels with this color will not be drawn (with chroma keying)*/
+#define LV_COLOR_TRANSP    LV_COLOR_LIME         /*LV_COLOR_LIME: pure green*/
+
+/* Enable anti-aliasing (lines, and radiuses will be smoothed) */
+#define LV_ANTIALIAS        1
+
+/* The the real width of the display changes some default values:
+ * default object sizes, layout of examples, etc.
+ * According to the width of the display (hor. res. / dpi)
+ * the displays fall in 4 categories.
+ * The 4th is extra large which has no upper limit so not listed here
+ * The upper limit of the categories are set below in 0.1 inch unit.
+ */
+#define LV_DISP_SMALL_LIMIT  30
+#define LV_DISP_MEDIUM_LIMIT 50
+#define LV_DISP_LARGE_LIMIT  70
+
+/* Type of coordinates. Should be `int16_t` (or `int32_t` for extreme cases) */
+typedef int16_t lv_coord_t;
+
+/* Maximum buffer size to allocate for rotation. Only used if software rotation is enabled. */
+#define LV_DISP_ROT_MAX_BUF  (10U * 1024U)
 
 /* Adjust color mix functions rounding. GPUs might calculate color mix (blending) differently.
  * 0: round down, 64: round up from x.75, 128: round up from half, 192: round up from x.25, 254: round up */
@@ -49,7 +76,19 @@
 #define LV_MEM_CUSTOM 0
 #if LV_MEM_CUSTOM == 0
     /*Size of the memory available for `lv_mem_alloc()` in bytes (>= 2kB)*/
-    #define LV_MEM_SIZE (48U * 1024U)          /*[bytes]*/
+    #define LV_MEM_SIZE (32U * 1024U)          /*[bytes]*/
+
+    /* Compiler prefix for a big array declaration */
+    #define LV_MEM_ATTR
+
+    /* Automatically defrag. on free. Defrag. means joining the adjacent free cells. */
+    #define LV_MEM_AUTO_DEFRAG 1
+
+    /* Use the standard memcpy and memset instead of LVGL's own functions.
+     * The standard functions might or might not be faster depending on their implementation. */
+    #define LV_MEMCPY_MEMSET_STD 0
+
+    #define LV_ENABLE_GC 0
 
     /*Set an address for the memory pool instead of allocating it as a normal array. Can be in external SRAM too.*/
     #define LV_MEM_ADR 0     /*0: unused*/
@@ -78,7 +117,7 @@
  *====================*/
 
 /*Default display refresh period. LVG will redraw changed areas with this period time*/
-#define LV_DISP_DEF_REFR_PERIOD 30      /*[ms]*/
+#define LV_DISP_DEF_REFR_PERIOD 40      /*[ms]*/
 
 /*Input device read period in milliseconds*/
 #define LV_INDEV_DEF_READ_PERIOD 30     /*[ms]*/
@@ -96,7 +135,10 @@
 
 /*Default Dot Per Inch. Used to initialize default sizes such as widgets sized, style paddings.
  *(Not so important, you can adjust it to modify default sizes and spaces)*/
-#define LV_DPI_DEF 130     /*[px/inch]*/
+#define LV_DPI_DEF 126     /*[px/inch]*/
+
+typedef void * lv_disp_drv_user_data_t;             /*Type of user data in the display driver*/
+typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the input device driver*/
 
 /*=======================
  * FEATURE CONFIGURATION
@@ -354,26 +396,26 @@
 /*Montserrat fonts with ASCII range and some symbols using bpp = 4
  *https://fonts.google.com/specimen/Montserrat*/
 #define LV_FONT_MONTSERRAT_8  0
-#define LV_FONT_MONTSERRAT_10 0
-#define LV_FONT_MONTSERRAT_12 0
+#define LV_FONT_MONTSERRAT_10 1
+#define LV_FONT_MONTSERRAT_12 1
 #define LV_FONT_MONTSERRAT_14 1
-#define LV_FONT_MONTSERRAT_16 0
-#define LV_FONT_MONTSERRAT_18 0
+#define LV_FONT_MONTSERRAT_16 1
+#define LV_FONT_MONTSERRAT_18 1
 #define LV_FONT_MONTSERRAT_20 0
 #define LV_FONT_MONTSERRAT_22 0
-#define LV_FONT_MONTSERRAT_24 0
+#define LV_FONT_MONTSERRAT_24 1
 #define LV_FONT_MONTSERRAT_26 0
 #define LV_FONT_MONTSERRAT_28 0
 #define LV_FONT_MONTSERRAT_30 0
 #define LV_FONT_MONTSERRAT_32 0
 #define LV_FONT_MONTSERRAT_34 0
-#define LV_FONT_MONTSERRAT_36 0
+#define LV_FONT_MONTSERRAT_36 1
 #define LV_FONT_MONTSERRAT_38 0
 #define LV_FONT_MONTSERRAT_40 0
 #define LV_FONT_MONTSERRAT_42 0
 #define LV_FONT_MONTSERRAT_44 0
 #define LV_FONT_MONTSERRAT_46 0
-#define LV_FONT_MONTSERRAT_48 0
+#define LV_FONT_MONTSERRAT_48 1
 
 /*Demonstrate special features*/
 #define LV_FONT_MONTSERRAT_12_SUBPX      0
@@ -382,8 +424,8 @@
 #define LV_FONT_SIMSUN_16_CJK            0  /*1000 most common CJK radicals*/
 
 /*Pixel perfect monospace fonts*/
-#define LV_FONT_UNSCII_8  0
-#define LV_FONT_UNSCII_16 0
+#define LV_FONT_UNSCII_8  1
+#define LV_FONT_UNSCII_16 1
 
 /*Optionally declare custom fonts here.
  *You can use these fonts as default font too and they will be available globally.
@@ -632,17 +674,17 @@
 #endif
 
 /*PNG decoder library*/
-#define LV_USE_PNG 0
+#define LV_USE_PNG 1
 
 /*BMP decoder library*/
-#define LV_USE_BMP 0
+#define LV_USE_BMP 1
 
 /* JPG + split JPG decoder library.
  * Split JPG is a custom format optimized for embedded systems. */
 #define LV_USE_SJPG 0
 
 /*GIF decoder library*/
-#define LV_USE_GIF 0
+#define LV_USE_GIF 1
 
 /*QR code library*/
 #define LV_USE_QRCODE 0
