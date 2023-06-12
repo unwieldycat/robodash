@@ -22,51 +22,51 @@ extern "C" {
  *      INCLUDES
  *********************/
 
-#include "lvgl/misc/lv_log.h"
-#include "lvgl/misc/lv_timer.h"
-#include "lvgl/misc/lv_math.h"
-#include "lvgl/misc/lv_mem.h"
-#include "lvgl/misc/lv_async.h"
-#include "lvgl/misc/lv_anim_timeline.h"
-#include "lvgl/misc/lv_printf.h"
+#include "src/misc/lv_log.h"
+#include "src/misc/lv_timer.h"
+#include "src/misc/lv_math.h"
+#include "src/misc/lv_mem.h"
+#include "src/misc/lv_async.h"
+#include "src/misc/lv_anim_timeline.h"
+#include "src/misc/lv_printf.h"
 
-#include "lvgl/hal/lv_hal.h"
+#include "src/hal/lv_hal.h"
 
-#include "lvgl/core/lv_obj.h"
-#include "lvgl/core/lv_group.h"
-#include "lvgl/core/lv_indev.h"
-#include "lvgl/core/lv_refr.h"
-#include "lvgl/core/lv_disp.h"
-#include "lvgl/core/lv_theme.h"
+#include "src/core/lv_obj.h"
+#include "src/core/lv_group.h"
+#include "src/core/lv_indev.h"
+#include "src/core/lv_refr.h"
+#include "src/core/lv_disp.h"
+#include "src/core/lv_theme.h"
 
-#include "lvgl/font/lv_font.h"
-#include "lvgl/font/lv_font_loader.h"
-#include "lvgl/font/lv_font_fmt_txt.h"
+#include "src/font/lv_font.h"
+#include "src/font/lv_font_loader.h"
+#include "src/font/lv_font_fmt_txt.h"
 
-#include "lvgl/widgets/lv_arc.h"
-#include "lvgl/widgets/lv_btn.h"
-#include "lvgl/widgets/lv_img.h"
-#include "lvgl/widgets/lv_label.h"
-#include "lvgl/widgets/lv_line.h"
-#include "lvgl/widgets/lv_table.h"
-#include "lvgl/widgets/lv_checkbox.h"
-#include "lvgl/widgets/lv_bar.h"
-#include "lvgl/widgets/lv_slider.h"
-#include "lvgl/widgets/lv_btnmatrix.h"
-#include "lvgl/widgets/lv_dropdown.h"
-#include "lvgl/widgets/lv_roller.h"
-#include "lvgl/widgets/lv_textarea.h"
-#include "lvgl/widgets/lv_canvas.h"
-#include "lvgl/widgets/lv_switch.h"
+#include "src/widgets/lv_arc.h"
+#include "src/widgets/lv_btn.h"
+#include "src/widgets/lv_img.h"
+#include "src/widgets/lv_label.h"
+#include "src/widgets/lv_line.h"
+#include "src/widgets/lv_table.h"
+#include "src/widgets/lv_checkbox.h"
+#include "src/widgets/lv_bar.h"
+#include "src/widgets/lv_slider.h"
+#include "src/widgets/lv_btnmatrix.h"
+#include "src/widgets/lv_dropdown.h"
+#include "src/widgets/lv_roller.h"
+#include "src/widgets/lv_textarea.h"
+#include "src/widgets/lv_canvas.h"
+#include "src/widgets/lv_switch.h"
 
-#include "lvgl/draw/lv_draw.h"
+#include "src/draw/lv_draw.h"
 
-#include "lvgl/lv_api_map.h"
+#include "src/lv_api_map.h"
 
 /*-----------------
  * EXTRAS
  *----------------*/
-#include "lvgl/extra/lv_extra.h"
+#include "src/extra/lv_extra.h"
 
 /*********************
  *      DEFINES
