@@ -21,7 +21,7 @@
 extern "C" {
 namespace pros {
 namespace c {
-#endif//__cplusplus
+#endif //__cplusplus
 
 /**
  * Displays a formatted string on the emulated three-button LCD screen.
@@ -41,14 +41,12 @@ namespace c {
  * \return True if the operation was successful, or false otherwise, setting
  * errno values as specified above.
  */
-bool __attribute__((weak)) lcd_print(int16_t line, const char* fmt, ...)  {
-    return false;
-}
+bool __attribute__((weak)) lcd_print(int16_t line, const char *fmt, ...) { return false; }
 
 #ifdef __cplusplus
 } // namespace c
 } // namespace pros
 } // extern "C"
-#endif//__cplusplus
+#endif //__cplusplus
 
 #endif // _PROS_LLEMU_H_

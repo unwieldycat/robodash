@@ -1,5 +1,5 @@
 #pragma once
-#include "liblvgl/lvgl.h"
+#include "lvgl/lvgl.h"
 
 namespace gui {
 namespace theme {

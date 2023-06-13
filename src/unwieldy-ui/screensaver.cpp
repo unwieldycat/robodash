@@ -21,7 +21,7 @@ void gui::screensaver::_initialize() {
 
 	// FIXME: Check if screensaver file exists
 	ss_img = lv_img_create(ss_cont);
-	lv_img_set_src(ss_img, "/usd/screensaver.bin");
+	lv_img_set_src(ss_img, "S:/usd/screensaver.bin");
 	lv_obj_align(ss_img, LV_ALIGN_CENTER, 0, 0);
 }
 

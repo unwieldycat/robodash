@@ -1,6 +1,6 @@
 #pragma once
 #include "api.h"
-#include "liblvgl/lvgl.h"
+#include "lvgl/lvgl.h"
 #include <map>
 
 namespace gui {

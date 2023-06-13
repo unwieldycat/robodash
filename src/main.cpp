@@ -1,11 +1,13 @@
 #include "main.h"
-#include "liblvgl/misc/lv_area.h"
-#include "liblvgl/widgets/lv_canvas.h"
 #include "unwieldy-ui/gui.hpp"
 
 void auton0() {}
 void auton1() { std::cout << "Running auton "; }
 void auton2() {}
+
+pros::Motor flywheel_motor(3);
+pros::Motor drivetrain_left(1);
+pros::Motor drivetrain_right(2);
 
 gui::DevicesView devices_view;
 gui::SelectorView selector_view;
@@ -22,6 +24,15 @@ void initialize() {
 	gui::bar::add_actions({{"Explode Robot", auton0}, {"Among us", auton1}});
 	gui::register_view(&devices_view);
 	gui::register_view(&selector_view);
+
+	devices_view.add_motors(
+	    {{"Flywheel", &flywheel_motor},
+	     {"Drive Left", &drivetrain_left},
+	     {"Drive Right", &drivetrain_right},
+	     {"Drive Right", &drivetrain_right},
+	     {"Drive Right", &drivetrain_right},
+	     {"Drive Right", &drivetrain_right}}
+	);
 
 	selector_view.add_autons(
 	    {{"Match load", auton0}, {"Score acorn", auton1}, {"Become sentient", auton2}}
