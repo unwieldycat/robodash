@@ -1,5 +1,6 @@
 #include "selector.hpp"
 #include "common/styles.hpp"
+#include "lvgl/misc/lv_area.h"
 
 // ============================= Routine Class ============================= //
 
@@ -120,16 +121,11 @@ gui::SelectorView::SelectorView() : View("Auton Selector"){};
 
 void gui::SelectorView::refresh() {}
 
+// TODO: Up/down buttons? v5 and scrolling aren't friends
 void gui::SelectorView::initialize() {
-	lv_obj_t *title_label = lv_label_create(this->obj);
-	lv_label_set_text(title_label, "Autonomous routines");
-	lv_obj_add_style(title_label, &style_text_large, 0);
-	lv_obj_set_width(title_label, 464);
-	lv_obj_align(title_label, LV_ALIGN_TOP_LEFT, 8, 8);
-
 	routine_list = lv_list_create(this->obj);
-	lv_obj_set_size(routine_list, 228, 168);
-	lv_obj_align(routine_list, LV_ALIGN_TOP_LEFT, 8, 32);
+	lv_obj_set_size(routine_list, 228, 192);
+	lv_obj_align(routine_list, LV_ALIGN_TOP_LEFT, 8, 8);
 	lv_obj_add_style(routine_list, &style_list, 0);
 
 	selected_label = lv_label_create(this->obj);
@@ -142,29 +138,15 @@ void gui::SelectorView::initialize() {
 	lv_obj_add_style(nothing_btn, &style_list_btn, 0);
 	lv_obj_add_style(nothing_btn, &style_list_btn_pr, LV_STATE_PRESSED);
 
-	lv_obj_t *done_btn = lv_btn_create(this->obj);
-	lv_obj_set_size(done_btn, 224, 32);
-	lv_obj_align(done_btn, LV_ALIGN_BOTTOM_RIGHT, -8, -8);
-	lv_obj_add_event_cb(done_btn, &done_act, LV_EVENT_PRESSED, NULL);
-	lv_obj_add_style(done_btn, &style_btn, 0);
-	lv_obj_add_style(done_btn, &style_btn_primary, 0);
-	lv_obj_add_style(done_btn, &style_btn_primary_pr, LV_STATE_PRESSED);
-
-	lv_obj_t *done_img = lv_img_create(done_btn);
-	lv_img_set_src(done_img, LV_SYMBOL_OK);
-	lv_obj_set_align(done_img, LV_ALIGN_CENTER);
-
 	if (pros::usd::is_installed()) {
 		// FIXME: function called before routines vector populated
 		// sdconf_load();
-		lv_obj_set_size(done_btn, 160, 32);
-		lv_obj_align(done_btn, LV_ALIGN_BOTTOM_RIGHT, -8, -8);
 
 		saved_toast = lv_label_create(this->obj);
-		lv_label_set_text(saved_toast, "Saved selection to SD card");
+		lv_label_set_text(saved_toast, "Saved to SD");
 		lv_obj_add_style(saved_toast, &style_text_centered, 0);
 		lv_obj_add_style(saved_toast, &style_text_small, 0);
-		lv_obj_align(saved_toast, LV_ALIGN_CENTER, 190, 70);
+		lv_obj_align(saved_toast, LV_ALIGN_BOTTOM_RIGHT, -16, -16);
 		lv_obj_add_flag(saved_toast, LV_OBJ_FLAG_HIDDEN);
 
 		lv_obj_t *save_btn = lv_btn_create(this->obj);
