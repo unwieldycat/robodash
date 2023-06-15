@@ -150,7 +150,7 @@ void gui::theme::_initialize() {
 	lv_style_init(&style_text_small);
 	lv_style_set_text_color(&style_text_small, text_color);
 	lv_style_set_text_opa(&style_text_small, LV_OPA_COVER);
-	lv_style_set_text_font(&style_text_small, &lv_font_montserrat_10);
+	lv_style_set_text_font(&style_text_small, &lv_font_montserrat_12);
 	lv_style_set_text_letter_space(&style_text_small, 1);
 
 	// Medium text
@@ -160,12 +160,11 @@ void gui::theme::_initialize() {
 	lv_style_set_text_font(&style_text_medium, &lv_font_montserrat_14);
 	lv_style_set_text_letter_space(&style_text_medium, 1);
 
-	// FIXME: Enable large font
 	// Large text
 	lv_style_init(&style_text_large);
 	lv_style_set_text_color(&style_text_large, text_color);
 	lv_style_set_text_opa(&style_text_large, LV_OPA_COVER);
-	lv_style_set_text_font(&style_text_large, &lv_font_montserrat_14);
+	lv_style_set_text_font(&style_text_large, &lv_font_montserrat_16);
 
 	// Text align
 	lv_style_init(&style_text_centered);
