@@ -155,7 +155,8 @@ void gui::SelectorView::initialize() {
 	lv_obj_set_align(done_img, LV_ALIGN_CENTER);
 
 	if (pros::usd::is_installed()) {
-		sdconf_load();
+		// FIXME: function called before routines vector populated
+		// sdconf_load();
 		lv_obj_set_size(done_btn, 160, 32);
 		lv_obj_align(done_btn, LV_ALIGN_BOTTOM_RIGHT, -8, -8);
 
