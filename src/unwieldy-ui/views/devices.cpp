@@ -1,6 +1,4 @@
-#include "devices.hpp"
-#include "common/styles.hpp"
-#include "unwieldy-ui/gui.hpp"
+#include "unwieldy-ui/apix.hpp"
 
 std::vector<pros::Motor *> motors;
 lv_obj_t *devices_cont;

@@ -1,5 +1,4 @@
-#include "screensaver.hpp"
-#include "common/styles.hpp"
+#include "apix.hpp"
 
 bool ss_active = false;
 int ss_timeout = 15;

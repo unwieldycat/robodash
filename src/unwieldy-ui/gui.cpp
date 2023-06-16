@@ -1,5 +1,4 @@
-#include "api.hpp"
-#include "common/styles.hpp"
+#include "apix.hpp"
 
 #define INFO_BAR_WIDTH 32
 
