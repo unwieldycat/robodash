@@ -1,5 +1,5 @@
-#include "common/styles.hpp"
-#include "styles.hpp"
+#include "theme.hpp"
+#include "internal/styles.hpp"
 
 // ================================= Colors ================================= //
 
