@@ -19,6 +19,9 @@ Routine *selected_routine = nullptr;
 bool selection_done = false;
 bool selection_running = false;
 
+int saved_id;
+char saved_name[256];
+
 lv_obj_t *select_cont;
 lv_obj_t *selected_label;
 lv_obj_t *saved_toast;
@@ -59,31 +62,38 @@ void sdconf_load() {
 	rewind(save_file);
 
 	// Read contents
-	int saved_id;
-	char saved_name[1000];
 	fscanf(save_file, "%d %[^\n]", &saved_id, saved_name);
 	fclose(save_file);
+}
 
+void load_saved() {
+	if (!saved_id) return;
+
+	// None selected condition
 	if (saved_id == -1) {
 		lv_label_set_text(selected_label, "No routine\nselected");
 		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 
 		selected_routine = nullptr;
-	} else {
-		Routine selected = routines.at(saved_id);
-		std::string routine_name = selected.name;
-
-		// Exit if routine name does not match
-		if (saved_name != routine_name) return;
-
-		selected_routine = &selected;
-
-		// Update routine label
-		char label_str[sizeof(routine_name) + 20];
-		sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
-		lv_label_set_text(selected_label, label_str);
-		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
+		return;
 	}
+
+	// Out of bounds check
+	if (routines.size() < saved_id + 1) return;
+
+	Routine selected = routines.at(saved_id);
+	std::string routine_name = selected.name;
+
+	// Exit if routine name does not match saved
+	if (saved_name != routine_name) return;
+
+	selected_routine = &selected;
+
+	// Update routine label
+	char label_str[sizeof(routine_name) + 20];
+	sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
+	lv_label_set_text(selected_label, label_str);
+	lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 }
 
 // =============================== Selection =============================== //
@@ -137,8 +147,7 @@ void gui::SelectorView::initialize() {
 	lv_obj_add_style(nothing_btn, &style_list_btn_pr, LV_STATE_PRESSED);
 
 	if (pros::usd::is_installed()) {
-		// FIXME: function called before routines vector populated
-		// sdconf_load();
+		sdconf_load();
 
 		saved_toast = lv_label_create(this->obj);
 		lv_label_set_text(saved_toast, "Saved to SD");
@@ -179,6 +188,8 @@ void gui::SelectorView::add_autons(std::vector<routine_t> new_routines) {
 		lv_obj_add_style(new_btn, &style_list_btn_pr, LV_STATE_PRESSED);
 		lv_obj_add_event_cb(new_btn, &r_select_act, LV_EVENT_PRESSED, &routine);
 	}
+
+	load_saved();
 }
 
 void gui::SelectorView::do_auton() {
