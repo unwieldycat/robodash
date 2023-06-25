@@ -62,8 +62,8 @@ void initialize() {
 
 	devices_view.add_motors({
 		{"Flywheel", &flywheel_motor},
-	    {"Drive Left", &drivetrain_left},
-	    {"Drive Right", &drivetrain_right},
+		{"Drive Left", &drivetrain_left},
+		{"Drive Right", &drivetrain_right},
 	});
 
 	selector_view.add_autons({
