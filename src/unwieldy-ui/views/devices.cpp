@@ -8,10 +8,6 @@ lv_obj_t *devices_cont;
 gui::DevicesView::DevicesView() : View("Devices"){};
 
 void gui::DevicesView::initialize() {
-	lv_obj_t *label = lv_label_create(this->obj);
-	lv_label_set_text(label, "Test");
-	lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
-
 	devices_cont = lv_obj_create(this->obj);
 	lv_obj_add_style(devices_cont, &style_transp, 0);
 	lv_obj_set_size(devices_cont, LV_PCT(100), LV_PCT(100));
