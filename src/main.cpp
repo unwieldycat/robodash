@@ -1,16 +1,42 @@
 #include "main.h"
 #include "unwieldy-ui/gui.hpp"
 
-void auton0() {}
-void auton1() { std::cout << "Running auton "; }
-void auton2() {}
+// ================================ Devices ================================ //
 
 pros::Motor flywheel_motor(3);
 pros::Motor drivetrain_left(1);
 pros::Motor drivetrain_right(2);
+pros::Imu inertial(20);
+pros::adi::Led led_strip({2, 1}, 16);
+
+// ============================= Example autons ============================= //
+
+void best_auton() { std::cout << "Running best auton" << std::endl; }
+void simple_auton() { std::cout << "Running simple auton " << std::endl; }
+void good_auton() { std::cout << "Running good auton" << std::endl; }
+
+// ============================ Example actions ============================ //
+
+void toggle_led() {
+	static bool active;
+
+	if (active) {
+		led_strip.set_all(0xffffff);
+		active = false;
+	} else {
+		led_strip.set_all(0xff00ff);
+		active = true;
+	}
+}
+
+void recalib_inertial() { inertial.reset(); }
+
+// ================================= Views ================================= //
 
 gui::DevicesView devices_view;
 gui::SelectorView selector_view;
+
+// ========================= Competition Functions ========================= //
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -19,24 +45,34 @@ gui::SelectorView selector_view;
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
+	// I turn off clang-format here because it doesn't handle vectors
+	// as params very well
+	/* clang-format off */
 
+	// Initialize library and register views
 	gui::initialize();
-	gui::bar::add_actions({{"Explode Robot", auton0}, {"Among us", auton1}});
 	gui::register_view(&devices_view);
 	gui::register_view(&selector_view);
 
-	devices_view.add_motors(
-	    {{"Flywheel", &flywheel_motor},
-	     {"Drive Left", &drivetrain_left},
-	     {"Drive Right", &drivetrain_right},
-	     {"Drive Right", &drivetrain_right},
-	     {"Drive Right", &drivetrain_right},
-	     {"Drive Right", &drivetrain_right}}
-	);
+	// Configure ui
+	gui::bar::add_actions({
+		{"Recalibrate Inertial", recalib_inertial}, 
+		{"Toggle LEDs", toggle_led}
+	});
 
-	selector_view.add_autons(
-	    {{"Match load", auton0}, {"Score acorn", auton1}, {"Become sentient", auton2}}
-	);
+	devices_view.add_motors({
+		{"Flywheel", &flywheel_motor},
+	    {"Drive Left", &drivetrain_left},
+	    {"Drive Right", &drivetrain_right},
+	});
+
+	selector_view.add_autons({
+		{"Best auton", &best_auton},
+		{"Simple auton", &simple_auton},
+		{"Good auton", &good_auton}
+	});
+
+	/* clang-format on */
 }
 
 /**
@@ -55,7 +91,10 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() {
+	// Focus auton selector
+	gui::set_view(&selector_view);
+}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -68,7 +107,10 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+	// Run selected autonomous function
+	selector_view.do_auton();
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -83,4 +125,7 @@ void autonomous() {}
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol() {}
+void opcontrol() {
+	// Manually activate screensaver when match starts
+	gui::screensaver::activate();
+}
