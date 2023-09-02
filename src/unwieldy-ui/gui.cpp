@@ -8,6 +8,8 @@ lv_obj_t *view_list;
 lv_obj_t *battery_label;
 lv_obj_t *battery_icon;
 lv_obj_t *run_list;
+lv_obj_t *match_icon;
+lv_obj_t *match_label;
 
 std::map<int, gui::View *> views;
 gui::View *current_view;
@@ -132,6 +134,23 @@ void gui::bar::add_actions(std::vector<action_t> new_actions) {
 			lv_img_set_src(battery_icon, LV_SYMBOL_BATTERY_EMPTY);
 		}
 
+		// Update game status
+		if (pros::competition::is_connected()) {
+			if (pros::competition::is_autonomous()) {
+				lv_label_set_text(match_label, "Auton");
+			} else {
+				lv_label_set_text(match_label, "Driver");
+			}
+			if (pros::competition::is_disabled()) {
+				lv_img_set_src(match_icon, LV_SYMBOL_PAUSE);
+			} else {
+				lv_img_set_src(match_icon, LV_SYMBOL_PLAY);
+			}
+		} else {
+			lv_label_set_text(match_label, "No Comp");
+			lv_img_set_src(match_icon, LV_SYMBOL_CLOSE);
+		}
+
 		for (auto const &[id, view] : views) {
 			view->refresh();
 		}
@@ -209,18 +228,37 @@ void gui::initialize() {
 
 	lv_obj_t *batery_cont = lv_obj_create(info_bar);
 	lv_obj_set_size(batery_cont, 96, 24);
-	lv_obj_align(batery_cont, LV_ALIGN_TOP_RIGHT, -4, 4);
+	lv_obj_align(batery_cont, LV_ALIGN_TOP_RIGHT, -8, 4);
 	lv_obj_add_style(batery_cont, &style_transp, 0);
+	lv_obj_set_flex_align(
+	    batery_cont, LV_FLEX_ALIGN_END, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER
+	);
 
 	battery_label = lv_label_create(batery_cont);
 	lv_label_set_text(battery_label, "100%");
 	lv_obj_align(battery_label, LV_ALIGN_LEFT_MID, 12, 0);
-	lv_obj_add_style(battery_label, &style_text_medium, 0);
+	lv_obj_add_style(battery_label, &style_text_small, 0);
 
 	battery_icon = lv_img_create(batery_cont);
 	lv_img_set_src(battery_icon, LV_SYMBOL_BATTERY_FULL);
 	lv_obj_align(battery_icon, LV_ALIGN_RIGHT_MID, -12, 0);
 	lv_obj_add_style(battery_icon, &style_text_medium, 0);
+
+	lv_obj_t *match_cont = lv_obj_create(info_bar);
+	lv_obj_set_size(match_cont, 96, 24);
+	lv_obj_align(match_cont, LV_ALIGN_TOP_RIGHT, -80, 4);
+	lv_obj_add_style(match_cont, &style_transp, 0);
+	lv_obj_set_flex_align(
+	    match_cont, LV_FLEX_ALIGN_END, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER
+	);
+
+	match_label = lv_label_create(match_cont);
+	lv_label_set_text(match_label, "Driver");
+	lv_obj_add_style(match_label, &style_text_small, 0);
+
+	match_icon = lv_img_create(match_cont);
+	lv_img_set_src(match_icon, LV_SYMBOL_PLAY);
+	lv_obj_add_style(match_icon, &style_text_medium, 0);
 
 	gui::screensaver::_initialize();
 
