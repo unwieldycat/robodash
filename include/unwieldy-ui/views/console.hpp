@@ -1,7 +1,5 @@
 #pragma once
-#include "pros/llemu.hpp"
 #include "unwieldy-ui/apix.hpp"
-#include <cstdio>
 
 namespace gui {
 
@@ -20,20 +18,6 @@ class ConsoleView : public View {
 	void clear();
 
 	/**
-	 * @brief Clear a specific line
-	 *
-	 * @param line
-	 */
-	void clear_line(int line);
-
-	/**
-	 * @brief Move the cursor to the beginning of a line
-	 *
-	 * @param line
-	 */
-	void set_line(int line);
-
-	/**
 	 * @brief Print to the console
 	 *
 	 * @param str String to print to console
@@ -48,7 +32,11 @@ class ConsoleView : public View {
 	 * @param args Args to
 	 */
 	template <typename... Params>
-	void printf(std::string fmt, Params... args) {}
+	void printf(std::string fmt, Params... args) {
+		char fstr[sizeof(fmt) + sizeof...(args)];
+		sprintf(fstr, fmt.c_str(), args...);
+		print(fstr);
+	}
 
 	void refresh();
 	void initialize();
