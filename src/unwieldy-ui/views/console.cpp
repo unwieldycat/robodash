@@ -22,6 +22,7 @@ void gui::ConsoleView::initialize() {
 
 void gui::ConsoleView::clear() {
 	lv_label_set_text(output, "");
+	stream.str("");
 	stream.clear();
 }
 
