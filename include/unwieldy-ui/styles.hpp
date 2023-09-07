@@ -25,16 +25,16 @@ void _initialize();
 
 // ================================= Colors ================================= //
 
-extern lv_color_t bg_color;
-extern lv_color_t border_color;
-extern lv_color_t shade_color;
-extern lv_color_t primary_color;
-extern lv_color_t primary_color_dark;
-extern lv_color_t text_color;
+extern lv_color_t color_bg;
+extern lv_color_t color_border;
+extern lv_color_t color_shade;
+extern lv_color_t color_primary;
+extern lv_color_t color_primary_dark;
+extern lv_color_t color_text;
 
-extern lv_color_t bar_color;
-extern lv_color_t bar_color_dark;
-extern lv_color_t bar_outline_color;
+extern lv_color_t color_bar;
+extern lv_color_t color_bar_dark;
+extern lv_color_t color_bar_outline;
 
 extern void _init_colors();
 
