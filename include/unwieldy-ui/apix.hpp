@@ -9,4 +9,5 @@
 #pragma once
 
 #include "api.hpp"
+#include "fonts.hpp"
 #include "internal/styles.hpp"

@@ -30,6 +30,7 @@ lv_style_t style_btn_primary_pr;
 lv_style_t style_btn_outline;
 lv_style_t style_btn_outline_pr;
 
+lv_style_t style_text_mono;
 lv_style_t style_text_small;
 lv_style_t style_text_medium;
 lv_style_t style_text_large;
@@ -144,6 +145,13 @@ void gui::theme::_initialize() {
 	// Pressed outline button
 	lv_style_init(&style_btn_outline_pr);
 	lv_style_set_bg_color(&style_btn_outline_pr, shade_color);
+
+	// Monospaced text
+	lv_style_init(&style_text_mono);
+	lv_style_set_text_color(&style_text_mono, text_color);
+	lv_style_set_text_opa(&style_text_mono, LV_OPA_COVER);
+	lv_style_set_text_font(&style_text_mono, &source_code_pro);
+	lv_style_set_text_letter_space(&style_text_mono, 1);
 
 	// Small text
 	lv_style_init(&style_text_small);

@@ -14,6 +14,7 @@ extern lv_style_t style_btn_primary_pr;
 extern lv_style_t style_btn_outline;
 extern lv_style_t style_btn_outline_pr;
 
+extern lv_style_t style_text_mono;
 extern lv_style_t style_text_small;
 extern lv_style_t style_text_medium;
 extern lv_style_t style_text_large;
