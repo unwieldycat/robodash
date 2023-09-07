@@ -12,7 +12,6 @@
 
 #include "gui.hpp"
 #include "screensaver.hpp"
-#include "theme.hpp"
 #include "views/console.hpp"
 #include "views/devices.hpp"
 #include "views/selector.hpp"
