@@ -193,15 +193,7 @@ void gui::initialize() {
 	lv_dropdown_set_dir(view_list, LV_DIR_TOP);
 	lv_obj_add_event_cb(view_list, &view_list_select_cb, LV_EVENT_ALL, NULL);
 
-	lv_obj_add_event_cb(
-	    view_list,
-	    [](lv_event_t *event) {
-		    lv_obj_t *list = lv_dropdown_get_list(view_list);
-		    if (!list) return;
-		    lv_obj_add_style(list, &style_bar_list, LV_PART_MAIN);
-	    },
-	    LV_EVENT_FOCUSED, NULL
-	);
+	DROPDOWN_LIST_STYLE(view_list, &style_bar_list);
 
 	run_list = lv_dropdown_create(info_bar);
 	lv_dropdown_clear_options(run_list);
@@ -216,15 +208,7 @@ void gui::initialize() {
 	lv_obj_add_flag(run_list, LV_OBJ_FLAG_HIDDEN);
 	lv_obj_add_event_cb(run_list, &run_list_select_cb, LV_EVENT_ALL, NULL);
 
-	lv_obj_add_event_cb(
-	    run_list,
-	    [](lv_event_t *event) {
-		    lv_obj_t *list = lv_dropdown_get_list(run_list);
-		    if (!list) return;
-		    lv_obj_add_style(list, &style_bar_list, LV_PART_MAIN);
-	    },
-	    LV_EVENT_FOCUSED, NULL
-	);
+	DROPDOWN_LIST_STYLE(run_list, &style_bar_list);
 
 	lv_obj_t *batery_cont = lv_obj_create(info_bar);
 	lv_obj_set_size(batery_cont, 96, 24);
