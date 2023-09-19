@@ -164,11 +164,11 @@ void gui::bar::add_actions(std::vector<action_t> new_actions) {
 // =============================== Initialize =============================== //
 
 void attribution() {
-	std::string banner =
-	    "\e[1;35m _  ___ __ _____ _  _ _     \n"
-	    "| || \\ V  V /___| || | |                GUI powered by unwieldy-ui\n"
-	    " \\_,_|\\_/\\_/     \\_,_|_|          \e[0mCopyright (C) Alex Y | Version %s\n";
-	printf(banner.c_str(), UWUI_VERSION);
+	std::string banner = "\e[1;35m        _ \n"
+	                     " _ _ __| |\n"
+	                     "| '_/ _` |		GUI powered by robodash\n"
+	                     "|_| \\__,_|	  \e[0mCopyright (C) Alex Y | Version %s\n";
+	printf(banner.c_str(), RD_VERSION);
 }
 
 void gui::initialize() {

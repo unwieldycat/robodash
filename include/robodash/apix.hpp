@@ -1,7 +1,7 @@
 /**
  * @file apix.hpp
  *
- * Extended API header for unwieldy-ui.
+ * Extended API header for robodash.
  *
  * Includes additional declarations for fonts, styles, and more. Automatically
  * includes the main API header file as well.

@@ -25,7 +25,7 @@ EXCLUDE_COLD_LIBRARIES:=
 
 # Set this to 1 to add additional rules to compile your project as a PROS library template
 IS_LIBRARY:=1
-LIBNAME:=unwieldy-ui
+LIBNAME:=robodash
 VERSION:=2.0.0
 
 # EXCLUDE_SRC_FROM_LIB= $(SRCDIR)/unpublishedfile.c
@@ -37,7 +37,7 @@ ASSET_FILES=$(wildcard $(ROOT)/assets/*)
 # files that get distributed to every user (beyond your source archive) - add
 # whatever files you want here. This line is configured to add all header files
 # that are in the the include directory get exported
-TEMPLATE_FILES=$(INCDIR)/unwieldy-ui/**/*.h $(INCDIR)/unwieldy-ui/**/*.hpp
+TEMPLATE_FILES=$(INCDIR)/robodash/**/*.h $(INCDIR)/robodash/**/*.hpp
 TEMPLATE_FILES+=$(INCDIR)/lvgl/**/*.h
 TEMPLATE_FILES+=ASSET_FILES
 

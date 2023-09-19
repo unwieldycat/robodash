@@ -1,5 +1,5 @@
 #include "main.h"
-#include "unwieldy-ui/gui.hpp"
+#include "robodash/gui.hpp"
 
 // ================================ Devices ================================ //
 
@@ -35,6 +35,8 @@ void recalib_inertial() { inertial.reset(); }
 
 gui::DevicesView devices_view;
 gui::SelectorView selector_view;
+gui::ConsoleView test_console;
+gui::FieldView field_view;
 
 // ========================= Competition Functions ========================= //
 
@@ -53,6 +55,7 @@ void initialize() {
 	gui::initialize();
 	gui::register_view(&devices_view);
 	gui::register_view(&selector_view);
+	gui::register_view(&test_console);
 
 	// Configure ui
 	gui::bar::add_actions({
@@ -126,6 +129,9 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	// Manually activate screensaver when match starts
-	gui::screensaver::activate();
+	for (int i = 0; i < 100; i++) {
+		test_console.clear();
+		test_console.printf("what up %d", i);
+		pros::delay(500);
+	}
 }

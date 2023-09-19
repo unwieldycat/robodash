@@ -1,14 +1,14 @@
 /**
  * @file api.hpp
  *
- * API header for unwieldy-ui.
+ * API header for robodash.
  *
  * Includes all necessary functions for programmers.
  */
 
 #pragma once
 
-#define UWUI_VERSION "2.0.0-dev"
+#define RD_VERSION "2.0.0-dev"
 
 #include "gui.hpp"
 #include "screensaver.hpp"

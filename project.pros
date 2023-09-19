@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "uw-ui",
+    "project_name": "robodash-test",
     "target": "v5",
     "templates": {
       "kernel": {
@@ -81,7 +81,7 @@
       }
     },
     "upload_options": {
-      "description": "unwieldy-ui demo ",
+      "description": "robodash demo ",
       "slot": 3
     }
   }
