@@ -14,4 +14,5 @@
 #include "screensaver.hpp"
 #include "views/console.hpp"
 #include "views/devices.hpp"
+#include "views/field.hpp"
 #include "views/selector.hpp"
