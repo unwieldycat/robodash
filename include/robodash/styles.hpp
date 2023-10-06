@@ -38,6 +38,8 @@ void _initialize();
 
 // ================================= Colors ================================= //
 
+// TODO: Use pallette
+
 extern lv_color_t color_bg;
 extern lv_color_t color_border;
 extern lv_color_t color_shade;
