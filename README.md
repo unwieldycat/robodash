@@ -1,6 +1,6 @@
 # robodash
 
-An elegant, modular, and powerful UI solution for VEX V5
+An extendable GUI for the VEX V5. Built with LVGL.
 
 <details closed>
 <summary>Preview</summary>
