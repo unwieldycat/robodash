@@ -29,12 +29,12 @@ class FieldView : public View {
 	void set_pos(double x, double y);
 
 	/**
-	 * @brief Set the field bounds
+	 * @brief Set the field scale. Center of the field is always 0, outermost
+	 * value will be equal to the specified maximum value.
 	 *
-	 * @param max Field maximum value (topmost, rightmost)
-	 * @param min Field minimum value (bottommost, leftmost)
+	 * @param max Field maximum value
 	 */
-	void set_bounds(double max, double min);
+	void set_scale(double max);
 
 	void refresh();
 	void initialize();
