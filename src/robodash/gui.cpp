@@ -44,6 +44,12 @@ void gui::register_view(View *view) {
 	view_list_refresh();
 }
 
+void gui::register_views(std::vector<View *> views) {
+	for (View *view : views) {
+		gui::register_view(view);
+	}
+}
+
 void gui::set_view(View *view) {
 	if (current_view) lv_obj_add_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
 	current_view = view;

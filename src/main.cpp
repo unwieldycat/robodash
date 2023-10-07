@@ -44,9 +44,7 @@ gui::FieldView field_view;
 void initialize() {
 	// Initialize library and register views
 	gui::initialize();
-	gui::register_view(&devices_view);
-	gui::register_view(&selector_view);
-	gui::register_view(&test_console);
+	gui::register_views({&devices_view, &selector_view, &test_console});
 
 	// Configure ui
 	gui::bar::add_actions({

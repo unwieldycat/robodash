@@ -26,6 +26,13 @@ class View {
 void register_view(View *view);
 
 /**
+ * @brief Register multiple views
+ *
+ * @param views
+ */
+void register_views(std::vector<View *> views);
+
+/**
  * @brief Set the current view
  *
  * @param view
