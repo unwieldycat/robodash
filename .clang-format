@@ -6,5 +6,6 @@ UseCRLF: false
 ColumnLimit: 100
 AllowShortIfStatementsOnASingleLine: WithoutElse
 AlignAfterOpenBracket: BlockIndent
+AlignArrayOfStructures: Left
 AlwaysBreakTemplateDeclarations: "MultiLine"
 AlwaysBreakTemplateDeclarations: true
