@@ -23,6 +23,7 @@ void gui::FieldView::refresh() {
 void gui::FieldView::initialize() {
 	field = lv_img_create(this->obj);
 	lv_obj_set_size(field, FIELD_SIZE, FIELD_SIZE);
+	lv_obj_align(field, LV_ALIGN_TOP_LEFT, 8, 8);
 
 	arrow = lv_img_create(field);
 	lv_img_set_src(arrow, LV_SYMBOL_DUMMY); // temp
