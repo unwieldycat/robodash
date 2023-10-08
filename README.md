@@ -1,6 +1,6 @@
 # robodash
 
-An extendable GUI for the VEX V5. Built with LVGL.
+A flexible robot dashboard for the VEX V5. Built with LVGL.
 
 <details closed>
 <summary>Preview</summary>
@@ -15,7 +15,7 @@ An extendable GUI for the VEX V5. Built with LVGL.
 
 - **Customizable** - Customizable theme and splash screen
 
-- **Plugable** - Create your own pages
+- **Extendable** - Create your own views
 
 ## Installation
 
