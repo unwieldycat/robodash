@@ -1,7 +1,6 @@
 #pragma once
 #include "../gui.hpp"
 
-// TODO: Units support
 // TODO: Built-in field images
 
 namespace gui {
