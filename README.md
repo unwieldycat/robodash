@@ -19,6 +19,10 @@ An extendable GUI for the VEX V5. Built with LVGL.
 
 ## Installation
 
+> [!IMPORTANT]\
+> To prevent conflicts with the bundled liblvgl version, liblvgl should be
+> removed from your project prior to installing robodash
+
 1. Download the latest template from the releases tab
 2. Open download location and register the template by running
    `pros c fetch robodash@x.x.x.zip`
