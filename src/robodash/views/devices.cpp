@@ -27,16 +27,31 @@ void gui::DevicesView::refresh() {}
 void gui::DevicesView::add_motors(std::vector<motor_desc_t> mtrs) {
 	for (motor_desc_t motor_desc : mtrs) {
 		lv_obj_t *motor_item = lv_obj_create(devices_cont);
-		lv_obj_set_size(motor_item, LV_PCT(100), 32);
-		lv_obj_add_style(motor_item, &style_list_btn, 0);
+		lv_obj_set_size(motor_item, 224, 32);
+		lv_obj_add_style(motor_item, &style_btn_outline, 0);
 		lv_obj_center(motor_item);
 		lv_obj_clear_flag(motor_item, LV_OBJ_FLAG_SCROLLABLE);
 		lv_obj_set_user_data(motor_item, motor_desc.second);
 
+		lv_obj_t *motor_port = lv_img_create(motor_item);
+		lv_obj_align(motor_port, LV_ALIGN_LEFT_MID, -4, 0);
+		lv_obj_set_size(motor_port, 28, 28);
+		lv_img_set_src(motor_port, LV_SYMBOL_DUMMY); // temp
+
 		lv_obj_t *motor_name = lv_label_create(motor_item);
 		lv_label_set_text(motor_name, motor_desc.first.c_str());
 		lv_obj_set_height(motor_name, 24);
-		lv_obj_set_align(motor_name, LV_ALIGN_LEFT_MID);
+		lv_obj_align(motor_name, LV_ALIGN_LEFT_MID, 48, 0);
+
+		lv_obj_t *motor_rpm = lv_label_create(motor_item);
+		lv_label_set_text(motor_rpm, "300rpm");
+		lv_obj_add_style(motor_rpm, &style_text_small, 0);
+		lv_obj_align(motor_rpm, LV_ALIGN_RIGHT_MID, -64, 0);
+
+		lv_obj_t *motor_temp = lv_label_create(motor_item);
+		lv_label_set_text(motor_temp, "XX°C");
+		lv_obj_add_style(motor_temp, &style_text_small, 0);
+		lv_obj_align(motor_temp, LV_ALIGN_RIGHT_MID, -4, 0);
 
 		motors.push_back(motor_desc.second);
 	}
