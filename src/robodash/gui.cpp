@@ -1,14 +1,17 @@
 #include "apix.hpp"
 
-#define INFO_BAR_WIDTH 32
+#define CLOSED_SIDEBAR_WIDTH 32
+#define OPEN_SIDEBAR_WIDTH 128
 
 lv_obj_t *view_cont;
-lv_obj_t *info_bar;
+
+lv_obj_t *sidebar_closed;
+lv_obj_t *sidebar_open_btn;
+
+lv_obj_t *sidebar_open;
+lv_obj_t *sidebar_close_btn;
+
 lv_obj_t *view_list;
-lv_obj_t *battery_label;
-lv_obj_t *battery_icon;
-lv_obj_t *match_icon;
-lv_obj_t *match_label;
 
 std::map<int, gui::View *> views;
 gui::View *current_view;
@@ -82,42 +85,6 @@ void view_list_select_cb(lv_event_t *event) {
 
 [[noreturn]] void background() {
 	while (true) {
-		// Refresh battery level
-		int level = pros::battery::get_capacity();
-		char level_str[sizeof(level) + 1];
-		sprintf(level_str, "%d%%", level);
-		lv_label_set_text(battery_label, level_str);
-
-		// yanderedev technique
-		if (level >= 80) {
-			lv_img_set_src(battery_icon, LV_SYMBOL_BATTERY_FULL);
-		} else if (level < 80 && level >= 60) {
-			lv_img_set_src(battery_icon, LV_SYMBOL_BATTERY_3);
-		} else if (level < 60 && level >= 40) {
-			lv_img_set_src(battery_icon, LV_SYMBOL_BATTERY_2);
-		} else if (level < 40 && level >= 20) {
-			lv_img_set_src(battery_icon, LV_SYMBOL_BATTERY_1);
-		} else if (level < 20 && level >= 0) {
-			lv_img_set_src(battery_icon, LV_SYMBOL_BATTERY_EMPTY);
-		}
-
-		// Update game status
-		if (pros::competition::is_connected()) {
-			if (pros::competition::is_autonomous()) {
-				lv_label_set_text(match_label, "Auton");
-			} else {
-				lv_label_set_text(match_label, "Driver");
-			}
-			if (pros::competition::is_disabled()) {
-				lv_img_set_src(match_icon, LV_SYMBOL_PAUSE);
-			} else {
-				lv_img_set_src(match_icon, LV_SYMBOL_PLAY);
-			}
-		} else {
-			lv_label_set_text(match_label, "No Comp");
-			lv_img_set_src(match_icon, LV_SYMBOL_CLOSE);
-		}
-
 		for (auto const &[id, view] : views) {
 			view->refresh();
 		}
@@ -142,59 +109,49 @@ void gui::initialize() {
 	attribution();
 	gui::theme::_initialize();
 
+	// View container
 	view_cont = lv_obj_create(lv_scr_act());
-	lv_obj_set_size(view_cont, 480, 240 - INFO_BAR_WIDTH);
+	lv_obj_set_size(view_cont, 480 - CLOSED_SIDEBAR_WIDTH, LV_PCT(100));
 	lv_obj_add_style(view_cont, &style_bg, 0);
+	lv_obj_align(view_cont, LV_ALIGN_TOP_LEFT, 0, 0);
 
-	info_bar = lv_obj_create(lv_scr_act());
-	lv_obj_set_size(info_bar, 480, INFO_BAR_WIDTH);
-	lv_obj_add_style(info_bar, &style_bar_bg, 0);
-	lv_obj_align(info_bar, LV_ALIGN_BOTTOM_MID, 0, 0);
+	// Sidebar
+	sidebar_closed = lv_obj_create(lv_scr_act());
+	lv_obj_set_size(sidebar_closed, 480 - CLOSED_SIDEBAR_WIDTH, LV_PCT(100));
+	lv_obj_add_style(sidebar_closed, &style_bar_bg, 0);
+	lv_obj_align(sidebar_closed, LV_ALIGN_TOP_RIGHT, 0, 0);
 
-	view_list = lv_dropdown_create(info_bar);
-	lv_dropdown_clear_options(view_list);
-	lv_obj_set_size(view_list, 152, 32);
-	lv_obj_align(view_list, LV_ALIGN_TOP_LEFT, 0, 0);
-	lv_obj_add_style(view_list, &style_bar_button, 0);
-	lv_obj_add_style(view_list, &style_bar_button_pr, LV_STATE_PRESSED);
-	lv_dropdown_set_dir(view_list, LV_DIR_TOP);
-	lv_obj_add_event_cb(view_list, &view_list_select_cb, LV_EVENT_ALL, NULL);
+	sidebar_open_btn = lv_btn_create(sidebar_closed);
+	lv_obj_set_size(sidebar_open_btn, 24, 24);
+	lv_obj_add_style(sidebar_open_btn, &style_btn_outline, 0);
+	lv_obj_add_style(sidebar_open_btn, &style_btn_outline_pr, LV_STATE_PRESSED);
+	lv_obj_align(sidebar_open_btn, LV_ALIGN_TOP_LEFT, 4, 4);
 
-	DROPDOWN_LIST_STYLE(view_list, &style_bar_list);
+	lv_obj_t *open_img = lv_img_create(sidebar_close_btn);
+	lv_img_set_src(open_img, LV_SYMBOL_BARS);
+	lv_obj_align(open_img, LV_ALIGN_CENTER, 0, 0);
 
-	lv_obj_t *batery_cont = lv_obj_create(info_bar);
-	lv_obj_set_size(batery_cont, 96, 24);
-	lv_obj_align(batery_cont, LV_ALIGN_TOP_RIGHT, -8, 4);
-	lv_obj_add_style(batery_cont, &style_transp, 0);
-	lv_obj_set_flex_align(
-	    batery_cont, LV_FLEX_ALIGN_END, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER
-	);
+	// Open sidebar
+	sidebar_open = lv_obj_create(view_cont);
+	lv_obj_set_size(view_cont, OPEN_SIDEBAR_WIDTH, LV_PCT(100));
+	lv_obj_align(sidebar_open, LV_ALIGN_TOP_RIGHT, 0, 0);
+	lv_obj_add_style(sidebar_open, &style_bar_bg, 0);
 
-	battery_label = lv_label_create(batery_cont);
-	lv_label_set_text(battery_label, "100%");
-	lv_obj_align(battery_label, LV_ALIGN_LEFT_MID, 12, 0);
-	lv_obj_add_style(battery_label, &style_text_small, 0);
+	sidebar_close_btn = lv_btn_create(sidebar_open);
+	lv_obj_set_size(sidebar_close_btn, 24, 24);
+	lv_obj_add_style(sidebar_close_btn, &style_btn_outline, 0);
+	lv_obj_add_style(sidebar_close_btn, &style_btn_outline_pr, LV_STATE_PRESSED);
+	lv_obj_align(sidebar_close_btn, LV_ALIGN_TOP_LEFT, 4, 4);
 
-	battery_icon = lv_img_create(batery_cont);
-	lv_img_set_src(battery_icon, LV_SYMBOL_BATTERY_FULL);
-	lv_obj_align(battery_icon, LV_ALIGN_RIGHT_MID, -12, 0);
-	lv_obj_add_style(battery_icon, &style_text_medium, 0);
+	lv_obj_t *close_img = lv_img_create(sidebar_close_btn);
+	lv_img_set_src(close_img, LV_SYMBOL_CLOSE);
+	lv_obj_align(close_img, LV_ALIGN_CENTER, 0, 0);
 
-	lv_obj_t *match_cont = lv_obj_create(info_bar);
-	lv_obj_set_size(match_cont, 96, 24);
-	lv_obj_align(match_cont, LV_ALIGN_TOP_RIGHT, -80, 4);
-	lv_obj_add_style(match_cont, &style_transp, 0);
-	lv_obj_set_flex_align(
-	    match_cont, LV_FLEX_ALIGN_END, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER
-	);
-
-	match_label = lv_label_create(match_cont);
-	lv_label_set_text(match_label, "Driver");
-	lv_obj_add_style(match_label, &style_text_small, 0);
-
-	match_icon = lv_img_create(match_cont);
-	lv_img_set_src(match_icon, LV_SYMBOL_PLAY);
-	lv_obj_add_style(match_icon, &style_text_medium, 0);
+	// View switcher
+	view_list = lv_list_create(sidebar_open);
+	lv_obj_set_size(view_list, LV_PCT(100) - 8, LV_PCT(100) - 32);
+	lv_obj_add_style(view_list, &style_list, 0);
+	lv_obj_align(view_list, LV_ALIGN_TOP_LEFT, 4, 28);
 
 	gui::screensaver::_initialize();
 
