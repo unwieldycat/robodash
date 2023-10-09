@@ -1,3 +1,4 @@
+#include "gui.hpp"
 #include "apix.hpp"
 
 #define CLOSED_SIDEBAR_WIDTH 32
@@ -36,12 +37,18 @@ gui::View::~View() { lv_obj_del(this->obj); }
 
 // =========================== View Management =========================== //
 
+void view_btn_cb(lv_event_t *event) { gui::set_view((gui::View *)lv_event_get_user_data(event)); }
+
 void gui::register_view(View *view) {
 	lv_obj_set_parent(view->obj, view_cont);
 	view->initialize();
 	views.emplace(view->id, view);
 	if (!current_view) gui::set_view(view);
-	view_list_refresh();
+
+	lv_obj_t *view_button = lv_list_add_btn(view_list, NULL, view->name.c_str());
+	lv_obj_add_style(view_button, &style_list_btn, 0);
+	lv_obj_add_style(view_button, &style_list_btn_pr, LV_STATE_PRESSED);
+	lv_obj_add_event_cb(view_button, view_btn_cb, LV_EVENT_PRESSED, view);
 }
 
 void gui::register_views(std::vector<View *> views) {
@@ -58,28 +65,13 @@ void gui::set_view(View *view) {
 
 gui::View *gui::get_view() { return current_view; }
 
-// ================================ Info Bar ================================ //
+// ================================ Sidebar ================================ //
 
-void view_list_refresh() {
-	lv_dropdown_clear_options(view_list);
+// TODO: Sidebar animation?
 
-	for (auto const &[id, view] : views) {
-		lv_dropdown_add_option(view_list, view->name.c_str(), view->id);
-		if (id == current_view->id) lv_dropdown_set_selected(view_list, id);
-	}
-}
+void open_sidebar(lv_event_t *event) { lv_obj_clear_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN); }
 
-void view_list_select_cb(lv_event_t *event) {
-	lv_obj_t *target = lv_event_get_target(event);
-	lv_event_code_t code = lv_event_get_code(event);
-	if (code != LV_EVENT_VALUE_CHANGED) return;
-
-	int idx = lv_dropdown_get_selected(target);
-	if (idx == current_view->id) return;
-
-	gui::View *selected = views.at(idx);
-	gui::set_view(selected);
-}
+void hide_sidebar(lv_event_t *event) { lv_obj_add_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN); }
 
 // ============================ Background Task ============================ //
 
@@ -126,6 +118,7 @@ void gui::initialize() {
 	lv_obj_add_style(sidebar_open_btn, &style_btn_outline, 0);
 	lv_obj_add_style(sidebar_open_btn, &style_btn_outline_pr, LV_STATE_PRESSED);
 	lv_obj_align(sidebar_open_btn, LV_ALIGN_TOP_LEFT, 4, 4);
+	lv_obj_add_event_cb(sidebar_open_btn, open_sidebar, LV_EVENT_PRESSED, NULL);
 
 	lv_obj_t *open_img = lv_img_create(sidebar_close_btn);
 	lv_img_set_src(open_img, LV_SYMBOL_BARS);
@@ -136,6 +129,7 @@ void gui::initialize() {
 	lv_obj_set_size(view_cont, OPEN_SIDEBAR_WIDTH, LV_PCT(100));
 	lv_obj_align(sidebar_open, LV_ALIGN_TOP_RIGHT, 0, 0);
 	lv_obj_add_style(sidebar_open, &style_bar_bg, 0);
+	lv_obj_add_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
 
 	sidebar_close_btn = lv_btn_create(sidebar_open);
 	lv_obj_set_size(sidebar_close_btn, 24, 24);
