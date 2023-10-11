@@ -67,11 +67,20 @@ gui::View *gui::get_view() { return current_view; }
 
 // ================================ Sidebar ================================ //
 
-// TODO: Sidebar animation?
+lv_anim_t sidebar_open_anim;
+lv_anim_t sidebar_close_anim;
 
-void open_sidebar(lv_event_t *event) { lv_obj_clear_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN); }
+void open_sidebar(lv_event_t *event) {
+	lv_obj_clear_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
+	lv_anim_start(&sidebar_open_anim);
+}
 
-void hide_sidebar(lv_event_t *event) { lv_obj_add_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN); }
+void hide_sidebar(lv_event_t *event) {
+	lv_obj_add_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
+	lv_anim_start(&sidebar_close_anim);
+}
+
+void anim_x_cb(void *obj, int x) { lv_obj_set_x((lv_obj_t *)obj, x); }
 
 // ============================ Background Task ============================ //
 
@@ -146,6 +155,16 @@ void gui::initialize() {
 	lv_obj_set_size(view_list, LV_PCT(100) - 8, LV_PCT(100) - 32);
 	lv_obj_add_style(view_list, &style_list, 0);
 	lv_obj_align(view_list, LV_ALIGN_TOP_LEFT, 4, 28);
+
+	// Create sidebar animations
+	lv_anim_init(&sidebar_open_anim);
+	lv_anim_set_var(&sidebar_open_anim, sidebar_open);
+	lv_anim_set_time(&sidebar_open_anim, 750);
+	lv_anim_set_exec_cb(&sidebar_open_anim, &anim_x_cb);
+	sidebar_close_anim = sidebar_open_anim;
+
+	lv_anim_set_values(&sidebar_open_anim, 480 + OPEN_SIDEBAR_WIDTH, 480);
+	lv_anim_set_values(&sidebar_close_anim, 480, 480 + OPEN_SIDEBAR_WIDTH);
 
 	gui::screensaver::_initialize();
 
