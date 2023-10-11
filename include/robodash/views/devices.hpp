@@ -1,6 +1,6 @@
 #pragma once
 #include "../gui.hpp"
-#include "lvgl/lvgl.h"
+#include "liblvgl/lvgl.h"
 
 namespace gui {
 
