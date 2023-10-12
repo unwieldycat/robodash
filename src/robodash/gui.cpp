@@ -1,6 +1,11 @@
 #include "gui.hpp"
 #include "apix.hpp"
 
+// TODO: refactor
+// TODO: refactor
+// TODO: refactor
+// TODO: refactor
+
 #define CLOSED_SIDEBAR_WIDTH 36
 #define OPEN_SIDEBAR_WIDTH 192
 
