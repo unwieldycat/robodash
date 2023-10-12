@@ -1,5 +1,6 @@
 #include "gui.hpp"
 #include "apix.hpp"
+#include "screensaver.hpp"
 
 // TODO: refactor
 // TODO: refactor
@@ -80,6 +81,8 @@ gui::View *gui::get_view() { return current_view; }
 
 // ================================ Sidebar ================================ //
 
+void activate_screensaver(lv_event_t *event) { gui::screensaver::activate(); }
+
 void open_sidebar(lv_event_t *event) {
 	lv_obj_clear_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
 	lv_obj_clear_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN);
@@ -145,12 +148,24 @@ void gui::initialize() {
 	lv_obj_set_size(sidebar_open_btn, 32, 32);
 	lv_obj_add_style(sidebar_open_btn, &style_bar_button, 0);
 	lv_obj_add_style(sidebar_open_btn, &style_bar_button_pr, LV_STATE_PRESSED);
-	lv_obj_align(sidebar_open_btn, LV_ALIGN_TOP_MID, 0, 2);
+	lv_obj_align(sidebar_open_btn, LV_ALIGN_TOP_MID, 0, 4);
 	lv_obj_add_event_cb(sidebar_open_btn, open_sidebar, LV_EVENT_PRESSED, NULL);
 
 	lv_obj_t *open_img = lv_img_create(sidebar_open_btn);
 	lv_img_set_src(open_img, LV_SYMBOL_LEFT);
 	lv_obj_align(open_img, LV_ALIGN_CENTER, 0, 0);
+
+	// Screensaver button
+	lv_obj_t *ss_activate_btn = lv_btn_create(sidebar_closed);
+	lv_obj_set_size(ss_activate_btn, 32, 32);
+	lv_obj_add_style(ss_activate_btn, &style_bar_button, 0);
+	lv_obj_add_style(ss_activate_btn, &style_bar_button_pr, LV_STATE_PRESSED);
+	lv_obj_align(ss_activate_btn, LV_ALIGN_TOP_MID, 0, 40);
+	lv_obj_add_event_cb(ss_activate_btn, activate_screensaver, LV_EVENT_PRESSED, NULL);
+
+	lv_obj_t *ss_btn_img = lv_img_create(ss_activate_btn);
+	lv_img_set_src(ss_btn_img, LV_SYMBOL_EYE_CLOSE);
+	lv_obj_align(ss_btn_img, LV_ALIGN_CENTER, 0, 0);
 
 	// Modal
 	// FIXME: Move styles from here to styles file
