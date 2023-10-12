@@ -2,8 +2,9 @@
 #include "apix.hpp"
 
 #define CLOSED_SIDEBAR_WIDTH 32
-#define OPEN_SIDEBAR_WIDTH 128
+#define OPEN_SIDEBAR_WIDTH 144
 
+lv_obj_t *screen;
 lv_obj_t *view_cont;
 
 lv_obj_t *sidebar_closed;
@@ -75,12 +76,12 @@ void open_sidebar(lv_event_t *event) {
 	lv_anim_start(&sidebar_open_anim);
 }
 
-void hide_sidebar(lv_event_t *event) {
-	lv_obj_add_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
+void close_sidebar(lv_event_t *event) {
 	lv_anim_start(&sidebar_close_anim);
+	// lv_obj_add_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
 }
 
-void anim_x_cb(void *obj, int x) { lv_obj_set_x((lv_obj_t *)obj, x); }
+void anim_x_cb(void *obj, int32_t x) { lv_obj_set_x((lv_obj_t *)obj, x); }
 
 // ============================ Background Task ============================ //
 
@@ -110,15 +111,18 @@ void gui::initialize() {
 	attribution();
 	gui::theme::_initialize();
 
+	screen = lv_scr_act();
+	lv_obj_clear_flag(screen, LV_OBJ_FLAG_SCROLLABLE);
+
 	// View container
-	view_cont = lv_obj_create(lv_scr_act());
-	lv_obj_set_size(view_cont, 480 - CLOSED_SIDEBAR_WIDTH, LV_PCT(100));
+	view_cont = lv_obj_create(screen);
+	lv_obj_set_size(view_cont, 480 - CLOSED_SIDEBAR_WIDTH, 240);
 	lv_obj_add_style(view_cont, &style_bg, 0);
 	lv_obj_align(view_cont, LV_ALIGN_TOP_LEFT, 0, 0);
 
 	// Sidebar
-	sidebar_closed = lv_obj_create(lv_scr_act());
-	lv_obj_set_size(sidebar_closed, 480 - CLOSED_SIDEBAR_WIDTH, LV_PCT(100));
+	sidebar_closed = lv_obj_create(screen);
+	lv_obj_set_size(sidebar_closed, CLOSED_SIDEBAR_WIDTH, 240);
 	lv_obj_add_style(sidebar_closed, &style_bar_bg, 0);
 	lv_obj_align(sidebar_closed, LV_ALIGN_TOP_RIGHT, 0, 0);
 
@@ -134,8 +138,8 @@ void gui::initialize() {
 	lv_obj_align(open_img, LV_ALIGN_CENTER, 0, 0);
 
 	// Open sidebar
-	sidebar_open = lv_obj_create(view_cont);
-	lv_obj_set_size(view_cont, OPEN_SIDEBAR_WIDTH, LV_PCT(100));
+	sidebar_open = lv_obj_create(screen);
+	lv_obj_set_size(sidebar_open, OPEN_SIDEBAR_WIDTH, 240);
 	lv_obj_align(sidebar_open, LV_ALIGN_TOP_RIGHT, 0, 0);
 	lv_obj_add_style(sidebar_open, &style_bar_bg, 0);
 	lv_obj_add_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
@@ -145,6 +149,7 @@ void gui::initialize() {
 	lv_obj_add_style(sidebar_close_btn, &style_btn_outline, 0);
 	lv_obj_add_style(sidebar_close_btn, &style_btn_outline_pr, LV_STATE_PRESSED);
 	lv_obj_align(sidebar_close_btn, LV_ALIGN_TOP_LEFT, 4, 4);
+	lv_obj_add_event_cb(sidebar_close_btn, close_sidebar, LV_EVENT_PRESSED, NULL);
 
 	lv_obj_t *close_img = lv_img_create(sidebar_close_btn);
 	lv_img_set_src(close_img, LV_SYMBOL_CLOSE);
@@ -159,12 +164,16 @@ void gui::initialize() {
 	// Create sidebar animations
 	lv_anim_init(&sidebar_open_anim);
 	lv_anim_set_var(&sidebar_open_anim, sidebar_open);
-	lv_anim_set_time(&sidebar_open_anim, 750);
+	lv_anim_set_time(&sidebar_open_anim, 250);
 	lv_anim_set_exec_cb(&sidebar_open_anim, &anim_x_cb);
+
 	sidebar_close_anim = sidebar_open_anim;
 
-	lv_anim_set_values(&sidebar_open_anim, 480 + OPEN_SIDEBAR_WIDTH, 480);
-	lv_anim_set_values(&sidebar_close_anim, 480, 480 + OPEN_SIDEBAR_WIDTH);
+	lv_anim_set_path_cb(&sidebar_open_anim, &lv_anim_path_ease_in);
+	lv_anim_set_values(&sidebar_open_anim, OPEN_SIDEBAR_WIDTH, 0);
+
+	lv_anim_set_values(&sidebar_close_anim, 0, OPEN_SIDEBAR_WIDTH);
+	lv_anim_set_path_cb(&sidebar_close_anim, &lv_anim_path_ease_out);
 
 	gui::screensaver::_initialize();
 
