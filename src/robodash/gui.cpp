@@ -1,7 +1,7 @@
 #include "gui.hpp"
 #include "apix.hpp"
 
-#define CLOSED_SIDEBAR_WIDTH 32
+#define CLOSED_SIDEBAR_WIDTH 36
 #define OPEN_SIDEBAR_WIDTH 192
 
 lv_obj_t *screen;
@@ -133,18 +133,18 @@ void gui::initialize() {
 	// Sidebar
 	sidebar_closed = lv_obj_create(screen);
 	lv_obj_set_size(sidebar_closed, CLOSED_SIDEBAR_WIDTH, 240);
-	lv_obj_add_style(sidebar_closed, &style_bar_bg, 0);
+	lv_obj_add_style(sidebar_closed, &style_bg, 0);
 	lv_obj_align(sidebar_closed, LV_ALIGN_TOP_RIGHT, 0, 0);
 
 	sidebar_open_btn = lv_btn_create(sidebar_closed);
-	lv_obj_set_size(sidebar_open_btn, 24, 24);
-	lv_obj_add_style(sidebar_open_btn, &style_btn_outline, 0);
-	lv_obj_add_style(sidebar_open_btn, &style_btn_outline_pr, LV_STATE_PRESSED);
-	lv_obj_align(sidebar_open_btn, LV_ALIGN_TOP_LEFT, 4, 4);
+	lv_obj_set_size(sidebar_open_btn, 32, 32);
+	lv_obj_add_style(sidebar_open_btn, &style_bar_button, 0);
+	lv_obj_add_style(sidebar_open_btn, &style_bar_button_pr, LV_STATE_PRESSED);
+	lv_obj_align(sidebar_open_btn, LV_ALIGN_TOP_MID, 0, 2);
 	lv_obj_add_event_cb(sidebar_open_btn, open_sidebar, LV_EVENT_PRESSED, NULL);
 
-	lv_obj_t *open_img = lv_img_create(sidebar_close_btn);
-	lv_img_set_src(open_img, LV_SYMBOL_BARS);
+	lv_obj_t *open_img = lv_img_create(sidebar_open_btn);
+	lv_img_set_src(open_img, LV_SYMBOL_LEFT);
 	lv_obj_align(open_img, LV_ALIGN_CENTER, 0, 0);
 
 	// Modal
@@ -166,7 +166,7 @@ void gui::initialize() {
 	lv_obj_add_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
 
 	sidebar_close_btn = lv_btn_create(sidebar_open);
-	lv_obj_set_size(sidebar_close_btn, 24, 24);
+	lv_obj_set_size(sidebar_close_btn, 28, 28);
 	lv_obj_add_style(sidebar_close_btn, &style_btn_outline, 0);
 	lv_obj_add_style(sidebar_close_btn, &style_btn_outline_pr, LV_STATE_PRESSED);
 	lv_obj_align(sidebar_close_btn, LV_ALIGN_TOP_LEFT, 4, 4);
@@ -179,8 +179,8 @@ void gui::initialize() {
 	// View switcher
 	view_list = lv_list_create(sidebar_open);
 	lv_obj_set_size(view_list, LV_PCT(100) - 8, LV_PCT(100) - 32);
-	lv_obj_add_style(view_list, &style_list, 0);
-	lv_obj_align(view_list, LV_ALIGN_TOP_LEFT, 4, 28);
+	lv_obj_add_style(view_list, &style_bar_list, 0);
+	lv_obj_align(view_list, LV_ALIGN_TOP_LEFT, 4, 36);
 
 	// Create sidebar animations
 	lv_anim_init(&anim_sidebar_open);
