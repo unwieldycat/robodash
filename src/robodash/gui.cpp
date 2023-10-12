@@ -185,12 +185,12 @@ void gui::initialize() {
 	// Create sidebar animations
 	lv_anim_init(&anim_sidebar_open);
 	lv_anim_set_var(&anim_sidebar_open, sidebar_open);
-	lv_anim_set_time(&anim_sidebar_open, 250);
+	lv_anim_set_time(&anim_sidebar_open, 200);
 	lv_anim_set_exec_cb(&anim_sidebar_open, &anim_x_cb);
 
 	anim_sidebar_close = anim_sidebar_open;
 
-	lv_anim_set_path_cb(&anim_sidebar_open, &lv_anim_path_ease_in);
+	lv_anim_set_path_cb(&anim_sidebar_open, &lv_anim_path_ease_out);
 	lv_anim_set_values(&anim_sidebar_open, OPEN_SIDEBAR_WIDTH, 0);
 
 	lv_anim_set_values(&anim_sidebar_close, 0, OPEN_SIDEBAR_WIDTH);
@@ -198,7 +198,7 @@ void gui::initialize() {
 
 	lv_anim_init(&anim_modal_close);
 	lv_anim_set_var(&anim_modal_close, sidebar_modal);
-	lv_anim_set_time(&anim_modal_close, 250);
+	lv_anim_set_time(&anim_modal_close, 200);
 	lv_anim_set_exec_cb(&anim_modal_close, &anim_opa_cb);
 
 	anim_modal_open = anim_modal_close;
