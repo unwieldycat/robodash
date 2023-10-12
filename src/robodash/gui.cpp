@@ -24,6 +24,7 @@ std::map<int, gui::View *> views;
 gui::View *current_view;
 
 void view_list_refresh();
+void close_sidebar(lv_event_t *event);
 
 // =========================== Base View Class =========================== //
 
@@ -55,6 +56,7 @@ void gui::register_view(View *view) {
 	lv_obj_add_style(view_button, &style_list_btn, 0);
 	lv_obj_add_style(view_button, &style_list_btn_pr, LV_STATE_PRESSED);
 	lv_obj_add_event_cb(view_button, view_btn_cb, LV_EVENT_PRESSED, view);
+	lv_obj_add_event_cb(view_button, close_sidebar, LV_EVENT_PRESSED, NULL);
 }
 
 void gui::register_views(std::vector<View *> views) {
@@ -154,6 +156,7 @@ void gui::initialize() {
 	lv_obj_set_style_radius(sidebar_modal, 0, 0);
 	lv_obj_set_style_border_width(sidebar_modal, 0, 0);
 	lv_obj_add_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_event_cb(sidebar_modal, close_sidebar, LV_EVENT_PRESSED, NULL);
 
 	// Open sidebar
 	sidebar_open = lv_obj_create(screen);
