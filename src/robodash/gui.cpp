@@ -2,7 +2,7 @@
 #include "apix.hpp"
 
 #define CLOSED_SIDEBAR_WIDTH 32
-#define OPEN_SIDEBAR_WIDTH 144
+#define OPEN_SIDEBAR_WIDTH 192
 
 lv_obj_t *screen;
 lv_obj_t *view_cont;
