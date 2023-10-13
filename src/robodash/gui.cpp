@@ -23,8 +23,8 @@ lv_obj_t *sidebar_modal;
 
 lv_anim_t anim_sidebar_open;
 lv_anim_t anim_sidebar_close;
-lv_anim_t anim_modal_close;
-lv_anim_t anim_modal_open;
+lv_anim_t anim_modal_hide;
+lv_anim_t anim_modal_show;
 
 std::map<int, gui::View *> views;
 gui::View *current_view;
@@ -87,12 +87,12 @@ void open_sidebar(lv_event_t *event) {
 	lv_obj_clear_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
 	lv_obj_clear_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN);
 	lv_anim_start(&anim_sidebar_open);
-	lv_anim_start(&anim_modal_open);
+	lv_anim_start(&anim_modal_show);
 }
 
 void close_sidebar(lv_event_t *event) {
 	lv_anim_start(&anim_sidebar_close);
-	lv_anim_start(&anim_modal_close);
+	lv_anim_start(&anim_modal_hide);
 }
 
 void anim_x_cb(void *obj, int32_t x) { lv_obj_set_x((lv_obj_t *)obj, x); }
@@ -216,16 +216,16 @@ void gui::initialize() {
 	lv_anim_set_values(&anim_sidebar_close, 0, OPEN_SIDEBAR_WIDTH);
 	lv_anim_set_path_cb(&anim_sidebar_close, &lv_anim_path_ease_out);
 
-	lv_anim_init(&anim_modal_close);
-	lv_anim_set_var(&anim_modal_close, sidebar_modal);
-	lv_anim_set_time(&anim_modal_close, 200);
-	lv_anim_set_exec_cb(&anim_modal_close, &anim_opa_cb);
+	lv_anim_init(&anim_modal_hide);
+	lv_anim_set_var(&anim_modal_hide, sidebar_modal);
+	lv_anim_set_time(&anim_modal_hide, 200);
+	lv_anim_set_exec_cb(&anim_modal_hide, &anim_opa_cb);
 
-	anim_modal_open = anim_modal_close;
+	anim_modal_show = anim_modal_hide;
 
-	lv_anim_set_values(&anim_modal_close, 144, 0);
-	lv_anim_set_deleted_cb(&anim_modal_close, &anim_del_cb);
-	lv_anim_set_values(&anim_modal_open, 0, 144);
+	lv_anim_set_values(&anim_modal_hide, 144, 0);
+	lv_anim_set_deleted_cb(&anim_modal_hide, &anim_del_cb);
+	lv_anim_set_values(&anim_modal_show, 0, 144);
 
 	gui::screensaver::_initialize();
 
