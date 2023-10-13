@@ -2,11 +2,6 @@
 #include "apix.hpp"
 #include "screensaver.hpp"
 
-// TODO: refactor
-// TODO: refactor
-// TODO: refactor
-// TODO: refactor
-
 #define CLOSED_SIDEBAR_WIDTH 36
 #define OPEN_SIDEBAR_WIDTH 192
 
@@ -29,41 +24,9 @@ lv_anim_t anim_modal_show;
 std::map<int, gui::View *> views;
 gui::View *current_view;
 
-void view_list_refresh();
-void close_sidebar(lv_event_t *event);
-
-// =========================== View Management =========================== //
+// =============================== Callbacks =============================== //
 
 void view_btn_cb(lv_event_t *event) { gui::set_view((gui::View *)lv_event_get_user_data(event)); }
-
-void gui::register_view(View *view) {
-	lv_obj_set_parent(view->obj, view_cont);
-	view->initialize();
-	views.emplace(view->id, view);
-	if (!current_view) gui::set_view(view);
-
-	lv_obj_t *view_button = lv_list_add_btn(view_list, NULL, view->name.c_str());
-	lv_obj_add_style(view_button, &style_list_btn, 0);
-	lv_obj_add_style(view_button, &style_list_btn_pr, LV_STATE_PRESSED);
-	lv_obj_add_event_cb(view_button, view_btn_cb, LV_EVENT_PRESSED, view);
-	lv_obj_add_event_cb(view_button, close_sidebar, LV_EVENT_PRESSED, NULL);
-}
-
-void gui::register_views(std::vector<View *> views) {
-	for (View *view : views) {
-		gui::register_view(view);
-	}
-}
-
-void gui::set_view(View *view) {
-	if (current_view) lv_obj_add_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
-	current_view = view;
-	lv_obj_clear_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
-}
-
-gui::View *gui::get_view() { return current_view; }
-
-// ================================ Sidebar ================================ //
 
 void activate_screensaver(lv_event_t *event) { gui::screensaver::activate(); }
 
@@ -85,34 +48,9 @@ void anim_opa_cb(void *obj, int32_t opa) { lv_obj_set_style_bg_opa((lv_obj_t *)o
 
 void anim_del_cb(lv_anim_t *anim) { lv_obj_add_flag((lv_obj_t *)anim->var, LV_OBJ_FLAG_HIDDEN); }
 
-// ============================ Background Task ============================ //
+// =========================== UI Initialization =========================== //
 
-[[noreturn]] void background() {
-	while (true) {
-		for (auto const &[id, view] : views) {
-			view->refresh();
-		}
-
-		gui::screensaver::_refresh();
-
-		pros::delay(500);
-	}
-}
-
-// =============================== Initialize =============================== //
-
-void attribution() {
-	std::string banner = "\e[1;35m        _ \n"
-	                     " _ _ __| |\n"
-	                     "| '_/ _` |		GUI powered by robodash\n"
-	                     "|_| \\__,_|	  \e[0mCopyright (C) Alex Y | Version %s\n";
-	printf(banner.c_str(), RD_VERSION);
-}
-
-void gui::initialize() {
-	attribution();
-	gui::theme::_initialize();
-
+void create_ui() {
 	screen = lv_scr_act();
 	lv_obj_clear_flag(screen, LV_OBJ_FLAG_SCROLLABLE);
 
@@ -122,7 +60,7 @@ void gui::initialize() {
 	lv_obj_add_style(view_cont, &style_bg, 0);
 	lv_obj_align(view_cont, LV_ALIGN_TOP_LEFT, 0, 0);
 
-	// Sidebar
+	// Collapsed sidebar
 	sidebar_closed = lv_obj_create(screen);
 	lv_obj_set_size(sidebar_closed, CLOSED_SIDEBAR_WIDTH, 240);
 	lv_obj_add_style(sidebar_closed, &style_bg, 0);
@@ -185,8 +123,10 @@ void gui::initialize() {
 	lv_obj_set_size(view_list, LV_PCT(100) - 8, LV_PCT(100) - 32);
 	lv_obj_add_style(view_list, &style_bar_list, 0);
 	lv_obj_align(view_list, LV_ALIGN_TOP_LEFT, 4, 36);
+}
 
-	// Create sidebar animations
+void create_anims() {
+	// Sidebar animations
 	lv_anim_init(&anim_sidebar_open);
 	lv_anim_set_var(&anim_sidebar_open, sidebar_open);
 	lv_anim_set_time(&anim_sidebar_open, 200);
@@ -200,6 +140,7 @@ void gui::initialize() {
 	lv_anim_set_values(&anim_sidebar_close, 0, OPEN_SIDEBAR_WIDTH);
 	lv_anim_set_path_cb(&anim_sidebar_close, &lv_anim_path_ease_out);
 
+	// Modal animations
 	lv_anim_init(&anim_modal_hide);
 	lv_anim_set_var(&anim_modal_hide, sidebar_modal);
 	lv_anim_set_time(&anim_modal_hide, 200);
@@ -210,6 +151,67 @@ void gui::initialize() {
 	lv_anim_set_values(&anim_modal_hide, 144, 0);
 	lv_anim_set_deleted_cb(&anim_modal_hide, &anim_del_cb);
 	lv_anim_set_values(&anim_modal_show, 0, 144);
+}
+
+// =========================== View Management =========================== //
+
+void gui::register_view(View *view) {
+	lv_obj_set_parent(view->obj, view_cont);
+	view->initialize();
+	views.emplace(view->id, view);
+	if (!current_view) gui::set_view(view);
+
+	lv_obj_t *view_button = lv_list_add_btn(view_list, NULL, view->name.c_str());
+	lv_obj_add_style(view_button, &style_list_btn, 0);
+	lv_obj_add_style(view_button, &style_list_btn_pr, LV_STATE_PRESSED);
+	lv_obj_add_event_cb(view_button, view_btn_cb, LV_EVENT_PRESSED, view);
+	lv_obj_add_event_cb(view_button, close_sidebar, LV_EVENT_PRESSED, NULL);
+}
+
+void gui::register_views(std::vector<View *> views) {
+	for (View *view : views) {
+		gui::register_view(view);
+	}
+}
+
+void gui::set_view(View *view) {
+	if (current_view) lv_obj_add_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
+	current_view = view;
+	lv_obj_clear_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
+}
+
+gui::View *gui::get_view() { return current_view; }
+
+// ============================ Background Task ============================ //
+
+[[noreturn]] void background() {
+	while (true) {
+		for (auto const &[id, view] : views) {
+			view->refresh();
+		}
+
+		gui::screensaver::_refresh();
+
+		pros::delay(500);
+	}
+}
+
+// =============================== Initialize =============================== //
+
+void attribution() {
+	std::string banner = "\e[1;35m        _ \n"
+	                     " _ _ __| |\n"
+	                     "| '_/ _` |		GUI powered by robodash\n"
+	                     "|_| \\__,_|	  \e[0mCopyright (C) Alex Y | Version %s\n";
+	printf(banner.c_str(), RD_VERSION);
+}
+
+void gui::initialize() {
+	attribution();
+	gui::theme::_initialize();
+
+	create_ui();
+	create_anims();
 
 	gui::screensaver::_initialize();
 
