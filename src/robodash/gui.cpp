@@ -162,7 +162,7 @@ void gui::register_view(View *view) {
 	if (!current_view) gui::set_view(view);
 
 	lv_obj_t *view_button = lv_list_add_btn(view_list, NULL, view->name.c_str());
-	lv_obj_add_style(view_button, &style_list_btn, 0);
+	lv_obj_add_style(view_button, &style_bar_list_btn, 0);
 	lv_obj_add_style(view_button, &style_list_btn_pr, LV_STATE_PRESSED);
 	lv_obj_add_event_cb(view_button, view_btn_cb, LV_EVENT_PRESSED, view);
 	lv_obj_add_event_cb(view_button, close_sidebar, LV_EVENT_PRESSED, NULL);

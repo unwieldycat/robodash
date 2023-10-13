@@ -5,6 +5,7 @@
 lv_style_t style_bar_button;
 lv_style_t style_bar_button_pr;
 lv_style_t style_bar_list;
+lv_style_t style_bar_list_btn;
 lv_style_t style_bar_bg;
 
 void _init_style_bar() {
@@ -30,6 +31,17 @@ void _init_style_bar() {
 	lv_style_set_border_width(&style_bar_list, 0);
 	lv_style_set_bg_color(&style_bar_list, color_bar);
 	lv_style_set_pad_all(&style_bar_list, 8);
+
+	// Sidebar list button
+	lv_style_init(&style_bar_list_btn);
+	lv_style_set_border_color(&style_bar_list_btn, color_bar_outline);
+	lv_style_set_border_width(&style_bar_list_btn, 1);
+	lv_style_set_border_opa(&style_bar_list_btn, LV_OPA_COVER);
+	lv_style_set_border_side(&style_bar_list_btn, LV_BORDER_SIDE_BOTTOM);
+	lv_style_set_text_color(&style_bar_list_btn, color_text);
+	lv_style_set_radius(&style_bar_list_btn, 0);
+	lv_style_set_bg_color(&style_bar_list_btn, color_bar);
+	// lv_style_set_pad_ver(&style_bar_list_btn, 12);
 
 	// Sidebar background
 	lv_style_init(&style_bar_bg);
