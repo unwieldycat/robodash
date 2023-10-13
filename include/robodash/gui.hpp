@@ -1,22 +1,10 @@
 #pragma once
 #include "api.h"
 #include "lvgl/lvgl.h"
+#include "view.hpp"
 #include <map>
 
 namespace gui {
-
-class View {
-  public:
-	int id;
-	std::string name;
-	lv_obj_t *obj;
-
-	View(std::string name);
-	~View();
-
-	virtual void refresh() = 0;
-	virtual void initialize() = 0;
-};
 
 /**
  * @brief Register a view

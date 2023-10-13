@@ -12,6 +12,7 @@
 
 #include "gui.hpp"
 #include "screensaver.hpp"
+#include "view.hpp"
 #include "views/console.hpp"
 #include "views/devices.hpp"
 #include "views/field.hpp"
