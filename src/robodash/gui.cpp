@@ -2,7 +2,7 @@
 #include "apix.hpp"
 #include "screensaver.hpp"
 
-#define CLOSED_SIDEBAR_WIDTH 36
+#define CLOSED_SIDEBAR_WIDTH 40
 #define OPEN_SIDEBAR_WIDTH 192
 
 lv_obj_t *screen;
