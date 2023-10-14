@@ -42,7 +42,6 @@ void _init_style_bar() {
 	lv_style_set_text_color(&style_bar_list_btn, color_text);
 	lv_style_set_radius(&style_bar_list_btn, 0);
 	lv_style_set_bg_color(&style_bar_list_btn, color_bar);
-	// lv_style_set_pad_ver(&style_bar_list_btn, 12);
 
 	// Sidebar background
 	lv_style_init(&style_bar_bg);
