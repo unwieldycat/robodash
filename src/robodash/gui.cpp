@@ -1,6 +1,7 @@
 #include "gui.hpp"
 #include "apix.hpp"
 #include "screensaver.hpp"
+#include "styles.hpp"
 
 #define CLOSED_SIDEBAR_WIDTH 40
 #define OPEN_SIDEBAR_WIDTH 192
@@ -90,13 +91,9 @@ void create_ui() {
 	lv_obj_align(ss_btn_img, LV_ALIGN_CENTER, 0, 0);
 
 	// Modal
-	// FIXME: Move styles from here to styles file
 	sidebar_modal = lv_obj_create(screen);
 	lv_obj_set_size(sidebar_modal, LV_PCT(100), LV_PCT(100));
-	lv_obj_set_style_bg_opa(sidebar_modal, 144, 0);
-	lv_obj_set_style_bg_color(sidebar_modal, lv_color_black(), 0);
-	lv_obj_set_style_radius(sidebar_modal, 0, 0);
-	lv_obj_set_style_border_width(sidebar_modal, 0, 0);
+	lv_obj_add_style(sidebar_modal, &style_bar_modal, 0);
 	lv_obj_add_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN);
 	lv_obj_add_event_cb(sidebar_modal, close_sidebar, LV_EVENT_PRESSED, NULL);
 

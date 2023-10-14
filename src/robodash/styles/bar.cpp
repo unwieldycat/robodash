@@ -7,6 +7,7 @@ lv_style_t style_bar_button_pr;
 lv_style_t style_bar_list;
 lv_style_t style_bar_list_btn;
 lv_style_t style_bar_bg;
+lv_style_t style_bar_modal;
 
 void _init_style_bar() {
 	// Sidebar button
@@ -50,4 +51,11 @@ void _init_style_bar() {
 	lv_style_set_bg_color(&style_bar_bg, color_bar);
 	lv_style_set_text_color(&style_bar_bg, color_text);
 	lv_style_set_pad_all(&style_bar_bg, 0);
+
+	// Sidebar modal
+	lv_style_init(&style_bar_modal);
+	lv_style_set_bg_opa(&style_bar_modal, 144);
+	lv_style_set_bg_color(&style_bar_modal, lv_color_black());
+	lv_style_set_radius(&style_bar_modal, 0);
+	lv_style_set_border_width(&style_bar_modal, 0);
 }
