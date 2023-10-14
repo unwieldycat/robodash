@@ -104,11 +104,16 @@ void create_ui() {
 	lv_obj_add_style(sidebar_open, &style_bar_bg, 0);
 	lv_obj_add_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
 
+	lv_obj_t *title = lv_label_create(sidebar_open);
+	lv_label_set_text(title, "Select View");
+	lv_obj_add_style(title, &style_text_large, 0);
+	lv_obj_align(title, LV_ALIGN_TOP_LEFT, 12, 12);
+
 	sidebar_close_btn = lv_btn_create(sidebar_open);
-	lv_obj_set_size(sidebar_close_btn, 28, 28);
-	lv_obj_add_style(sidebar_close_btn, &style_btn_outline, 0);
-	lv_obj_add_style(sidebar_close_btn, &style_btn_outline_pr, LV_STATE_PRESSED);
-	lv_obj_align(sidebar_close_btn, LV_ALIGN_TOP_LEFT, 4, 4);
+	lv_obj_set_size(sidebar_close_btn, 32, 32);
+	lv_obj_add_style(sidebar_close_btn, &style_transp, 0);
+	lv_obj_add_style(sidebar_close_btn, &style_transp, LV_STATE_PRESSED);
+	lv_obj_align(sidebar_close_btn, LV_ALIGN_TOP_RIGHT, -4, 4);
 	lv_obj_add_event_cb(sidebar_close_btn, close_sidebar, LV_EVENT_PRESSED, NULL);
 
 	lv_obj_t *close_img = lv_img_create(sidebar_close_btn);
