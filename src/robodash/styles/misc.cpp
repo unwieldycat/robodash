@@ -20,4 +20,5 @@ void _init_style_misc() {
 	lv_style_set_border_opa(&style_transp, LV_OPA_TRANSP);
 	lv_style_set_radius(&style_transp, 0);
 	lv_style_set_pad_all(&style_transp, 0);
+	lv_style_set_shadow_width(&style_transp, 0);
 }
