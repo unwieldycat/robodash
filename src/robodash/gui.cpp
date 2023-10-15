@@ -1,38 +1,140 @@
+#include "gui.hpp"
 #include "apix.hpp"
+#include "screensaver.hpp"
+#include "styles.hpp"
 
-#define INFO_BAR_WIDTH 32
+#define CLOSED_SIDEBAR_WIDTH 40
+#define OPEN_SIDEBAR_WIDTH 192
 
+lv_obj_t *screen;
 lv_obj_t *view_cont;
-lv_obj_t *info_bar;
+
+lv_obj_t *sidebar_open_btn;
+
+lv_obj_t *sidebar_open;
+lv_obj_t *sidebar_close_btn;
 lv_obj_t *view_list;
-lv_obj_t *battery_label;
-lv_obj_t *battery_icon;
-lv_obj_t *run_list;
-lv_obj_t *match_icon;
-lv_obj_t *match_label;
+lv_obj_t *sidebar_modal;
+
+lv_anim_t anim_sidebar_open;
+lv_anim_t anim_sidebar_close;
+lv_anim_t anim_modal_hide;
+lv_anim_t anim_modal_show;
 
 std::map<int, gui::View *> views;
 gui::View *current_view;
 
-std::vector<gui::bar::action_t> actions;
+// =============================== Callbacks =============================== //
 
-void view_list_refresh();
+void view_btn_cb(lv_event_t *event) { gui::set_view((gui::View *)lv_event_get_user_data(event)); }
 
-// =========================== Base View Class =========================== //
-
-int global_id = 0;
-
-gui::View::View(std::string name) : name(name) {
-	this->id = global_id;
-	global_id++;
-
-	this->obj = lv_obj_create(lv_scr_act());
-	lv_obj_set_size(this->obj, lv_pct(100), lv_pct(100));
-	lv_obj_add_flag(this->obj, LV_OBJ_FLAG_HIDDEN);
-	lv_obj_add_style(this->obj, &style_bg, 0);
+void open_sidebar(lv_event_t *event) {
+	lv_obj_clear_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN);
+	lv_anim_start(&anim_sidebar_open);
+	lv_anim_start(&anim_modal_show);
 }
 
-gui::View::~View() { lv_obj_del(this->obj); }
+void close_sidebar(lv_event_t *event) {
+	lv_anim_start(&anim_sidebar_close);
+	lv_anim_start(&anim_modal_hide);
+}
+
+void anim_x_cb(void *obj, int32_t x) { lv_obj_set_x((lv_obj_t *)obj, x); }
+
+void anim_opa_cb(void *obj, int32_t opa) { lv_obj_set_style_bg_opa((lv_obj_t *)obj, opa, 0); }
+
+void anim_del_cb(lv_anim_t *anim) { lv_obj_add_flag((lv_obj_t *)anim->var, LV_OBJ_FLAG_HIDDEN); }
+
+// =========================== UI Initialization =========================== //
+
+void create_ui() {
+	screen = lv_scr_act();
+	lv_obj_clear_flag(screen, LV_OBJ_FLAG_SCROLLABLE);
+
+	// View container
+	view_cont = lv_obj_create(screen);
+	lv_obj_set_size(view_cont, 480, 240);
+	lv_obj_add_style(view_cont, &style_bg, 0);
+	lv_obj_align(view_cont, LV_ALIGN_TOP_LEFT, 0, 0);
+
+	sidebar_open_btn = lv_btn_create(screen);
+	lv_obj_set_size(sidebar_open_btn, 32, 32);
+	lv_obj_add_style(sidebar_open_btn, &style_bar_button, 0);
+	lv_obj_add_style(sidebar_open_btn, &style_bar_button_pr, LV_STATE_PRESSED);
+	lv_obj_align(sidebar_open_btn, LV_ALIGN_TOP_RIGHT, -4, 4);
+	lv_obj_add_event_cb(sidebar_open_btn, open_sidebar, LV_EVENT_PRESSED, NULL);
+
+	lv_obj_t *open_img = lv_img_create(sidebar_open_btn);
+	lv_img_set_src(open_img, &stack);
+	lv_obj_set_style_img_recolor(open_img, color_text, 0);
+	lv_obj_set_style_img_recolor_opa(open_img, LV_OPA_COVER, 0);
+	lv_obj_align(open_img, LV_ALIGN_CENTER, 0, 0);
+
+	// Modal
+	sidebar_modal = lv_obj_create(screen);
+	lv_obj_set_size(sidebar_modal, LV_PCT(100), LV_PCT(100));
+	lv_obj_add_style(sidebar_modal, &style_bar_modal, 0);
+	lv_obj_add_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_event_cb(sidebar_modal, close_sidebar, LV_EVENT_PRESSED, NULL);
+
+	// Open sidebar
+	sidebar_open = lv_obj_create(screen);
+	lv_obj_set_size(sidebar_open, OPEN_SIDEBAR_WIDTH, 240);
+	lv_obj_align(sidebar_open, LV_ALIGN_TOP_RIGHT, 0, 0);
+	lv_obj_add_style(sidebar_open, &style_bar_bg, 0);
+	lv_obj_add_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
+
+	lv_obj_t *title = lv_label_create(sidebar_open);
+	lv_label_set_text(title, "Select View");
+	lv_obj_add_style(title, &style_text_large, 0);
+	lv_obj_align(title, LV_ALIGN_TOP_LEFT, 12, 12);
+
+	sidebar_close_btn = lv_btn_create(sidebar_open);
+	lv_obj_set_size(sidebar_close_btn, 32, 32);
+	lv_obj_add_style(sidebar_close_btn, &style_transp, 0);
+	lv_obj_add_style(sidebar_close_btn, &style_transp, LV_STATE_PRESSED);
+	lv_obj_align(sidebar_close_btn, LV_ALIGN_TOP_RIGHT, -4, 4);
+	lv_obj_add_event_cb(sidebar_close_btn, close_sidebar, LV_EVENT_PRESSED, NULL);
+
+	lv_obj_t *close_img = lv_img_create(sidebar_close_btn);
+	lv_img_set_src(close_img, LV_SYMBOL_CLOSE);
+	lv_obj_align(close_img, LV_ALIGN_CENTER, 0, 0);
+
+	// View switcher
+	view_list = lv_list_create(sidebar_open);
+	lv_obj_set_size(view_list, LV_PCT(100) - 8, LV_PCT(100) - 32);
+	lv_obj_add_style(view_list, &style_bar_list, 0);
+	lv_obj_align(view_list, LV_ALIGN_TOP_LEFT, 4, 36);
+}
+
+void create_anims() {
+	// Sidebar animations
+	lv_anim_init(&anim_sidebar_open);
+	lv_anim_set_var(&anim_sidebar_open, sidebar_open);
+	lv_anim_set_time(&anim_sidebar_open, 200);
+	lv_anim_set_exec_cb(&anim_sidebar_open, &anim_x_cb);
+
+	anim_sidebar_close = anim_sidebar_open;
+
+	lv_anim_set_path_cb(&anim_sidebar_open, &lv_anim_path_ease_out);
+	lv_anim_set_values(&anim_sidebar_open, OPEN_SIDEBAR_WIDTH, 0);
+
+	lv_anim_set_values(&anim_sidebar_close, 0, OPEN_SIDEBAR_WIDTH);
+	lv_anim_set_path_cb(&anim_sidebar_close, &lv_anim_path_ease_out);
+
+	// Modal animations
+	lv_anim_init(&anim_modal_hide);
+	lv_anim_set_var(&anim_modal_hide, sidebar_modal);
+	lv_anim_set_time(&anim_modal_hide, 200);
+	lv_anim_set_exec_cb(&anim_modal_hide, &anim_opa_cb);
+
+	anim_modal_show = anim_modal_hide;
+
+	lv_anim_set_values(&anim_modal_hide, 144, 0);
+	lv_anim_set_deleted_cb(&anim_modal_hide, &anim_del_cb);
+	lv_anim_set_values(&anim_modal_show, 0, 144);
+}
 
 // =========================== View Management =========================== //
 
@@ -41,7 +143,12 @@ void gui::register_view(View *view) {
 	view->initialize();
 	views.emplace(view->id, view);
 	if (!current_view) gui::set_view(view);
-	view_list_refresh();
+
+	lv_obj_t *view_button = lv_list_add_btn(view_list, NULL, view->name.c_str());
+	lv_obj_add_style(view_button, &style_bar_list_btn, 0);
+	lv_obj_add_style(view_button, &style_list_btn_pr, LV_STATE_PRESSED);
+	lv_obj_add_event_cb(view_button, view_btn_cb, LV_EVENT_PRESSED, view);
+	lv_obj_add_event_cb(view_button, close_sidebar, LV_EVENT_PRESSED, NULL);
 }
 
 void gui::register_views(std::vector<View *> views) {
@@ -58,105 +165,10 @@ void gui::set_view(View *view) {
 
 gui::View *gui::get_view() { return current_view; }
 
-// ================================ Info Bar ================================ //
-
-void view_list_refresh() {
-	lv_dropdown_clear_options(view_list);
-
-	for (auto const &[id, view] : views) {
-		lv_dropdown_add_option(view_list, view->name.c_str(), view->id);
-		if (id == current_view->id) lv_dropdown_set_selected(view_list, id);
-	}
-}
-
-void view_list_select_cb(lv_event_t *event) {
-	lv_obj_t *target = lv_event_get_target(event);
-	lv_event_code_t code = lv_event_get_code(event);
-	if (code != LV_EVENT_VALUE_CHANGED) return;
-
-	int idx = lv_dropdown_get_selected(target);
-	if (idx == current_view->id) return;
-
-	gui::View *selected = views.at(idx);
-	gui::set_view(selected);
-}
-
-void run_list_refresh() {
-	lv_dropdown_clear_options(run_list);
-
-	int idx = 0;
-	for (gui::bar::action_t action : actions) {
-		lv_dropdown_add_option(run_list, action.first.c_str(), idx);
-		idx++;
-	}
-}
-
-void run_list_select_cb(lv_event_t *event) {
-	lv_obj_t *target = lv_event_get_current_target(event);
-	lv_event_code_t code = lv_event_get_code(event);
-	if (code != LV_EVENT_VALUE_CHANGED) return;
-
-	int idx = lv_dropdown_get_selected(target);
-	gui::bar::action_t selected = actions.at(idx);
-	selected.second();
-}
-
-void gui::bar::add_action(std::string name, std::function<void()> action) {
-	actions.push_back({name, action});
-	if (!lv_obj_has_flag(run_list, LV_OBJ_FLAG_HIDDEN)) return;
-	lv_obj_clear_flag(run_list, LV_OBJ_FLAG_HIDDEN);
-
-	run_list_refresh();
-}
-
-void gui::bar::add_actions(std::vector<action_t> new_actions) {
-	actions.insert(actions.end(), new_actions.begin(), new_actions.end());
-	if (!lv_obj_has_flag(run_list, LV_OBJ_FLAG_HIDDEN)) return;
-	lv_obj_clear_flag(run_list, LV_OBJ_FLAG_HIDDEN);
-
-	run_list_refresh();
-}
-
 // ============================ Background Task ============================ //
 
 [[noreturn]] void background() {
 	while (true) {
-		// Refresh battery level
-		int level = pros::battery::get_capacity();
-		char level_str[sizeof(level) + 1];
-		sprintf(level_str, "%d%%", level);
-		lv_label_set_text(battery_label, level_str);
-
-		// yanderedev technique
-		if (level >= 80) {
-			lv_img_set_src(battery_icon, LV_SYMBOL_BATTERY_FULL);
-		} else if (level < 80 && level >= 60) {
-			lv_img_set_src(battery_icon, LV_SYMBOL_BATTERY_3);
-		} else if (level < 60 && level >= 40) {
-			lv_img_set_src(battery_icon, LV_SYMBOL_BATTERY_2);
-		} else if (level < 40 && level >= 20) {
-			lv_img_set_src(battery_icon, LV_SYMBOL_BATTERY_1);
-		} else if (level < 20 && level >= 0) {
-			lv_img_set_src(battery_icon, LV_SYMBOL_BATTERY_EMPTY);
-		}
-
-		// Update game status
-		if (pros::competition::is_connected()) {
-			if (pros::competition::is_autonomous()) {
-				lv_label_set_text(match_label, "Auton");
-			} else {
-				lv_label_set_text(match_label, "Driver");
-			}
-			if (pros::competition::is_disabled()) {
-				lv_img_set_src(match_icon, LV_SYMBOL_PAUSE);
-			} else {
-				lv_img_set_src(match_icon, LV_SYMBOL_PLAY);
-			}
-		} else {
-			lv_label_set_text(match_label, "No Comp");
-			lv_img_set_src(match_icon, LV_SYMBOL_CLOSE);
-		}
-
 		for (auto const &[id, view] : views) {
 			view->refresh();
 		}
@@ -181,74 +193,8 @@ void gui::initialize() {
 	attribution();
 	gui::theme::_initialize();
 
-	view_cont = lv_obj_create(lv_scr_act());
-	lv_obj_set_size(view_cont, 480, 240 - INFO_BAR_WIDTH);
-	lv_obj_add_style(view_cont, &style_bg, 0);
-
-	info_bar = lv_obj_create(lv_scr_act());
-	lv_obj_set_size(info_bar, 480, INFO_BAR_WIDTH);
-	lv_obj_add_style(info_bar, &style_bar_bg, 0);
-	lv_obj_align(info_bar, LV_ALIGN_BOTTOM_MID, 0, 0);
-
-	view_list = lv_dropdown_create(info_bar);
-	lv_dropdown_clear_options(view_list);
-	lv_obj_set_size(view_list, 152, 32);
-	lv_obj_align(view_list, LV_ALIGN_TOP_LEFT, 0, 0);
-	lv_obj_add_style(view_list, &style_bar_button, 0);
-	lv_obj_add_style(view_list, &style_bar_button_pr, LV_STATE_PRESSED);
-	lv_dropdown_set_dir(view_list, LV_DIR_TOP);
-	lv_obj_add_event_cb(view_list, &view_list_select_cb, LV_EVENT_ALL, NULL);
-
-	DROPDOWN_LIST_STYLE(view_list, &style_bar_list);
-
-	run_list = lv_dropdown_create(info_bar);
-	lv_dropdown_clear_options(run_list);
-	lv_dropdown_set_text(run_list, "Run");
-	lv_dropdown_set_symbol(run_list, LV_SYMBOL_CHARGE);
-	lv_dropdown_set_selected_highlight(run_list, false);
-	lv_dropdown_set_dir(run_list, LV_DIR_TOP);
-	lv_obj_set_size(run_list, 64, 32);
-	lv_obj_align(run_list, LV_ALIGN_TOP_LEFT, 152, 0);
-	lv_obj_add_style(run_list, &style_bar_button, 0);
-	lv_obj_add_style(run_list, &style_bar_button_pr, LV_STATE_PRESSED);
-	lv_obj_add_flag(run_list, LV_OBJ_FLAG_HIDDEN);
-	lv_obj_add_event_cb(run_list, &run_list_select_cb, LV_EVENT_ALL, NULL);
-
-	DROPDOWN_LIST_STYLE(run_list, &style_bar_list);
-
-	lv_obj_t *batery_cont = lv_obj_create(info_bar);
-	lv_obj_set_size(batery_cont, 96, 24);
-	lv_obj_align(batery_cont, LV_ALIGN_TOP_RIGHT, -8, 4);
-	lv_obj_add_style(batery_cont, &style_transp, 0);
-	lv_obj_set_flex_align(
-	    batery_cont, LV_FLEX_ALIGN_END, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER
-	);
-
-	battery_label = lv_label_create(batery_cont);
-	lv_label_set_text(battery_label, "100%");
-	lv_obj_align(battery_label, LV_ALIGN_LEFT_MID, 12, 0);
-	lv_obj_add_style(battery_label, &style_text_small, 0);
-
-	battery_icon = lv_img_create(batery_cont);
-	lv_img_set_src(battery_icon, LV_SYMBOL_BATTERY_FULL);
-	lv_obj_align(battery_icon, LV_ALIGN_RIGHT_MID, -12, 0);
-	lv_obj_add_style(battery_icon, &style_text_medium, 0);
-
-	lv_obj_t *match_cont = lv_obj_create(info_bar);
-	lv_obj_set_size(match_cont, 96, 24);
-	lv_obj_align(match_cont, LV_ALIGN_TOP_RIGHT, -80, 4);
-	lv_obj_add_style(match_cont, &style_transp, 0);
-	lv_obj_set_flex_align(
-	    match_cont, LV_FLEX_ALIGN_END, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER
-	);
-
-	match_label = lv_label_create(match_cont);
-	lv_label_set_text(match_label, "Driver");
-	lv_obj_add_style(match_label, &style_text_small, 0);
-
-	match_icon = lv_img_create(match_cont);
-	lv_img_set_src(match_icon, LV_SYMBOL_PLAY);
-	lv_obj_add_style(match_icon, &style_text_medium, 0);
+	create_ui();
+	create_anims();
 
 	gui::screensaver::_initialize();
 
