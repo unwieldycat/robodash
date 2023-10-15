@@ -2,11 +2,6 @@
 
 A flexible robot dashboard for the VEX V5. Built with LVGL.
 
-<details closed>
-<summary>Preview</summary>
-<img src="./doc_images/selector.png">
-</details>
-
 ### Features
 
 - **Auton Selector** - An intuitive, game agnostic selector with SD card saving
