@@ -93,6 +93,8 @@ extern void _init_style_text();
 extern lv_style_t style_bar_button;
 extern lv_style_t style_bar_button_pr;
 extern lv_style_t style_bar_list;
+extern lv_style_t style_bar_list_btn;
 extern lv_style_t style_bar_bg;
+extern lv_style_t style_bar_modal;
 
 extern void _init_style_bar();

@@ -14,5 +14,5 @@
 #pragma once
 
 #include "api.hpp"
-#include "fonts.hpp"
+#include "assets.hpp"
 #include "styles.hpp"

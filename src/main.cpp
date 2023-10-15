@@ -15,22 +15,6 @@ void best_auton() { std::cout << "Running best auton" << std::endl; }
 void simple_auton() { std::cout << "Running simple auton " << std::endl; }
 void good_auton() { std::cout << "Running good auton" << std::endl; }
 
-// ============================ Example actions ============================ //
-
-void toggle_led() {
-	static bool active;
-
-	if (active) {
-		led_strip.set_all(0xffffff);
-		active = false;
-	} else {
-		led_strip.set_all(0xff00ff);
-		active = true;
-	}
-}
-
-void recalib_inertial() { inertial.reset(); }
-
 // ================================= Views ================================= //
 
 gui::DevicesView devices_view;
@@ -44,12 +28,6 @@ void initialize() {
 	// Initialize library and register views
 	gui::initialize();
 	gui::register_views({&devices_view, &selector_view, &test_console});
-
-	// Configure ui
-	gui::bar::add_actions({
-	    {"Recalibrate Inertial", recalib_inertial},
-        {"Toggle LEDs",          toggle_led      }
-    });
 
 	devices_view.add_motors({
 	    {"Flywheel",    &flywheel_motor  },
