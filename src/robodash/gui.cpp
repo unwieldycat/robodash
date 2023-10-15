@@ -66,7 +66,9 @@ void create_ui() {
 	lv_obj_add_event_cb(sidebar_open_btn, open_sidebar, LV_EVENT_PRESSED, NULL);
 
 	lv_obj_t *open_img = lv_img_create(sidebar_open_btn);
-	lv_img_set_src(open_img, LV_SYMBOL_LEFT);
+	lv_img_set_src(open_img, &stack);
+	lv_obj_set_style_img_recolor(open_img, color_text, 0);
+	lv_obj_set_style_img_recolor_opa(open_img, LV_OPA_COVER, 0);
 	lv_obj_align(open_img, LV_ALIGN_CENTER, 0, 0);
 
 	// Modal
