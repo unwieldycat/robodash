@@ -1,16 +1,17 @@
 # robodash
 
-A flexible robot dashboard for the VEX V5. Built with LVGL.
+A flexible, unified robot dashboard for the VEX V5. Built with LVGL.
 
 ### Features
 
-- **Auton Selector** - An intuitive, game agnostic selector with SD card saving
+- **Effortless** - Say goodbye to LLEMU, give your robot a powerful UI with
+  minimal code required.
 
-- **Quick Actions** - Run user-defined functions from the toolbar
+- **View Switcher** - Have multiple active screens and easily switch between
+  them. No more cramming everything on one screen.
 
-- **Customizable** - Customizable theme and splash screen
-
-- **Extendable** - Create your own views
+- **Extendable** - Create your own views, or use ones from a third-party
+  template.
 
 ## Installation
 
