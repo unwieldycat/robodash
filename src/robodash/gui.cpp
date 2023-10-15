@@ -169,12 +169,8 @@ gui::View *gui::get_view() { return current_view; }
 
 [[noreturn]] void background() {
 	while (true) {
-		for (auto const &[id, view] : views) {
-			view->refresh();
-		}
-
+		if (current_view) current_view->refresh();
 		gui::screensaver::_refresh();
-
 		pros::delay(500);
 	}
 }
