@@ -9,7 +9,6 @@
 lv_obj_t *screen;
 lv_obj_t *view_cont;
 
-lv_obj_t *sidebar_closed;
 lv_obj_t *sidebar_open_btn;
 
 lv_obj_t *sidebar_open;
@@ -28,8 +27,6 @@ gui::View *current_view;
 // =============================== Callbacks =============================== //
 
 void view_btn_cb(lv_event_t *event) { gui::set_view((gui::View *)lv_event_get_user_data(event)); }
-
-void activate_screensaver(lv_event_t *event) { gui::screensaver::activate(); }
 
 void open_sidebar(lv_event_t *event) {
 	lv_obj_clear_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
@@ -57,38 +54,20 @@ void create_ui() {
 
 	// View container
 	view_cont = lv_obj_create(screen);
-	lv_obj_set_size(view_cont, 480 - CLOSED_SIDEBAR_WIDTH, 240);
+	lv_obj_set_size(view_cont, 480, 240);
 	lv_obj_add_style(view_cont, &style_bg, 0);
 	lv_obj_align(view_cont, LV_ALIGN_TOP_LEFT, 0, 0);
 
-	// Collapsed sidebar
-	sidebar_closed = lv_obj_create(screen);
-	lv_obj_set_size(sidebar_closed, CLOSED_SIDEBAR_WIDTH, 240);
-	lv_obj_add_style(sidebar_closed, &style_bg, 0);
-	lv_obj_align(sidebar_closed, LV_ALIGN_TOP_RIGHT, 0, 0);
-
-	sidebar_open_btn = lv_btn_create(sidebar_closed);
+	sidebar_open_btn = lv_btn_create(screen);
 	lv_obj_set_size(sidebar_open_btn, 32, 32);
 	lv_obj_add_style(sidebar_open_btn, &style_bar_button, 0);
 	lv_obj_add_style(sidebar_open_btn, &style_bar_button_pr, LV_STATE_PRESSED);
-	lv_obj_align(sidebar_open_btn, LV_ALIGN_TOP_MID, 0, 4);
+	lv_obj_align(sidebar_open_btn, LV_ALIGN_TOP_RIGHT, -4, 4);
 	lv_obj_add_event_cb(sidebar_open_btn, open_sidebar, LV_EVENT_PRESSED, NULL);
 
 	lv_obj_t *open_img = lv_img_create(sidebar_open_btn);
 	lv_img_set_src(open_img, LV_SYMBOL_LEFT);
 	lv_obj_align(open_img, LV_ALIGN_CENTER, 0, 0);
-
-	// Screensaver button
-	lv_obj_t *ss_activate_btn = lv_btn_create(sidebar_closed);
-	lv_obj_set_size(ss_activate_btn, 32, 32);
-	lv_obj_add_style(ss_activate_btn, &style_bar_button, 0);
-	lv_obj_add_style(ss_activate_btn, &style_bar_button_pr, LV_STATE_PRESSED);
-	lv_obj_align(ss_activate_btn, LV_ALIGN_TOP_MID, 0, 40);
-	lv_obj_add_event_cb(ss_activate_btn, activate_screensaver, LV_EVENT_PRESSED, NULL);
-
-	lv_obj_t *ss_btn_img = lv_img_create(ss_activate_btn);
-	lv_img_set_src(ss_btn_img, LV_SYMBOL_EYE_CLOSE);
-	lv_obj_align(ss_btn_img, LV_ALIGN_CENTER, 0, 0);
 
 	// Modal
 	sidebar_modal = lv_obj_create(screen);
