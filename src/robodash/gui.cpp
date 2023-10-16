@@ -139,12 +139,12 @@ void create_anims() {
 // =========================== View Management =========================== //
 
 void gui::register_view(View *view) {
-	lv_obj_set_parent(view->obj, view_cont);
+	lv_obj_set_parent(view->get_obj(), view_cont);
 	view->initialize();
-	views.emplace(view->id, view);
+	views.emplace(view->get_id(), view);
 	if (!current_view) gui::set_view(view);
 
-	lv_obj_t *view_button = lv_list_add_btn(view_list, NULL, view->name.c_str());
+	lv_obj_t *view_button = lv_list_add_btn(view_list, NULL, view->get_name().c_str());
 	lv_obj_add_style(view_button, &style_bar_list_btn, 0);
 	lv_obj_add_style(view_button, &style_list_btn_pr, LV_STATE_PRESSED);
 	lv_obj_add_event_cb(view_button, view_btn_cb, LV_EVENT_PRESSED, view);
@@ -158,9 +158,9 @@ void gui::register_views(std::vector<View *> views) {
 }
 
 void gui::set_view(View *view) {
-	if (current_view) lv_obj_add_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
+	if (current_view) lv_obj_add_flag(current_view->get_obj(), LV_OBJ_FLAG_HIDDEN);
 	current_view = view;
-	lv_obj_clear_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(current_view->get_obj(), LV_OBJ_FLAG_HIDDEN);
 }
 
 gui::View *gui::get_view() { return current_view; }
