@@ -1,19 +1,6 @@
 #pragma once
 #include "lvgl/lvgl.h"
 
-#define DROPDOWN_LIST_STYLE(list, style)                                                           \
-	{                                                                                              \
-		lv_obj_add_event_cb(                                                                       \
-		    list,                                                                                  \
-		    [](lv_event_t *event) {                                                                \
-			    lv_obj_t *listobj = lv_dropdown_get_list(list);                                    \
-			    if (!listobj) return;                                                              \
-			    lv_obj_add_style(listobj, style, LV_PART_MAIN);                                    \
-		    },                                                                                     \
-		    LV_EVENT_FOCUSED, NULL                                                                 \
-		);                                                                                         \
-	}
-
 extern void _init_styles();
 
 // ========================== Animation Callbacks ========================== //
