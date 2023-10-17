@@ -25,6 +25,13 @@ class ConsoleView : public View {
 	void print(std::string str);
 
 	/**
+	 * @brief Print to the console with a newline
+	 *
+	 * @param str String to print to console
+	 */
+	void println(std::string str);
+
+	/**
 	 * @brief Print to the console
 	 *
 	 * @tparam Params
