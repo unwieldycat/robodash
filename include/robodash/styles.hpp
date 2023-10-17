@@ -36,6 +36,12 @@ void _initialize();
 } // namespace theme
 } // namespace gui
 
+// ========================== Animation Callbacks ========================== //
+
+void anim_x_cb(void *obj, int32_t x);
+void anim_opa_cb(void *obj, int32_t opa);
+void anim_del_cb(lv_anim_t *anim);
+
 // ================================= Colors ================================= //
 
 // TODO: Use pallette
