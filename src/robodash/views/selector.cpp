@@ -25,7 +25,6 @@ char saved_name[256];
 lv_obj_t *select_cont;
 lv_obj_t *selected_label;
 lv_obj_t *saved_toast;
-
 lv_obj_t *routine_list;
 
 // ============================= SD Card Saving ============================= //
@@ -96,7 +95,7 @@ void load_saved() {
 	lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 }
 
-// =============================== Selection =============================== //
+// ============================== UI Callbacks ============================== //
 
 void r_select_act(lv_event_t *event) {
 
@@ -125,11 +124,12 @@ void save_act(lv_event_t *event) {
 	lv_obj_clear_flag(saved_toast, LV_OBJ_FLAG_HIDDEN);
 }
 
+// ============================= Core Functions ============================= //
+
 gui::SelectorView::SelectorView() : View("Auton Selector"){};
 
 void gui::SelectorView::refresh() {}
 
-// TODO: Up/down buttons? v5 and scrolling aren't friends
 void gui::SelectorView::initialize() {
 	routine_list = lv_list_create(this->get_obj());
 	lv_obj_set_size(routine_list, 228, 192);
