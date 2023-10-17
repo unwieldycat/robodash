@@ -12,7 +12,7 @@ void gui::ConsoleView::refresh() {}
 
 void gui::ConsoleView::initialize() {
 	output = lv_label_create(this->get_obj());
-	lv_obj_set_size(output, 464, 192);
+	lv_obj_set_size(output, 464, 224);
 	lv_obj_align(output, LV_ALIGN_CENTER, 0, 0);
 	lv_obj_add_style(output, &style_transp, 0);
 	lv_obj_add_style(output, &style_text_mono, 0);
