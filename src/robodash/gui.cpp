@@ -1,9 +1,6 @@
 #include "gui.hpp"
-#include "api.hpp"
 #include "apix.hpp"
-#include "lvgl/misc/lv_area.h"
 #include "screensaver.hpp"
-#include "styles.hpp"
 
 #define CLOSED_SIDEBAR_WIDTH 40
 #define OPEN_SIDEBAR_WIDTH 192
@@ -173,7 +170,7 @@ gui::View *gui::get_view() { return current_view; }
 	while (true) {
 		if (current_view) current_view->refresh();
 		gui::screensaver::_refresh();
-		pros::delay(500);
+		pros::delay(100);
 	}
 }
 
