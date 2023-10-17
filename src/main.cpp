@@ -1,14 +1,6 @@
 #include "main.h"
 #include "robodash/gui.hpp"
 
-// ================================ Devices ================================ //
-
-pros::Motor flywheel_motor(3);
-pros::Motor drivetrain_left(1);
-pros::Motor drivetrain_right(2);
-pros::Imu inertial(20);
-pros::adi::Led led_strip({2, 1}, 16);
-
 // ============================= Example autons ============================= //
 
 void best_auton() { std::cout << "Running best auton" << std::endl; }
@@ -17,25 +9,17 @@ void good_auton() { std::cout << "Running good auton" << std::endl; }
 
 // ================================= Views ================================= //
 
-gui::DevicesView devices_view;
-gui::SelectorView selector_view;
-gui::ConsoleView test_console;
-gui::FieldView field_view;
+gui::SelectorView selector;
+gui::ConsoleView console;
 
 // ========================= Competition Functions ========================= //
 
 void initialize() {
 	// Initialize library and register views
 	gui::initialize();
-	gui::register_views({&devices_view, &selector_view, &test_console});
+	gui::register_views({&selector, &console});
 
-	devices_view.add_motors({
-	    {"Flywheel",    &flywheel_motor  },
-	    {"Drive Left",  &drivetrain_left },
-	    {"Drive Right", &drivetrain_right},
-	});
-
-	selector_view.add_autons({
+	selector.add_autons({
 	    {"Best auton",   &best_auton  },
         {"Simple auton", &simple_auton},
         {"Good auton",   &good_auton  }
@@ -46,18 +30,18 @@ void disabled() {}
 
 void competition_initialize() {
 	// Focus auton selector
-	gui::set_view(&selector_view);
+	gui::set_view(&selector);
 }
 
 void autonomous() {
 	// Run selected autonomous function
-	selector_view.do_auton();
+	selector.do_auton();
 }
 
 void opcontrol() {
 	for (int i = 0; i < 100; i++) {
-		test_console.clear();
-		test_console.printf("what up %d", i);
+		console.clear();
+		console.printf("Hello %d", i);
 		pros::delay(500);
 	}
 }
