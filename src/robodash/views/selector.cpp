@@ -133,7 +133,7 @@ void gui::SelectorView::refresh() {}
 void gui::SelectorView::initialize() {
 	routine_list = lv_list_create(this->get_obj());
 	lv_obj_set_size(routine_list, 228, 192);
-	lv_obj_align(routine_list, LV_ALIGN_TOP_LEFT, 8, 8);
+	lv_obj_align(routine_list, LV_ALIGN_BOTTOM_LEFT, 8, -8);
 	lv_obj_add_style(routine_list, &style_list, 0);
 
 	selected_label = lv_label_create(this->get_obj());
@@ -145,6 +145,11 @@ void gui::SelectorView::initialize() {
 	lv_obj_add_event_cb(nothing_btn, &r_select_act, LV_EVENT_PRESSED, nullptr);
 	lv_obj_add_style(nothing_btn, &style_list_btn, 0);
 	lv_obj_add_style(nothing_btn, &style_list_btn_pr, LV_STATE_PRESSED);
+
+	lv_obj_t *title = lv_label_create(this->get_obj());
+	lv_label_set_text(title, "Select autonomous routine");
+	lv_obj_add_style(title, &style_text_large, 0);
+	lv_obj_align(title, LV_ALIGN_TOP_LEFT, 8, 12);
 
 	if (pros::usd::is_installed()) {
 		sdconf_load();
