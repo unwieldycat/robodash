@@ -1,3 +1,8 @@
+/**
+ * @file styles.hpp
+ * @internal
+ */
+
 #pragma once
 #include "lvgl/lvgl.h"
 

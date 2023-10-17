@@ -1,3 +1,10 @@
+/**
+ * @file console.hpp
+ * @brief Robodash ConsoleView
+ *
+ * Built-in ConsoleView class for debugging. Emulates a standard console output.
+ */
+
 #pragma once
 #include "robodash/apix.hpp"
 

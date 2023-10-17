@@ -1,3 +1,11 @@
+/**
+ * @file view.hpp
+ * @brief Base view class
+ *
+ * Abstract view class for other views to derrive. Provides basic functions and
+ * structure.
+ */
+
 #pragma once
 #include "api.h"
 #include "lvgl/lvgl.h"

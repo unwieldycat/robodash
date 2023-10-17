@@ -1,3 +1,10 @@
+/**
+ * @file screensaver.hpp
+ * @brief Screensaver functions
+ *
+ * Functions to configure and interface with the screensaver.
+ */
+
 #pragma once
 #include "api.h"
 #include "lvgl/lvgl.h"
