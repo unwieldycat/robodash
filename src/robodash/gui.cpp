@@ -180,7 +180,7 @@ gui::View *gui::get_view() { return current_view; }
 // =============================== Initialize =============================== //
 
 void gui::initialize() {
-	gui::theme::_initialize();
+	_init_styles();
 
 	create_ui();
 	create_anims();

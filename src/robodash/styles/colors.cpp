@@ -26,13 +26,3 @@ void _init_colors() {
 	color_bar_dark = lv_color_hsv_to_rgb(hue, 50, 15);
 	color_bar_outline = lv_color_hsv_to_rgb(hue, 10, 50);
 }
-
-// ============================= User Functions ============================= //
-
-void gui::theme::set_hue(int new_hue) {
-	hue = new_hue;
-
-	// Rebuild styles and notify lvgl to refresh all objects
-	_initialize();
-	lv_obj_report_style_change(NULL);
-}

@@ -14,27 +14,7 @@
 		);                                                                                         \
 	}
 
-// ============================ Theme namespace ============================ //
-
-namespace gui {
-namespace theme {
-
-/**
- * @brief Set the hue of the UI
- *
- * @param hue [0..359]
- */
-void set_hue(int hue);
-
-// --------------------------- Internal Functions --------------------------- //
-
-/**
- * @brief Initialize themes (Runs internally)
- */
-void _initialize();
-
-} // namespace theme
-} // namespace gui
+extern void _init_styles();
 
 // ========================== Animation Callbacks ========================== //
 
@@ -43,8 +23,6 @@ void anim_opa_cb(void *obj, int32_t opa);
 void anim_del_cb(lv_anim_t *anim);
 
 // ================================= Colors ================================= //
-
-// TODO: Use pallette
 
 extern lv_color_t color_bg;
 extern lv_color_t color_border;
@@ -94,7 +72,7 @@ extern lv_style_t style_text_centered;
 
 extern void _init_style_text();
 
-// ================================= Toolbar ================================= //
+// ================================ Sidebar ================================ //
 
 extern lv_style_t style_bar_button;
 extern lv_style_t style_bar_button_pr;
