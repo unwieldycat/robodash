@@ -1,8 +1,3 @@
-/**
- * @file assets.hpp
- * @internal
- */
-
 #pragma once
 #include "apix.hpp"
 
