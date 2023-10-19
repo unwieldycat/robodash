@@ -17,8 +17,6 @@
 
 namespace gui {
 
-namespace views {
-
 typedef std::function<void()> routine_action_t;
 typedef std::pair<std::string, routine_action_t> routine_t;
 
@@ -40,7 +38,5 @@ class SelectorView : public View {
 	void refresh();
 	void initialize();
 };
-
-} // namespace views
 
 } // namespace gui
