@@ -27,6 +27,8 @@ lv_obj_t *selected_label;
 lv_obj_t *saved_toast;
 lv_obj_t *routine_list;
 
+lv_anim_t anim_toast;
+
 // ============================= SD Card Saving ============================= //
 
 void sdconf_save() {
@@ -122,6 +124,7 @@ void done_act(lv_event_t *event) { selection_done = true; }
 void save_act(lv_event_t *event) {
 	sdconf_save();
 	lv_obj_clear_flag(saved_toast, LV_OBJ_FLAG_HIDDEN);
+	lv_anim_start(&anim_toast);
 }
 
 // ============================= Core Functions ============================= //
@@ -173,6 +176,14 @@ void gui::SelectorView::initialize() {
 		lv_img_set_src(save_img, LV_SYMBOL_SAVE);
 		lv_obj_set_align(save_img, LV_ALIGN_CENTER);
 	}
+
+	lv_anim_init(&anim_toast);
+	lv_anim_set_var(&anim_toast, saved_toast);
+	lv_anim_set_time(&anim_toast, 255);
+	lv_anim_set_delay(&anim_toast, 3000);
+	lv_anim_set_exec_cb(&anim_toast, &anim_text_opa_cb);
+	lv_anim_set_deleted_cb(&anim_toast, &anim_del_cb);
+	lv_anim_set_values(&anim_toast, 255, 0);
 }
 
 // ============================= Other Methods ============================= //
