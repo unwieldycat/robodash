@@ -10,6 +10,8 @@
 
 namespace gui {
 
+namespace views {
+
 class ConsoleView : public View {
   public:
 	/**
@@ -55,5 +57,7 @@ class ConsoleView : public View {
 	void refresh();
 	void initialize();
 };
+
+} // namespace views
 
 } // namespace gui
