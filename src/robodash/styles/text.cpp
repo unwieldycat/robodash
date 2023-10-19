@@ -14,7 +14,7 @@ void _init_style_text() {
 	lv_style_init(&style_text_mono);
 	lv_style_set_text_color(&style_text_mono, color_text);
 	lv_style_set_text_opa(&style_text_mono, LV_OPA_COVER);
-	lv_style_set_text_font(&style_text_mono, &source_code_pro);
+	lv_style_set_text_font(&style_text_mono, &source_code_pro_16);
 	lv_style_set_text_letter_space(&style_text_mono, 1);
 
 	// Medium text

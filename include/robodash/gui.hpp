@@ -1,3 +1,10 @@
+/**
+ * @file gui.hpp
+ * @brief Core robodash functions
+ *
+ * Core functions to interface with robodash.
+ */
+
 #pragma once
 #include "api.h"
 #include "liblvgl/lvgl.h"

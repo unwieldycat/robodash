@@ -1,9 +1,8 @@
 /**
  * @file api.hpp
+ * @brief API entrypoint for robodash
  *
- * API header for robodash.
- *
- * Includes all necessary functions for programmers.
+ * Includes all necessary end-user functions.
  */
 
 #pragma once
@@ -14,6 +13,4 @@
 #include "screensaver.hpp"
 #include "view.hpp"
 #include "views/console.hpp"
-#include "views/devices.hpp"
-#include "views/field.hpp"
 #include "views/selector.hpp"

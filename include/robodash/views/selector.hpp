@@ -1,3 +1,11 @@
+/**
+ * @file selector.hpp
+ * @brief Robodash SelectorView
+ *
+ * Built-in SelectorView class for function selecting, primarily for autonomous
+ * routines.
+ */
+
 #pragma once
 #include "../gui.hpp"
 #include "api.h"

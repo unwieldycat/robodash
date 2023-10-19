@@ -25,8 +25,9 @@ char saved_name[256];
 lv_obj_t *select_cont;
 lv_obj_t *selected_label;
 lv_obj_t *saved_toast;
-
 lv_obj_t *routine_list;
+
+lv_anim_t anim_toast;
 
 // ============================= SD Card Saving ============================= //
 
@@ -96,7 +97,7 @@ void load_saved() {
 	lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 }
 
-// =============================== Selection =============================== //
+// ============================== UI Callbacks ============================== //
 
 void r_select_act(lv_event_t *event) {
 
@@ -123,20 +124,22 @@ void done_act(lv_event_t *event) { selection_done = true; }
 void save_act(lv_event_t *event) {
 	sdconf_save();
 	lv_obj_clear_flag(saved_toast, LV_OBJ_FLAG_HIDDEN);
+	lv_anim_start(&anim_toast);
 }
+
+// ============================= Core Functions ============================= //
 
 gui::SelectorView::SelectorView() : View("Auton Selector"){};
 
 void gui::SelectorView::refresh() {}
 
-// TODO: Up/down buttons? v5 and scrolling aren't friends
 void gui::SelectorView::initialize() {
-	routine_list = lv_list_create(this->obj);
+	routine_list = lv_list_create(this->get_obj());
 	lv_obj_set_size(routine_list, 228, 192);
-	lv_obj_align(routine_list, LV_ALIGN_TOP_LEFT, 8, 8);
+	lv_obj_align(routine_list, LV_ALIGN_BOTTOM_LEFT, 8, -8);
 	lv_obj_add_style(routine_list, &style_list, 0);
 
-	selected_label = lv_label_create(this->obj);
+	selected_label = lv_label_create(this->get_obj());
 	lv_label_set_text(selected_label, "No routine\nselected");
 	lv_obj_add_style(selected_label, &style_text_centered, 0);
 	lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
@@ -146,17 +149,22 @@ void gui::SelectorView::initialize() {
 	lv_obj_add_style(nothing_btn, &style_list_btn, 0);
 	lv_obj_add_style(nothing_btn, &style_list_btn_pr, LV_STATE_PRESSED);
 
+	lv_obj_t *title = lv_label_create(this->get_obj());
+	lv_label_set_text(title, "Select autonomous routine");
+	lv_obj_add_style(title, &style_text_large, 0);
+	lv_obj_align(title, LV_ALIGN_TOP_LEFT, 8, 12);
+
 	if (pros::usd::is_installed()) {
 		sdconf_load();
 
-		saved_toast = lv_label_create(this->obj);
+		saved_toast = lv_label_create(this->get_obj());
 		lv_label_set_text(saved_toast, "Saved to SD");
 		lv_obj_add_style(saved_toast, &style_text_centered, 0);
 		lv_obj_add_style(saved_toast, &style_text_small, 0);
 		lv_obj_align(saved_toast, LV_ALIGN_BOTTOM_RIGHT, -16, -16);
 		lv_obj_add_flag(saved_toast, LV_OBJ_FLAG_HIDDEN);
 
-		lv_obj_t *save_btn = lv_btn_create(this->obj);
+		lv_obj_t *save_btn = lv_btn_create(this->get_obj());
 		lv_obj_set_size(save_btn, 64, 32);
 		lv_obj_align(save_btn, LV_ALIGN_BOTTOM_RIGHT, -172, -8);
 		lv_obj_add_event_cb(save_btn, &save_act, LV_EVENT_PRESSED, NULL);
@@ -168,6 +176,14 @@ void gui::SelectorView::initialize() {
 		lv_img_set_src(save_img, LV_SYMBOL_SAVE);
 		lv_obj_set_align(save_img, LV_ALIGN_CENTER);
 	}
+
+	lv_anim_init(&anim_toast);
+	lv_anim_set_var(&anim_toast, saved_toast);
+	lv_anim_set_time(&anim_toast, 255);
+	lv_anim_set_delay(&anim_toast, 3000);
+	lv_anim_set_exec_cb(&anim_toast, &anim_text_opa_cb);
+	lv_anim_set_deleted_cb(&anim_toast, &anim_del_cb);
+	lv_anim_set_values(&anim_toast, 255, 0);
 }
 
 // ============================= Other Methods ============================= //

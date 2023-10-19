@@ -1,7 +1,6 @@
 #include "gui.hpp"
 #include "apix.hpp"
 #include "screensaver.hpp"
-#include "styles.hpp"
 
 #define CLOSED_SIDEBAR_WIDTH 40
 #define OPEN_SIDEBAR_WIDTH 192
@@ -39,12 +38,6 @@ void close_sidebar(lv_event_t *event) {
 	lv_anim_start(&anim_sidebar_close);
 	lv_anim_start(&anim_modal_hide);
 }
-
-void anim_x_cb(void *obj, int32_t x) { lv_obj_set_x((lv_obj_t *)obj, x); }
-
-void anim_opa_cb(void *obj, int32_t opa) { lv_obj_set_style_bg_opa((lv_obj_t *)obj, opa, 0); }
-
-void anim_del_cb(lv_anim_t *anim) { lv_obj_add_flag((lv_obj_t *)anim->var, LV_OBJ_FLAG_HIDDEN); }
 
 // =========================== UI Initialization =========================== //
 
@@ -101,6 +94,12 @@ void create_ui() {
 	lv_img_set_src(close_img, LV_SYMBOL_CLOSE);
 	lv_obj_align(close_img, LV_ALIGN_CENTER, 0, 0);
 
+	// Version
+	lv_obj_t *version_label = lv_label_create(sidebar_open);
+	lv_label_set_text(version_label, RD_VERSION);
+	lv_obj_align(version_label, LV_ALIGN_BOTTOM_RIGHT, 0, 0);
+	lv_obj_add_style(version_label, &style_text_small, 0);
+
 	// View switcher
 	view_list = lv_list_create(sidebar_open);
 	lv_obj_set_size(view_list, LV_PCT(100) - 8, LV_PCT(100) - 32);
@@ -139,12 +138,12 @@ void create_anims() {
 // =========================== View Management =========================== //
 
 void gui::register_view(View *view) {
-	lv_obj_set_parent(view->obj, view_cont);
+	lv_obj_set_parent(view->get_obj(), view_cont);
 	view->initialize();
-	views.emplace(view->id, view);
+	views.emplace(view->get_id(), view);
 	if (!current_view) gui::set_view(view);
 
-	lv_obj_t *view_button = lv_list_add_btn(view_list, NULL, view->name.c_str());
+	lv_obj_t *view_button = lv_list_add_btn(view_list, NULL, view->get_name().c_str());
 	lv_obj_add_style(view_button, &style_bar_list_btn, 0);
 	lv_obj_add_style(view_button, &style_list_btn_pr, LV_STATE_PRESSED);
 	lv_obj_add_event_cb(view_button, view_btn_cb, LV_EVENT_PRESSED, view);
@@ -158,9 +157,9 @@ void gui::register_views(std::vector<View *> views) {
 }
 
 void gui::set_view(View *view) {
-	if (current_view) lv_obj_add_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
+	if (current_view) lv_obj_add_flag(current_view->get_obj(), LV_OBJ_FLAG_HIDDEN);
 	current_view = view;
-	lv_obj_clear_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(current_view->get_obj(), LV_OBJ_FLAG_HIDDEN);
 }
 
 gui::View *gui::get_view() { return current_view; }
@@ -169,29 +168,16 @@ gui::View *gui::get_view() { return current_view; }
 
 [[noreturn]] void background() {
 	while (true) {
-		for (auto const &[id, view] : views) {
-			view->refresh();
-		}
-
+		if (current_view) current_view->refresh();
 		gui::screensaver::_refresh();
-
-		pros::delay(500);
+		pros::delay(100);
 	}
 }
 
 // =============================== Initialize =============================== //
 
-void attribution() {
-	std::string banner = "\e[1;35m        _ \n"
-	                     " _ _ __| |\n"
-	                     "| '_/ _` |		GUI powered by robodash\n"
-	                     "|_| \\__,_|	  \e[0mCopyright (C) Alex Y | Version %s\n";
-	printf(banner.c_str(), RD_VERSION);
-}
-
 void gui::initialize() {
-	attribution();
-	gui::theme::_initialize();
+	_init_styles();
 
 	create_ui();
 	create_anims();

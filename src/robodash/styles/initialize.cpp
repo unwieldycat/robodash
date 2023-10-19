@@ -1,6 +1,6 @@
 #include "robodash/styles.hpp"
 
-void gui::theme::_initialize() {
+void _init_styles() {
 	_init_colors();
 	_init_style_misc();
 	_init_style_text();
