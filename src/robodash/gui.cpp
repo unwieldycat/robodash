@@ -94,12 +94,6 @@ void create_ui() {
 	lv_img_set_src(close_img, LV_SYMBOL_CLOSE);
 	lv_obj_align(close_img, LV_ALIGN_CENTER, 0, 0);
 
-	// Version
-	lv_obj_t *version_label = lv_label_create(sidebar_open);
-	lv_label_set_text(version_label, RD_VERSION);
-	lv_obj_align(version_label, LV_ALIGN_BOTTOM_RIGHT, 0, 0);
-	lv_obj_add_style(version_label, &style_text_small, 0);
-
 	// View switcher
 	view_list = lv_list_create(sidebar_open);
 	lv_obj_set_size(view_list, LV_PCT(100) - 8, LV_PCT(100) - 32);
