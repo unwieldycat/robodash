@@ -1,7 +1,6 @@
 #include "gui.hpp"
 #include "apix.hpp"
 #include "screensaver.hpp"
-#include <stdexcept>
 
 #define CLOSED_SIDEBAR_WIDTH 40
 #define OPEN_SIDEBAR_WIDTH 192
@@ -133,14 +132,6 @@ void create_anims() {
 // =========================== View Management =========================== //
 
 void gui::register_view(View *view) {
-	version_compat_t view_version = view->get_rd_compat();
-
-	if ((view_version.major != RD_VERSION_MAJOR) || view_version.minor > RD_VERSION_MINOR) {
-		throw std::runtime_error(
-		    "View " + view->get_name() + " is not compatible with the current robodash version"
-		);
-	}
-
 	lv_obj_set_parent(view->get_obj(), view_cont);
 	view->initialize();
 	views.emplace(view->get_id(), view);

@@ -13,11 +13,6 @@
 
 namespace gui {
 
-typedef struct version_compat {
-	int major;
-	int minor;
-} version_compat_t;
-
 /**
  * @brief Base view class
  */
@@ -26,8 +21,6 @@ class View {
 	int id;
 	std::string name;
 	lv_obj_t *obj;
-
-	version_compat_t rd_compat;
 
   public:
 	/**
@@ -58,13 +51,6 @@ class View {
 	 * @return std::string
 	 */
 	std::string get_name();
-
-	/**
-	 * @brief Get the robodash version the view was created with
-	 *
-	 * @return version_compat_t
-	 */
-	version_compat_t get_rd_compat();
 
 	/**
 	 * @brief UI refresh function. Runs whenever the view is focused.

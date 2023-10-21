@@ -9,7 +9,6 @@ int generate_id() {
 // ========================= Constructor/Destructor ========================= //
 
 gui::View::View(std::string name) : name(name) {
-	this->rd_compat = {RD_VERSION_MAJOR, RD_VERSION_MINOR};
 	this->id = generate_id();
 
 	this->obj = lv_obj_create(lv_scr_act());
@@ -27,5 +26,3 @@ int gui::View::get_id() { return this->id; }
 std::string gui::View::get_name() { return this->name; }
 
 lv_obj_t *gui::View::get_obj() { return this->obj; }
-
-gui::version_compat_t gui::View::get_rd_compat() { return this->rd_compat; }
