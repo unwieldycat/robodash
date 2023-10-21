@@ -38,7 +38,6 @@ ASSET_FILES=$(wildcard $(ROOT)/assets/*)
 # whatever files you want here. This line is configured to add all header files
 # that are in the the include directory get exported
 TEMPLATE_FILES=$(INCDIR)/robodash/**/*.h $(INCDIR)/robodash/**/*.hpp
-TEMPLATE_FILES+=$(INCDIR)/lvgl/**/*.h
 TEMPLATE_FILES+=ASSET_FILES
 
 .DEFAULT_GOAL=quick

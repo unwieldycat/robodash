@@ -1,5 +1,5 @@
 #pragma once
-#include "lvgl/lvgl.h"
+#include "liblvgl/lvgl.h"
 
 extern void _init_styles();
 

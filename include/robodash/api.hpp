@@ -7,7 +7,10 @@
 
 #pragma once
 
-#define RD_VERSION "2.0.0-dev"
+#define RD_VERSION_MAJOR 2
+#define RD_VERSION_MINOR 0
+#define RD_VERSION_PATCH 0
+#define RD_VERSION_INFO "dev"
 
 #include "gui.hpp"
 #include "screensaver.hpp"
