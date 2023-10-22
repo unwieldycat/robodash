@@ -17,11 +17,11 @@
 
 namespace gui {
 
-typedef std::function<void()> routine_action_t;
-typedef std::pair<std::string, routine_action_t> routine_t;
-
 class SelectorView : public View {
   public:
+	typedef std::function<void()> routine_action_t;
+	typedef std::pair<std::string, routine_action_t> routine_t;
+
 	/**
 	 * @brief Construct a new SelectorView
 	 */
