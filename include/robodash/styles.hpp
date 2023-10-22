@@ -1,3 +1,9 @@
+/**
+ * @file styles.hpp
+ * @brief Styles used by robodash
+ * @internal
+ */
+
 #pragma once
 #include "apix.hpp"
 

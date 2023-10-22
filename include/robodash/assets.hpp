@@ -1,3 +1,9 @@
+/**
+ * @file assets.hpp
+ * @brief Images and fonts used by robodash
+ * @internal
+ */
+
 #pragma once
 #include "apix.hpp"
 
