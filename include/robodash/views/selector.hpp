@@ -8,11 +8,8 @@
  */
 
 #pragma once
-#include "../gui.hpp"
-#include "api.h"
-#include "liblvgl/lvgl.h"
+#include "robodash/apix.hpp"
 #include <functional>
-#include <iostream>
 #include <string>
 #include <vector>
 

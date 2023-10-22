@@ -7,10 +7,8 @@
  */
 
 #pragma once
-#include "api.h"
-#include "liblvgl/lvgl.h"
+#include "api.hpp"
 #include "view.hpp"
-#include <map>
 
 namespace gui {
 

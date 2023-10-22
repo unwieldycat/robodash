@@ -9,7 +9,6 @@
 
 #pragma once
 #include "api.h"
-#include "liblvgl/lvgl.h"
 #include <string>
 
 namespace gui {

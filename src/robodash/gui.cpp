@@ -1,6 +1,8 @@
 #include "gui.hpp"
 #include "apix.hpp"
 #include "filesystem.hpp"
+#include <map>
+#include <vector>
 
 #define CLOSED_SIDEBAR_WIDTH 40
 #define OPEN_SIDEBAR_WIDTH 192

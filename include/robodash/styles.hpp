@@ -1,5 +1,5 @@
 #pragma once
-#include "liblvgl/lvgl.h"
+#include "apix.hpp"
 
 extern void _init_styles();
 

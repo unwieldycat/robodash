@@ -12,6 +12,8 @@
 #define RD_VERSION_PATCH 0
 #define RD_VERSION_INFO "dev"
 
+#include "liblvgl/lvgl.h"
+
 #include "gui.hpp"
 #include "view.hpp"
 #include "views/console.hpp"
