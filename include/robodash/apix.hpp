@@ -16,4 +16,5 @@
 
 #include "api.hpp"
 #include "assets.hpp"
+#include "filesystem.hpp"
 #include "styles.hpp"
