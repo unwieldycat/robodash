@@ -38,7 +38,6 @@ class ImageView : public rd::View {
 	 * color images.
 	 */
 	ImageView(std::string name, std::string path);
-	~ImageView();
 
 	void initialize();
 	void refresh();
