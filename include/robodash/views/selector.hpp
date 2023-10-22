@@ -22,6 +22,9 @@ typedef std::pair<std::string, routine_action_t> routine_t;
 
 class SelectorView : public View {
   public:
+	/**
+	 * @brief Construct a new SelectorView
+	 */
 	SelectorView();
 
 	/**

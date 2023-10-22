@@ -13,9 +13,9 @@ namespace gui {
 class ConsoleView : public View {
   public:
 	/**
-	 * @brief Create a console view
+	 * @brief Construct a new ConsoleView
 	 *
-	 * @param name Name of the console
+	 * @param name Name to display on screen
 	 */
 	ConsoleView(std::string name = "Console");
 
@@ -39,7 +39,7 @@ class ConsoleView : public View {
 	void println(std::string str);
 
 	/**
-	 * @brief Print to the console
+	 * @brief Print a formatted string to the console
 	 *
 	 * @tparam Params
 	 * @param fmt Format string
