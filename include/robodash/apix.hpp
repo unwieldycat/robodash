@@ -15,6 +15,6 @@
 #pragma once
 
 #include "api.hpp"
-#include "assets.hpp"
-#include "filesystem.hpp"
-#include "styles.hpp"
+#include "impl/assets.hpp"
+#include "impl/filesystem.hpp"
+#include "impl/styles.hpp"
