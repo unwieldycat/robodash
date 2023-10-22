@@ -22,7 +22,6 @@ lv_anim_t anim_sidebar_close;
 lv_anim_t anim_modal_hide;
 lv_anim_t anim_modal_show;
 
-std::map<int, rd::View *> views;
 rd::View *current_view;
 
 // =============================== Callbacks =============================== //
@@ -136,7 +135,6 @@ void create_anims() {
 void rd::register_view(View *view) {
 	lv_obj_set_parent(view->get_obj(), view_cont);
 	view->initialize();
-	views.emplace(view->get_id(), view);
 	if (!current_view) rd::set_view(view);
 
 	lv_obj_t *view_button = lv_list_add_btn(view_list, NULL, view->get_name().c_str());
