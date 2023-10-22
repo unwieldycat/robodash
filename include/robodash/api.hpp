@@ -18,7 +18,7 @@
 #error "LVGL version incompatible with robodash (Requires >= 8.3.X)"
 #endif
 
-#include "gui.hpp"
+#include "core.hpp"
 #include "view.hpp"
 #include "views/console.hpp"
 #include "views/image.hpp"

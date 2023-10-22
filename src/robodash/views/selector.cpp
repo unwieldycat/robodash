@@ -129,11 +129,11 @@ void save_act(lv_event_t *event) {
 
 // ============================= Core Functions ============================= //
 
-gui::SelectorView::SelectorView() : View("Auton Selector"){};
+rd::SelectorView::SelectorView() : View("Auton Selector"){};
 
-void gui::SelectorView::refresh() {}
+void rd::SelectorView::refresh() {}
 
-void gui::SelectorView::initialize() {
+void rd::SelectorView::initialize() {
 	routine_list = lv_list_create(this->get_obj());
 	lv_obj_set_size(routine_list, 228, 192);
 	lv_obj_align(routine_list, LV_ALIGN_BOTTOM_LEFT, 8, -8);
@@ -188,7 +188,7 @@ void gui::SelectorView::initialize() {
 
 // ============================= Other Methods ============================= //
 
-void gui::SelectorView::add_autons(std::vector<routine_t> new_routines) {
+void rd::SelectorView::add_autons(std::vector<routine_t> new_routines) {
 	for (routine_t routine : new_routines) {
 		static int r_index = 0;
 
@@ -208,7 +208,7 @@ void gui::SelectorView::add_autons(std::vector<routine_t> new_routines) {
 	load_saved();
 }
 
-void gui::SelectorView::do_auton() {
+void rd::SelectorView::do_auton() {
 	if (selected_routine == nullptr) return; // If commanded to do nothing then return
 	selected_routine->action();
 }

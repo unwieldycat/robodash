@@ -9,13 +9,13 @@
 #pragma once
 #include "robodash/apix.hpp"
 
-namespace gui {
+namespace rd {
 
 /**
  * @brief ImageView class
  * @addtogroup image-view
  */
-class ImageView : public gui::View {
+class ImageView : public rd::View {
   private:
 	std::string path;
 
@@ -44,4 +44,4 @@ class ImageView : public gui::View {
 	void refresh();
 };
 
-} // namespace gui
+} // namespace rd

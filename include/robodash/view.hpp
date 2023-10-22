@@ -11,7 +11,7 @@
 #include "api.h"
 #include <string>
 
-namespace gui {
+namespace rd {
 
 /**
  * @brief Base view class
@@ -71,4 +71,4 @@ class View {
 	// @}
 };
 
-} // namespace gui
+} // namespace rd

@@ -13,7 +13,7 @@
 #include <string>
 #include <vector>
 
-namespace gui {
+namespace rd {
 
 /**
  * @brief SelectorView class
@@ -51,4 +51,4 @@ class SelectorView : public View {
 	/// @}
 };
 
-} // namespace gui
+} // namespace rd

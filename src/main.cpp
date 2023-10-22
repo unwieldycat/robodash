@@ -1,5 +1,5 @@
 #include "main.h"
-#include "robodash/gui.hpp"
+#include "robodash/core.hpp"
 
 // ============================= Example autons ============================= //
 
@@ -9,15 +9,15 @@ void good_auton() { std::cout << "Running good auton" << std::endl; }
 
 // ================================= Views ================================= //
 
-gui::SelectorView selector;
-gui::ConsoleView console;
+rd::SelectorView selector;
+rd::ConsoleView console;
 
 // ========================= Competition Functions ========================= //
 
 void initialize() {
 	// Initialize library and register views
-	gui::initialize();
-	gui::register_views({&selector, &console});
+	rd::initialize();
+	rd::register_views({&selector, &console});
 
 	selector.add_autons({
 	    {"Best auton",   &best_auton  },
@@ -30,7 +30,7 @@ void disabled() {}
 
 void competition_initialize() {
 	// Focus auton selector
-	gui::set_view(&selector);
+	rd::set_view(&selector);
 }
 
 void autonomous() {

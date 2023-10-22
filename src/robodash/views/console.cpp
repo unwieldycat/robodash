@@ -6,11 +6,11 @@ std::ostringstream stream;
 
 // ============================= Core Functions ============================= //
 
-gui::ConsoleView::ConsoleView(std::string name) : View(name) {}
+rd::ConsoleView::ConsoleView(std::string name) : View(name) {}
 
-void gui::ConsoleView::refresh() {}
+void rd::ConsoleView::refresh() {}
 
-void gui::ConsoleView::initialize() {
+void rd::ConsoleView::initialize() {
 	output = lv_label_create(this->get_obj());
 	lv_obj_set_size(output, 464, 224);
 	lv_obj_align(output, LV_ALIGN_CENTER, 0, 0);
@@ -21,15 +21,15 @@ void gui::ConsoleView::initialize() {
 
 // =========================== Console Functions =========================== //
 
-void gui::ConsoleView::clear() {
+void rd::ConsoleView::clear() {
 	lv_label_set_text(output, "");
 	stream.str("");
 	stream.clear();
 }
 
-void gui::ConsoleView::print(std::string str) {
+void rd::ConsoleView::print(std::string str) {
 	stream << str;
 	lv_label_set_text(output, stream.str().c_str());
 }
 
-void gui::ConsoleView::println(std::string str) { this->print(str + "\n"); }
+void rd::ConsoleView::println(std::string str) { this->print(str + "\n"); }

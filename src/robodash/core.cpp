@@ -1,4 +1,4 @@
-#include "gui.hpp"
+#include "core.hpp"
 #include "apix.hpp"
 #include "filesystem.hpp"
 #include <map>
@@ -22,12 +22,12 @@ lv_anim_t anim_sidebar_close;
 lv_anim_t anim_modal_hide;
 lv_anim_t anim_modal_show;
 
-std::map<int, gui::View *> views;
-gui::View *current_view;
+std::map<int, rd::View *> views;
+rd::View *current_view;
 
 // =============================== Callbacks =============================== //
 
-void view_btn_cb(lv_event_t *event) { gui::set_view((gui::View *)lv_event_get_user_data(event)); }
+void view_btn_cb(lv_event_t *event) { rd::set_view((rd::View *)lv_event_get_user_data(event)); }
 
 void open_sidebar(lv_event_t *event) {
 	lv_obj_clear_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
@@ -133,11 +133,11 @@ void create_anims() {
 
 // =========================== View Management =========================== //
 
-void gui::register_view(View *view) {
+void rd::register_view(View *view) {
 	lv_obj_set_parent(view->get_obj(), view_cont);
 	view->initialize();
 	views.emplace(view->get_id(), view);
-	if (!current_view) gui::set_view(view);
+	if (!current_view) rd::set_view(view);
 
 	lv_obj_t *view_button = lv_list_add_btn(view_list, NULL, view->get_name().c_str());
 	lv_obj_add_style(view_button, &style_bar_list_btn, 0);
@@ -146,19 +146,19 @@ void gui::register_view(View *view) {
 	lv_obj_add_event_cb(view_button, close_sidebar, LV_EVENT_PRESSED, NULL);
 }
 
-void gui::register_views(std::vector<View *> views) {
+void rd::register_views(std::vector<View *> views) {
 	for (View *view : views) {
-		gui::register_view(view);
+		rd::register_view(view);
 	}
 }
 
-void gui::set_view(View *view) {
+void rd::set_view(View *view) {
 	if (current_view) lv_obj_add_flag(current_view->get_obj(), LV_OBJ_FLAG_HIDDEN);
 	current_view = view;
 	lv_obj_clear_flag(current_view->get_obj(), LV_OBJ_FLAG_HIDDEN);
 }
 
-gui::View *gui::get_view() { return current_view; }
+rd::View *rd::get_view() { return current_view; }
 
 // ============================ Background Task ============================ //
 
@@ -171,7 +171,7 @@ gui::View *gui::get_view() { return current_view; }
 
 // =============================== Initialize =============================== //
 
-void gui::initialize() {
+void rd::initialize() {
 	_init_fs();
 	_init_styles();
 

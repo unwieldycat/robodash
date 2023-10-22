@@ -1,5 +1,5 @@
 /**
- * @file gui.hpp
+ * @file core.hpp
  * @brief Core robodash functions
  * @ingroup core
  *
@@ -10,7 +10,7 @@
 #include "api.hpp"
 #include "view.hpp"
 
-namespace gui {
+namespace rd {
 
 /// @addtogroup core
 /// @{
@@ -53,4 +53,4 @@ void initialize();
 
 /// @}
 
-} // namespace gui
+} // namespace rd

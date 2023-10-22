@@ -9,7 +9,7 @@
 #pragma once
 #include "robodash/apix.hpp"
 
-namespace gui {
+namespace rd {
 
 /**
  * @brief ConsoleView class
@@ -68,4 +68,4 @@ class ConsoleView : public View {
 	// @}
 };
 
-} // namespace gui
+} // namespace rd
