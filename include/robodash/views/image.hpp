@@ -29,7 +29,7 @@ class ImageView : public rd::View {
 	 * @brief Construct a new ImageView
 	 *
 	 * @param name Name to display on screen
-	 * @param path Path to the binary-formatted image
+	 * @param path File path to the binary-formatted image on SD card
 	 *
 	 * @note All images must be converted using LVGL's online image converter
 	 * tool. (https://lvgl.io/tools/imageconverter)

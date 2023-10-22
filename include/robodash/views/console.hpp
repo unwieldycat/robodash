@@ -53,7 +53,7 @@ class ConsoleView : public View {
 	 *
 	 * @tparam Params
 	 * @param fmt Format string
-	 * @param args Args to
+	 * @param args Args for format string
 	 */
 	template <typename... Params>
 	void printf(std::string fmt, Params... args) {

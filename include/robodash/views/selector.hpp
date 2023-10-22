@@ -36,7 +36,7 @@ class SelectorView : public View {
 
 	/**
 	 * @brief Initialize autonomous manager
-	 * @param autons Vector of Routine objects
+	 * @param autons Vector of Routines
 	 */
 	void add_autons(std::vector<routine_t> autons);
 
