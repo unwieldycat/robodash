@@ -13,7 +13,7 @@
 #define RD_VERSION_INFO "dev"
 
 #include "gui.hpp"
-#include "screensaver.hpp"
 #include "view.hpp"
 #include "views/console.hpp"
+#include "views/image.hpp"
 #include "views/selector.hpp"

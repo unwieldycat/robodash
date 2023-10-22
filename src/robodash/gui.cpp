@@ -1,6 +1,6 @@
 #include "gui.hpp"
 #include "apix.hpp"
-#include "screensaver.hpp"
+#include "filesystem.hpp"
 
 #define CLOSED_SIDEBAR_WIDTH 40
 #define OPEN_SIDEBAR_WIDTH 192
@@ -163,7 +163,6 @@ gui::View *gui::get_view() { return current_view; }
 [[noreturn]] void background() {
 	while (true) {
 		if (current_view) current_view->refresh();
-		gui::screensaver::_refresh();
 		pros::delay(100);
 	}
 }
@@ -171,12 +170,11 @@ gui::View *gui::get_view() { return current_view; }
 // =============================== Initialize =============================== //
 
 void gui::initialize() {
+	_init_fs();
 	_init_styles();
 
 	create_ui();
 	create_anims();
-
-	gui::screensaver::_initialize();
 
 	pros::Task gui_task(background, "GUI Update Task");
 }
