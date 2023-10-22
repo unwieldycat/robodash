@@ -7,6 +7,8 @@
 #define CLOSED_SIDEBAR_WIDTH 40
 #define OPEN_SIDEBAR_WIDTH 192
 
+bool initialized = false;
+
 lv_obj_t *screen;
 lv_obj_t *view_cont;
 
@@ -130,9 +132,17 @@ void create_anims() {
 	lv_anim_set_values(&anim_modal_show, 0, 144);
 }
 
+void ensure_initialized() {
+	if (!initialized) {
+		throw std::runtime_error("Robodash core function was called before library was initialized!"
+		);
+	}
+}
+
 // =========================== View Management =========================== //
 
 void rd::register_view(View *view) {
+	ensure_initialized();
 	lv_obj_set_parent(view->get_obj(), view_cont);
 	view->initialize();
 	if (!current_view) rd::set_view(view);
@@ -145,18 +155,23 @@ void rd::register_view(View *view) {
 }
 
 void rd::register_views(std::vector<View *> views) {
+	ensure_initialized();
 	for (View *view : views) {
 		rd::register_view(view);
 	}
 }
 
 void rd::set_view(View *view) {
+	ensure_initialized();
 	if (current_view) lv_obj_add_flag(current_view->get_obj(), LV_OBJ_FLAG_HIDDEN);
 	current_view = view;
 	lv_obj_clear_flag(current_view->get_obj(), LV_OBJ_FLAG_HIDDEN);
 }
 
-rd::View *rd::get_view() { return current_view; }
+rd::View *rd::get_view() {
+	ensure_initialized();
+	return current_view;
+}
 
 // ============================ Background Task ============================ //
 
@@ -170,6 +185,10 @@ rd::View *rd::get_view() { return current_view; }
 // =============================== Initialize =============================== //
 
 void rd::initialize() {
+	if (initialized) {
+		throw std::runtime_error("Robodash is already initialized!");
+	}
+
 	_init_fs();
 	_init_styles();
 
@@ -177,4 +196,6 @@ void rd::initialize() {
 	create_anims();
 
 	pros::Task gui_task(background, "GUI Update Task");
+
+	initialized = true;
 }
