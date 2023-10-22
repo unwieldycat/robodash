@@ -14,6 +14,10 @@
 
 #include "liblvgl/lvgl.h"
 
+#if (LV_VERSION_CHECK(8, 3, 0) == 0)
+#error "LVGL version incompatible with robodash (Requires >= 8.3.X)"
+#endif
+
 #include "gui.hpp"
 #include "view.hpp"
 #include "views/console.hpp"
