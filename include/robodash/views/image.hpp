@@ -1,11 +1,28 @@
+/**
+ * @file image.hpp
+ * @brief Robodash ImageView
+ * @ingroup image-view
+ *
+ * Built-in ImageView class to display images.
+ */
+
 #pragma once
 #include "robodash/apix.hpp"
 
 namespace gui {
 
+/**
+ * @brief ImageView class
+ * @addtogroup image-view
+ */
 class ImageView : public gui::View {
   private:
 	std::string path;
+
+	/// @addtogroup image-view
+	/// @{
+
+	/// @name ImageView Functions
 
   public:
 	/**

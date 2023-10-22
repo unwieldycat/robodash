@@ -1,6 +1,7 @@
 /**
  * @file gui.hpp
  * @brief Core robodash functions
+ * @ingroup core
  *
  * Core functions to interface with robodash.
  */
@@ -12,6 +13,12 @@
 #include <map>
 
 namespace gui {
+
+/// @addtogroup core
+/// @{
+
+/// @name Core functions
+/// Core view management functions
 
 /**
  * @brief Register a view
@@ -45,5 +52,7 @@ View *get_view();
  * @brief Initialize library
  */
 void initialize();
+
+/// @}
 
 } // namespace gui

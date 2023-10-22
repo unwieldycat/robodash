@@ -1,6 +1,7 @@
 /**
  * @file selector.hpp
  * @brief Robodash SelectorView
+ * @ingroup selector-view
  *
  * Built-in SelectorView class for function selecting, primarily for autonomous
  * routines.
@@ -17,10 +18,19 @@
 
 namespace gui {
 
+/**
+ * @brief SelectorView class
+ * @ingroup selector-view
+ */
 class SelectorView : public View {
+	/// @addtogroup selector-view
+	/// @{
   public:
+	/// @name SelectorView Typedefs
 	typedef std::function<void()> routine_action_t;
 	typedef std::pair<std::string, routine_action_t> routine_t;
+
+	/// @name SelectorView Functions
 
 	/**
 	 * @brief Construct a new SelectorView
@@ -40,6 +50,8 @@ class SelectorView : public View {
 
 	void refresh();
 	void initialize();
+
+	/// @}
 };
 
 } // namespace gui

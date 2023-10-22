@@ -1,6 +1,7 @@
 /**
  * @file view.hpp
  * @brief Base view class
+ * @ingroup abstract-view
  *
  * Abstract view class for other views to derrive. Provides basic functions and
  * structure.
@@ -15,6 +16,7 @@ namespace gui {
 
 /**
  * @brief Base view class
+ * @ingroup abstract-view
  */
 class View {
   private:
@@ -23,6 +25,11 @@ class View {
 	lv_obj_t *obj;
 
   public:
+	/// @addtogroup abstract-view
+	/// @{
+
+	/// @name Abstract View Functions
+
 	/**
 	 * @brief View constructor
 	 *
@@ -61,6 +68,8 @@ class View {
 	 * @brief UI initialize function. Runs when the view is registered.
 	 */
 	virtual void initialize() = 0;
+
+	// @}
 };
 
 } // namespace gui

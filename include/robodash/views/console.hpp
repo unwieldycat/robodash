@@ -1,6 +1,7 @@
 /**
  * @file console.hpp
  * @brief Robodash ConsoleView
+ * @ingroup console-view
  *
  * Built-in ConsoleView class for debugging. Emulates a standard console output.
  */
@@ -10,7 +11,16 @@
 
 namespace gui {
 
+/**
+ * @brief ConsoleView class
+ * @addtogroup console-view
+ */
 class ConsoleView : public View {
+	/// @addtogroup console-view
+	/// @{
+
+	/// @name ConsoleView Functions
+
   public:
 	/**
 	 * @brief Construct a new ConsoleView
@@ -54,6 +64,8 @@ class ConsoleView : public View {
 
 	void refresh();
 	void initialize();
+
+	// @}
 };
 
 } // namespace gui
