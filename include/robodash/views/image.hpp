@@ -37,7 +37,7 @@ class ImageView : public rd::View {
 	 * performance. CF_INDEXED_4_BIT or CF_INDEXED_8_BIT is reccomended for
 	 * color images.
 	 */
-	ImageView(std::string name, std::string path);
+	ImageView(std::string path, std::string name = "Image");
 
 	void initialize();
 	void refresh();

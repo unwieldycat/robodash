@@ -116,7 +116,7 @@ void r_select_act(lv_event_t *event) {
 		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 	}
 
-	routine = selected_routine;
+	selected_routine = routine;
 }
 
 void done_act(lv_event_t *event) { selection_done = true; }
@@ -134,6 +134,8 @@ rd::SelectorView::SelectorView() : View("Auton Selector"){};
 void rd::SelectorView::refresh() {}
 
 void rd::SelectorView::initialize() {
+	lv_obj_set_style_bg_color(this->get_obj(), color_bg, 0);
+
 	routine_list = lv_list_create(this->get_obj());
 	lv_obj_set_size(routine_list, 228, 192);
 	lv_obj_align(routine_list, LV_ALIGN_BOTTOM_LEFT, 8, -8);
