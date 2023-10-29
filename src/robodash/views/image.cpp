@@ -2,7 +2,7 @@
 
 // ============================= Core Functions ============================= //
 
-rd::ImageView::ImageView(std::string name, std::string path) : View(name) {
+rd::ImageView::ImageView(std::string path, std::string name) : View(name) {
 	this->path = "S:" + path;
 }
 
