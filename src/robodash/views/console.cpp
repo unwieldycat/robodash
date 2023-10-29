@@ -29,7 +29,7 @@ void rd::ConsoleView::clear() {
 
 void rd::ConsoleView::print(std::string str) {
 	stream << str;
-	lv_label_set_text(output, stream.str().c_str());
+	if (output) lv_label_set_text(output, stream.str().c_str());
 }
 
 void rd::ConsoleView::println(std::string str) { this->print(str + "\n"); }
