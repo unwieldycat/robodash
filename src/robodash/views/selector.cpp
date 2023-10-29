@@ -116,7 +116,7 @@ void r_select_act(lv_event_t *event) {
 		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 	}
 
-	routine = selected_routine;
+	selected_routine = routine;
 }
 
 void done_act(lv_event_t *event) { selection_done = true; }
