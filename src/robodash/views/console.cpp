@@ -7,7 +7,7 @@ std::ostringstream stream;
 // ============================= Core Functions ============================= //
 
 rd::Console::Console(std::string name) {
-	rd::View console_view(name);
+	static rd::View console_view(name);
 
 	lv_obj_set_style_bg_color(console_view.get_obj(), color_bg, 0);
 

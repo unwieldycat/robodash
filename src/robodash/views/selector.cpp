@@ -130,7 +130,7 @@ void save_act(lv_event_t *event) {
 // ============================= Core Functions ============================= //
 
 rd::Selector::Selector() {
-	rd::View selector_view("Auton Selector");
+	static rd::View selector_view("Auton Selector");
 
 	lv_obj_set_style_bg_color(selector_view.get_obj(), color_bg, 0);
 
