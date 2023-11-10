@@ -8,7 +8,6 @@ std::ostringstream stream;
 
 rd::Console::Console(std::string name) {
 	rd::View console_view(name);
-	rd::register_view(&console_view);
 
 	lv_obj_set_style_bg_color(console_view.get_obj(), color_bg, 0);
 

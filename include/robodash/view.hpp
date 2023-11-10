@@ -50,6 +50,11 @@ class View {
 	 */
 	std::string get_name();
 
+	/**
+	 * @brief Set this view to the active view
+	 */
+	void focus();
+
 	// @}
 };
 

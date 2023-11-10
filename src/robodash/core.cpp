@@ -8,6 +8,8 @@
 
 bool initialized = false;
 
+// ============================== UI Elements ============================== //
+
 lv_obj_t *screen;
 lv_obj_t *view_cont;
 
@@ -25,9 +27,9 @@ lv_anim_t anim_modal_show;
 
 rd::View *current_view;
 
-// =============================== Callbacks =============================== //
+// ============================== UI Callbacks ============================== //
 
-void view_btn_cb(lv_event_t *event) { rd::set_view((rd::View *)lv_event_get_user_data(event)); }
+void view_btn_cb(lv_event_t *event) { ((rd::View *)lv_event_get_user_data(event))->focus(); }
 
 void open_sidebar(lv_event_t *event) {
 	lv_obj_clear_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
@@ -138,37 +140,34 @@ void ensure_initialized() {
 	}
 }
 
-// =========================== View Management =========================== //
+// =============================== View Class =============================== //
 
-void rd::register_view(View *view) {
-	ensure_initialized();
-	lv_obj_set_parent(view->get_obj(), view_cont);
-	if (!current_view) rd::set_view(view);
+rd::View::View(std::string name) : name(name) {
+	this->obj = lv_obj_create(lv_scr_act());
+	lv_obj_set_size(this->obj, lv_pct(100), lv_pct(100));
+	lv_obj_add_flag(this->obj, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_style(this->obj, &style_bg, 0);
 
-	lv_obj_t *view_button = lv_list_add_btn(view_list, NULL, view->get_name().c_str());
+	lv_obj_set_parent(this->get_obj(), view_cont);
+	if (!current_view) this->focus();
+
+	lv_obj_t *view_button = lv_list_add_btn(view_list, NULL, name.c_str());
 	lv_obj_add_style(view_button, &style_bar_list_btn, 0);
 	lv_obj_add_style(view_button, &style_list_btn_pr, LV_STATE_PRESSED);
-	lv_obj_add_event_cb(view_button, view_btn_cb, LV_EVENT_PRESSED, view);
+	lv_obj_add_event_cb(view_button, view_btn_cb, LV_EVENT_PRESSED, this);
 	lv_obj_add_event_cb(view_button, close_sidebar, LV_EVENT_PRESSED, NULL);
 }
 
-void rd::register_views(std::vector<View *> views) {
-	ensure_initialized();
-	for (View *view : views) {
-		rd::register_view(view);
-	}
-}
+rd::View::~View() { lv_obj_del(this->obj); }
 
-void rd::set_view(View *view) {
-	ensure_initialized();
+std::string rd::View::get_name() { return this->name; }
+
+lv_obj_t *rd::View::get_obj() { return this->obj; }
+
+void rd::View::focus() {
 	if (current_view) lv_obj_add_flag(current_view->get_obj(), LV_OBJ_FLAG_HIDDEN);
-	current_view = view;
+	current_view = this;
 	lv_obj_clear_flag(current_view->get_obj(), LV_OBJ_FLAG_HIDDEN);
-}
-
-rd::View *rd::get_view() {
-	ensure_initialized();
-	return current_view;
 }
 
 // =============================== Initialize =============================== //
