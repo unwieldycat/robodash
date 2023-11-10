@@ -1,9 +1,9 @@
 /**
  * @file console.hpp
- * @brief Robodash ConsoleView
- * @ingroup console-view
+ * @brief Robodash Console
+ * @ingroup console
  *
- * Built-in ConsoleView class for debugging. Emulates a standard console output.
+ * Built-in Console class for debugging. Emulates a standard console output.
  */
 
 #pragma once
@@ -12,22 +12,24 @@
 namespace rd {
 
 /**
- * @brief ConsoleView class
- * @addtogroup console-view
+ * @brief Console class
+ * @addtogroup console
  */
-class ConsoleView : public View {
-	/// @addtogroup console-view
+class Console {
+	/// @addtogroup console
 	/// @{
 
-	/// @name ConsoleView Functions
+	/// @name Console Functions
+  private:
+	rd::View view;
 
   public:
 	/**
-	 * @brief Construct a new ConsoleView
+	 * @brief Construct a new Console
 	 *
 	 * @param name Name to display on screen
 	 */
-	ConsoleView(std::string name = "Console");
+	Console(std::string name = "Console");
 
 	/**
 	 * @brief Clear all console lines
@@ -62,8 +64,10 @@ class ConsoleView : public View {
 		print(fstr);
 	}
 
-	void refresh();
-	void initialize();
+	/**
+	 * @brief Set this view to the active view
+	 */
+	void focus();
 
 	// @}
 };

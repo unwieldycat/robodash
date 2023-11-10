@@ -1,10 +1,7 @@
 /**
  * @file view.hpp
- * @brief Base view class
- * @ingroup abstract-view
- *
- * Abstract view class for other views to derrive. Provides basic functions and
- * structure.
+ * @brief View class
+ * @ingroup view
  */
 
 #pragma once
@@ -14,20 +11,20 @@
 namespace rd {
 
 /**
- * @brief Base view class
- * @ingroup abstract-view
+ * @brief View class
+ * @ingroup view
  */
 class View {
   private:
-	int id;
 	std::string name;
 	lv_obj_t *obj;
+	lv_obj_t *view_btn;
 
   public:
-	/// @addtogroup abstract-view
+	/// @addtogroup view
 	/// @{
 
-	/// @name Abstract View Functions
+	/// @name View Functions
 
 	/**
 	 * @brief View constructor
@@ -36,13 +33,6 @@ class View {
 	 */
 	View(std::string name);
 	~View();
-
-	/**
-	 * @brief Get the object's unique ID. Used internally.
-	 *
-	 * @return int ID of object
-	 */
-	int get_id();
 
 	/**
 	 * @brief Get the view's lvgl object
@@ -59,14 +49,9 @@ class View {
 	std::string get_name();
 
 	/**
-	 * @brief UI refresh function. Runs whenever the view is focused.
+	 * @brief Set this view to the active view
 	 */
-	virtual void refresh() = 0;
-
-	/**
-	 * @brief UI initialize function. Runs when the view is registered.
-	 */
-	virtual void initialize() = 0;
+	void focus();
 
 	// @}
 };

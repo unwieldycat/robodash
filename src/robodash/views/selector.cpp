@@ -129,19 +129,15 @@ void save_act(lv_event_t *event) {
 
 // ============================= Core Functions ============================= //
 
-rd::SelectorView::SelectorView() : View("Auton Selector"){};
+rd::Selector::Selector() : view("Auton Selector") {
+	lv_obj_set_style_bg_color(view.get_obj(), color_bg, 0);
 
-void rd::SelectorView::refresh() {}
-
-void rd::SelectorView::initialize() {
-	lv_obj_set_style_bg_color(this->get_obj(), color_bg, 0);
-
-	routine_list = lv_list_create(this->get_obj());
+	routine_list = lv_list_create(view.get_obj());
 	lv_obj_set_size(routine_list, 228, 192);
 	lv_obj_align(routine_list, LV_ALIGN_BOTTOM_LEFT, 8, -8);
 	lv_obj_add_style(routine_list, &style_list, 0);
 
-	selected_label = lv_label_create(this->get_obj());
+	selected_label = lv_label_create(view.get_obj());
 	lv_label_set_text(selected_label, "No routine\nselected");
 	lv_obj_add_style(selected_label, &style_text_centered, 0);
 	lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
@@ -151,7 +147,7 @@ void rd::SelectorView::initialize() {
 	lv_obj_add_style(nothing_btn, &style_list_btn, 0);
 	lv_obj_add_style(nothing_btn, &style_list_btn_pr, LV_STATE_PRESSED);
 
-	lv_obj_t *title = lv_label_create(this->get_obj());
+	lv_obj_t *title = lv_label_create(view.get_obj());
 	lv_label_set_text(title, "Select autonomous routine");
 	lv_obj_add_style(title, &style_text_large, 0);
 	lv_obj_align(title, LV_ALIGN_TOP_LEFT, 8, 12);
@@ -159,14 +155,14 @@ void rd::SelectorView::initialize() {
 	if (pros::usd::is_installed()) {
 		sdconf_load();
 
-		saved_toast = lv_label_create(this->get_obj());
+		saved_toast = lv_label_create(view.get_obj());
 		lv_label_set_text(saved_toast, "Saved to SD");
 		lv_obj_add_style(saved_toast, &style_text_centered, 0);
 		lv_obj_add_style(saved_toast, &style_text_small, 0);
 		lv_obj_align(saved_toast, LV_ALIGN_BOTTOM_RIGHT, -16, -16);
 		lv_obj_add_flag(saved_toast, LV_OBJ_FLAG_HIDDEN);
 
-		lv_obj_t *save_btn = lv_btn_create(this->get_obj());
+		lv_obj_t *save_btn = lv_btn_create(view.get_obj());
 		lv_obj_set_size(save_btn, 64, 32);
 		lv_obj_align(save_btn, LV_ALIGN_BOTTOM_RIGHT, -172, -8);
 		lv_obj_add_event_cb(save_btn, &save_act, LV_EVENT_PRESSED, NULL);
@@ -190,7 +186,7 @@ void rd::SelectorView::initialize() {
 
 // ============================= Other Methods ============================= //
 
-void rd::SelectorView::add_autons(std::vector<routine_t> new_routines) {
+void rd::Selector::add_autons(std::vector<routine_t> new_routines) {
 	for (routine_t routine : new_routines) {
 		static int r_index = 0;
 
@@ -210,7 +206,9 @@ void rd::SelectorView::add_autons(std::vector<routine_t> new_routines) {
 	load_saved();
 }
 
-void rd::SelectorView::do_auton() {
+void rd::Selector::do_auton() {
 	if (selected_routine == nullptr) return; // If commanded to do nothing then return
 	selected_routine->action();
 }
+
+void rd::Selector::focus() { this->view.focus(); }

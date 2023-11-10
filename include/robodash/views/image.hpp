@@ -1,9 +1,9 @@
 /**
  * @file image.hpp
- * @brief Robodash ImageView
- * @ingroup image-view
+ * @brief Robodash Image
+ * @ingroup image
  *
- * Built-in ImageView class to display images.
+ * Built-in Image class to display images.
  */
 
 #pragma once
@@ -12,21 +12,20 @@
 namespace rd {
 
 /**
- * @brief ImageView class
+ * @brief Image class
  * @addtogroup image-view
  */
-class ImageView : public rd::View {
-  private:
-	std::string path;
-
+class Image {
 	/// @addtogroup image-view
 	/// @{
 
-	/// @name ImageView Functions
+	/// @name Image Functions
+  private:
+	rd::View view;
 
   public:
 	/**
-	 * @brief Construct a new ImageView
+	 * @brief Construct a new Image
 	 *
 	 * @param name Name to display on screen
 	 * @param path File path to the binary-formatted image on SD card
@@ -37,10 +36,14 @@ class ImageView : public rd::View {
 	 * performance. CF_INDEXED_4_BIT or CF_INDEXED_8_BIT is reccomended for
 	 * color images.
 	 */
-	ImageView(std::string path, std::string name = "Image");
+	Image(std::string path, std::string name = "Image");
 
-	void initialize();
-	void refresh();
+	/**
+	 * @brief Set this view to the active view
+	 */
+	void focus();
+
+	/// @}
 };
 
 } // namespace rd
