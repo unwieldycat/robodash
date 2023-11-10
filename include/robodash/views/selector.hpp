@@ -1,7 +1,7 @@
 /**
  * @file selector.hpp
  * @brief Robodash Selector
- * @ingroup selector-view
+ * @ingroup selector
  *
  * Built-in Selector class for function selecting, primarily for autonomous
  * routines.
@@ -17,10 +17,10 @@ namespace rd {
 
 /**
  * @brief Selector class
- * @ingroup selector-view
+ * @ingroup selector
  */
 class Selector {
-	/// @addtogroup selector-view
+	/// @addtogroup selector
 	/// @{
   private:
 	rd::View view;

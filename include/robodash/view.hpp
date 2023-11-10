@@ -1,10 +1,7 @@
 /**
  * @file view.hpp
- * @brief Base view class
- * @ingroup abstract-view
- *
- * Abstract view class for other views to derrive. Provides basic functions and
- * structure.
+ * @brief View class
+ * @ingroup view
  */
 
 #pragma once
@@ -14,8 +11,8 @@
 namespace rd {
 
 /**
- * @brief Base view class
- * @ingroup abstract-view
+ * @brief View class
+ * @ingroup view
  */
 class View {
   private:
@@ -23,10 +20,10 @@ class View {
 	lv_obj_t *obj;
 
   public:
-	/// @addtogroup abstract-view
+	/// @addtogroup view
 	/// @{
 
-	/// @name Abstract View Functions
+	/// @name View Functions
 
 	/**
 	 * @brief View constructor

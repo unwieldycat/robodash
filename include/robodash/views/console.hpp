@@ -1,7 +1,7 @@
 /**
  * @file console.hpp
  * @brief Robodash Console
- * @ingroup console-view
+ * @ingroup console
  *
  * Built-in Console class for debugging. Emulates a standard console output.
  */
@@ -13,10 +13,10 @@ namespace rd {
 
 /**
  * @brief Console class
- * @addtogroup console-view
+ * @addtogroup console
  */
 class Console {
-	/// @addtogroup console-view
+	/// @addtogroup console
 	/// @{
 
 	/// @name Console Functions

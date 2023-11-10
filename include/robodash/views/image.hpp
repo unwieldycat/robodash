@@ -1,7 +1,7 @@
 /**
  * @file image.hpp
  * @brief Robodash Image
- * @ingroup image-view
+ * @ingroup image
  *
  * Built-in Image class to display images.
  */
