@@ -20,6 +20,8 @@ class Image {
 	/// @{
 
 	/// @name Image Functions
+  private:
+	rd::View view;
 
   public:
 	/**
@@ -35,6 +37,11 @@ class Image {
 	 * color images.
 	 */
 	Image(std::string path, std::string name = "Image");
+
+	/**
+	 * @brief Set this view to the active view
+	 */
+	void focus();
 
 	/// @}
 };

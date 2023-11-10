@@ -22,6 +22,9 @@ namespace rd {
 class Selector {
 	/// @addtogroup selector-view
 	/// @{
+  private:
+	rd::View view;
+
   public:
 	/// @name Selector Typedefs
 	typedef std::function<void()> routine_action_t;
@@ -44,6 +47,11 @@ class Selector {
 	 * @brief Run selected auton
 	 */
 	void do_auton();
+
+	/**
+	 * @brief Set this view to the active view
+	 */
+	void focus();
 
 	/// @}
 };

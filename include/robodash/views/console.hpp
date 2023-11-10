@@ -20,6 +20,8 @@ class Console {
 	/// @{
 
 	/// @name Console Functions
+  private:
+	rd::View view;
 
   public:
 	/**
@@ -61,6 +63,11 @@ class Console {
 		sprintf(fstr, fmt.c_str(), args...);
 		print(fstr);
 	}
+
+	/**
+	 * @brief Set this view to the active view
+	 */
+	void focus();
 
 	// @}
 };
