@@ -19,7 +19,6 @@ namespace rd {
  */
 class View {
   private:
-	int id;
 	std::string name;
 	lv_obj_t *obj;
 
@@ -36,13 +35,6 @@ class View {
 	 */
 	View(std::string name);
 	~View();
-
-	/**
-	 * @brief Get the object's unique ID. Used internally.
-	 *
-	 * @return int ID of object
-	 */
-	int get_id();
 
 	/**
 	 * @brief Get the view's lvgl object
