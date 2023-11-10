@@ -50,16 +50,6 @@ class View {
 	 */
 	std::string get_name();
 
-	/**
-	 * @brief UI refresh function. Runs whenever the view is focused.
-	 */
-	virtual void refresh() = 0;
-
-	/**
-	 * @brief UI initialize function. Runs when the view is registered.
-	 */
-	virtual void initialize() = 0;
-
 	// @}
 };
 

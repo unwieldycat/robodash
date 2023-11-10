@@ -143,7 +143,6 @@ void ensure_initialized() {
 void rd::register_view(View *view) {
 	ensure_initialized();
 	lv_obj_set_parent(view->get_obj(), view_cont);
-	view->initialize();
 	if (!current_view) rd::set_view(view);
 
 	lv_obj_t *view_button = lv_list_add_btn(view_list, NULL, view->get_name().c_str());
@@ -172,15 +171,6 @@ rd::View *rd::get_view() {
 	return current_view;
 }
 
-// ============================ Background Task ============================ //
-
-[[noreturn]] void background() {
-	while (true) {
-		if (current_view) current_view->refresh();
-		pros::delay(100);
-	}
-}
-
 // =============================== Initialize =============================== //
 
 void rd::initialize() {
@@ -193,8 +183,6 @@ void rd::initialize() {
 
 	create_ui();
 	create_anims();
-
-	pros::Task gui_task(background, "GUI Update Task");
 
 	initialized = true;
 }
