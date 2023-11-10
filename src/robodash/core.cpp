@@ -133,16 +133,11 @@ void create_anims() {
 	lv_anim_set_values(&anim_modal_show, 0, 144);
 }
 
-void ensure_initialized() {
-	if (!initialized) {
-		throw std::runtime_error("Robodash core function was called before library was initialized!"
-		);
-	}
-}
-
 // =============================== View Class =============================== //
 
 rd::View::View(std::string name) : name(name) {
+	rd::initialize();
+
 	this->obj = lv_obj_create(lv_scr_act());
 	lv_obj_set_size(this->obj, lv_pct(100), lv_pct(100));
 	lv_obj_add_flag(this->obj, LV_OBJ_FLAG_HIDDEN);
@@ -173,9 +168,7 @@ void rd::View::focus() {
 // =============================== Initialize =============================== //
 
 void rd::initialize() {
-	if (initialized) {
-		throw std::runtime_error("Robodash is already initialized!");
-	}
+	if (initialized) return;
 
 	_init_fs();
 	_init_styles();
