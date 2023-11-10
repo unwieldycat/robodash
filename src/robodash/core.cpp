@@ -159,14 +159,17 @@ rd::View::View(std::string name) : name(name) {
 	lv_obj_set_parent(this->get_obj(), view_cont);
 	if (!current_view) this->focus();
 
-	lv_obj_t *view_button = lv_list_add_btn(view_list, NULL, name.c_str());
-	lv_obj_add_style(view_button, &style_bar_list_btn, 0);
-	lv_obj_add_style(view_button, &style_list_btn_pr, LV_STATE_PRESSED);
-	lv_obj_add_event_cb(view_button, view_btn_cb, LV_EVENT_PRESSED, this);
-	lv_obj_add_event_cb(view_button, close_sidebar, LV_EVENT_PRESSED, NULL);
+	this->view_btn = lv_list_add_btn(view_list, NULL, name.c_str());
+	lv_obj_add_style(view_btn, &style_bar_list_btn, 0);
+	lv_obj_add_style(view_btn, &style_list_btn_pr, LV_STATE_PRESSED);
+	lv_obj_add_event_cb(view_btn, view_btn_cb, LV_EVENT_PRESSED, this);
+	lv_obj_add_event_cb(view_btn, close_sidebar, LV_EVENT_PRESSED, NULL);
 }
 
-rd::View::~View() { lv_obj_del(this->obj); }
+rd::View::~View() {
+	lv_obj_del(this->view_btn);
+	lv_obj_del(this->obj);
+}
 
 std::string rd::View::get_name() { return this->name; }
 

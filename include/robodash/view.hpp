@@ -18,6 +18,7 @@ class View {
   private:
 	std::string name;
 	lv_obj_t *obj;
+	lv_obj_t *view_btn;
 
   public:
 	/// @addtogroup view
