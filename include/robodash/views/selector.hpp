@@ -1,9 +1,9 @@
 /**
  * @file selector.hpp
- * @brief Robodash SelectorView
+ * @brief Robodash Selector
  * @ingroup selector-view
  *
- * Built-in SelectorView class for function selecting, primarily for autonomous
+ * Built-in Selector class for function selecting, primarily for autonomous
  * routines.
  */
 
@@ -16,23 +16,23 @@
 namespace rd {
 
 /**
- * @brief SelectorView class
+ * @brief Selector class
  * @ingroup selector-view
  */
-class SelectorView : public View {
+class Selector {
 	/// @addtogroup selector-view
 	/// @{
   public:
-	/// @name SelectorView Typedefs
+	/// @name Selector Typedefs
 	typedef std::function<void()> routine_action_t;
 	typedef std::pair<std::string, routine_action_t> routine_t;
 
-	/// @name SelectorView Functions
+	/// @name Selector Functions
 
 	/**
-	 * @brief Construct a new SelectorView
+	 * @brief Construct a new Selector
 	 */
-	SelectorView();
+	Selector();
 
 	/**
 	 * @brief Initialize autonomous manager
@@ -44,9 +44,6 @@ class SelectorView : public View {
 	 * @brief Run selected auton
 	 */
 	void do_auton();
-
-	void refresh();
-	void initialize();
 
 	/// @}
 };
