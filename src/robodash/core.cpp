@@ -1,12 +1,9 @@
-#include "core.hpp"
 #include "apix.hpp"
 #include <map>
 #include <vector>
 
 #define CLOSED_SIDEBAR_WIDTH 40
 #define OPEN_SIDEBAR_WIDTH 192
-
-bool initialized = false;
 
 // ============================== UI Elements ============================== //
 
@@ -133,10 +130,26 @@ void create_anims() {
 	lv_anim_set_values(&anim_modal_show, 0, 144);
 }
 
+// =============================== Initialize =============================== //
+
+bool initialized = false;
+
+void initialize() {
+	if (initialized) return;
+
+	_init_fs();
+	_init_styles();
+
+	create_ui();
+	create_anims();
+
+	initialized = true;
+}
+
 // =============================== View Class =============================== //
 
 rd::View::View(std::string name) : name(name) {
-	rd::initialize();
+	initialize();
 
 	this->obj = lv_obj_create(lv_scr_act());
 	lv_obj_set_size(this->obj, lv_pct(100), lv_pct(100));
@@ -163,18 +176,4 @@ void rd::View::focus() {
 	if (current_view) lv_obj_add_flag(current_view->get_obj(), LV_OBJ_FLAG_HIDDEN);
 	current_view = this;
 	lv_obj_clear_flag(current_view->get_obj(), LV_OBJ_FLAG_HIDDEN);
-}
-
-// =============================== Initialize =============================== //
-
-void rd::initialize() {
-	if (initialized) return;
-
-	_init_fs();
-	_init_styles();
-
-	create_ui();
-	create_anims();
-
-	initialized = true;
 }
