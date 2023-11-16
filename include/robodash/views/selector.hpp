@@ -33,7 +33,7 @@ class Selector {
 	/// @name Selector Functions
 
 	/**
-	 * @brief Construct a new Selector
+	 * @brief Create a new Selector
 	 */
 	Selector();
 

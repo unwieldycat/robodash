@@ -32,7 +32,7 @@ class Image {
 
   public:
 	/**
-	 * @brief Construct a new Image
+	 * @brief Create a new Image
 	 *
 	 * @param name File path to the binary-formatted image on SD card
 	 * @param path Name to display on screen
@@ -40,7 +40,7 @@ class Image {
 	Image(std::string path, std::string name = "Image");
 
 	/**
-	 * @brief Construct a new Image
+	 * @brief Create a new Image
 	 *
 	 * @param image_dsc LVGL image descriptor object
 	 * @param name Name to display on screen

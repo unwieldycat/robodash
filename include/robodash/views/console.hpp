@@ -25,7 +25,7 @@ class Console {
 
   public:
 	/**
-	 * @brief Construct a new Console
+	 * @brief Create a new Console
 	 *
 	 * @param name Name to display on screen
 	 */
