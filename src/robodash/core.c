@@ -172,13 +172,15 @@ rd_view_t *rd_view_create(const char *name) {
 void rd_view_del(rd_view_t *view) {
 	lv_obj_del(view->_btn);
 	lv_obj_del(view->obj);
+	if (current_view == view) current_view = NULL;
 	free(view);
 }
 
 lv_obj_t *rd_view_obj(rd_view_t *view) { return view->obj; }
 
 void rd_view_focus(rd_view_t *view) {
-	if (current_view) lv_obj_add_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
+	if (view == NULL) return;
+	if (current_view != NULL) lv_obj_add_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
 	current_view = view;
 	lv_obj_clear_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
 }
