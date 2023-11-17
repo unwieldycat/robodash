@@ -1,5 +1,5 @@
 /**
- * @file assets.hpp
+ * @file assets.h
  * @brief Images and fonts used by robodash
  * @internal
  */

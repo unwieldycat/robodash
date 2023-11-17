@@ -1,5 +1,5 @@
 /**
- * @file filesystem.hpp
+ * @file filesystem.h
  * @brief LVGL filesystem driver for images
  * @internal
  */
