@@ -36,11 +36,11 @@ rd_view_t *rd_view_create(const char *name);
 void rd_view_focus(rd_view_t *view);
 
 /**
- * @brief Destroy a view
+ * @brief Delete a view
  *
- * @param view View to destroy
+ * @param view View to delete
  */
-void rd_view_destroy(rd_view_t *view);
+void rd_view_del(rd_view_t *view);
 
 /**
  * @brief Get the view's lvgl object
