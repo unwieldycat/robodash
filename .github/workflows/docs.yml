@@ -1,0 +1,41 @@
+# I stole this from purduesigbots/pros-doxygen-docs
+
+name: Build and Deploy Docs
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: 
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Pip Installer
+        uses: BSFishy/pip-action@v1
+        with:
+          packages: jinja2 Pygments
+      - name: Install Doxygen
+        run: sudo sh -c 'echo deb http://cz.archive.ubuntu.com/ubuntu focal main universe >> /etc/apt/sources.list' && sudo apt-get update && sudo apt-get install -y -t focal doxygen
+      - name: Checkout
+        uses: actions/checkout@v2.0.0
+      - name: Checkout m.css
+        uses: Mushus/checkout-submodule@v1.0.1
+        with:
+          submodulePath: ./m.css
+      - name: Generate Documentation
+        run: ./build-docs.sh
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4.4.3
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: docs/output/html # The folder the action should deploy.
+
