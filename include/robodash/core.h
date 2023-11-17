@@ -15,7 +15,7 @@ extern "C" {
  * @brief Robodash view structure
  */
 typedef struct rd_view {
-	char *name;
+	const char *name;
 	lv_obj_t *obj;
 	lv_obj_t *_btn;
 } rd_view_t;
