@@ -70,7 +70,7 @@ class Console {
 	 */
 	void focus();
 
-	// @}
+	/// @}
 };
 
 } // namespace rd
