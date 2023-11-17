@@ -1,4 +1,5 @@
 #include "console.hpp"
+#include "robodash/apix.h"
 #include <sstream>
 
 lv_obj_t *output;

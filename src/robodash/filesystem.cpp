@@ -5,7 +5,7 @@
     Used for opening images, but write is supported too
 */
 
-#include "apix.hpp"
+#include "apix.h"
 #include "liblvgl/lvgl.h"
 #include <stdio.h>
 

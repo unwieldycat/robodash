@@ -7,7 +7,7 @@
  */
 
 #pragma once
-#include "robodash/apix.hpp"
+#include "robodash/api.h"
 
 namespace rd {
 
