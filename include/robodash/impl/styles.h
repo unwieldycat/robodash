@@ -1,11 +1,15 @@
 /**
- * @file styles.hpp
+ * @file styles.h
  * @brief Styles used by robodash
  * @internal
  */
 
 #pragma once
 #include "robodash/apix.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 extern void _init_styles();
 
@@ -76,3 +80,7 @@ extern lv_style_t style_bar_bg;
 extern lv_style_t style_bar_modal;
 
 extern void _init_style_bar();
+
+#ifdef __cplusplus
+}
+#endif

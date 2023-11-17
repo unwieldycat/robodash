@@ -1,6 +1,5 @@
 #include "apix.h"
-#include <map>
-#include <vector>
+#include <stdlib.h>
 
 #define CLOSED_SIDEBAR_WIDTH 40
 #define OPEN_SIDEBAR_WIDTH 192
@@ -151,7 +150,7 @@ void initialize() {
 rd_view_t *rd_view_create(const char *name) {
 	initialize();
 
-	rd_view_t *view = (rd_view *)malloc(sizeof(rd_view));
+	rd_view_t *view = (rd_view_t *)malloc(sizeof(rd_view_t));
 
 	view->obj = lv_obj_create(lv_scr_act());
 	lv_obj_set_size(view->obj, lv_pct(100), lv_pct(100));
