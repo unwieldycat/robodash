@@ -8,7 +8,7 @@
  */
 
 #pragma once
-#include "robodash/apix.hpp"
+#include "robodash/api.h"
 #include <functional>
 #include <string>
 #include <vector>
@@ -23,7 +23,7 @@ class Selector {
 	/// @addtogroup selector
 	/// @{
   private:
-	rd::View view;
+	rd_view_t *view;
 
   public:
 	/// @name Selector Typedefs

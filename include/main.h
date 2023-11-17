@@ -38,7 +38,7 @@
  * Add includes here
  */
 #include "api.h"
-#include "robodash/api.hpp"
+#include "robodash/api.h"
 
 /**
  * If you find doing pros::Motor() to be tedious and you'd prefer just to do

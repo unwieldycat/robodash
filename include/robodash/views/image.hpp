@@ -7,7 +7,8 @@
  */
 
 #pragma once
-#include "robodash/apix.hpp"
+#include "robodash/api.h"
+#include <string>
 
 namespace rd {
 
@@ -28,7 +29,7 @@ class Image {
 
 	/// @name Image Functions
   private:
-	rd::View view;
+	rd_view_t *view;
 
   public:
 	/**
