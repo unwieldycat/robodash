@@ -1,5 +1,5 @@
 /**
- * @file apix.hpp
+ * @file apix.h
  * @internal
  *
  * Extended API header for robodash.

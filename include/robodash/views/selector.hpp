@@ -23,7 +23,7 @@ class Selector {
 	/// @addtogroup selector
 	/// @{
   private:
-	rd::View view;
+	rd_view_t *view;
 
   public:
 	/// @name Selector Typedefs

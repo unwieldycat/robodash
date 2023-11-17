@@ -22,11 +22,11 @@ lv_anim_t anim_sidebar_close;
 lv_anim_t anim_modal_hide;
 lv_anim_t anim_modal_show;
 
-rd::View *current_view;
+rd_view_t *current_view;
 
 // ============================== UI Callbacks ============================== //
 
-void view_btn_cb(lv_event_t *event) { ((rd::View *)lv_event_get_user_data(event))->focus(); }
+void view_btn_cb(lv_event_t *event) { rd_view_focus((rd_view_t *)lv_event_get_user_data(event)); }
 
 void open_sidebar(lv_event_t *event) {
 	lv_obj_clear_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
@@ -148,35 +148,38 @@ void initialize() {
 
 // =============================== View Class =============================== //
 
-rd::View::View(std::string name) : name(name) {
+rd_view_t *rd_view_create(const char *name) {
 	initialize();
 
-	this->obj = lv_obj_create(lv_scr_act());
-	lv_obj_set_size(this->obj, lv_pct(100), lv_pct(100));
-	lv_obj_add_flag(this->obj, LV_OBJ_FLAG_HIDDEN);
-	lv_obj_add_style(this->obj, &style_bg, 0);
+	rd_view_t *view = (rd_view *)malloc(sizeof(rd_view));
 
-	lv_obj_set_parent(this->get_obj(), view_cont);
-	if (!current_view) this->focus();
+	view->obj = lv_obj_create(lv_scr_act());
+	lv_obj_set_size(view->obj, lv_pct(100), lv_pct(100));
+	lv_obj_add_flag(view->obj, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_style(view->obj, &style_bg, 0);
 
-	this->view_btn = lv_list_add_btn(view_list, NULL, name.c_str());
-	lv_obj_add_style(view_btn, &style_bar_list_btn, 0);
-	lv_obj_add_style(view_btn, &style_list_btn_pr, LV_STATE_PRESSED);
-	lv_obj_add_event_cb(view_btn, view_btn_cb, LV_EVENT_PRESSED, this);
-	lv_obj_add_event_cb(view_btn, close_sidebar, LV_EVENT_PRESSED, NULL);
+	lv_obj_set_parent(view->obj, view_cont);
+	if (!current_view) rd_view_focus(view);
+
+	view->_btn = lv_list_add_btn(view_list, NULL, name);
+	lv_obj_add_style(view->_btn, &style_bar_list_btn, 0);
+	lv_obj_add_style(view->_btn, &style_list_btn_pr, LV_STATE_PRESSED);
+	lv_obj_add_event_cb(view->_btn, view_btn_cb, LV_EVENT_PRESSED, view);
+	lv_obj_add_event_cb(view->_btn, close_sidebar, LV_EVENT_PRESSED, NULL);
+
+	return view;
 }
 
-rd::View::~View() {
-	lv_obj_del(this->view_btn);
-	lv_obj_del(this->obj);
+void rd_view_del(rd_view_t *view) {
+	lv_obj_del(view->_btn);
+	lv_obj_del(view->obj);
+	free(view);
 }
 
-std::string rd::View::get_name() { return this->name; }
+lv_obj_t *rd_view_obj(rd_view_t *view) { return view->obj; }
 
-lv_obj_t *rd::View::get_obj() { return this->obj; }
-
-void rd::View::focus() {
-	if (current_view) lv_obj_add_flag(current_view->get_obj(), LV_OBJ_FLAG_HIDDEN);
-	current_view = this;
-	lv_obj_clear_flag(current_view->get_obj(), LV_OBJ_FLAG_HIDDEN);
+void rd_view_focus(rd_view_t *view) {
+	if (current_view) lv_obj_add_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
+	current_view = view;
+	lv_obj_clear_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
 }
