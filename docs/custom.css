@@ -1,0 +1,11 @@
+html {
+    --primary-color: #FF1B7E;
+    --primary-dark-color: #E60063;
+    --primary-light-color: #FF4D9A;
+}
+
+html.dark-mode {
+    --primary-color: #FF4D9A;
+    --primary-dark-color: #FF80B7;
+    --primary-light-color: #FF1A7D;
+}
