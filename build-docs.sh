@@ -1,1 +1,1 @@
-./docs/m.css/documentation/doxygen.py ./docs/conf.py
+doxygen ./docs/Doxyfile
