@@ -1,11 +1,11 @@
 html {
-    --primary-color: #FF1B7E;
-    --primary-dark-color: #E60063;
-    --primary-light-color: #FF4D9A;
+	--primary-color: #ff1b7e;
+	--primary-dark-color: #e60063;
+	--primary-light-color: #ff4d9a;
 }
 
 html.dark-mode {
-    --primary-color: #FF4D9A;
-    --primary-dark-color: #FF80B7;
-    --primary-light-color: #FF1A7D;
+	--primary-color: #ff4d9a;
+	--primary-dark-color: #ff80b7;
+	--primary-light-color: #ff1a7d;
 }
