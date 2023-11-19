@@ -2,8 +2,6 @@
  * @file console.hpp
  * @brief Robodash Console
  * @ingroup console
- *
- * Built-in Console class for debugging. Emulates a standard console output.
  */
 
 #pragma once
@@ -13,8 +11,15 @@
 namespace rd {
 
 /**
+ * @defgroup console Console
+ * @brief A console for debugging
+ *
+ * A GUI console for debugging. Emulates a standard console output.
+ */
+
+/**
  * @brief Console class
- * @addtogroup console
+ * @ingroup console
  */
 class Console {
 	/// @addtogroup console

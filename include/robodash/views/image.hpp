@@ -2,8 +2,6 @@
  * @file image.hpp
  * @brief Robodash Image
  * @ingroup image
- *
- * Built-in Image class to display images.
  */
 
 #pragma once
@@ -13,18 +11,23 @@
 namespace rd {
 
 /**
- * @brief Image class
- * @addtogroup image-view
- *
+ * @defgroup image Image
+ * @brief An image display
  * @note All images must be converted using LVGL's online image converter
  * tool. (https://lvgl.io/tools/imageconverter)
  * @warning Images should be converted into an indexed color format for
  * performance. CF_INDEXED_4_BIT or CF_INDEXED_8_BIT is reccomended for
  * color images.
  *
+ * Displays still images.
+ */
+
+/**
+ * @brief Image class
+ * @ingroup image
  */
 class Image {
-	/// @addtogroup image-view
+	/// @addtogroup image
 	/// @{
 
 	/// @name Image Functions

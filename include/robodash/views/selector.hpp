@@ -2,9 +2,6 @@
  * @file selector.hpp
  * @brief Robodash Selector
  * @ingroup selector
- *
- * Built-in Selector class for function selecting, primarily for autonomous
- * routines.
  */
 
 #pragma once
@@ -14,6 +11,13 @@
 #include <vector>
 
 namespace rd {
+
+/**
+ * @defgroup selector Selector
+ * @brief A function selector
+ *
+ * A function selector for autonomous routines. Supports saving a configuration to SD card.
+ */
 
 /**
  * @brief Selector class
