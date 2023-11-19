@@ -36,7 +36,6 @@ typedef struct rd_view {
  *
  * @param name Name of the view
  * @return rd_view_t
- * @warning noooo
  */
 rd_view_t *rd_view_create(const char *name);
 
