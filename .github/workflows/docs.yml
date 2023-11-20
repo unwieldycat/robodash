@@ -27,4 +27,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
           branch: gh-pages # The branch the action should deploy to.
-          folder: ./docs-output # The folder the action should deploy.
+          folder: ./docs-output/html # The folder the action should deploy.
