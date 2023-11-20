@@ -17,3 +17,6 @@ temp.errors
 .d/
 
 **/.DS_Store
+
+docs-output/
+**/__pycache__/

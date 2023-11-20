@@ -1,5 +1,5 @@
 /**
- * @file apix.hpp
+ * @file apix.h
  * @internal
  *
  * Extended API header for robodash.
@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include "api.hpp"
-#include "impl/assets.hpp"
-#include "impl/filesystem.hpp"
-#include "impl/styles.hpp"
+#include "api.h"
+#include "impl/assets.h"
+#include "impl/filesystem.h"
+#include "impl/styles.h"

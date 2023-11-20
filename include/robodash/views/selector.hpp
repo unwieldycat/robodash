@@ -1,14 +1,11 @@
 /**
  * @file selector.hpp
- * @brief Robodash SelectorView
- * @ingroup selector-view
- *
- * Built-in SelectorView class for function selecting, primarily for autonomous
- * routines.
+ * @brief Robodash Selector
+ * @ingroup selector
  */
 
 #pragma once
-#include "robodash/apix.hpp"
+#include "robodash/api.h"
 #include <functional>
 #include <string>
 #include <vector>
@@ -16,23 +13,35 @@
 namespace rd {
 
 /**
- * @brief SelectorView class
- * @ingroup selector-view
+ * @defgroup selector Selector
+ * @brief A function selector
+ * @image html selector.png
+ *
+ * A function selector for easily managing autonomous routines. Supports saving a configuration to
+ * an SD card, and automatically loading it on the next run.
  */
-class SelectorView : public View {
-	/// @addtogroup selector-view
+
+/**
+ * @brief Selector class
+ * @ingroup selector
+ */
+class Selector {
+	/// @addtogroup selector
 	/// @{
+  private:
+	rd_view_t *view;
+
   public:
-	/// @name SelectorView Typedefs
+	/// @name Selector Typedefs
 	typedef std::function<void()> routine_action_t;
 	typedef std::pair<std::string, routine_action_t> routine_t;
 
-	/// @name SelectorView Functions
+	/// @name Selector Functions
 
 	/**
-	 * @brief Construct a new SelectorView
+	 * @brief Create a new Selector
 	 */
-	SelectorView();
+	Selector();
 
 	/**
 	 * @brief Initialize autonomous manager
@@ -45,8 +54,10 @@ class SelectorView : public View {
 	 */
 	void do_auton();
 
-	void refresh();
-	void initialize();
+	/**
+	 * @brief Set this view to the active view
+	 */
+	void focus();
 
 	/// @}
 };

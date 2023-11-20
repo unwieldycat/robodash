@@ -1,33 +1,42 @@
 /**
  * @file console.hpp
- * @brief Robodash ConsoleView
- * @ingroup console-view
- *
- * Built-in ConsoleView class for debugging. Emulates a standard console output.
+ * @brief Robodash Console
+ * @ingroup console
  */
 
 #pragma once
-#include "robodash/apix.hpp"
+#include "robodash/api.h"
+#include <string>
 
 namespace rd {
 
 /**
- * @brief ConsoleView class
- * @addtogroup console-view
+ * @defgroup console Console
+ * @brief A console for debugging
+ * @image html console.png
+ *
+ * A GUI console for debugging. Emulates a standard console output.
  */
-class ConsoleView : public View {
-	/// @addtogroup console-view
+
+/**
+ * @brief Console class
+ * @ingroup console
+ */
+class Console {
+	/// @addtogroup console
 	/// @{
 
-	/// @name ConsoleView Functions
+	/// @name Console Functions
+  private:
+	rd_view_t *view;
 
   public:
 	/**
-	 * @brief Construct a new ConsoleView
+	 * @brief Create a new Console
 	 *
 	 * @param name Name to display on screen
 	 */
-	ConsoleView(std::string name = "Console");
+	Console(std::string name = "Console");
 
 	/**
 	 * @brief Clear all console lines
@@ -62,10 +71,12 @@ class ConsoleView : public View {
 		print(fstr);
 	}
 
-	void refresh();
-	void initialize();
+	/**
+	 * @brief Set this view to the active view
+	 */
+	void focus();
 
-	// @}
+	/// @}
 };
 
 } // namespace rd

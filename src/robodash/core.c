@@ -1,12 +1,10 @@
-#include "core.hpp"
-#include "apix.hpp"
-#include <map>
-#include <vector>
+#include "apix.h"
+#include <stdlib.h>
 
 #define CLOSED_SIDEBAR_WIDTH 40
 #define OPEN_SIDEBAR_WIDTH 192
 
-bool initialized = false;
+// ============================== UI Elements ============================== //
 
 lv_obj_t *screen;
 lv_obj_t *view_cont;
@@ -23,11 +21,11 @@ lv_anim_t anim_sidebar_close;
 lv_anim_t anim_modal_hide;
 lv_anim_t anim_modal_show;
 
-rd::View *current_view;
+rd_view_t *current_view;
 
-// =============================== Callbacks =============================== //
+// ============================== UI Callbacks ============================== //
 
-void view_btn_cb(lv_event_t *event) { rd::set_view((rd::View *)lv_event_get_user_data(event)); }
+void view_btn_cb(lv_event_t *event) { rd_view_focus((rd_view_t *)lv_event_get_user_data(event)); }
 
 void open_sidebar(lv_event_t *event) {
 	lv_obj_clear_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
@@ -131,62 +129,12 @@ void create_anims() {
 	lv_anim_set_values(&anim_modal_show, 0, 144);
 }
 
-void ensure_initialized() {
-	if (!initialized) {
-		throw std::runtime_error("Robodash core function was called before library was initialized!"
-		);
-	}
-}
-
-// =========================== View Management =========================== //
-
-void rd::register_view(View *view) {
-	ensure_initialized();
-	lv_obj_set_parent(view->get_obj(), view_cont);
-	view->initialize();
-	if (!current_view) rd::set_view(view);
-
-	lv_obj_t *view_button = lv_list_add_btn(view_list, NULL, view->get_name().c_str());
-	lv_obj_add_style(view_button, &style_bar_list_btn, 0);
-	lv_obj_add_style(view_button, &style_list_btn_pr, LV_STATE_PRESSED);
-	lv_obj_add_event_cb(view_button, view_btn_cb, LV_EVENT_PRESSED, view);
-	lv_obj_add_event_cb(view_button, close_sidebar, LV_EVENT_PRESSED, NULL);
-}
-
-void rd::register_views(std::vector<View *> views) {
-	ensure_initialized();
-	for (View *view : views) {
-		rd::register_view(view);
-	}
-}
-
-void rd::set_view(View *view) {
-	ensure_initialized();
-	if (current_view) lv_obj_add_flag(current_view->get_obj(), LV_OBJ_FLAG_HIDDEN);
-	current_view = view;
-	lv_obj_clear_flag(current_view->get_obj(), LV_OBJ_FLAG_HIDDEN);
-}
-
-rd::View *rd::get_view() {
-	ensure_initialized();
-	return current_view;
-}
-
-// ============================ Background Task ============================ //
-
-[[noreturn]] void background() {
-	while (true) {
-		if (current_view) current_view->refresh();
-		pros::delay(100);
-	}
-}
-
 // =============================== Initialize =============================== //
 
-void rd::initialize() {
-	if (initialized) {
-		throw std::runtime_error("Robodash is already initialized!");
-	}
+bool initialized = false;
+
+void initialize() {
+	if (initialized) return;
 
 	_init_fs();
 	_init_styles();
@@ -194,7 +142,45 @@ void rd::initialize() {
 	create_ui();
 	create_anims();
 
-	pros::Task gui_task(background, "GUI Update Task");
-
 	initialized = true;
+}
+
+// =============================== View Class =============================== //
+
+rd_view_t *rd_view_create(const char *name) {
+	initialize();
+
+	rd_view_t *view = (rd_view_t *)malloc(sizeof(rd_view_t));
+
+	view->obj = lv_obj_create(lv_scr_act());
+	lv_obj_set_size(view->obj, lv_pct(100), lv_pct(100));
+	lv_obj_add_flag(view->obj, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_style(view->obj, &style_bg, 0);
+
+	lv_obj_set_parent(view->obj, view_cont);
+	if (!current_view) rd_view_focus(view);
+
+	view->_btn = lv_list_add_btn(view_list, NULL, name);
+	lv_obj_add_style(view->_btn, &style_bar_list_btn, 0);
+	lv_obj_add_style(view->_btn, &style_list_btn_pr, LV_STATE_PRESSED);
+	lv_obj_add_event_cb(view->_btn, view_btn_cb, LV_EVENT_PRESSED, view);
+	lv_obj_add_event_cb(view->_btn, close_sidebar, LV_EVENT_PRESSED, NULL);
+
+	return view;
+}
+
+void rd_view_del(rd_view_t *view) {
+	lv_obj_del(view->_btn);
+	lv_obj_del(view->obj);
+	if (current_view == view) current_view = NULL;
+	free(view);
+}
+
+lv_obj_t *rd_view_obj(rd_view_t *view) { return view->obj; }
+
+void rd_view_focus(rd_view_t *view) {
+	if (view == NULL) return;
+	if (current_view != NULL) lv_obj_add_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
+	current_view = view;
+	lv_obj_clear_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
 }

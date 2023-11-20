@@ -1,8 +1,8 @@
 /**
- * @file api.hpp
+ * @file api.h
  * @brief API entrypoint for robodash
  *
- * Includes all necessary end-user functions.
+ * Includes all necessary functions to use robodash.
  */
 
 #pragma once
@@ -17,8 +17,10 @@
 #error "LVGL version incompatible with robodash (Requires >= 8.3.X)"
 #endif
 
-#include "core.hpp"
-#include "view.hpp"
+#include "core.h"
+
+#ifdef __cplusplus
 #include "views/console.hpp"
 #include "views/image.hpp"
 #include "views/selector.hpp"
+#endif

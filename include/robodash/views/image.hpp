@@ -1,46 +1,66 @@
 /**
  * @file image.hpp
- * @brief Robodash ImageView
- * @ingroup image-view
- *
- * Built-in ImageView class to display images.
+ * @brief Robodash Image
+ * @ingroup image
  */
 
 #pragma once
-#include "robodash/apix.hpp"
+#include "robodash/api.h"
+#include <string>
 
 namespace rd {
 
 /**
- * @brief ImageView class
- * @addtogroup image-view
+ * @defgroup image Image
+ * @brief An image display
+ * @note All images must be converted using LVGL's online image converter
+ * tool. (https://lvgl.io/tools/imageconverter)
+ * @warning Images should be converted into an indexed color format for
+ * performance. CF_INDEXED_4_BIT or CF_INDEXED_8_BIT is reccomended for
+ * color images.
+ *
+ * @image html image.png
+ * @bug The sidebar animations are very choppy when viewing an image. A fix for this will be
+ * implemented for release.
+ *
+ * Displays still images from an SD card or a C array.
  */
-class ImageView : public rd::View {
-  private:
-	std::string path;
 
-	/// @addtogroup image-view
+/**
+ * @brief Image class
+ * @ingroup image
+ */
+class Image {
+	/// @addtogroup image
 	/// @{
 
-	/// @name ImageView Functions
+	/// @name Image Functions
+  private:
+	rd_view_t *view;
 
   public:
 	/**
-	 * @brief Construct a new ImageView
+	 * @brief Create a new Image
 	 *
-	 * @param name Name to display on screen
-	 * @param path File path to the binary-formatted image on SD card
-	 *
-	 * @note All images must be converted using LVGL's online image converter
-	 * tool. (https://lvgl.io/tools/imageconverter)
-	 * @warning Images should be converted into an indexed color format for
-	 * performance. CF_INDEXED_4_BIT or CF_INDEXED_8_BIT is reccomended for
-	 * color images.
+	 * @param name File path to the binary-formatted image on SD card
+	 * @param path Name to display on screen
 	 */
-	ImageView(std::string path, std::string name = "Image");
+	Image(std::string path, std::string name = "Image");
 
-	void initialize();
-	void refresh();
+	/**
+	 * @brief Create a new Image
+	 *
+	 * @param image_dsc LVGL image descriptor object
+	 * @param name Name to display on screen
+	 */
+	Image(lv_img_dsc_t image_dsc, std::string name = "Image");
+
+	/**
+	 * @brief Set this view to the active view
+	 */
+	void focus();
+
+	/// @}
 };
 
 } // namespace rd
