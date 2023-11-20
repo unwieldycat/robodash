@@ -13,8 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install Doxygen
-        run: sudo sh -c 'echo deb http://cz.archive.ubuntu.com/ubuntu focal main universe >> /etc/apt/sources.list' && sudo apt-get update && sudo apt-get install -y -t focal doxygen
       - name: Checkout
         uses: actions/checkout@v2.0.0
       - name: Checkout Doxygen Awesome
@@ -22,7 +20,9 @@ jobs:
         with:
           submodulePath: ./docs/doxygen-awesome-css
       - name: Generate Documentation
-        run: ./build-docs.sh
+        uses: mattnotmitt/doxygen-action@v1.9.5
+        with:
+           doxyfile-path: 'docs/Doxyfile'
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
