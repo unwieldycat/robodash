@@ -1,0 +1,17 @@
+\hypertarget{installing_autotoc_md0}{}\doxysubsection{Prerequisites}\label{installing_autotoc_md0}
+
+\begin{DoxyItemize}
+\item An installation of the P\+R\+OS C\+LI or V\+S\+Code extension.
+\item A P\+R\+OS 4 project. Robodash does not support P\+R\+OS 3 due to the bundled L\+V\+GL version.
+\item \href{https://github.com/purduesigbots/liblvgl}{\texttt{ liblvgl 8}}. L\+V\+GL 5.\+3 is not supported.
+\end{DoxyItemize}\hypertarget{installing_autotoc_md1}{}\doxysubsection{Installing the template}\label{installing_autotoc_md1}
+\begin{DoxyNote}{Note}
+If you only have the P\+R\+OS V\+S\+Code extension installed, you must run the commands below in the Integrated Terminal.
+\end{DoxyNote}
+
+\begin{DoxyEnumerate}
+\item Download the latest template from the \href{https://github.com/unwieldycat/robodash/releases}{\texttt{ releases tab}} on Git\+Hub
+\item Open the download location and fetch the template with {\ttfamily pros c fetch robodash@x.\+x.\+x.\+zip}. This registers the template with P\+R\+OS Conductor, the P\+R\+OS project management tools.
+\item Open the project you wish to use the library in and install the template with {\ttfamily pros c apply robodash@x.\+x.\+x}.
+\item {\ttfamily \#include \char`\"{}robodash/api.\+hpp\char`\"{}} in your project\textquotesingle{}s {\ttfamily main.\+h} file 
+\end{DoxyEnumerate}

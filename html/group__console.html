@@ -1,0 +1,381 @@
+<!-- HTML header for doxygen 1.9.8-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$langISO">
+	<head>
+		<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=11" />
+		<meta name="generator" content="Doxygen 1.8.17" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Robodash: Console</title>
+		<link href="tabs.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="dynsections.js"></script>
+		<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+ <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+  $darkmode
+		<link href="doxygen.css" rel="stylesheet" type="text/css" />
+		<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+		<!-- Extensions -->
+		<script
+			type="text/javascript"
+			src="doxygen-awesome-darkmode-toggle.js"
+		></script>
+		<script 
+			type="text/javascript" 
+			src="doxygen-awesome-paragraph-link.js"
+		></script>
+		<script type="text/javascript">
+			DoxygenAwesomeDarkModeToggle.init();
+			DoxygenAwesomeParagraphLink.init();
+		</script>
+	</head>
+	<body>
+		<!-- Github Corner -->
+		<a
+			href="https://github.com/unwieldycat/robodash"
+			class="github-corner"
+			aria-label="View source on GitHub"
+			><svg
+				width="64"
+				height="64"
+				viewBox="0 0 250 250"
+				style="
+					fill: var(--page-foreground-color);
+					color: var(--page-background-color);
+					position: absolute;
+					top: 0;
+					border: 0;
+					right: 0;
+				"
+				aria-hidden="true"
+			>
+				<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+				<path
+					d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+					fill="currentColor"
+					style="transform-origin: 130px 106px"
+					class="octo-arm"
+				></path>
+				<path
+					d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+					fill="currentColor"
+					class="octo-body"
+				></path></svg></a
+		><style>
+			.github-corner:hover .octo-arm {
+				animation: octocat-wave 560ms ease-in-out;
+			}
+			@keyframes octocat-wave {
+				0%,
+				100% {
+					transform: rotate(0);
+				}
+				20%,
+				60% {
+					transform: rotate(-25deg);
+				}
+				40%,
+				80% {
+					transform: rotate(10deg);
+				}
+			}
+			@media (max-width: 500px) {
+				.github-corner:hover .octo-arm {
+					animation: none;
+				}
+				.github-corner .octo-arm {
+					animation: octocat-wave 560ms ease-in-out;
+				}
+			}
+		</style>
+			<div id="top">
+				<!-- do not remove this div, it is closed by doxygen! -->
+				<div id="titlearea">
+					<table cellspacing="0" cellpadding="0">
+						<tbody>
+							<tr id="projectrow">
+								<td id="projectalign">
+									<div id="projectname">
+										Robodash<span
+											id="projectnumber"
+											>&#160;2.0.0</span
+										>
+									</div>
+									<div id="projectbrief">AGUItoolkitforPROS4</div>
+								</td>
+							</tr>
+							<!--BEGIN FULL_SIDEBAR-->
+							<tr>
+								<td colspan="2">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+</td>
+							</tr>
+							<!--END FULL_SIDEBAR-->
+						</tbody>
+					</table>
+				</div>
+				<!-- end header part --><!-- Generated by Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('group__console.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#files">Files</a> &#124;
+<a href="#nested-classes">Classes</a>  </div>
+  <div class="headertitle">
+<div class="title">Console</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>A console for debugging.  
+<a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
+Files</h2></td></tr>
+<tr class="memitem:console_8hpp"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8hpp.html">console.hpp</a></td></tr>
+<tr class="memdesc:console_8hpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Robodash Console. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrd_1_1Console.html">rd::Console</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classrd_1_1Console.html" title="Console class.">Console</a> class.  <a href="classrd_1_1Console.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Console Functions</h2></td></tr>
+<tr class="memitem:ga8caebc6c99af499b1ddd5bd40581eba1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__console.html#ga8caebc6c99af499b1ddd5bd40581eba1">rd::Console::Console</a> (std::string name=&quot;Console&quot;)</td></tr>
+<tr class="memdesc:ga8caebc6c99af499b1ddd5bd40581eba1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new <a class="el" href="classrd_1_1Console.html" title="Console class.">Console</a>.  <a href="group__console.html#ga8caebc6c99af499b1ddd5bd40581eba1">More...</a><br /></td></tr>
+<tr class="separator:ga8caebc6c99af499b1ddd5bd40581eba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5daa22a4ed2cc2a4d02c99c1324d6e63"><td class="memItemLeft" align="right" valign="top"><a id="ga5daa22a4ed2cc2a4d02c99c1324d6e63"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__console.html#ga5daa22a4ed2cc2a4d02c99c1324d6e63">rd::Console::clear</a> ()</td></tr>
+<tr class="memdesc:ga5daa22a4ed2cc2a4d02c99c1324d6e63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear all console lines. <br /></td></tr>
+<tr class="separator:ga5daa22a4ed2cc2a4d02c99c1324d6e63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga901c1b576599ae46096c7b4d90e757dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__console.html#ga901c1b576599ae46096c7b4d90e757dc">rd::Console::print</a> (std::string str)</td></tr>
+<tr class="memdesc:ga901c1b576599ae46096c7b4d90e757dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print to the console.  <a href="group__console.html#ga901c1b576599ae46096c7b4d90e757dc">More...</a><br /></td></tr>
+<tr class="separator:ga901c1b576599ae46096c7b4d90e757dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50b7cc2b4c81e8ffb5e525fd24415569"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__console.html#ga50b7cc2b4c81e8ffb5e525fd24415569">rd::Console::println</a> (std::string str)</td></tr>
+<tr class="memdesc:ga50b7cc2b4c81e8ffb5e525fd24415569"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print to the console with a newline.  <a href="group__console.html#ga50b7cc2b4c81e8ffb5e525fd24415569">More...</a><br /></td></tr>
+<tr class="separator:ga50b7cc2b4c81e8ffb5e525fd24415569"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac6d23173b88223b1f5ab365192e8ef89"><td class="memTemplParams" colspan="2">template&lt;typename... Params&gt; </td></tr>
+<tr class="memitem:gac6d23173b88223b1f5ab365192e8ef89"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__console.html#gac6d23173b88223b1f5ab365192e8ef89">rd::Console::printf</a> (std::string fmt, Params... args)</td></tr>
+<tr class="memdesc:gac6d23173b88223b1f5ab365192e8ef89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print a formatted string to the console.  <a href="group__console.html#gac6d23173b88223b1f5ab365192e8ef89">More...</a><br /></td></tr>
+<tr class="separator:gac6d23173b88223b1f5ab365192e8ef89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe06174e217c0391d488168839073581"><td class="memItemLeft" align="right" valign="top"><a id="gabe06174e217c0391d488168839073581"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__console.html#gabe06174e217c0391d488168839073581">rd::Console::focus</a> ()</td></tr>
+<tr class="memdesc:gabe06174e217c0391d488168839073581"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set this view to the active view. <br /></td></tr>
+<tr class="separator:gabe06174e217c0391d488168839073581"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>A console for debugging. </p>
+<div class="image">
+<img src="console.png" alt=""/>
+</div>
+<p>A GUI console for debugging. Emulates a standard console output. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga8caebc6c99af499b1ddd5bd40581eba1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8caebc6c99af499b1ddd5bd40581eba1">&#9670;&nbsp;</a></span>Console()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">rd::Console::Console </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>name</em> = <code>&quot;Console&quot;</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a new <a class="el" href="classrd_1_1Console.html" title="Console class.">Console</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Name to display on screen </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga901c1b576599ae46096c7b4d90e757dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga901c1b576599ae46096c7b4d90e757dc">&#9670;&nbsp;</a></span>print()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rd::Console::print </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Print to the console. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>String to print to console </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gac6d23173b88223b1f5ab365192e8ef89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac6d23173b88223b1f5ab365192e8ef89">&#9670;&nbsp;</a></span>printf()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Params&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rd::Console::printf </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>fmt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Params...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Print a formatted string to the console. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Params</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fmt</td><td>Format string </td></tr>
+    <tr><td class="paramname">args</td><td>Args for format string </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga50b7cc2b4c81e8ffb5e525fd24415569"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga50b7cc2b4c81e8ffb5e525fd24415569">&#9670;&nbsp;</a></span>println()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rd::Console::println </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Print to the console with a newline. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>String to print to console </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+\hypertarget{group__selector}{}\doxysection{Selector}
+\label{group__selector}\index{Selector@{Selector}}
+
+
+A function selector.  
+
+
+\doxysubsection*{Files}
+\begin{DoxyCompactItemize}
+\item 
+file \mbox{\hyperlink{selector_8hpp}{selector.\+hpp}}
+\begin{DoxyCompactList}\small\item\em Robodash Selector. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classrd_1_1Selector}{rd\+::\+Selector}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classrd_1_1Selector}{Selector}} class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Selector Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{group__selector_ga9d3fce51aabf28e2de016dbbdaf0e979}\label{group__selector_ga9d3fce51aabf28e2de016dbbdaf0e979}} 
+typedef std\+::function$<$ void()$>$ {\bfseries rd\+::\+Selector\+::routine\+\_\+action\+\_\+t}
+\item 
+\mbox{\Hypertarget{group__selector_ga55a46abfd53dfac821b42bf7a9bd6a2e}\label{group__selector_ga55a46abfd53dfac821b42bf7a9bd6a2e}} 
+typedef std\+::pair$<$ std\+::string, routine\+\_\+action\+\_\+t $>$ {\bfseries rd\+::\+Selector\+::routine\+\_\+t}
+\end{DoxyCompactItemize}
+\doxysubsection*{Selector Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{group__selector_gac4d8a51008aa3f6bcc215ebbc7a18064}\label{group__selector_gac4d8a51008aa3f6bcc215ebbc7a18064}} 
+\mbox{\hyperlink{group__selector_gac4d8a51008aa3f6bcc215ebbc7a18064}{rd\+::\+Selector\+::\+Selector}} ()
+\begin{DoxyCompactList}\small\item\em Create a new \mbox{\hyperlink{classrd_1_1Selector}{Selector}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__selector_ga42f5b1858122618d6bc02d2fbf745e3a}{rd\+::\+Selector\+::add\+\_\+autons}} (std\+::vector$<$ routine\+\_\+t $>$ autons)
+\begin{DoxyCompactList}\small\item\em Initialize autonomous manager. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{group__selector_ga5e7eda63d566b56e6ae5cd0db643b2c0}\label{group__selector_ga5e7eda63d566b56e6ae5cd0db643b2c0}} 
+void \mbox{\hyperlink{group__selector_ga5e7eda63d566b56e6ae5cd0db643b2c0}{rd\+::\+Selector\+::do\+\_\+auton}} ()
+\begin{DoxyCompactList}\small\item\em Run selected auton. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{group__selector_ga8f824c347f67daf37463314b2cd5303c}\label{group__selector_ga8f824c347f67daf37463314b2cd5303c}} 
+void \mbox{\hyperlink{group__selector_ga8f824c347f67daf37463314b2cd5303c}{rd\+::\+Selector\+::focus}} ()
+\begin{DoxyCompactList}\small\item\em Set this view to the active view. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A function selector. 
+
+
+
+A function selector for easily managing autonomous routines. Supports saving a configuration to an SD card, and automatically loading it on the next run. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{group__selector_ga42f5b1858122618d6bc02d2fbf745e3a}\label{group__selector_ga42f5b1858122618d6bc02d2fbf745e3a}} 
+\index{Selector@{Selector}!add\_autons@{add\_autons}}
+\index{add\_autons@{add\_autons}!Selector@{Selector}}
+\doxysubsubsection{\texorpdfstring{add\_autons()}{add\_autons()}}
+{\footnotesize\ttfamily void rd\+::\+Selector\+::add\+\_\+autons (\begin{DoxyParamCaption}\item[{std\+::vector$<$ routine\+\_\+t $>$}]{autons }\end{DoxyParamCaption})}
+
+
+
+Initialize autonomous manager. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em autons} & Vector of Routines \\
+\hline
+\end{DoxyParams}

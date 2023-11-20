@@ -1,0 +1,112 @@
+\hypertarget{group__console}{}\doxysection{Console}
+\label{group__console}\index{Console@{Console}}
+
+
+A console for debugging.  
+
+
+\doxysubsection*{Files}
+\begin{DoxyCompactItemize}
+\item 
+file \mbox{\hyperlink{console_8hpp}{console.\+hpp}}
+\begin{DoxyCompactList}\small\item\em Robodash Console. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classrd_1_1Console}{rd\+::\+Console}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classrd_1_1Console}{Console}} class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Console Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{group__console_ga8caebc6c99af499b1ddd5bd40581eba1}{rd\+::\+Console\+::\+Console}} (std\+::string name=\char`\"{}Console\char`\"{})
+\begin{DoxyCompactList}\small\item\em Create a new \mbox{\hyperlink{classrd_1_1Console}{Console}}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{group__console_ga5daa22a4ed2cc2a4d02c99c1324d6e63}\label{group__console_ga5daa22a4ed2cc2a4d02c99c1324d6e63}} 
+void \mbox{\hyperlink{group__console_ga5daa22a4ed2cc2a4d02c99c1324d6e63}{rd\+::\+Console\+::clear}} ()
+\begin{DoxyCompactList}\small\item\em Clear all console lines. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__console_ga901c1b576599ae46096c7b4d90e757dc}{rd\+::\+Console\+::print}} (std\+::string str)
+\begin{DoxyCompactList}\small\item\em Print to the console. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__console_ga50b7cc2b4c81e8ffb5e525fd24415569}{rd\+::\+Console\+::println}} (std\+::string str)
+\begin{DoxyCompactList}\small\item\em Print to the console with a newline. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename... Params$>$ }\\void \mbox{\hyperlink{group__console_gac6d23173b88223b1f5ab365192e8ef89}{rd\+::\+Console\+::printf}} (std\+::string fmt, Params... args)
+\begin{DoxyCompactList}\small\item\em Print a formatted string to the console. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{group__console_gabe06174e217c0391d488168839073581}\label{group__console_gabe06174e217c0391d488168839073581}} 
+void \mbox{\hyperlink{group__console_gabe06174e217c0391d488168839073581}{rd\+::\+Console\+::focus}} ()
+\begin{DoxyCompactList}\small\item\em Set this view to the active view. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A console for debugging. 
+
+
+
+A G\+UI console for debugging. Emulates a standard console output. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{group__console_ga8caebc6c99af499b1ddd5bd40581eba1}\label{group__console_ga8caebc6c99af499b1ddd5bd40581eba1}} 
+\index{Console@{Console}!Console@{Console}}
+\index{Console@{Console}!Console@{Console}}
+\doxysubsubsection{\texorpdfstring{Console()}{Console()}}
+{\footnotesize\ttfamily rd\+::\+Console\+::\+Console (\begin{DoxyParamCaption}\item[{std\+::string}]{name = {\ttfamily \char`\"{}Console\char`\"{}} }\end{DoxyParamCaption})}
+
+
+
+Create a new \mbox{\hyperlink{classrd_1_1Console}{Console}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Name to display on screen \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{group__console_ga901c1b576599ae46096c7b4d90e757dc}\label{group__console_ga901c1b576599ae46096c7b4d90e757dc}} 
+\index{Console@{Console}!print@{print}}
+\index{print@{print}!Console@{Console}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily void rd\+::\+Console\+::print (\begin{DoxyParamCaption}\item[{std\+::string}]{str }\end{DoxyParamCaption})}
+
+
+
+Print to the console. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & String to print to console \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{group__console_gac6d23173b88223b1f5ab365192e8ef89}\label{group__console_gac6d23173b88223b1f5ab365192e8ef89}} 
+\index{Console@{Console}!printf@{printf}}
+\index{printf@{printf}!Console@{Console}}
+\doxysubsubsection{\texorpdfstring{printf()}{printf()}}
+{\footnotesize\ttfamily template$<$typename... Params$>$ \\
+void rd\+::\+Console\+::printf (\begin{DoxyParamCaption}\item[{std\+::string}]{fmt,  }\item[{Params...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Print a formatted string to the console. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Params} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em fmt} & Format string \\
+\hline
+{\em args} & Args for format string \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{group__console_ga50b7cc2b4c81e8ffb5e525fd24415569}\label{group__console_ga50b7cc2b4c81e8ffb5e525fd24415569}} 
+\index{Console@{Console}!println@{println}}
+\index{println@{println}!Console@{Console}}
+\doxysubsubsection{\texorpdfstring{println()}{println()}}
+{\footnotesize\ttfamily void rd\+::\+Console\+::println (\begin{DoxyParamCaption}\item[{std\+::string}]{str }\end{DoxyParamCaption})}
+
+
+
+Print to the console with a newline. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & String to print to console \\
+\hline
+\end{DoxyParams}
