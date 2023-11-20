@@ -15,8 +15,10 @@ namespace rd {
 /**
  * @defgroup selector Selector
  * @brief A function selector
+ * @image html selector.png
  *
- * A function selector for autonomous routines. Supports saving a configuration to SD card.
+ * A function selector for easily managing autonomous routines. Supports saving a configuration to
+ * an SD card, and automatically loading it on the next run.
  */
 
 /**

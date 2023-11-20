@@ -19,7 +19,11 @@ namespace rd {
  * performance. CF_INDEXED_4_BIT or CF_INDEXED_8_BIT is reccomended for
  * color images.
  *
- * Displays still images.
+ * @image html image.png
+ * @bug The sidebar animations are very choppy when viewing an image. A fix for this will be
+ * implemented for release.
+ *
+ * Displays still images from an SD card or a C array.
  */
 
 /**

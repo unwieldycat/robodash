@@ -13,6 +13,7 @@ namespace rd {
 /**
  * @defgroup console Console
  * @brief A console for debugging
+ * @image html console.png
  *
  * A GUI console for debugging. Emulates a standard console output.
  */
