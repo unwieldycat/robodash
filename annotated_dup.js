@@ -5,5 +5,5 @@ var annotated_dup =
       [ "Image", "classrd_1_1Image.html", "classrd_1_1Image" ],
       [ "Selector", "classrd_1_1Selector.html", "classrd_1_1Selector" ]
     ] ],
-    [ "rd_view", "structrd__view.html", "structrd__view" ]
+    [ "rd_view", "structrd__view.html", null ]
 ];
