@@ -1,6 +1,6 @@
 @page usage Usage
 
-Robodash has two parts to it: the core, and the toolkit.
+Robodash has two parts: the core, and the toolkit.
 
 - The core library is the view management system and provides functions to
   create your own views. Creating your own views requires knowledge of LVGL.
@@ -38,7 +38,7 @@ void autonomous() {
 }
 ```
 
-You can learn more about each of the built-in tools at the @ref tools page.
+You can learn more about each of the built-in tools at the topics page.
 
 ## Core
 
