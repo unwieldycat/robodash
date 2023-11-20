@@ -2,7 +2,7 @@
  * @file api.h
  * @brief API entrypoint for robodash
  *
- * Includes all necessary end-user functions.
+ * Includes all necessary functions to use robodash.
  */
 
 #pragma once
