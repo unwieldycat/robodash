@@ -15,6 +15,7 @@ lv_obj_t *sidebar_open;
 lv_obj_t *sidebar_close_btn;
 lv_obj_t *view_list;
 lv_obj_t *sidebar_modal;
+lv_obj_t *alert_cont;
 
 lv_anim_t anim_sidebar_open;
 lv_anim_t anim_sidebar_close;
@@ -37,6 +38,14 @@ void open_sidebar(lv_event_t *event) {
 void close_sidebar(lv_event_t *event) {
 	lv_anim_start(&anim_sidebar_close);
 	lv_anim_start(&anim_modal_hide);
+}
+
+void alert_cb(lv_event_t *event) {
+	rd_view_t *view = (rd_view_t *)lv_event_get_user_data(event);
+	rd_view_focus(view);
+
+	lv_obj_t *alert = lv_event_get_target(event);
+	lv_obj_del(alert);
 }
 
 // =========================== UI Initialization =========================== //
@@ -99,6 +108,15 @@ void create_ui() {
 	lv_obj_set_size(view_list, LV_PCT(100) - 8, LV_PCT(100) - 32);
 	lv_obj_add_style(view_list, &style_bar_list, 0);
 	lv_obj_align(view_list, LV_ALIGN_TOP_LEFT, 4, 36);
+
+	// Alert container
+	alert_cont = lv_obj_create(screen);
+	lv_obj_set_size(alert_cont, 128, LV_PCT(100));
+	lv_obj_align(alert_cont, LV_ALIGN_TOP_LEFT, 0, 0);
+	lv_obj_add_style(alert_cont, &style_transp, 0);
+	lv_obj_set_flex_align(
+	    alert_cont, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_START
+	);
 }
 
 void create_anims() {
@@ -183,4 +201,18 @@ void rd_view_focus(rd_view_t *view) {
 	if (current_view != NULL) lv_obj_add_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
 	current_view = view;
 	lv_obj_clear_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
+}
+
+// TODO: Fix styles, make alerts red
+void rd_view_alert(rd_view_t *view, const char *msg) {
+	lv_obj_t *alert = lv_obj_create(alert_cont);
+	lv_obj_set_size(alert, LV_PCT(100) - 4, LV_PCT(100) - 4);
+	lv_obj_add_event_cb(alert, alert_cb, LV_EVENT_PRESSED, view);
+	lv_obj_add_style(alert, &style_btn, 0);
+
+	lv_obj_t *alert_msg = lv_label_create(alert);
+	lv_obj_align(alert, LV_ALIGN_CENTER, 0, 0);
+	lv_obj_add_style(alert_msg, &style_text_medium, 0);
+	lv_label_set_long_mode(alert_msg, LV_LABEL_LONG_SCROLL_CIRCULAR);
+	lv_label_set_text(alert_msg, msg);
 }
