@@ -35,7 +35,15 @@ void open_sidebar(lv_event_t *event) {
 	lv_anim_start(&anim_modal_show);
 }
 
+// FIXME: Make callbacks more elegant/organized
+
 void close_sidebar(lv_event_t *event) {
+	while (true) {
+		lv_obj_t *child = lv_obj_get_child(alert_cont, 0);
+		if (child == NULL) break;
+		lv_obj_del(child);
+	}
+
 	lv_anim_start(&anim_sidebar_close);
 	lv_anim_start(&anim_modal_hide);
 }
@@ -46,6 +54,8 @@ void alert_cb(lv_event_t *event) {
 
 	lv_obj_t *alert = lv_event_get_target(event);
 	lv_obj_del(alert);
+
+	if (lv_obj_get_child_cnt(alert_cont) == 0) lv_anim_start(&anim_modal_hide);
 }
 
 // =========================== UI Initialization =========================== //
@@ -111,12 +121,14 @@ void create_ui() {
 
 	// Alert container
 	alert_cont = lv_obj_create(screen);
-	lv_obj_set_size(alert_cont, 128, LV_PCT(100));
-	lv_obj_align(alert_cont, LV_ALIGN_TOP_LEFT, 0, 0);
+	lv_obj_set_size(alert_cont, 240, LV_PCT(100));
+	lv_obj_align(alert_cont, LV_ALIGN_CENTER, 0, 0);
 	lv_obj_add_style(alert_cont, &style_transp, 0);
+	lv_obj_clear_flag(alert_cont, LV_OBJ_FLAG_CLICKABLE);
 	lv_obj_set_flex_align(
-	    alert_cont, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_START
+	    alert_cont, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_START
 	);
+	lv_obj_set_flex_flow(alert_cont, LV_FLEX_FLOW_COLUMN);
 }
 
 void create_anims() {
@@ -132,6 +144,7 @@ void create_anims() {
 	lv_anim_set_values(&anim_sidebar_open, OPEN_SIDEBAR_WIDTH, 0);
 
 	lv_anim_set_values(&anim_sidebar_close, 0, OPEN_SIDEBAR_WIDTH);
+	lv_anim_set_deleted_cb(&anim_sidebar_close, &anim_del_cb);
 	lv_anim_set_path_cb(&anim_sidebar_close, &lv_anim_path_ease_out);
 
 	// Modal animations
@@ -203,12 +216,21 @@ void rd_view_focus(rd_view_t *view) {
 	lv_obj_clear_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
 }
 
-// TODO: Fix styles, make alerts red
+// TODO: Custom alert style
 void rd_view_alert(rd_view_t *view, const char *msg) {
+	if (!lv_obj_has_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN)) {
+		lv_anim_start(&anim_sidebar_close);
+	}
+
+	if (lv_obj_has_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN)) {
+		lv_obj_clear_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN);
+		lv_anim_start(&anim_modal_show);
+	}
+
 	lv_obj_t *alert = lv_obj_create(alert_cont);
-	lv_obj_set_size(alert, LV_PCT(100) - 4, LV_PCT(100) - 4);
-	lv_obj_add_event_cb(alert, alert_cb, LV_EVENT_PRESSED, view);
-	lv_obj_add_style(alert, &style_btn, 0);
+	lv_obj_set_size(alert, LV_PCT(100) - 4, 32);
+	lv_obj_add_event_cb(alert, alert_cb, LV_EVENT_CLICKED, view);
+	lv_obj_add_style(alert, &style_bar_button, 0);
 
 	lv_obj_t *alert_msg = lv_label_create(alert);
 	lv_obj_align(alert, LV_ALIGN_CENTER, 0, 0);
