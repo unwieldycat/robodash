@@ -16,6 +16,7 @@ lv_obj_t *sidebar_close_btn;
 lv_obj_t *view_list;
 lv_obj_t *sidebar_modal;
 lv_obj_t *alert_cont;
+lv_obj_t *alert_btn;
 
 lv_anim_t anim_sidebar_open;
 lv_anim_t anim_sidebar_close;
@@ -38,14 +39,21 @@ void open_sidebar(lv_event_t *event) {
 // FIXME: Make callbacks more elegant/organized
 
 void close_sidebar(lv_event_t *event) {
-	while (true) {
-		lv_obj_t *child = lv_obj_get_child(alert_cont, 0);
-		if (child == NULL) break;
-		lv_obj_del(child);
+	if (lv_obj_get_child_cnt(alert_cont) > 0) {
+		lv_obj_clear_flag(alert_btn, LV_OBJ_FLAG_HIDDEN);
 	}
 
+	lv_obj_add_flag(alert_cont, LV_OBJ_FLAG_HIDDEN);
 	lv_anim_start(&anim_sidebar_close);
 	lv_anim_start(&anim_modal_hide);
+}
+
+void alert_btn_cb(lv_event_t *event) {
+	if (!lv_obj_has_flag(alert_cont, LV_OBJ_FLAG_HIDDEN)) return;
+	lv_obj_add_flag(alert_btn, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(alert_cont, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN);
+	lv_anim_start(&anim_modal_show);
 }
 
 void alert_cb(lv_event_t *event) {
@@ -55,7 +63,10 @@ void alert_cb(lv_event_t *event) {
 	lv_obj_t *alert = lv_event_get_target(event);
 	lv_obj_del(alert);
 
-	if (lv_obj_get_child_cnt(alert_cont) == 0) lv_anim_start(&anim_modal_hide);
+	if (lv_obj_get_child_cnt(alert_cont) == 0) {
+		lv_obj_add_flag(alert_cont, LV_OBJ_FLAG_HIDDEN);
+		lv_anim_start(&anim_modal_hide);
+	}
 }
 
 // =========================== UI Initialization =========================== //
@@ -82,6 +93,20 @@ void create_ui() {
 	lv_obj_set_style_img_recolor(open_img, color_text, 0);
 	lv_obj_set_style_img_recolor_opa(open_img, LV_OPA_COVER, 0);
 	lv_obj_align(open_img, LV_ALIGN_CENTER, 0, 0);
+
+	alert_btn = lv_btn_create(screen);
+	lv_obj_set_size(alert_btn, 32, 32);
+	lv_obj_add_style(alert_btn, &style_bar_button, 0);
+	lv_obj_add_style(alert_btn, &style_bar_button_pr, LV_STATE_PRESSED);
+	lv_obj_align(alert_btn, LV_ALIGN_TOP_RIGHT, -42, 4);
+	lv_obj_add_event_cb(alert_btn, alert_btn_cb, LV_EVENT_PRESSED, NULL);
+	lv_obj_add_flag(alert_btn, LV_OBJ_FLAG_HIDDEN);
+
+	lv_obj_t *alert_img = lv_img_create(alert_btn);
+	lv_img_set_src(alert_img, LV_SYMBOL_BELL);
+	lv_obj_set_style_img_recolor(alert_img, color_text, 0);
+	lv_obj_set_style_img_recolor_opa(alert_img, LV_OPA_COVER, 0);
+	lv_obj_align(alert_img, LV_ALIGN_CENTER, 0, 0);
 
 	// Modal
 	sidebar_modal = lv_obj_create(screen);
@@ -226,6 +251,8 @@ void rd_view_alert(rd_view_t *view, const char *msg) {
 		lv_obj_clear_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN);
 		lv_anim_start(&anim_modal_show);
 	}
+
+	lv_obj_clear_flag(alert_cont, LV_OBJ_FLAG_HIDDEN);
 
 	lv_obj_t *alert = lv_obj_create(alert_cont);
 	lv_obj_set_size(alert, LV_PCT(100) - 4, 32);
