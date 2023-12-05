@@ -222,6 +222,8 @@ rd_view_t *rd_view_create(const char *name) {
 	lv_obj_add_event_cb(view->_btn, view_btn_cb, LV_EVENT_PRESSED, view);
 	lv_obj_add_event_cb(view->_btn, close_sidebar, LV_EVENT_PRESSED, NULL);
 
+	view->name = name;
+
 	return view;
 }
 
