@@ -268,6 +268,7 @@ void rd_view_alert(rd_view_t *view, const char *msg) {
 
 	lv_obj_t *alert_msg = lv_label_create(alert);
 	lv_obj_align(alert_msg, LV_ALIGN_TOP_LEFT, 0, 18);
+	lv_obj_set_width(alert_msg, LV_PCT(100));
 	lv_obj_add_style(alert_msg, &style_text_medium, 0);
 	lv_label_set_long_mode(alert_msg, LV_LABEL_LONG_WRAP);
 	lv_label_set_text(alert_msg, msg);
