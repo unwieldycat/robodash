@@ -264,7 +264,7 @@ void rd_view_alert(rd_view_t *view, const char *msg) {
 	lv_obj_t *origin_label = lv_label_create(alert);
 	lv_obj_align(origin_label, LV_ALIGN_TOP_LEFT, 0, 0);
 	lv_obj_add_style(origin_label, &style_text_small, 0);
-	lv_label_set_text(origin_label, strcat("Alert from ", view->name));
+	lv_label_set_text(origin_label, view->name);
 
 	lv_obj_t *alert_msg = lv_label_create(alert);
 	lv_obj_align(alert_msg, LV_ALIGN_TOP_LEFT, 0, 18);
