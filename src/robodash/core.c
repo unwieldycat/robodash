@@ -146,7 +146,7 @@ void create_ui() {
 
 	// Alert container
 	alert_cont = lv_obj_create(screen);
-	lv_obj_set_size(alert_cont, 240, LV_PCT(100));
+	lv_obj_set_size(alert_cont, 320, LV_PCT(100));
 	lv_obj_align(alert_cont, LV_ALIGN_CENTER, 0, 0);
 	lv_obj_add_style(alert_cont, &style_transp, 0);
 	lv_obj_clear_flag(alert_cont, LV_OBJ_FLAG_CLICKABLE);
@@ -241,7 +241,6 @@ void rd_view_focus(rd_view_t *view) {
 	lv_obj_clear_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
 }
 
-// TODO: Custom alert style
 void rd_view_alert(rd_view_t *view, const char *msg) {
 	if (!lv_obj_has_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN)) {
 		lv_anim_start(&anim_sidebar_close);
@@ -255,13 +254,19 @@ void rd_view_alert(rd_view_t *view, const char *msg) {
 	lv_obj_clear_flag(alert_cont, LV_OBJ_FLAG_HIDDEN);
 
 	lv_obj_t *alert = lv_obj_create(alert_cont);
-	lv_obj_set_size(alert, LV_PCT(100) - 4, 32);
+	lv_obj_set_width(alert, LV_PCT(100));
+	lv_obj_set_height(alert, LV_SIZE_CONTENT);
 	lv_obj_add_event_cb(alert, alert_cb, LV_EVENT_CLICKED, view);
-	lv_obj_add_style(alert, &style_bar_button, 0);
+	lv_obj_add_style(alert, &style_alert, 0);
+
+	lv_obj_t *origin_label = lv_label_create(alert);
+	lv_obj_align(origin_label, LV_ALIGN_TOP_LEFT, 0, 0);
+	lv_obj_add_style(origin_label, &style_text_small, 0);
+	lv_label_set_text(origin_label, strcat("Alert from ", view->name));
 
 	lv_obj_t *alert_msg = lv_label_create(alert);
-	lv_obj_align(alert, LV_ALIGN_CENTER, 0, 0);
+	lv_obj_align(alert_msg, LV_ALIGN_TOP_LEFT, 0, 18);
 	lv_obj_add_style(alert_msg, &style_text_medium, 0);
-	lv_label_set_long_mode(alert_msg, LV_LABEL_LONG_SCROLL_CIRCULAR);
+	lv_label_set_long_mode(alert_msg, LV_LABEL_LONG_WRAP);
 	lv_label_set_text(alert_msg, msg);
 }
