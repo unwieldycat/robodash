@@ -28,6 +28,7 @@ extern lv_color_t color_shade;
 extern lv_color_t color_primary;
 extern lv_color_t color_primary_dark;
 extern lv_color_t color_text;
+extern lv_color_t color_red;
 
 extern lv_color_t color_bar;
 extern lv_color_t color_bar_dark;
@@ -39,6 +40,7 @@ extern void _init_colors();
 
 extern lv_style_t style_bg;
 extern lv_style_t style_transp;
+extern lv_style_t style_alert;
 
 extern void _init_style_misc();
 

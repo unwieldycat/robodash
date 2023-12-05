@@ -62,6 +62,16 @@ void rd_view_del(rd_view_t *view);
  */
 lv_obj_t *rd_view_obj(rd_view_t *view);
 
+/**
+ * @brief Push an alert to the screen
+ *
+ * Pushes an alert to the screen, regardless of which view is active.
+ *
+ * @param view View to link back to
+ * @param msg Message to display
+ */
+void rd_view_alert(rd_view_t *view, const char *msg);
+
 /// @}
 
 #ifdef __cplusplus
