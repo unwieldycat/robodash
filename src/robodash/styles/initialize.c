@@ -6,5 +6,5 @@ void _init_styles() {
 	_init_style_text();
 	_init_style_btn();
 	_init_style_list();
-	_init_style_bar();
+	_init_style_core();
 }

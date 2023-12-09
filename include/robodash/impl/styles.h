@@ -72,16 +72,16 @@ extern lv_style_t style_text_centered;
 
 extern void _init_style_text();
 
-// ================================ Sidebar ================================ //
+// ================================== Core ================================== //
 
-extern lv_style_t style_bar_button;
-extern lv_style_t style_bar_button_pr;
-extern lv_style_t style_bar_list;
-extern lv_style_t style_bar_list_btn;
-extern lv_style_t style_bar_bg;
-extern lv_style_t style_bar_modal;
+extern lv_style_t style_core_button;
+extern lv_style_t style_core_button_pr;
+extern lv_style_t style_core_list;
+extern lv_style_t style_core_list_btn;
+extern lv_style_t style_core_bg;
+extern lv_style_t style_core_modal;
 
-extern void _init_style_bar();
+extern void _init_style_core();
 
 #ifdef __cplusplus
 }

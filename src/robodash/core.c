@@ -83,8 +83,8 @@ void create_ui() {
 
 	sidebar_open_btn = lv_btn_create(screen);
 	lv_obj_set_size(sidebar_open_btn, 32, 32);
-	lv_obj_add_style(sidebar_open_btn, &style_bar_button, 0);
-	lv_obj_add_style(sidebar_open_btn, &style_bar_button_pr, LV_STATE_PRESSED);
+	lv_obj_add_style(sidebar_open_btn, &style_core_button, 0);
+	lv_obj_add_style(sidebar_open_btn, &style_core_button_pr, LV_STATE_PRESSED);
 	lv_obj_align(sidebar_open_btn, LV_ALIGN_TOP_RIGHT, -4, 4);
 	lv_obj_add_event_cb(sidebar_open_btn, open_sidebar, LV_EVENT_PRESSED, NULL);
 
@@ -96,8 +96,8 @@ void create_ui() {
 
 	alert_btn = lv_btn_create(screen);
 	lv_obj_set_size(alert_btn, 32, 32);
-	lv_obj_add_style(alert_btn, &style_bar_button, 0);
-	lv_obj_add_style(alert_btn, &style_bar_button_pr, LV_STATE_PRESSED);
+	lv_obj_add_style(alert_btn, &style_core_button, 0);
+	lv_obj_add_style(alert_btn, &style_core_button_pr, LV_STATE_PRESSED);
 	lv_obj_align(alert_btn, LV_ALIGN_TOP_RIGHT, -42, 4);
 	lv_obj_add_event_cb(alert_btn, alert_btn_cb, LV_EVENT_PRESSED, NULL);
 	lv_obj_add_flag(alert_btn, LV_OBJ_FLAG_HIDDEN);
@@ -111,7 +111,7 @@ void create_ui() {
 	// Modal
 	sidebar_modal = lv_obj_create(screen);
 	lv_obj_set_size(sidebar_modal, LV_PCT(100), LV_PCT(100));
-	lv_obj_add_style(sidebar_modal, &style_bar_modal, 0);
+	lv_obj_add_style(sidebar_modal, &style_core_modal, 0);
 	lv_obj_add_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN);
 	lv_obj_add_event_cb(sidebar_modal, close_sidebar, LV_EVENT_PRESSED, NULL);
 
@@ -119,7 +119,7 @@ void create_ui() {
 	sidebar_open = lv_obj_create(screen);
 	lv_obj_set_size(sidebar_open, OPEN_SIDEBAR_WIDTH, 240);
 	lv_obj_align(sidebar_open, LV_ALIGN_TOP_RIGHT, 0, 0);
-	lv_obj_add_style(sidebar_open, &style_bar_bg, 0);
+	lv_obj_add_style(sidebar_open, &style_core_bg, 0);
 	lv_obj_add_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
 
 	lv_obj_t *title = lv_label_create(sidebar_open);
@@ -141,7 +141,7 @@ void create_ui() {
 	// View switcher
 	view_list = lv_list_create(sidebar_open);
 	lv_obj_set_size(view_list, LV_PCT(100) - 8, LV_PCT(100) - 32);
-	lv_obj_add_style(view_list, &style_bar_list, 0);
+	lv_obj_add_style(view_list, &style_core_list, 0);
 	lv_obj_align(view_list, LV_ALIGN_TOP_LEFT, 4, 36);
 
 	// Alert container
@@ -217,7 +217,7 @@ rd_view_t *rd_view_create(const char *name) {
 	if (!current_view) rd_view_focus(view);
 
 	view->_btn = lv_list_add_btn(view_list, NULL, name);
-	lv_obj_add_style(view->_btn, &style_bar_list_btn, 0);
+	lv_obj_add_style(view->_btn, &style_core_list_btn, 0);
 	lv_obj_add_style(view->_btn, &style_list_btn_pr, LV_STATE_PRESSED);
 	lv_obj_add_event_cb(view->_btn, view_btn_cb, LV_EVENT_PRESSED, view);
 	lv_obj_add_event_cb(view->_btn, close_sidebar, LV_EVENT_PRESSED, NULL);
