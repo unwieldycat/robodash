@@ -28,7 +28,7 @@ extern "C" {
 typedef struct rd_view {
 	const char *name;
 	lv_obj_t *obj;
-	lv_obj_t *_btn;
+	lv_obj_t *_view_btn;
 } rd_view_t;
 
 /**
