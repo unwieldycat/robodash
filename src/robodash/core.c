@@ -9,10 +9,7 @@
 lv_obj_t *screen;
 lv_obj_t *view_cont;
 
-lv_obj_t *sidebar_open_btn;
-
 lv_obj_t *sidebar_open;
-lv_obj_t *sidebar_close_btn;
 lv_obj_t *view_list;
 lv_obj_t *sidebar_modal;
 lv_obj_t *alert_cont;
@@ -81,14 +78,14 @@ void create_ui() {
 	lv_obj_add_style(view_cont, &style_bg, 0);
 	lv_obj_align(view_cont, LV_ALIGN_TOP_LEFT, 0, 0);
 
-	sidebar_open_btn = lv_btn_create(screen);
-	lv_obj_set_size(sidebar_open_btn, 32, 32);
-	lv_obj_add_style(sidebar_open_btn, &style_core_button, 0);
-	lv_obj_add_style(sidebar_open_btn, &style_core_button_pr, LV_STATE_PRESSED);
-	lv_obj_align(sidebar_open_btn, LV_ALIGN_TOP_RIGHT, -4, 4);
-	lv_obj_add_event_cb(sidebar_open_btn, open_sidebar, LV_EVENT_PRESSED, NULL);
+	lv_obj_t *views_open_btn = lv_btn_create(screen);
+	lv_obj_set_size(views_open_btn, 32, 32);
+	lv_obj_add_style(views_open_btn, &style_core_button, 0);
+	lv_obj_add_style(views_open_btn, &style_core_button_pr, LV_STATE_PRESSED);
+	lv_obj_align(views_open_btn, LV_ALIGN_TOP_RIGHT, -4, 4);
+	lv_obj_add_event_cb(views_open_btn, open_sidebar, LV_EVENT_PRESSED, NULL);
 
-	lv_obj_t *open_img = lv_img_create(sidebar_open_btn);
+	lv_obj_t *open_img = lv_img_create(views_open_btn);
 	lv_img_set_src(open_img, &stack);
 	lv_obj_set_style_img_recolor(open_img, color_text, 0);
 	lv_obj_set_style_img_recolor_opa(open_img, LV_OPA_COVER, 0);
@@ -127,14 +124,14 @@ void create_ui() {
 	lv_obj_add_style(title, &style_text_large, 0);
 	lv_obj_align(title, LV_ALIGN_TOP_LEFT, 12, 12);
 
-	sidebar_close_btn = lv_btn_create(sidebar_open);
-	lv_obj_set_size(sidebar_close_btn, 32, 32);
-	lv_obj_add_style(sidebar_close_btn, &style_transp, 0);
-	lv_obj_add_style(sidebar_close_btn, &style_transp, LV_STATE_PRESSED);
-	lv_obj_align(sidebar_close_btn, LV_ALIGN_TOP_RIGHT, -4, 4);
-	lv_obj_add_event_cb(sidebar_close_btn, close_sidebar, LV_EVENT_PRESSED, NULL);
+	lv_obj_t *views_close_btn = lv_btn_create(sidebar_open);
+	lv_obj_set_size(views_close_btn, 32, 32);
+	lv_obj_add_style(views_close_btn, &style_transp, 0);
+	lv_obj_add_style(views_close_btn, &style_transp, LV_STATE_PRESSED);
+	lv_obj_align(views_close_btn, LV_ALIGN_TOP_RIGHT, -4, 4);
+	lv_obj_add_event_cb(views_close_btn, close_sidebar, LV_EVENT_PRESSED, NULL);
 
-	lv_obj_t *close_img = lv_img_create(sidebar_close_btn);
+	lv_obj_t *close_img = lv_img_create(views_close_btn);
 	lv_img_set_src(close_img, LV_SYMBOL_CLOSE);
 	lv_obj_align(close_img, LV_ALIGN_CENTER, 0, 0);
 
