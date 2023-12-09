@@ -8,7 +8,7 @@ const int view_menu_width = 192;
 lv_obj_t *screen;
 lv_obj_t *view_cont;
 
-lv_obj_t *sidebar_open;
+lv_obj_t *view_menu;
 lv_obj_t *view_list;
 lv_obj_t *sidebar_modal;
 lv_obj_t *alert_cont;
@@ -26,7 +26,7 @@ rd_view_t *current_view;
 void view_focus_cb(lv_event_t *event) { rd_view_focus((rd_view_t *)lv_event_get_user_data(event)); }
 
 void views_btn_cb(lv_event_t *event) {
-	lv_obj_clear_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(view_menu, LV_OBJ_FLAG_HIDDEN);
 	lv_obj_clear_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN);
 	lv_anim_start(&anim_sidebar_open);
 	lv_anim_start(&anim_modal_show);
@@ -110,18 +110,18 @@ void create_ui() {
 	lv_obj_add_event_cb(sidebar_modal, close_cb, LV_EVENT_PRESSED, NULL);
 
 	// Open sidebar
-	sidebar_open = lv_obj_create(screen);
-	lv_obj_set_size(sidebar_open, view_menu_width, 240);
-	lv_obj_align(sidebar_open, LV_ALIGN_TOP_RIGHT, 0, 0);
-	lv_obj_add_style(sidebar_open, &style_core_bg, 0);
-	lv_obj_add_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
+	view_menu = lv_obj_create(screen);
+	lv_obj_set_size(view_menu, view_menu_width, 240);
+	lv_obj_align(view_menu, LV_ALIGN_TOP_RIGHT, 0, 0);
+	lv_obj_add_style(view_menu, &style_core_bg, 0);
+	lv_obj_add_flag(view_menu, LV_OBJ_FLAG_HIDDEN);
 
-	lv_obj_t *title = lv_label_create(sidebar_open);
+	lv_obj_t *title = lv_label_create(view_menu);
 	lv_label_set_text(title, "Select View");
 	lv_obj_add_style(title, &style_text_large, 0);
 	lv_obj_align(title, LV_ALIGN_TOP_LEFT, 12, 12);
 
-	lv_obj_t *views_close_btn = lv_btn_create(sidebar_open);
+	lv_obj_t *views_close_btn = lv_btn_create(view_menu);
 	lv_obj_set_size(views_close_btn, 32, 32);
 	lv_obj_add_style(views_close_btn, &style_transp, 0);
 	lv_obj_add_style(views_close_btn, &style_transp, LV_STATE_PRESSED);
@@ -133,7 +133,7 @@ void create_ui() {
 	lv_obj_align(close_img, LV_ALIGN_CENTER, 0, 0);
 
 	// View switcher
-	view_list = lv_list_create(sidebar_open);
+	view_list = lv_list_create(view_menu);
 	lv_obj_set_size(view_list, LV_PCT(100) - 8, LV_PCT(100) - 32);
 	lv_obj_add_style(view_list, &style_core_list, 0);
 	lv_obj_align(view_list, LV_ALIGN_TOP_LEFT, 4, 36);
@@ -153,7 +153,7 @@ void create_ui() {
 void create_anims() {
 	// Sidebar animations
 	lv_anim_init(&anim_sidebar_open);
-	lv_anim_set_var(&anim_sidebar_open, sidebar_open);
+	lv_anim_set_var(&anim_sidebar_open, view_menu);
 	lv_anim_set_time(&anim_sidebar_open, 200);
 	lv_anim_set_exec_cb(&anim_sidebar_open, &anim_x_cb);
 
@@ -238,7 +238,7 @@ void rd_view_focus(rd_view_t *view) {
 }
 
 void rd_view_alert(rd_view_t *view, const char *msg) {
-	if (!lv_obj_has_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN)) {
+	if (!lv_obj_has_flag(view_menu, LV_OBJ_FLAG_HIDDEN)) {
 		lv_anim_start(&anim_sidebar_close);
 	}
 
