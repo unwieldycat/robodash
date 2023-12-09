@@ -16,8 +16,8 @@ lv_obj_t *alert_btn;
 
 lv_anim_t anim_sidebar_open;
 lv_anim_t anim_sidebar_close;
-lv_anim_t anim_modal_hide;
-lv_anim_t anim_modal_show;
+lv_anim_t anim_shade_hide;
+lv_anim_t anim_shade_show;
 
 rd_view_t *current_view;
 
@@ -29,7 +29,7 @@ void views_btn_cb(lv_event_t *event) {
 	lv_obj_clear_flag(view_menu, LV_OBJ_FLAG_HIDDEN);
 	lv_obj_clear_flag(shade, LV_OBJ_FLAG_HIDDEN);
 	lv_anim_start(&anim_sidebar_open);
-	lv_anim_start(&anim_modal_show);
+	lv_anim_start(&anim_shade_show);
 }
 
 void close_cb(lv_event_t *event) {
@@ -39,7 +39,7 @@ void close_cb(lv_event_t *event) {
 
 	lv_obj_add_flag(alert_cont, LV_OBJ_FLAG_HIDDEN);
 	lv_anim_start(&anim_sidebar_close);
-	lv_anim_start(&anim_modal_hide);
+	lv_anim_start(&anim_shade_hide);
 }
 
 void alert_btn_cb(lv_event_t *event) {
@@ -47,7 +47,7 @@ void alert_btn_cb(lv_event_t *event) {
 	lv_obj_add_flag(alert_btn, LV_OBJ_FLAG_HIDDEN);
 	lv_obj_clear_flag(alert_cont, LV_OBJ_FLAG_HIDDEN);
 	lv_obj_clear_flag(shade, LV_OBJ_FLAG_HIDDEN);
-	lv_anim_start(&anim_modal_show);
+	lv_anim_start(&anim_shade_show);
 }
 
 void alert_cb(lv_event_t *event) {
@@ -59,7 +59,7 @@ void alert_cb(lv_event_t *event) {
 
 	if (lv_obj_get_child_cnt(alert_cont) == 0) {
 		lv_obj_add_flag(alert_cont, LV_OBJ_FLAG_HIDDEN);
-		lv_anim_start(&anim_modal_hide);
+		lv_anim_start(&anim_shade_hide);
 	}
 }
 
@@ -172,16 +172,16 @@ void create_anims() {
 
 	// -------------------------- Shade Animations -------------------------- //
 
-	lv_anim_init(&anim_modal_hide);
-	lv_anim_set_var(&anim_modal_hide, shade);
-	lv_anim_set_time(&anim_modal_hide, 200);
-	lv_anim_set_exec_cb(&anim_modal_hide, &anim_opa_cb);
+	lv_anim_init(&anim_shade_hide);
+	lv_anim_set_var(&anim_shade_hide, shade);
+	lv_anim_set_time(&anim_shade_hide, 200);
+	lv_anim_set_exec_cb(&anim_shade_hide, &anim_opa_cb);
 
-	anim_modal_show = anim_modal_hide;
+	anim_shade_show = anim_shade_hide;
 
-	lv_anim_set_values(&anim_modal_hide, 144, 0);
-	lv_anim_set_deleted_cb(&anim_modal_hide, &anim_del_cb);
-	lv_anim_set_values(&anim_modal_show, 0, 144);
+	lv_anim_set_values(&anim_shade_hide, 144, 0);
+	lv_anim_set_deleted_cb(&anim_shade_hide, &anim_del_cb);
+	lv_anim_set_values(&anim_shade_show, 0, 144);
 }
 
 // =============================== Initialize =============================== //
@@ -249,7 +249,7 @@ void rd_view_alert(rd_view_t *view, const char *msg) {
 
 	if (lv_obj_has_flag(shade, LV_OBJ_FLAG_HIDDEN)) {
 		lv_obj_clear_flag(shade, LV_OBJ_FLAG_HIDDEN);
-		lv_anim_start(&anim_modal_show);
+		lv_anim_start(&anim_shade_show);
 	}
 
 	lv_obj_clear_flag(alert_cont, LV_OBJ_FLAG_HIDDEN);
