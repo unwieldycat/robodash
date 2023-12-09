@@ -1,8 +1,7 @@
 #include "apix.h"
 #include <stdlib.h>
 
-#define CLOSED_SIDEBAR_WIDTH 40
-#define OPEN_SIDEBAR_WIDTH 192
+const int view_menu_width = 192;
 
 // ============================== UI Elements ============================== //
 
@@ -112,7 +111,7 @@ void create_ui() {
 
 	// Open sidebar
 	sidebar_open = lv_obj_create(screen);
-	lv_obj_set_size(sidebar_open, OPEN_SIDEBAR_WIDTH, 240);
+	lv_obj_set_size(sidebar_open, view_menu_width, 240);
 	lv_obj_align(sidebar_open, LV_ALIGN_TOP_RIGHT, 0, 0);
 	lv_obj_add_style(sidebar_open, &style_core_bg, 0);
 	lv_obj_add_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
@@ -161,9 +160,9 @@ void create_anims() {
 	anim_sidebar_close = anim_sidebar_open;
 
 	lv_anim_set_path_cb(&anim_sidebar_open, &lv_anim_path_ease_out);
-	lv_anim_set_values(&anim_sidebar_open, OPEN_SIDEBAR_WIDTH, 0);
+	lv_anim_set_values(&anim_sidebar_open, view_menu_width, 0);
 
-	lv_anim_set_values(&anim_sidebar_close, 0, OPEN_SIDEBAR_WIDTH);
+	lv_anim_set_values(&anim_sidebar_close, 0, view_menu_width);
 	lv_anim_set_deleted_cb(&anim_sidebar_close, &anim_del_cb);
 	lv_anim_set_path_cb(&anim_sidebar_close, &lv_anim_path_ease_out);
 
