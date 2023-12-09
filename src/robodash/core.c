@@ -69,11 +69,12 @@ void create_ui() {
 	screen = lv_scr_act();
 	lv_obj_clear_flag(screen, LV_OBJ_FLAG_SCROLLABLE);
 
-	// View container
 	view_cont = lv_obj_create(screen);
 	lv_obj_set_size(view_cont, 480, 240);
 	lv_obj_add_style(view_cont, &style_bg, 0);
 	lv_obj_align(view_cont, LV_ALIGN_TOP_LEFT, 0, 0);
+
+	// ---------------------------- Top Buttons ---------------------------- //
 
 	lv_obj_t *views_open_btn = lv_btn_create(screen);
 	lv_obj_set_size(views_open_btn, 32, 32);
@@ -102,14 +103,16 @@ void create_ui() {
 	lv_obj_set_style_img_recolor_opa(alert_img, LV_OPA_COVER, 0);
 	lv_obj_align(alert_img, LV_ALIGN_CENTER, 0, 0);
 
-	// Modal
+	// ------------------------------- Shade ------------------------------- //
+
 	sidebar_modal = lv_obj_create(screen);
 	lv_obj_set_size(sidebar_modal, LV_PCT(100), LV_PCT(100));
 	lv_obj_add_style(sidebar_modal, &style_core_modal, 0);
 	lv_obj_add_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN);
 	lv_obj_add_event_cb(sidebar_modal, close_cb, LV_EVENT_PRESSED, NULL);
 
-	// Open sidebar
+	// ----------------------------- View Menu ----------------------------- //
+
 	view_menu = lv_obj_create(screen);
 	lv_obj_set_size(view_menu, view_menu_width, 240);
 	lv_obj_align(view_menu, LV_ALIGN_TOP_RIGHT, 0, 0);
@@ -132,13 +135,13 @@ void create_ui() {
 	lv_img_set_src(close_img, LV_SYMBOL_CLOSE);
 	lv_obj_align(close_img, LV_ALIGN_CENTER, 0, 0);
 
-	// View switcher
 	view_list = lv_list_create(view_menu);
 	lv_obj_set_size(view_list, LV_PCT(100) - 8, LV_PCT(100) - 32);
 	lv_obj_add_style(view_list, &style_core_list, 0);
 	lv_obj_align(view_list, LV_ALIGN_TOP_LEFT, 4, 36);
 
-	// Alert container
+	// -------------------------- Alert Container -------------------------- //
+
 	alert_cont = lv_obj_create(screen);
 	lv_obj_set_size(alert_cont, 320, LV_PCT(100));
 	lv_obj_align(alert_cont, LV_ALIGN_CENTER, 0, 0);
@@ -151,7 +154,8 @@ void create_ui() {
 }
 
 void create_anims() {
-	// Sidebar animations
+	// ------------------------- Sidebar Animations ------------------------- //
+
 	lv_anim_init(&anim_sidebar_open);
 	lv_anim_set_var(&anim_sidebar_open, view_menu);
 	lv_anim_set_time(&anim_sidebar_open, 200);
@@ -166,7 +170,8 @@ void create_anims() {
 	lv_anim_set_deleted_cb(&anim_sidebar_close, &anim_del_cb);
 	lv_anim_set_path_cb(&anim_sidebar_close, &lv_anim_path_ease_out);
 
-	// Modal animations
+	// -------------------------- Shade Animations -------------------------- //
+
 	lv_anim_init(&anim_modal_hide);
 	lv_anim_set_var(&anim_modal_hide, sidebar_modal);
 	lv_anim_set_time(&anim_modal_hide, 200);
