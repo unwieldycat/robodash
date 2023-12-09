@@ -24,18 +24,16 @@ rd_view_t *current_view;
 
 // ============================== UI Callbacks ============================== //
 
-void view_btn_cb(lv_event_t *event) { rd_view_focus((rd_view_t *)lv_event_get_user_data(event)); }
+void view_focus_cb(lv_event_t *event) { rd_view_focus((rd_view_t *)lv_event_get_user_data(event)); }
 
-void open_sidebar(lv_event_t *event) {
+void views_btn_cb(lv_event_t *event) {
 	lv_obj_clear_flag(sidebar_open, LV_OBJ_FLAG_HIDDEN);
 	lv_obj_clear_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN);
 	lv_anim_start(&anim_sidebar_open);
 	lv_anim_start(&anim_modal_show);
 }
 
-// FIXME: Make callbacks more elegant/organized
-
-void close_sidebar(lv_event_t *event) {
+void close_cb(lv_event_t *event) {
 	if (lv_obj_get_child_cnt(alert_cont) > 0) {
 		lv_obj_clear_flag(alert_btn, LV_OBJ_FLAG_HIDDEN);
 	}
@@ -83,7 +81,7 @@ void create_ui() {
 	lv_obj_add_style(views_open_btn, &style_core_button, 0);
 	lv_obj_add_style(views_open_btn, &style_core_button_pr, LV_STATE_PRESSED);
 	lv_obj_align(views_open_btn, LV_ALIGN_TOP_RIGHT, -4, 4);
-	lv_obj_add_event_cb(views_open_btn, open_sidebar, LV_EVENT_PRESSED, NULL);
+	lv_obj_add_event_cb(views_open_btn, views_btn_cb, LV_EVENT_PRESSED, NULL);
 
 	lv_obj_t *open_img = lv_img_create(views_open_btn);
 	lv_img_set_src(open_img, &stack);
@@ -110,7 +108,7 @@ void create_ui() {
 	lv_obj_set_size(sidebar_modal, LV_PCT(100), LV_PCT(100));
 	lv_obj_add_style(sidebar_modal, &style_core_modal, 0);
 	lv_obj_add_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN);
-	lv_obj_add_event_cb(sidebar_modal, close_sidebar, LV_EVENT_PRESSED, NULL);
+	lv_obj_add_event_cb(sidebar_modal, close_cb, LV_EVENT_PRESSED, NULL);
 
 	// Open sidebar
 	sidebar_open = lv_obj_create(screen);
@@ -129,7 +127,7 @@ void create_ui() {
 	lv_obj_add_style(views_close_btn, &style_transp, 0);
 	lv_obj_add_style(views_close_btn, &style_transp, LV_STATE_PRESSED);
 	lv_obj_align(views_close_btn, LV_ALIGN_TOP_RIGHT, -4, 4);
-	lv_obj_add_event_cb(views_close_btn, close_sidebar, LV_EVENT_PRESSED, NULL);
+	lv_obj_add_event_cb(views_close_btn, close_cb, LV_EVENT_PRESSED, NULL);
 
 	lv_obj_t *close_img = lv_img_create(views_close_btn);
 	lv_img_set_src(close_img, LV_SYMBOL_CLOSE);
@@ -216,8 +214,8 @@ rd_view_t *rd_view_create(const char *name) {
 	view->_btn = lv_list_add_btn(view_list, NULL, name);
 	lv_obj_add_style(view->_btn, &style_core_list_btn, 0);
 	lv_obj_add_style(view->_btn, &style_list_btn_pr, LV_STATE_PRESSED);
-	lv_obj_add_event_cb(view->_btn, view_btn_cb, LV_EVENT_PRESSED, view);
-	lv_obj_add_event_cb(view->_btn, close_sidebar, LV_EVENT_PRESSED, NULL);
+	lv_obj_add_event_cb(view->_btn, view_focus_cb, LV_EVENT_PRESSED, view);
+	lv_obj_add_event_cb(view->_btn, close_cb, LV_EVENT_PRESSED, NULL);
 
 	view->name = name;
 
