@@ -8,9 +8,9 @@ const int view_menu_width = 192;
 lv_obj_t *screen;
 lv_obj_t *view_cont;
 
+lv_obj_t *shade;
 lv_obj_t *view_menu;
 lv_obj_t *view_list;
-lv_obj_t *sidebar_modal;
 lv_obj_t *alert_cont;
 lv_obj_t *alert_btn;
 
@@ -27,7 +27,7 @@ void view_focus_cb(lv_event_t *event) { rd_view_focus((rd_view_t *)lv_event_get_
 
 void views_btn_cb(lv_event_t *event) {
 	lv_obj_clear_flag(view_menu, LV_OBJ_FLAG_HIDDEN);
-	lv_obj_clear_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(shade, LV_OBJ_FLAG_HIDDEN);
 	lv_anim_start(&anim_sidebar_open);
 	lv_anim_start(&anim_modal_show);
 }
@@ -46,7 +46,7 @@ void alert_btn_cb(lv_event_t *event) {
 	if (!lv_obj_has_flag(alert_cont, LV_OBJ_FLAG_HIDDEN)) return;
 	lv_obj_add_flag(alert_btn, LV_OBJ_FLAG_HIDDEN);
 	lv_obj_clear_flag(alert_cont, LV_OBJ_FLAG_HIDDEN);
-	lv_obj_clear_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_clear_flag(shade, LV_OBJ_FLAG_HIDDEN);
 	lv_anim_start(&anim_modal_show);
 }
 
@@ -105,11 +105,11 @@ void create_ui() {
 
 	// ------------------------------- Shade ------------------------------- //
 
-	sidebar_modal = lv_obj_create(screen);
-	lv_obj_set_size(sidebar_modal, LV_PCT(100), LV_PCT(100));
-	lv_obj_add_style(sidebar_modal, &style_core_modal, 0);
-	lv_obj_add_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN);
-	lv_obj_add_event_cb(sidebar_modal, close_cb, LV_EVENT_PRESSED, NULL);
+	shade = lv_obj_create(screen);
+	lv_obj_set_size(shade, LV_PCT(100), LV_PCT(100));
+	lv_obj_add_style(shade, &style_core_shade, 0);
+	lv_obj_add_flag(shade, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_add_event_cb(shade, close_cb, LV_EVENT_PRESSED, NULL);
 
 	// ----------------------------- View Menu ----------------------------- //
 
@@ -173,7 +173,7 @@ void create_anims() {
 	// -------------------------- Shade Animations -------------------------- //
 
 	lv_anim_init(&anim_modal_hide);
-	lv_anim_set_var(&anim_modal_hide, sidebar_modal);
+	lv_anim_set_var(&anim_modal_hide, shade);
 	lv_anim_set_time(&anim_modal_hide, 200);
 	lv_anim_set_exec_cb(&anim_modal_hide, &anim_opa_cb);
 
@@ -247,8 +247,8 @@ void rd_view_alert(rd_view_t *view, const char *msg) {
 		lv_anim_start(&anim_sidebar_close);
 	}
 
-	if (lv_obj_has_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN)) {
-		lv_obj_clear_flag(sidebar_modal, LV_OBJ_FLAG_HIDDEN);
+	if (lv_obj_has_flag(shade, LV_OBJ_FLAG_HIDDEN)) {
+		lv_obj_clear_flag(shade, LV_OBJ_FLAG_HIDDEN);
 		lv_anim_start(&anim_modal_show);
 	}
 

@@ -7,7 +7,7 @@ lv_style_t style_core_button_pr;
 lv_style_t style_core_list;
 lv_style_t style_core_list_btn;
 lv_style_t style_core_bg;
-lv_style_t style_core_modal;
+lv_style_t style_core_shade;
 
 void _init_style_core() {
 	// Sidebar button
@@ -52,9 +52,9 @@ void _init_style_core() {
 	lv_style_set_pad_all(&style_core_bg, 0);
 
 	// Sidebar modal
-	lv_style_init(&style_core_modal);
-	lv_style_set_bg_opa(&style_core_modal, 144);
-	lv_style_set_bg_color(&style_core_modal, lv_color_black());
-	lv_style_set_radius(&style_core_modal, 0);
-	lv_style_set_border_width(&style_core_modal, 0);
+	lv_style_init(&style_core_shade);
+	lv_style_set_bg_opa(&style_core_shade, 144);
+	lv_style_set_bg_color(&style_core_shade, lv_color_black());
+	lv_style_set_radius(&style_core_shade, 0);
+	lv_style_set_border_width(&style_core_shade, 0);
 }

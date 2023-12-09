@@ -79,7 +79,7 @@ extern lv_style_t style_core_button_pr;
 extern lv_style_t style_core_list;
 extern lv_style_t style_core_list_btn;
 extern lv_style_t style_core_bg;
-extern lv_style_t style_core_modal;
+extern lv_style_t style_core_shade;
 
 extern void _init_style_core();
 
