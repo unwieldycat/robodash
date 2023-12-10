@@ -1,5 +1,4 @@
 #include "apix.h"
-#include <stdlib.h>
 
 const int view_menu_width = 192;
 
@@ -21,9 +20,25 @@ lv_anim_t anim_shade_show;
 
 rd_view_t *current_view;
 
+std::vector<rd_view_t *> views;
+
+// ============================ Helper Functions============================ //
+
+bool valid_view(rd_view_t *view) {
+	for (int i = 0; i < views.size(); i++) {
+		rd_view_t *reg_view = views.at(i);
+		if (view == reg_view) return true;
+	}
+
+	return false;
+}
+
 // ============================== UI Callbacks ============================== //
 
-void view_focus_cb(lv_event_t *event) { rd_view_focus((rd_view_t *)lv_event_get_user_data(event)); }
+void view_focus_cb(lv_event_t *event) {
+	rd_view_t *view = (rd_view_t *)lv_event_get_user_data(event);
+	rd_view_focus(view);
+}
 
 void views_btn_cb(lv_event_t *event) {
 	lv_obj_clear_flag(view_menu, LV_OBJ_FLAG_HIDDEN);
@@ -223,19 +238,39 @@ rd_view_t *rd_view_create(const char *name) {
 
 	view->name = name;
 
+	// Add view to registered list
+	views.push_back(view);
+
 	return view;
 }
 
 void rd_view_del(rd_view_t *view) {
+	if (!valid_view(view)) return;
+
 	lv_obj_del(view->_view_btn);
 	lv_obj_del(view->obj);
 	if (current_view == view) current_view = NULL;
+
+	// Remove view from registered list
+	for (int i = 0; i < views.size(); i++) {
+		rd_view_t *reg_view = views.at(i);
+		if (view != reg_view) continue;
+
+		views.erase(views.begin() + i, views.begin() + i + 1);
+	}
+
 	free(view);
 }
 
-lv_obj_t *rd_view_obj(rd_view_t *view) { return view->obj; }
+lv_obj_t *rd_view_obj(rd_view_t *view) {
+	if (!valid_view(view)) return NULL;
+
+	return view->obj;
+}
 
 void rd_view_focus(rd_view_t *view) {
+	if (!valid_view(view)) return;
+
 	if (view == NULL) return;
 	if (current_view != NULL) lv_obj_add_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
 	current_view = view;
@@ -243,6 +278,8 @@ void rd_view_focus(rd_view_t *view) {
 }
 
 void rd_view_alert(rd_view_t *view, const char *msg) {
+	if (!valid_view(view)) return;
+
 	if (!lv_obj_has_flag(view_menu, LV_OBJ_FLAG_HIDDEN)) {
 		lv_anim_start(&anim_sidebar_close);
 	}
