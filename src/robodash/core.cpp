@@ -25,8 +25,9 @@ std::vector<rd_view_t *> views;
 // ============================ Helper Functions============================ //
 
 bool valid_view(rd_view_t *view) {
-	for (int i = 0; i < views.size(); i++) {
-		rd_view_t *reg_view = views.at(i);
+	if (view == NULL) return false;
+
+	for (rd_view_t *reg_view : views) {
 		if (view == reg_view) return true;
 	}
 
@@ -255,8 +256,7 @@ void rd_view_del(rd_view_t *view) {
 	for (int i = 0; i < views.size(); i++) {
 		rd_view_t *reg_view = views.at(i);
 		if (view != reg_view) continue;
-
-		views.erase(views.begin() + i, views.begin() + i + 1);
+		views.erase(views.begin() + i);
 	}
 
 	free(view);
@@ -271,7 +271,6 @@ lv_obj_t *rd_view_obj(rd_view_t *view) {
 void rd_view_focus(rd_view_t *view) {
 	if (!valid_view(view)) return;
 
-	if (view == NULL) return;
 	if (current_view != NULL) lv_obj_add_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
 	current_view = view;
 	lv_obj_clear_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
