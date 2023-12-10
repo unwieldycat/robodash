@@ -12,7 +12,7 @@ extern "C" {
 /*********************
  *      INCLUDES
  *********************/
-#include "../../../lvgl.h"
+#include "liblvgl/lvgl.h"
 #if LV_USE_FFMPEG != 0
 
 /*********************

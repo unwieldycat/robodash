@@ -13,11 +13,11 @@ extern "C" {
 /*********************
  *      INCLUDES
  *********************/
-#include "../../../lv_conf_internal.h"
+#include "liblvgl/lv_conf_internal.h"
 
 #if LV_USE_FRAGMENT
 
-#include "../../../core/lv_obj.h"
+#include "liblvgl/core/lv_obj.h"
 
 /*********************
  *      DEFINES

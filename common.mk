@@ -225,19 +225,10 @@ else
 ELF_DEPS+=$(call GETALLOBJ,$(EXCLUDE_SRCDIRS))
 endif
 
-ASSET_OBJ=$(addprefix $(BINDIR)/, $(addsuffix .o, $(ASSET_FILES)) )
-ELF_DEPS+=$(ASSET_OBJ)
-
-.SECONDEXPANSION:
-$(ASSET_OBJ): $$(patsubst bin/%,%,$$(basename $$@))
-	$(VV)mkdir -p $(BINDIR)/static
-	@echo "ASSET $@"
-	$(VV)$(OBJCOPY) -I binary -O elf32-littlearm -B arm $^ $@
-
 $(MONOLITH_BIN): $(MONOLITH_ELF) $(BINDIR)
 	$(call test_output_2,Creating $@ for $(DEVICE) ,$(OBJCOPY) $< -O binary -R .hot_init $@,$(DONE_STRING))
 
-$(MONOLITH_ELF): $(ELF_DEPS) $(LIBRARIES) $(ASSET_OBJ)
+$(MONOLITH_ELF): $(ELF_DEPS) $(LIBRARIES)
 	$(call _pros_ld_timestamp)
 	$(call test_output_2,Linking project with $(ARCHIVE_TEXT_LIST) ,$(LD) $(LDFLAGS) $(ELF_DEPS) $(LDTIMEOBJ) $(call wlprefix,-T$(FWDIR)/v5.ld $(LNK_FLAGS)) -o $@,$(OK_STRING))
 	@echo Section sizes:
@@ -246,7 +237,7 @@ $(MONOLITH_ELF): $(ELF_DEPS) $(LIBRARIES) $(ASSET_OBJ)
 $(COLD_BIN): $(COLD_ELF)
 	$(call test_output_2,Creating cold package binary for $(DEVICE) ,$(OBJCOPY) $< -O binary -R .hot_init $@,$(DONE_STRING))
 
-$(COLD_ELF): $(COLD_LIBRARIES) $(ASSET_OBJ)
+$(COLD_ELF): $(COLD_LIBRARIES)
 	$(VV)mkdir -p $(dir $@)
 	$(call test_output_2,Creating cold package with $(ARCHIVE_TEXT_LIST) ,$(LD) $(LDFLAGS) $(call wlprefix,--gc-keep-exported --whole-archive $^ -lstdc++ --no-whole-archive) $(call wlprefix,-T$(FWDIR)/v5.ld $(LNK_FLAGS) -o $@),$(OK_STRING))
 	$(call test_output_2,Stripping cold package ,$(OBJCOPY) --strip-symbol=install_hot_table --strip-symbol=__libc_init_array --strip-symbol=_PROS_COMPILE_DIRECTORY --strip-symbol=_PROS_COMPILE_TIMESTAMP --strip-symbol=_PROS_COMPILE_TIMESTAMP_INT $@ $@, $(DONE_STRING))
