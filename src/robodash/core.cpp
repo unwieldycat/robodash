@@ -20,6 +20,12 @@ lv_anim_t anim_shade_show;
 
 rd_view_t *current_view;
 
+// FIXME: Some issue is occuring with the vector that causes it to not keep its
+// FIXME: contents. This causes valid_view() to think some views are invalid.
+// FIXME: This is likely due to multithreading, so a solution like mutexes
+// FIXME: may need to be implemented. Mutexes cause the GUI to freeze forever
+// FIXME: though.
+
 std::vector<rd_view_t *> views;
 
 // ============================ Helper Functions============================ //
