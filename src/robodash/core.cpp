@@ -20,21 +20,15 @@ lv_anim_t anim_shade_show;
 
 rd_view_t *current_view;
 
-// FIXME: Some issue is occuring with the vector that causes it to not keep its
-// FIXME: contents. This causes valid_view() to think some views are invalid.
-// FIXME: This is likely due to multithreading, so a solution like mutexes
-// FIXME: may need to be implemented. Mutexes cause the GUI to freeze forever
-// FIXME: though.
-
-std::vector<rd_view_t *> views;
-
 // ============================ Helper Functions============================ //
 
 bool valid_view(rd_view_t *view) {
 	if (view == NULL) return false;
 
-	for (rd_view_t *reg_view : views) {
-		if (view == reg_view) return true;
+	for (int i = 0; i < lv_obj_get_child_cnt(view_list); i++) {
+		lv_obj_t *child = lv_obj_get_child(view_list, i);
+		rd_view_t *reg_view = (rd_view_t *)lv_obj_get_user_data(child);
+		if (reg_view == view) return true;
 	}
 
 	return false;
@@ -240,13 +234,11 @@ rd_view_t *rd_view_create(const char *name) {
 	view->_view_btn = lv_list_add_btn(view_list, NULL, name);
 	lv_obj_add_style(view->_view_btn, &style_core_list_btn, 0);
 	lv_obj_add_style(view->_view_btn, &style_list_btn_pr, LV_STATE_PRESSED);
+	lv_obj_set_user_data(view->_view_btn, view);
 	lv_obj_add_event_cb(view->_view_btn, view_focus_cb, LV_EVENT_PRESSED, view);
 	lv_obj_add_event_cb(view->_view_btn, close_cb, LV_EVENT_PRESSED, NULL);
 
 	view->name = name;
-
-	// Add view to registered list
-	views.push_back(view);
 
 	return view;
 }
@@ -257,13 +249,6 @@ void rd_view_del(rd_view_t *view) {
 	lv_obj_del(view->_view_btn);
 	lv_obj_del(view->obj);
 	if (current_view == view) current_view = NULL;
-
-	// Remove view from registered list
-	for (int i = 0; i < views.size(); i++) {
-		rd_view_t *reg_view = views.at(i);
-		if (view != reg_view) continue;
-		views.erase(views.begin() + i);
-	}
 
 	free(view);
 }
