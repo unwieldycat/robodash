@@ -227,9 +227,7 @@ rd_view_t *rd_view_create(const char *name) {
 	lv_obj_set_size(view->obj, lv_pct(100), lv_pct(100));
 	lv_obj_add_flag(view->obj, LV_OBJ_FLAG_HIDDEN);
 	lv_obj_add_style(view->obj, &style_bg, 0);
-
 	lv_obj_set_parent(view->obj, view_cont);
-	if (!current_view) rd_view_focus(view);
 
 	view->_view_btn = lv_list_add_btn(view_list, NULL, name);
 	lv_obj_add_style(view->_view_btn, &style_core_list_btn, 0);
@@ -237,6 +235,8 @@ rd_view_t *rd_view_create(const char *name) {
 	lv_obj_set_user_data(view->_view_btn, view);
 	lv_obj_add_event_cb(view->_view_btn, view_focus_cb, LV_EVENT_PRESSED, view);
 	lv_obj_add_event_cb(view->_view_btn, close_cb, LV_EVENT_PRESSED, NULL);
+
+	if (!current_view) rd_view_focus(view);
 
 	view->name = name;
 
