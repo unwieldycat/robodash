@@ -14,17 +14,18 @@ rd::Console console;
 
 // ========================= Competition Functions ========================= //
 
-void initialize() {
+void initialize() {}
+
+void disabled() {}
+
+void competition_initialize() {
+	// Register autons
 	selector.add_autons({
 	    {"Best auton",   &best_auton  },
         {"Simple auton", &simple_auton},
         {"Good auton",   &good_auton  }
     });
-}
 
-void disabled() {}
-
-void competition_initialize() {
 	// Focus auton selector
 	selector.focus();
 }
