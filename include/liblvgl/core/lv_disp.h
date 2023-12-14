@@ -13,7 +13,7 @@ extern "C" {
 /*********************
  *      INCLUDES
  *********************/
-#include "../hal/lv_hal.h"
+#include "liblvgl/hal/lv_hal.h"
 #include "lv_obj.h"
 #include "lv_theme.h"
 

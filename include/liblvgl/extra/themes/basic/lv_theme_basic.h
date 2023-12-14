@@ -13,7 +13,7 @@ extern "C" {
 /*********************
  *      INCLUDES
  *********************/
-#include "../../../core/lv_obj.h"
+#include "liblvgl/core/lv_obj.h"
 
 #if LV_USE_THEME_BASIC
 
