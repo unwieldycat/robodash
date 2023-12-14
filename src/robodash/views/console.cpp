@@ -14,13 +14,13 @@ rd::Console::Console(std::string name) {
 	lv_obj_set_style_bg_color(view->obj, color_bg, 0);
 
 	output_cont = lv_obj_create(view->obj);
-	lv_obj_set_width(output_cont, 464);
-	lv_obj_set_height(output_cont, LV_SIZE_CONTENT);
-	lv_obj_align(output_cont, LV_ALIGN_TOP_LEFT, 0, 0);
+	lv_obj_set_width(output_cont, lv_pct(100));
+	lv_obj_set_height(output_cont, lv_pct(100));
+	lv_obj_align(output_cont, LV_ALIGN_CENTER, 0, 0);
 	lv_obj_add_style(output_cont, &style_transp, 0);
 
 	output = lv_label_create(output_cont);
-	lv_obj_align(output, LV_ALIGN_TOP_LEFT, 0, 0);
+	lv_obj_set_height(output, LV_SIZE_CONTENT);
 	lv_obj_add_style(output, &style_transp, 0);
 	lv_obj_add_style(output, &style_text_mono, 0);
 	lv_label_set_recolor(output, true);
@@ -38,7 +38,7 @@ void rd::Console::clear() {
 void rd::Console::print(std::string str) {
 	stream << str;
 	if (output) lv_label_set_text(output, stream.str().c_str());
-	lv_obj_scroll_by(output_cont, 0, 8, LV_ANIM_OFF); // FIXME: Broken, doesn't do anything at all
+	lv_obj_scroll_to_y(output_cont, LV_COORD_MAX, LV_ANIM_OFF);
 }
 
 void rd::Console::println(std::string str) { this->print(str + "\n"); }
