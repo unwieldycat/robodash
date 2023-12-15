@@ -12,6 +12,7 @@ lv_obj_t *view_menu;
 lv_obj_t *view_list;
 lv_obj_t *alert_cont;
 lv_obj_t *alert_btn;
+lv_obj_t *anim_label;
 
 lv_anim_t anim_sidebar_open;
 lv_anim_t anim_sidebar_close;
@@ -44,8 +45,11 @@ void view_focus_cb(lv_event_t *event) {
 void views_btn_cb(lv_event_t *event) {
 	lv_obj_clear_flag(view_menu, LV_OBJ_FLAG_HIDDEN);
 	lv_obj_clear_flag(shade, LV_OBJ_FLAG_HIDDEN);
-	lv_anim_start(&anim_sidebar_open);
-	lv_anim_start(&anim_shade_show);
+
+	if (rd_view_get_anims(current_view) == RD_ANIM_ON) {
+		lv_anim_start(&anim_sidebar_open);
+		lv_anim_start(&anim_shade_show);
+	}
 }
 
 void close_cb(lv_event_t *event) {
@@ -54,8 +58,14 @@ void close_cb(lv_event_t *event) {
 	}
 
 	lv_obj_add_flag(alert_cont, LV_OBJ_FLAG_HIDDEN);
-	lv_anim_start(&anim_sidebar_close);
-	lv_anim_start(&anim_shade_hide);
+
+	if (rd_view_get_anims(current_view) == RD_ANIM_ON) {
+		lv_anim_start(&anim_sidebar_close);
+		lv_anim_start(&anim_shade_hide);
+	} else {
+		lv_obj_add_flag(view_menu, LV_OBJ_FLAG_HIDDEN);
+		lv_obj_add_flag(shade, LV_OBJ_FLAG_HIDDEN);
+	}
 }
 
 void alert_btn_cb(lv_event_t *event) {
@@ -63,7 +73,7 @@ void alert_btn_cb(lv_event_t *event) {
 	lv_obj_add_flag(alert_btn, LV_OBJ_FLAG_HIDDEN);
 	lv_obj_clear_flag(alert_cont, LV_OBJ_FLAG_HIDDEN);
 	lv_obj_clear_flag(shade, LV_OBJ_FLAG_HIDDEN);
-	lv_anim_start(&anim_shade_show);
+	if (rd_view_get_anims(current_view) == RD_ANIM_ON) lv_anim_start(&anim_shade_show);
 }
 
 void alert_cb(lv_event_t *event) {
@@ -75,7 +85,12 @@ void alert_cb(lv_event_t *event) {
 
 	if (lv_obj_get_child_cnt(alert_cont) == 0) {
 		lv_obj_add_flag(alert_cont, LV_OBJ_FLAG_HIDDEN);
-		lv_anim_start(&anim_shade_hide);
+
+		if (rd_view_get_anims(current_view) == RD_ANIM_ON) {
+			lv_anim_start(&anim_shade_hide);
+		} else {
+			lv_obj_add_flag(shade, LV_OBJ_FLAG_HIDDEN);
+		}
 	}
 }
 
@@ -155,6 +170,14 @@ void create_ui() {
 	lv_obj_set_size(view_list, lv_pct(100) - 8, lv_pct(100) - 32);
 	lv_obj_add_style(view_list, &style_core_list, 0);
 	lv_obj_align(view_list, LV_ALIGN_TOP_LEFT, 4, 36);
+
+	anim_label = lv_label_create(view_menu);
+	lv_label_set_text(anim_label, "Animations are disabled\nfor this view");
+	lv_obj_add_style(anim_label, &style_text_small, 0);
+	lv_obj_add_style(anim_label, &style_text_centered, 0);
+	lv_obj_align(anim_label, LV_ALIGN_BOTTOM_MID, 0, -2);
+	lv_obj_add_flag(anim_label, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_set_style_text_font(anim_label, &lv_font_montserrat_10, 0);
 
 	// -------------------------- Alert Container -------------------------- //
 
@@ -239,6 +262,7 @@ rd_view_t *rd_view_create(const char *name) {
 	if (!current_view) rd_view_focus(view);
 
 	view->name = name;
+	view->anims = RD_ANIM_ON;
 
 	return view;
 }
@@ -253,6 +277,10 @@ void rd_view_del(rd_view_t *view) {
 	free(view);
 }
 
+void rd_view_set_anims(rd_view_t *view, rd_anim_state_t state) { view->anims = state; }
+
+rd_anim_state_t rd_view_get_anims(rd_view_t *view) { return view->anims; }
+
 lv_obj_t *rd_view_obj(rd_view_t *view) {
 	if (!valid_view(view)) return NULL;
 
@@ -265,6 +293,11 @@ void rd_view_focus(rd_view_t *view) {
 	if (current_view != NULL) lv_obj_add_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
 	current_view = view;
 	lv_obj_clear_flag(current_view->obj, LV_OBJ_FLAG_HIDDEN);
+
+	if (rd_view_get_anims(current_view) == RD_ANIM_ON)
+		lv_obj_add_flag(anim_label, LV_OBJ_FLAG_HIDDEN);
+	else
+		lv_obj_clear_flag(anim_label, LV_OBJ_FLAG_HIDDEN);
 }
 
 void rd_view_alert(rd_view_t *view, const char *msg) {

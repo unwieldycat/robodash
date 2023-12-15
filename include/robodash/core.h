@@ -23,12 +23,18 @@ extern "C" {
 /// @{
 
 /**
+ * @brief Animation state
+ */
+typedef enum rd_anim_state { RD_ANIM_ON, RD_ANIM_OFF } rd_anim_state_t;
+
+/**
  * @brief Robodash view structure
  */
 typedef struct rd_view {
 	const char *name;
 	lv_obj_t *obj;
 	lv_obj_t *_list_btn;
+	rd_anim_state_t anims;
 } rd_view_t;
 
 /**
@@ -71,6 +77,22 @@ lv_obj_t *rd_view_obj(rd_view_t *view);
  * @param msg Message to display
  */
 void rd_view_alert(rd_view_t *view, const char *msg);
+
+/**
+ * @brief Enable or disable animations for a view
+ *
+ * @param view View to modify
+ * @param state Animation state
+ */
+void rd_view_set_anims(rd_view_t *view, rd_anim_state_t state);
+
+/**
+ * @brief Get the animation state for a view
+ *
+ * @param view View to query
+ * @return rd_anim_state_t
+ */
+rd_anim_state_t rd_view_get_anims(rd_view_t *view);
 
 /// @}
 
