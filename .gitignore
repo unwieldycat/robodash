@@ -15,3 +15,5 @@ temp.log
 temp.errors
 *.ini
 .d/
+
+docs-output/
