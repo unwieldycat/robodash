@@ -20,8 +20,6 @@ namespace rd {
  * color images.
  *
  * @image html image.png
- * @bug The sidebar animations are very choppy when viewing an image. A fix for this will be
- * implemented for release.
  *
  * Displays still images from an SD card or a C array.
  */
