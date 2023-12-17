@@ -304,12 +304,15 @@ void rd_view_alert(rd_view_t *view, const char *msg) {
 	if (!valid_view(view)) return;
 
 	if (!lv_obj_has_flag(view_menu, LV_OBJ_FLAG_HIDDEN)) {
-		lv_anim_start(&anim_sidebar_close);
+		if (rd_view_get_anims(current_view) == RD_ANIM_ON)
+			lv_anim_start(&anim_sidebar_close);
+		else
+			lv_obj_add_flag(view_menu, LV_OBJ_FLAG_HIDDEN);
 	}
 
 	if (lv_obj_has_flag(shade, LV_OBJ_FLAG_HIDDEN)) {
 		lv_obj_clear_flag(shade, LV_OBJ_FLAG_HIDDEN);
-		lv_anim_start(&anim_shade_show);
+		if (rd_view_get_anims(current_view) == RD_ANIM_ON) lv_anim_start(&anim_shade_show);
 	}
 
 	lv_obj_clear_flag(alert_cont, LV_OBJ_FLAG_HIDDEN);
