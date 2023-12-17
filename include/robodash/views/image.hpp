@@ -21,7 +21,7 @@ namespace rd {
  *
  * @image html image.png
  *
- * Displays still images from an SD card or a C array.
+ * Displays still images from an SD card or C array.
  */
 
 /**

@@ -16,7 +16,8 @@ extern "C" {
  * @defgroup core Core
  * @brief The view management system.
  *
- * Knowledge of LVGL is required if you wish to create a view.
+ * The LVGL view management system to enable compatibility between templates that provide LVGL GUIs.
+ * Knowledge of LVGL is required to use this API.
  */
 
 /// @addtogroup core
@@ -41,7 +42,7 @@ typedef struct rd_view {
  * @brief Create a view
  *
  * @param name Name of the view
- * @return rd_view_t
+ * @return A pointer to a view object
  */
 rd_view_t *rd_view_create(const char *name);
 
@@ -64,12 +65,12 @@ void rd_view_del(rd_view_t *view);
 /**
  * @brief Get the view's lvgl object
  *
- * @param view View
+ * @param view View to query
  */
 lv_obj_t *rd_view_obj(rd_view_t *view);
 
 /**
- * @brief Push an alert to the screen
+ * @brief Push an alert
  *
  * Pushes an alert to the screen, regardless of which view is active.
  *
@@ -90,7 +91,7 @@ void rd_view_set_anims(rd_view_t *view, rd_anim_state_t state);
  * @brief Get the animation state for a view
  *
  * @param view View to query
- * @return rd_anim_state_t
+ * @return The animation state
  */
 rd_anim_state_t rd_view_get_anims(rd_view_t *view);
 
