@@ -115,8 +115,6 @@ void r_select_act(lv_event_t *event) {
 	selected_routine = routine;
 }
 
-void done_act(lv_event_t *event) { selection_done = true; }
-
 void save_act(lv_event_t *event) {
 	sd_save();
 	lv_obj_clear_flag(saved_toast, LV_OBJ_FLAG_HIDDEN);
