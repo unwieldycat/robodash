@@ -943,7 +943,12 @@ WARN_LOGFILE           =
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = include/robodash/ docs/pages/ README.md
+INPUT                  = include/robodash/ \
+                         docs/pages/installing.md \
+                         docs/pages/usage.md \
+                         docs/pages/ui.md \
+                         docs/pages/ \
+                         README.md
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
