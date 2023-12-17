@@ -20,9 +20,6 @@ Routine *selected_routine = nullptr;
 bool selection_done = false;
 bool selection_running = false;
 
-int saved_id;
-char saved_name[256];
-
 lv_obj_t *select_cont;
 lv_obj_t *selected_label;
 lv_obj_t *saved_toast;
@@ -32,7 +29,7 @@ lv_anim_t anim_toast;
 
 // ============================= SD Card Saving ============================= //
 
-void sdconf_save() {
+void sd_save() {
 	FILE *save_file;
 	save_file = fopen("/usd/rd_auton.txt", "w");
 
@@ -53,7 +50,7 @@ void sdconf_save() {
 	fclose(save_file);
 }
 
-void sdconf_load() {
+void sd_load() {
 	FILE *save_file;
 	save_file = fopen("/usd/rd_auton.txt", "r");
 	if (!save_file) return;
@@ -64,12 +61,10 @@ void sdconf_load() {
 	rewind(save_file);
 
 	// Read contents
+	int saved_id = -1;
+	char saved_name[256];
 	fscanf(save_file, "%d %[^\n]", &saved_id, saved_name);
 	fclose(save_file);
-}
-
-void load_saved() {
-	if (!saved_id) return;
 
 	// None selected condition
 	if (saved_id == -1) {
@@ -123,7 +118,7 @@ void r_select_act(lv_event_t *event) {
 void done_act(lv_event_t *event) { selection_done = true; }
 
 void save_act(lv_event_t *event) {
-	sdconf_save();
+	sd_save();
 	lv_obj_clear_flag(saved_toast, LV_OBJ_FLAG_HIDDEN);
 	lv_anim_start(&anim_toast);
 }
@@ -159,8 +154,6 @@ rd::Selector::Selector(std::vector<routine_t> new_routines) {
 	lv_obj_align(title, LV_ALIGN_TOP_LEFT, 8, 12);
 
 	if (pros::usd::is_installed()) {
-		sdconf_load();
-
 		saved_toast = lv_label_create(view->obj);
 		lv_label_set_text(saved_toast, "Saved to SD");
 		lv_obj_add_style(saved_toast, &style_text_centered, 0);
@@ -207,7 +200,7 @@ rd::Selector::Selector(std::vector<routine_t> new_routines) {
 		lv_obj_add_event_cb(new_btn, &r_select_act, LV_EVENT_PRESSED, &routine);
 	}
 
-	load_saved();
+	if (pros::usd::is_installed()) sd_load();
 }
 
 // ============================= Other Methods ============================= //
