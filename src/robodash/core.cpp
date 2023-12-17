@@ -259,10 +259,10 @@ rd_view_t *rd_view_create(const char *name) {
 	lv_obj_add_event_cb(view->_list_btn, view_focus_cb, LV_EVENT_PRESSED, view);
 	lv_obj_add_event_cb(view->_list_btn, close_cb, LV_EVENT_PRESSED, NULL);
 
-	if (!current_view) rd_view_focus(view);
-
 	view->name = name;
 	view->anims = RD_ANIM_ON;
+
+	if (!current_view) rd_view_focus(view);
 
 	return view;
 }
