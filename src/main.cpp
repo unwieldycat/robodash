@@ -9,8 +9,15 @@ void good_auton() { std::cout << "Running good auton" << std::endl; }
 
 // ================================= Views ================================= //
 
-rd::Selector selector; // Create robodash selector
-rd::Console console;   // Create robodash console
+// Create robodash selector
+rd::Selector selector({
+    {"Best auton",   &best_auton  },
+    {"Simple auton", &simple_auton},
+    {"Good auton",   &good_auton  }
+});
+
+// Create robodash console
+rd::Console console;
 
 // ========================= Competition Functions ========================= //
 
@@ -19,20 +26,13 @@ void initialize() {}
 void disabled() {}
 
 void competition_initialize() {
-	// Register autons to selector
-	selector.add_autons({
-	    {"Best auton",   &best_auton  },
-        {"Simple auton", &simple_auton},
-        {"Good auton",   &good_auton  }
-    });
-
 	// Focus auton selector on screen
 	selector.focus();
 }
 
 void autonomous() {
 	// Run the selected autonomous function
-	selector.do_auton();
+	selector.run_auton();
 }
 
 void opcontrol() {

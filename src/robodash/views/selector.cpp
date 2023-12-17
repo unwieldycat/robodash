@@ -128,9 +128,12 @@ void save_act(lv_event_t *event) {
 	lv_anim_start(&anim_toast);
 }
 
-// ============================= Core Functions ============================= //
+// ============================== Constructor ============================== //
 
-rd::Selector::Selector() {
+rd::Selector::Selector(std::vector<routine_t> new_routines) {
+
+	// ----------------------------- Create UI ----------------------------- //
+
 	this->view = rd_view_create("Auton Selector");
 
 	lv_obj_set_style_bg_color(view->obj, color_bg, 0);
@@ -185,11 +188,9 @@ rd::Selector::Selector() {
 	lv_anim_set_exec_cb(&anim_toast, &anim_text_opa_cb);
 	lv_anim_set_deleted_cb(&anim_toast, &anim_del_cb);
 	lv_anim_set_values(&anim_toast, 255, 0);
-}
 
-// ============================= Other Methods ============================= //
+	// ----------------------------- Add autons ----------------------------- //
 
-void rd::Selector::add_autons(std::vector<routine_t> new_routines) {
 	for (routine_t routine : new_routines) {
 		static int r_index = 0;
 
@@ -209,7 +210,9 @@ void rd::Selector::add_autons(std::vector<routine_t> new_routines) {
 	load_saved();
 }
 
-void rd::Selector::do_auton() {
+// ============================= Other Methods ============================= //
+
+void rd::Selector::run_auton() {
 	if (selected_routine == nullptr) return; // If commanded to do nothing then return
 	selected_routine->action();
 }

@@ -39,20 +39,15 @@ class Selector {
 	/// @name Selector Functions
 
 	/**
-	 * @brief Create a new Selector
+	 * @brief Create autonomous selector
+	 * @param autons Vector of autonomous rotuines
 	 */
-	Selector();
-
-	/**
-	 * @brief Initialize autonomous manager
-	 * @param autons Vector of Routines
-	 */
-	void add_autons(std::vector<routine_t> autons);
+	Selector(std::vector<routine_t> autons);
 
 	/**
 	 * @brief Run selected auton
 	 */
-	void do_auton();
+	void run_auton();
 
 	/**
 	 * @brief Set this view to the active view
