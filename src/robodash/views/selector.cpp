@@ -34,7 +34,7 @@ lv_anim_t anim_toast;
 
 void sdconf_save() {
 	FILE *save_file;
-	save_file = fopen("/usd/autoconf.txt", "w");
+	save_file = fopen("/usd/rd_auton.txt", "w");
 
 	if (selected_routine == nullptr) {
 		fputs("-1", save_file);
@@ -55,7 +55,7 @@ void sdconf_save() {
 
 void sdconf_load() {
 	FILE *save_file;
-	save_file = fopen("/usd/autoconf.txt", "r");
+	save_file = fopen("/usd/rd_auton.txt", "r");
 	if (!save_file) return;
 
 	// Get file size
