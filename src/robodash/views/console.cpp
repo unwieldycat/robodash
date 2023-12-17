@@ -1,10 +1,5 @@
 #include "console.hpp"
 #include "robodash/apix.h"
-#include <sstream>
-
-lv_obj_t *output;
-lv_obj_t *output_cont;
-std::ostringstream stream;
 
 // ============================= Core Functions ============================= //
 
@@ -13,13 +8,13 @@ rd::Console::Console(std::string name) {
 
 	lv_obj_set_style_bg_color(view->obj, color_bg, 0);
 
-	output_cont = lv_obj_create(view->obj);
+	this->output_cont = lv_obj_create(view->obj);
 	lv_obj_set_width(output_cont, lv_pct(100));
 	lv_obj_set_height(output_cont, lv_pct(100));
 	lv_obj_align(output_cont, LV_ALIGN_CENTER, 0, 0);
 	lv_obj_add_style(output_cont, &style_transp, 0);
 
-	output = lv_label_create(output_cont);
+	this->output = lv_label_create(output_cont);
 	lv_obj_set_height(output, LV_SIZE_CONTENT);
 	lv_obj_add_style(output, &style_transp, 0);
 	lv_obj_add_style(output, &style_text_mono, 0);
@@ -30,15 +25,15 @@ rd::Console::Console(std::string name) {
 // =========================== Console Functions =========================== //
 
 void rd::Console::clear() {
-	lv_label_set_text(output, "");
-	stream.str("");
-	stream.clear();
+	lv_label_set_text(this->output, "");
+	this->stream.str("");
+	this->stream.clear();
 }
 
 void rd::Console::print(std::string str) {
-	stream << str;
-	if (output) lv_label_set_text(output, stream.str().c_str());
-	lv_obj_scroll_to_y(output_cont, LV_COORD_MAX, LV_ANIM_OFF);
+	this->stream << str;
+	if (this->output) lv_label_set_text(this->output, this->stream.str().c_str());
+	lv_obj_scroll_to_y(this->output_cont, LV_COORD_MAX, LV_ANIM_OFF);
 }
 
 void rd::Console::println(std::string str) { this->print(str + "\n"); }
