@@ -41,6 +41,7 @@ class Selector {
 	/**
 	 * @brief Create autonomous selector
 	 * @param autons Vector of autonomous rotuines
+	 * @bug Multiple selectors cannot be active at the same time.
 	 */
 	Selector(std::vector<routine_t> autons);
 
