@@ -3,13 +3,14 @@
 
 // =============================== Variables =============================== //
 
+// TODO: Make variables members, so multiple selectors can be used
+
 std::vector<rd::Selector::routine_t> routines;
 rd::Selector::routine_t *selected_routine = nullptr;
 
 lv_obj_t *select_cont;
 lv_obj_t *selected_label;
 lv_obj_t *saved_toast;
-lv_obj_t *routine_list;
 
 lv_anim_t anim_toast;
 
@@ -107,7 +108,7 @@ rd::Selector::Selector(std::vector<routine_t> new_routines) {
 
 	lv_obj_set_style_bg_color(view->obj, color_bg, 0);
 
-	routine_list = lv_list_create(view->obj);
+	lv_obj_t *routine_list = lv_list_create(view->obj);
 	lv_obj_set_size(routine_list, 228, 192);
 	lv_obj_align(routine_list, LV_ALIGN_BOTTOM_LEFT, 8, -8);
 	lv_obj_add_style(routine_list, &style_list, 0);
