@@ -1,12 +1,13 @@
 var indexSectionsWithContent =
 {
-  0: "abcdfiprsu",
+  0: "abcfilprstu",
   1: "cirs",
   2: "acfis",
-  3: "acdfiprs",
+  3: "cfiprs",
   4: "r",
-  5: "cis",
-  6: "biru"
+  5: "r",
+  6: "cis",
+  7: "bilru"
 };
 
 var indexSectionNames =
@@ -16,8 +17,9 @@ var indexSectionNames =
   2: "files",
   3: "functions",
   4: "typedefs",
-  5: "groups",
-  6: "pages"
+  5: "enums",
+  6: "groups",
+  7: "pages"
 };
 
 var indexSectionLabels =
@@ -27,7 +29,8 @@ var indexSectionLabels =
   2: "Files",
   3: "Functions",
   4: "Typedefs",
-  5: "Modules",
-  6: "Pages"
+  5: "Enumerations",
+  6: "Modules",
+  7: "Pages"
 };
 

@@ -25,13 +25,15 @@
 var NAVTREE =
 [
   [ "Robodash", "index.html", [
-    [ "Installation", "md_installing.html", null ],
-    [ "Usage", "md_usage.html", null ],
+    [ "Installation", "installing.html", null ],
+    [ "Usage", "usage.html", null ],
+    [ "User Interface", "ui.html", [
+      [ "Alerts", "ui.html#autotoc_md4", null ]
+    ] ],
     [ "Bug List", "bug.html", null ],
-    [ "Modules", "modules.html", "modules" ],
+    [ "Topics", "topics.html", "topics" ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
-      [ "Class Index", "classes.html", null ],
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", null ],
         [ "Functions", "functions_func.html", null ]
@@ -42,7 +44,8 @@ var NAVTREE =
       [ "File Members", "globals.html", [
         [ "All", "globals.html", null ],
         [ "Functions", "globals_func.html", null ],
-        [ "Typedefs", "globals_type.html", null ]
+        [ "Typedefs", "globals_type.html", null ],
+        [ "Enumerations", "globals_enum.html", null ]
       ] ]
     ] ]
   ] ]

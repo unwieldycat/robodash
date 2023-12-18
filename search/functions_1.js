@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['clear_0',['clear',['../group__console.html#ga5daa22a4ed2cc2a4d02c99c1324d6e63',1,'rd::Console']]],
-  ['console_1',['Console',['../group__console.html#ga8caebc6c99af499b1ddd5bd40581eba1',1,'rd::Console']]]
+  ['focus_0',['focus',['../group__console.html#gabe06174e217c0391d488168839073581',1,'rd::Console::focus()'],['../group__image.html#ga317205da14ca86b86f2d1bd1bb310101',1,'rd::Image::focus()'],['../group__selector.html#ga8f824c347f67daf37463314b2cd5303c',1,'rd::Selector::focus()']]]
 ];

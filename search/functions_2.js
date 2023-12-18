@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['do_5fauton_0',['do_auton',['../group__selector.html#ga5e7eda63d566b56e6ae5cd0db643b2c0',1,'rd::Selector']]]
+  ['image_0',['image',['../group__image.html#ga4f1a26e44ab7ea69641e04946cf3f6bd',1,'rd::Image::Image(std::string path, std::string name=&quot;Image&quot;)'],['../group__image.html#gab91ac9ff8889a5a8b52887c507ebbba2',1,'rd::Image::Image(lv_img_dsc_t image_dsc, std::string name=&quot;Image&quot;)']]]
 ];

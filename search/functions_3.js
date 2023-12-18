@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['focus_0',['focus',['../group__console.html#gabe06174e217c0391d488168839073581',1,'rd::Console::focus()'],['../group__image.html#ga317205da14ca86b86f2d1bd1bb310101',1,'rd::Image::focus()'],['../group__selector.html#ga8f824c347f67daf37463314b2cd5303c',1,'rd::Selector::focus()']]]
+  ['print_0',['print',['../group__console.html#ga901c1b576599ae46096c7b4d90e757dc',1,'rd::Console']]],
+  ['printf_1',['printf',['../group__console.html#gac6d23173b88223b1f5ab365192e8ef89',1,'rd::Console']]],
+  ['println_2',['println',['../group__console.html#ga50b7cc2b4c81e8ffb5e525fd24415569',1,'rd::Console']]]
 ];
