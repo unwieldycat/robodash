@@ -1,24 +1,10 @@
 #include "api.h"
 #include "robodash/apix.h"
 
-// ============================= Routine Class ============================= //
-
-class Routine {
-  public:
-	Routine(int id, std::string name, std::function<void()> action)
-	    : id(id), name(name), action(action) {}
-
-	int id;
-	std::string name;
-	std::function<void()> action;
-};
-
 // =============================== Variables =============================== //
 
-std::vector<Routine> routines;
-Routine *selected_routine = nullptr;
-bool selection_done = false;
-bool selection_running = false;
+std::vector<rd::Selector::routine_t> routines;
+rd::Selector::routine_t *selected_routine = nullptr;
 
 lv_obj_t *select_cont;
 lv_obj_t *selected_label;
@@ -34,15 +20,12 @@ void sd_save() {
 	save_file = fopen("/usd/rd_auton.txt", "w");
 
 	if (selected_routine == nullptr) {
-		fputs("-1", save_file);
+		fputs("", save_file);
 	} else {
-		std::string routine_name = selected_routine->name;
-		int routine_id = selected_routine->id;
+		std::string routine_name = selected_routine->first;
 
-		// File format:
-		// [id] [name]
-		char file_data[sizeof(routine_name) + sizeof(routine_id) + 1];
-		sprintf(file_data, "%d %s", routine_id, routine_name.c_str());
+		char file_data[sizeof(routine_name)];
+		sprintf(file_data, "%s", routine_name.c_str());
 
 		fputs(file_data, save_file);
 	}
@@ -61,13 +44,12 @@ void sd_load() {
 	rewind(save_file);
 
 	// Read contents
-	int saved_id = -1;
-	char saved_name[256];
-	fscanf(save_file, "%d %[^\n]", &saved_id, saved_name);
+	char saved_name[file_size];
+	fscanf(save_file, "%[^\n]", saved_name);
 	fclose(save_file);
 
 	// None selected condition
-	if (saved_id == -1) {
+	if (strcmp(saved_name, "") == 0) {
 		lv_label_set_text(selected_label, "No routine\nselected");
 		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 
@@ -75,39 +57,33 @@ void sd_load() {
 		return;
 	}
 
-	// Out of bounds check
-	if (routines.size() < saved_id + 1) return;
+	for (rd::Selector::routine_t &r : routines) {
+		if (strcmp(r.first.c_str(), saved_name) == 0) selected_routine = &r;
+	}
 
-	Routine selected = routines.at(saved_id);
-	std::string routine_name = selected.name;
-
-	// Exit if routine name does not match saved
-	if (saved_name != routine_name) return;
-
-	selected_routine = &selected;
-
-	// Update routine label
-	char label_str[sizeof(routine_name) + 20];
-	sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
-	lv_label_set_text(selected_label, label_str);
-	lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
+	if (selected_routine != nullptr) {
+		// Update routine label
+		char label_str[sizeof(saved_name) + 20];
+		sprintf(label_str, "Selected routine:\n%s", selected_routine->first.c_str());
+		lv_label_set_text(selected_label, label_str);
+		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
+	}
 }
 
 // ============================== UI Callbacks ============================== //
 
 void r_select_act(lv_event_t *event) {
-
 	lv_obj_t *obj = lv_event_get_target(event);
-	Routine *routine = (Routine *)lv_event_get_user_data(event);
+	rd::Selector::routine_t *routine = (rd::Selector::routine_t *)lv_event_get_user_data(event);
 
 	if (routine == nullptr) {
 		lv_label_set_text(selected_label, "No routine\nselected");
 		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 	} else {
-		std::string routine_name = routine->name;
+		const char *routine_name = routine->first.c_str();
 
 		char label_str[sizeof(routine_name) + 20];
-		sprintf(label_str, "Selected routine:\n%s", routine_name.c_str());
+		sprintf(label_str, "Selected routine:\n%s", routine_name);
 		lv_label_set_text(selected_label, label_str);
 		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 	}
@@ -183,16 +159,11 @@ rd::Selector::Selector(std::vector<routine_t> new_routines) {
 	// ----------------------------- Add autons ----------------------------- //
 
 	for (routine_t routine : new_routines) {
-		static int r_index = 0;
-
-		Routine new_routine(r_index, routine.first, routine.second);
-		routines.push_back(new_routine);
-
-		r_index++;
+		routines.push_back(routine);
 	}
 
-	for (Routine &routine : routines) {
-		lv_obj_t *new_btn = lv_list_add_btn(routine_list, NULL, routine.name.c_str());
+	for (routine_t &routine : routines) {
+		lv_obj_t *new_btn = lv_list_add_btn(routine_list, NULL, routine.first.c_str());
 		lv_obj_add_style(new_btn, &style_list_btn, 0);
 		lv_obj_add_style(new_btn, &style_list_btn_pr, LV_STATE_PRESSED);
 		lv_obj_add_event_cb(new_btn, &r_select_act, LV_EVENT_PRESSED, &routine);
@@ -205,7 +176,7 @@ rd::Selector::Selector(std::vector<routine_t> new_routines) {
 
 void rd::Selector::run_auton() {
 	if (selected_routine == nullptr) return; // If commanded to do nothing then return
-	selected_routine->action();
+	selected_routine->second();
 }
 
 void rd::Selector::focus() { rd_view_focus(this->view); }
