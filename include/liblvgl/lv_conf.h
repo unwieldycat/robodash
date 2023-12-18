@@ -383,25 +383,25 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
  * https://fonts.google.com/specimen/Montserrat  */
 #define LV_FONT_MONTSERRAT_8     0
 #define LV_FONT_MONTSERRAT_10    1
-#define LV_FONT_MONTSERRAT_12    0
+#define LV_FONT_MONTSERRAT_12    1
 #define LV_FONT_MONTSERRAT_14    1
-#define LV_FONT_MONTSERRAT_16    0
-#define LV_FONT_MONTSERRAT_18    0
+#define LV_FONT_MONTSERRAT_16    1
+#define LV_FONT_MONTSERRAT_18    1
 #define LV_FONT_MONTSERRAT_20    1
 #define LV_FONT_MONTSERRAT_22    0
-#define LV_FONT_MONTSERRAT_24    0
+#define LV_FONT_MONTSERRAT_24    1
 #define LV_FONT_MONTSERRAT_26    0
 #define LV_FONT_MONTSERRAT_28    0
 #define LV_FONT_MONTSERRAT_30    1
 #define LV_FONT_MONTSERRAT_32    0
 #define LV_FONT_MONTSERRAT_34    0
-#define LV_FONT_MONTSERRAT_36    0
+#define LV_FONT_MONTSERRAT_36    1
 #define LV_FONT_MONTSERRAT_38    0
 #define LV_FONT_MONTSERRAT_40    1
-#define LV_FONT_MONTSERRAT_42    0
+#define LV_FONT_MONTSERRAT_42    1
 #define LV_FONT_MONTSERRAT_44    0
 #define LV_FONT_MONTSERRAT_46    0
-#define LV_FONT_MONTSERRAT_48    0
+#define LV_FONT_MONTSERRAT_48    1
 
 /* Demonstrate special features */
 #define LV_FONT_MONTSERRAT_12_SUBPX      0
@@ -494,6 +494,8 @@ typedef void * lv_font_user_data_t;
 #define LV_THEME_DEFAULT_FONT_NORMAL        &lv_font_montserrat_20
 #define LV_THEME_DEFAULT_FONT_SUBTITLE      &lv_font_montserrat_10
 #define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_30
+
+#define CONFIG_LV_THEME_DEFAULT_DARK 1
 
 /*=================
  *  Text settings
@@ -756,6 +758,8 @@ typedef void * lv_obj_user_data_t;
 /*Time of slide animation [ms] (0: no animation)*/
 #  define LV_TILEVIEW_DEF_ANIM_TIME   300
 #endif
+
+#define CONFIG_LV_USE_GIF 1
 
 /*Window (dependencies: lv_cont, lv_btn, lv_label, lv_img, lv_page)*/
 #define LV_USE_WIN      1

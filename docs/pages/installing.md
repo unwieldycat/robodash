@@ -26,3 +26,11 @@ commands below in the Integrated Terminal.
    `pros c apply robodash@x.x.x`.
 
 4. `#include "robodash/api.hpp"` in your project's `main.h` file
+
+<div class="section_buttons">
+ 
+| Previous |                Next |
+|:---------|--------------------:|
+|          | [Usage](@ref usage) |
+ 
+</div>

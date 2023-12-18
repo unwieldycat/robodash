@@ -1,4 +1,5 @@
 #include "main.h"
+#include "robodash/api.h"
 
 // ============================= Example autons ============================= //
 
@@ -8,35 +9,36 @@ void good_auton() { std::cout << "Running good auton" << std::endl; }
 
 // ================================= Views ================================= //
 
-rd::Selector selector;
+// Create robodash selector
+rd::Selector selector({
+    {"Best auton",   &best_auton  },
+    {"Simple auton", &simple_auton},
+    {"Good auton",   &good_auton  }
+});
+
+// Create robodash console
 rd::Console console;
 
 // ========================= Competition Functions ========================= //
 
-void initialize() {
-	selector.add_autons({
-	    {"Best auton",   &best_auton  },
-        {"Simple auton", &simple_auton},
-        {"Good auton",   &good_auton  }
-    });
-}
+void initialize() {}
 
 void disabled() {}
 
 void competition_initialize() {
-	// Focus auton selector
+	// Focus auton selector on screen
 	selector.focus();
 }
 
 void autonomous() {
-	// Run selected autonomous function
-	selector.do_auton();
+	// Run the selected autonomous function
+	selector.run_auton();
 }
 
 void opcontrol() {
+	// Print hello 0-99 to the robodash console
 	for (int i = 0; i < 100; i++) {
-		console.clear();
-		console.printf("Hello %d", i);
-		pros::delay(500);
+		console.printf("Hello %d\n", i);
+		pros::delay(200);
 	}
 }

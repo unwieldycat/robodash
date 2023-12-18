@@ -4,7 +4,7 @@ name: Build and Deploy Docs
 # events but only for the master branch
 on:
   push:
-    branches: 
+    branches:
       - main
   workflow_dispatch:
 
@@ -20,9 +20,9 @@ jobs:
         with:
           submodulePath: ./docs/doxygen-awesome-css
       - name: Generate Documentation
-        uses: mattnotmitt/doxygen-action@v1.9.5
+        uses: mattnotmitt/doxygen-action@edge
         with:
-           doxyfile-path: 'docs/Doxyfile'
+          doxyfile-path: "docs/Doxyfile"
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:

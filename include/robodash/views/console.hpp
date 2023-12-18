@@ -6,6 +6,7 @@
 
 #pragma once
 #include "robodash/api.h"
+#include <sstream>
 #include <string>
 
 namespace rd {
@@ -29,6 +30,10 @@ class Console {
 	/// @name Console Functions
   private:
 	rd_view_t *view;
+
+	lv_obj_t *output;
+	lv_obj_t *output_cont;
+	std::ostringstream stream;
 
   public:
 	/**

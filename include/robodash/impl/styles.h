@@ -28,6 +28,7 @@ extern lv_color_t color_shade;
 extern lv_color_t color_primary;
 extern lv_color_t color_primary_dark;
 extern lv_color_t color_text;
+extern lv_color_t color_red;
 
 extern lv_color_t color_bar;
 extern lv_color_t color_bar_dark;
@@ -39,6 +40,7 @@ extern void _init_colors();
 
 extern lv_style_t style_bg;
 extern lv_style_t style_transp;
+extern lv_style_t style_alert;
 
 extern void _init_style_misc();
 
@@ -70,16 +72,16 @@ extern lv_style_t style_text_centered;
 
 extern void _init_style_text();
 
-// ================================ Sidebar ================================ //
+// ================================== Core ================================== //
 
-extern lv_style_t style_bar_button;
-extern lv_style_t style_bar_button_pr;
-extern lv_style_t style_bar_list;
-extern lv_style_t style_bar_list_btn;
-extern lv_style_t style_bar_bg;
-extern lv_style_t style_bar_modal;
+extern lv_style_t style_core_button;
+extern lv_style_t style_core_button_pr;
+extern lv_style_t style_core_list;
+extern lv_style_t style_core_list_btn;
+extern lv_style_t style_core_bg;
+extern lv_style_t style_core_shade;
 
-extern void _init_style_bar();
+extern void _init_style_core();
 
 #ifdef __cplusplus
 }
