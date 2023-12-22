@@ -1,7 +1,5 @@
 #include "selector.hpp"
 #include "api.h"
-#include "liblvgl/core/lv_obj.h"
-#include "liblvgl/extra/layouts/flex/lv_flex.h"
 #include "robodash/apix.h"
 #include <cstring>
 
