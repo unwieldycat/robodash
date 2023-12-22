@@ -28,9 +28,6 @@ namespace rd {
 class Selector {
 	/// @addtogroup selector
 	/// @{
-  private:
-	rd_view_t *view;
-
   public:
 	/// @name Selector Typedefs
 	typedef std::function<void()> routine_action_t;
@@ -56,6 +53,23 @@ class Selector {
 	void focus();
 
 	/// @}
+
+  private:
+	rd_view_t *view;
+
+	lv_obj_t *select_cont;
+	lv_obj_t *selected_label;
+	lv_obj_t *saved_toast;
+	lv_anim_t anim_toast;
+
+	std::vector<rd::Selector::routine_t> routines;
+	rd::Selector::routine_t *selected_routine = nullptr;
+
+	void sd_save();
+	void sd_load();
+
+	static void select_cb(lv_event_t *event);
+	static void save_cb(lv_event_t *event);
 };
 
 } // namespace rd
