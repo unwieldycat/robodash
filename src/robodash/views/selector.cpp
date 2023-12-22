@@ -65,6 +65,7 @@ void rd::Selector::select_cb(lv_event_t *event) {
 	lv_obj_t *obj = lv_event_get_target(event);
 	rd::Selector::routine_t *routine = (rd::Selector::routine_t *)lv_event_get_user_data(event);
 	rd::Selector *selector = (rd::Selector *)lv_obj_get_user_data(obj);
+	if (selector == nullptr) return;
 
 	if (routine == nullptr) {
 		lv_label_set_text(selector->selected_label, "No routine\nselected");
@@ -84,6 +85,7 @@ void rd::Selector::select_cb(lv_event_t *event) {
 void rd::Selector::save_cb(lv_event_t *event) {
 	lv_obj_t *obj = lv_event_get_target(event);
 	rd::Selector *selector = (rd::Selector *)lv_obj_get_user_data(obj);
+	if (selector == nullptr) return;
 	selector->sd_save();
 
 	lv_obj_clear_flag(selector->saved_toast, LV_OBJ_FLAG_HIDDEN);
@@ -112,6 +114,7 @@ rd::Selector::Selector(std::vector<routine_t> new_routines) {
 
 	lv_obj_t *nothing_btn = lv_list_add_btn(routine_list, NULL, "Nothing");
 	lv_obj_add_event_cb(nothing_btn, &select_cb, LV_EVENT_PRESSED, nullptr);
+	lv_obj_set_user_data(nothing_btn, this);
 	lv_obj_add_style(nothing_btn, &style_list_btn, 0);
 	lv_obj_add_style(nothing_btn, &style_list_btn_pr, LV_STATE_PRESSED);
 
