@@ -42,6 +42,13 @@ class Selector {
 
 	/**
 	 * @brief Create autonomous selector
+	 * @param name Name of the autonomous selector
+	 * @param autons Vector of autonomous rotuines
+	 */
+	Selector(std::string name, std::vector<routine_t> autons);
+
+	/**
+	 * @brief Create autonomous selector
 	 * @param autons Vector of autonomous rotuines
 	 */
 	Selector(std::vector<routine_t> autons);

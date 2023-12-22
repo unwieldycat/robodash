@@ -1,3 +1,4 @@
+#include "selector.hpp"
 #include "api.h"
 #include "liblvgl/core/lv_obj.h"
 #include "liblvgl/extra/layouts/flex/lv_flex.h"
@@ -105,11 +106,13 @@ void rd::Selector::save_cb(lv_event_t *event) {
 
 // ============================== Constructor ============================== //
 
-rd::Selector::Selector(std::vector<routine_t> new_routines) {
+rd::Selector::Selector(std::vector<routine_t> autons) : Selector("Auton Selector", autons) {}
+
+rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 
 	// ----------------------------- Create UI ----------------------------- //
 
-	this->view = rd_view_create("Auton Selector");
+	this->view = rd_view_create(name.c_str());
 
 	lv_obj_set_style_bg_color(view->obj, color_bg, 0);
 
