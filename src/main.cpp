@@ -11,9 +11,9 @@ void good_auton() { std::cout << "Running good auton" << std::endl; }
 
 // Create robodash selector
 rd::Selector selector({
-    {"Best auton",   &best_auton  },
+    {"Best auton", &best_auton},
     {"Simple auton", &simple_auton},
-    {"Good auton",   &good_auton  }
+    {"Good auton", &good_auton},
 });
 
 // Create robodash console
