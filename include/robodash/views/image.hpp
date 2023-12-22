@@ -40,8 +40,8 @@ class Image {
 	/**
 	 * @brief Create a new Image
 	 *
-	 * @param name File path to the binary-formatted image on SD card
-	 * @param path Name to display on screen
+	 * @param path File path to the binary-formatted image on SD card
+	 * @param name Name to display on screen
 	 */
 	Image(std::string path, std::string name = "Image");
 
