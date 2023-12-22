@@ -1,5 +1,6 @@
 #include "api.h"
 #include "robodash/apix.h"
+#include <cstring>
 
 // ============================= SD Card Saving ============================= //
 
@@ -71,7 +72,7 @@ void rd::Selector::select_cb(lv_event_t *event) {
 	} else {
 		const char *routine_name = routine->first.c_str();
 
-		char label_str[sizeof(routine_name) + 20];
+		char label_str[strlen(routine_name) + 20];
 		sprintf(label_str, "Selected routine:\n%s", routine_name);
 		lv_label_set_text(selector->selected_label, label_str);
 		lv_obj_align(selector->selected_label, LV_ALIGN_CENTER, 120, 0);
