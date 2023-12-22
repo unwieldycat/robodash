@@ -1,4 +1,6 @@
 #include "api.h"
+#include "liblvgl/core/lv_obj.h"
+#include "liblvgl/extra/layouts/flex/lv_flex.h"
 #include "robodash/apix.h"
 #include <cstring>
 
@@ -11,7 +13,7 @@ void rd::Selector::sd_save() {
 	if (selected_routine == nullptr) {
 		fputs("", save_file);
 	} else {
-		std::string routine_name = selected_routine->first;
+		std::string routine_name = selected_routine->name;
 
 		char file_data[sizeof(routine_name)];
 		sprintf(file_data, "%s", routine_name.c_str());
@@ -47,13 +49,13 @@ void rd::Selector::sd_load() {
 	}
 
 	for (rd::Selector::routine_t &r : routines) {
-		if (strcmp(r.first.c_str(), saved_name) == 0) selected_routine = &r;
+		if (strcmp(r.name.c_str(), saved_name) == 0) selected_routine = &r;
 	}
 
 	if (selected_routine != nullptr) {
 		// Update routine label
 		char label_str[sizeof(saved_name) + 20];
-		sprintf(label_str, "Selected routine:\n%s", selected_routine->first.c_str());
+		sprintf(label_str, "Selected routine:\n%s", selected_routine->name.c_str());
 		lv_label_set_text(selected_label, label_str);
 		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 	}
@@ -67,19 +69,28 @@ void rd::Selector::select_cb(lv_event_t *event) {
 	rd::Selector *selector = (rd::Selector *)lv_obj_get_user_data(obj);
 	if (selector == nullptr) return;
 
+	selector->selected_routine = routine;
+
 	if (routine == nullptr) {
 		lv_label_set_text(selector->selected_label, "No routine\nselected");
-		lv_obj_align(selector->selected_label, LV_ALIGN_CENTER, 120, 0);
-	} else {
-		const char *routine_name = routine->first.c_str();
-
-		char label_str[strlen(routine_name) + 20];
-		sprintf(label_str, "Selected routine:\n%s", routine_name);
-		lv_label_set_text(selector->selected_label, label_str);
-		lv_obj_align(selector->selected_label, LV_ALIGN_CENTER, 120, 0);
+		lv_obj_add_flag(selector->selected_img, LV_OBJ_FLAG_HIDDEN);
+		return;
 	}
 
-	selector->selected_routine = routine;
+	const char *routine_name = routine->name.c_str();
+
+	char label_str[strlen(routine_name) + 20];
+	sprintf(label_str, "Selected routine:\n%s", routine_name);
+	lv_label_set_text(selector->selected_label, label_str);
+	lv_obj_align(selector->selected_label, LV_ALIGN_CENTER, 120, 0);
+
+	if (routine->img.empty()) {
+		lv_obj_add_flag(selector->selected_img, LV_OBJ_FLAG_HIDDEN);
+		return;
+	}
+
+	lv_img_set_src(selector->selected_img, routine->img.c_str());
+	lv_obj_clear_flag(selector->selected_img, LV_OBJ_FLAG_HIDDEN);
 }
 
 void rd::Selector::save_cb(lv_event_t *event) {
@@ -107,10 +118,27 @@ rd::Selector::Selector(std::vector<routine_t> new_routines) {
 	lv_obj_align(routine_list, LV_ALIGN_BOTTOM_LEFT, 8, -8);
 	lv_obj_add_style(routine_list, &style_list, 0);
 
-	selected_label = lv_label_create(view->obj);
+	// FIXME: Figure out the layout of the image and label
+
+	lv_obj_t *selected_cont = lv_obj_create(view->obj);
+	lv_obj_add_style(selected_cont, &style_transp, 0);
+	lv_obj_set_layout(selected_cont, LV_LAYOUT_FLEX);
+	lv_obj_set_size(selected_cont, 240, 240);
+	lv_obj_align(selected_cont, LV_ALIGN_CENTER, 120, 0);
+	lv_obj_set_flex_align(
+	    selected_cont, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER
+	);
+	lv_obj_set_flex_flow(selected_cont, LV_FLEX_FLOW_COLUMN);
+
+	selected_label = lv_label_create(selected_cont);
 	lv_label_set_text(selected_label, "No routine\nselected");
 	lv_obj_add_style(selected_label, &style_text_centered, 0);
-	lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
+
+	selected_img = lv_img_create(selected_cont);
+	lv_obj_set_size(selected_img, 168, 168);
+	// lv_obj_set_style_bg_opa(selected_img, LV_OPA_COVER, 0);
+	// lv_obj_set_style_bg_color(selected_img, lv_color_hex(0xff0000), 0);
+	lv_obj_add_flag(selected_img, LV_OBJ_FLAG_HIDDEN);
 
 	lv_obj_t *nothing_btn = lv_list_add_btn(routine_list, NULL, "Nothing");
 	lv_obj_add_event_cb(nothing_btn, &select_cb, LV_EVENT_PRESSED, nullptr);
@@ -160,7 +188,7 @@ rd::Selector::Selector(std::vector<routine_t> new_routines) {
 	}
 
 	for (routine_t &routine : routines) {
-		lv_obj_t *new_btn = lv_list_add_btn(routine_list, NULL, routine.first.c_str());
+		lv_obj_t *new_btn = lv_list_add_btn(routine_list, NULL, routine.name.c_str());
 		lv_obj_add_style(new_btn, &style_list_btn, 0);
 		lv_obj_add_style(new_btn, &style_list_btn_pr, LV_STATE_PRESSED);
 		lv_obj_set_user_data(new_btn, this);
@@ -174,7 +202,7 @@ rd::Selector::Selector(std::vector<routine_t> new_routines) {
 
 void rd::Selector::run_auton() {
 	if (selected_routine == nullptr) return; // If commanded to do nothing then return
-	selected_routine->second();
+	selected_routine->action();
 }
 
 void rd::Selector::focus() { rd_view_focus(this->view); }

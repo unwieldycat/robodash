@@ -31,7 +31,12 @@ class Selector {
   public:
 	/// @name Selector Typedefs
 	typedef std::function<void()> routine_action_t;
-	typedef std::pair<std::string, routine_action_t> routine_t;
+
+	typedef struct routine {
+		std::string name;
+		routine_action_t action;
+		std::string img = "";
+	} routine_t;
 
 	/// @name Selector Functions
 
@@ -59,6 +64,7 @@ class Selector {
 
 	lv_obj_t *select_cont;
 	lv_obj_t *selected_label;
+	lv_obj_t *selected_img;
 	lv_obj_t *saved_toast;
 	lv_anim_t anim_toast;
 
