@@ -5,6 +5,8 @@
 
 // ============================= SD Card Saving ============================= //
 
+// FIXME: SD card saving doesnt work properly with multiple selectors
+
 void rd::Selector::sd_save() {
 	FILE *save_file;
 	save_file = fopen("/usd/rd_auton.txt", "w");
