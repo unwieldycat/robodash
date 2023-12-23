@@ -12,10 +12,10 @@ void rd::Selector::sd_save() {
 	if (selected_routine == nullptr) {
 		fputs("", save_file);
 	} else {
-		std::string routine_name = selected_routine->name;
+		const char *routine_name = selected_routine->name.c_str();
 
-		char file_data[sizeof(routine_name)];
-		sprintf(file_data, "%s", routine_name.c_str());
+		char file_data[strlen(routine_name)];
+		sprintf(file_data, "%s", routine_name);
 
 		fputs(file_data, save_file);
 	}
@@ -53,7 +53,7 @@ void rd::Selector::sd_load() {
 
 	if (selected_routine != nullptr) {
 		// Update routine label
-		char label_str[sizeof(saved_name) + 20];
+		char label_str[strlen(saved_name) + 20];
 		sprintf(label_str, "Selected routine:\n%s", selected_routine->name.c_str());
 		lv_label_set_text(selected_label, label_str);
 		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
