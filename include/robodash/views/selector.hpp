@@ -74,6 +74,7 @@ class Selector {
 	lv_obj_t *saved_toast;
 	lv_anim_t anim_toast;
 
+	std::string name;
 	std::vector<rd::Selector::routine_t> routines;
 	rd::Selector::routine_t *selected_routine = nullptr;
 

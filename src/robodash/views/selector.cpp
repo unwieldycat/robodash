@@ -3,22 +3,50 @@
 #include "robodash/apix.h"
 #include <cstring>
 
-// ============================= SD Card Saving ============================= //
+const char *file_name = "/usd/rd_auton.txt";
 
-// FIXME: SD card saving doesnt work properly with multiple selectors
+// ============================= SD Card Saving ============================= //
 
 void rd::Selector::sd_save() {
 	FILE *save_file;
-	save_file = fopen("/usd/rd_auton.txt", "w");
 
-	if (selected_routine == nullptr) {
-		fputs("", save_file);
-	} else {
+	// Ensure the file exists
+	save_file = fopen(file_name, "a");
+	fclose(save_file);
+
+	// Open in read mode
+	save_file = fopen(file_name, "r");
+	if (!save_file) return;
+
+	// Get file size
+	fseek(save_file, 0L, SEEK_END);
+	int file_size = ftell(save_file);
+	rewind(save_file);
+
+	char new_text[file_size];
+	char line[256];
+	char saved_selector[256];
+
+	new_text[0] = '\0'; // THIS IS VERY IMPORTANT
+
+	// Find and remove keys for our selector
+	while (fgets(line, 256, save_file)) {
+		sscanf(line, "%[^:] \n", saved_selector);
+		if (saved_selector == this->name) continue;
+		strcat(new_text, line);
+	}
+
+	fclose(save_file);
+	save_file = fopen(file_name, "w");
+	fputs(new_text, save_file);
+
+	// Write save data
+	if (selected_routine != nullptr) {
+		const char *selector_name = this->name.c_str();
 		const char *routine_name = selected_routine->name.c_str();
 
-		char file_data[strlen(routine_name)];
-		sprintf(file_data, "%s", routine_name);
-
+		char file_data[strlen(selector_name) + strlen(routine_name) + 2];
+		sprintf(file_data, "%s: %s\n", selector_name, routine_name);
 		fputs(file_data, save_file);
 	}
 
@@ -27,24 +55,23 @@ void rd::Selector::sd_save() {
 
 void rd::Selector::sd_load() {
 	FILE *save_file;
-	save_file = fopen("/usd/rd_auton.txt", "r");
+	save_file = fopen(file_name, "r");
 	if (!save_file) return;
 
-	// Get file size
-	fseek(save_file, 0L, SEEK_END);
-	int file_size = ftell(save_file);
-	rewind(save_file);
-
 	// Read contents
-	char saved_name[file_size];
-	fscanf(save_file, "%[^\n]", saved_name);
+	char line[256];
+	char saved_selector[256];
+	char saved_name[256];
+
+	while (fgets(line, 256, save_file)) {
+		sscanf(line, "%[^:]: %[^\n\0]", saved_selector, saved_name);
+		if (saved_selector == this->name) break;
+	}
+
 	fclose(save_file);
 
-	// None selected condition
-	if (strcmp(saved_name, "") == 0) {
-		lv_label_set_text(selected_label, "No routine\nselected");
-		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
-
+	// None selected or not our selector
+	if (strcmp(saved_name, "") == 0 || saved_selector != this->name) {
 		selected_routine = nullptr;
 		return;
 	}
@@ -59,6 +86,11 @@ void rd::Selector::sd_load() {
 		sprintf(label_str, "Selected routine:\n%s", selected_routine->name.c_str());
 		lv_label_set_text(selected_label, label_str);
 		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
+
+		if (selected_routine->img.empty()) return;
+
+		lv_img_set_src(this->selected_img, selected_routine->img.c_str());
+		lv_obj_clear_flag(this->selected_img, LV_OBJ_FLAG_HIDDEN);
 	}
 }
 
@@ -108,7 +140,7 @@ void rd::Selector::save_cb(lv_event_t *event) {
 
 rd::Selector::Selector(std::vector<routine_t> autons) : Selector("Auton Selector", autons) {}
 
-rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
+rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) : name(name) {
 
 	// ----------------------------- Create UI ----------------------------- //
 
