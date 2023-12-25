@@ -74,7 +74,7 @@ class Selector {
 
 	std::string name;
 	std::vector<rd::Selector::routine_t> routines;
-	rd::Selector::routine_t *selected_routine = nullptr;
+	rd::Selector::routine_t *selected_routine;
 
 	void sd_save();
 	void sd_load();

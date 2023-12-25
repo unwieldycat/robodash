@@ -131,7 +131,9 @@ void rd::Selector::select_cb(lv_event_t *event) {
 
 rd::Selector::Selector(std::vector<routine_t> autons) : Selector("Auton Selector", autons) {}
 
-rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) : name(name) {
+rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
+	this->name = name;
+	this->selected_routine = nullptr;
 
 	// ----------------------------- Create UI ----------------------------- //
 
