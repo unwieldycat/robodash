@@ -87,7 +87,7 @@ void rd::Selector::sd_load() {
 		lv_label_set_text(selected_label, label_str);
 		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
 
-		if (selected_routine->img.empty()) return;
+		if (selected_routine->img.empty() || !pros::usd::is_installed()) return;
 
 		lv_img_set_src(this->selected_img, selected_routine->img.c_str());
 		lv_obj_clear_flag(this->selected_img, LV_OBJ_FLAG_HIDDEN);
@@ -118,7 +118,7 @@ void rd::Selector::select_cb(lv_event_t *event) {
 	lv_label_set_text(selector->selected_label, label_str);
 	lv_obj_align(selector->selected_label, LV_ALIGN_CENTER, 120, 0);
 
-	if (routine->img.empty()) {
+	if (routine->img.empty() || !pros::usd::is_installed()) {
 		lv_obj_add_flag(selector->selected_img, LV_OBJ_FLAG_HIDDEN);
 		return;
 	}
