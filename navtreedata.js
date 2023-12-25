@@ -30,7 +30,6 @@ var NAVTREE =
     [ "User Interface", "ui.html", [
       [ "Alerts", "ui.html#autotoc_md4", null ]
     ] ],
-    [ "Bug List", "bug.html", null ],
     [ "Topics", "topics.html", "topics" ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],

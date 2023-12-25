@@ -105,7 +105,7 @@
 									<div id="projectname">
 										Robodash<span
 											id="projectnumber"
-											>&#160;2.0.0</span
+											>&#160;2.1.0</span
 										>
 									</div>
 									<div id="projectbrief">A GUI toolkit for PROS 4</div>
@@ -171,6 +171,7 @@ $(document).ready(function(){initNavTree('classrd_1_1Selector.html',''); initRes
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="classrd_1_1Selector-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">rd::Selector Class Reference<div class="ingroups"><a class="el" href="group__selector.html">Selector</a></div></div></div>
 </div><!--header-->
@@ -181,20 +182,28 @@ $(document).ready(function(){initNavTree('classrd_1_1Selector.html',''); initRes
 
 <p><code>#include &lt;<a class="el" href="selector_8hpp_source.html">selector.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrd_1_1Selector_1_1routine.html">routine</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Selector Typedefs</div></td></tr>
 <tr class="memitem:ga9d3fce51aabf28e2de016dbbdaf0e979" id="r_ga9d3fce51aabf28e2de016dbbdaf0e979"><td class="memItemLeft" align="right" valign="top">
 typedef std::function&lt; void()&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>routine_action_t</b></td></tr>
 <tr class="separator:ga9d3fce51aabf28e2de016dbbdaf0e979"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga55a46abfd53dfac821b42bf7a9bd6a2e" id="r_ga55a46abfd53dfac821b42bf7a9bd6a2e"><td class="memItemLeft" align="right" valign="top">
-typedef std::pair&lt; std::string, routine_action_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>routine_t</b></td></tr>
-<tr class="separator:ga55a46abfd53dfac821b42bf7a9bd6a2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf3b041a7168476d328ae1e20763f6ab4" id="r_gaf3b041a7168476d328ae1e20763f6ab4"><td class="memItemLeft" align="right" valign="top">
+typedef struct <a class="el" href="structrd_1_1Selector_1_1routine.html">rd::Selector::routine</a>&#160;</td><td class="memItemRight" valign="bottom"><b>routine_t</b></td></tr>
+<tr class="separator:gaf3b041a7168476d328ae1e20763f6ab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Selector Functions</div></td></tr>
-<tr class="memitem:ga0206ee21bbf67d8a0d2e8adae4ea081b" id="r_ga0206ee21bbf67d8a0d2e8adae4ea081b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__selector.html#ga0206ee21bbf67d8a0d2e8adae4ea081b">Selector</a> (std::vector&lt; routine_t &gt; autons)</td></tr>
+<tr class="memitem:ga66183732b5637b7519e673ab644fb307" id="r_ga66183732b5637b7519e673ab644fb307"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__selector.html#ga66183732b5637b7519e673ab644fb307">Selector</a> (std::string name, std::vector&lt; <a class="el" href="structrd_1_1Selector_1_1routine.html">routine_t</a> &gt; autons)</td></tr>
+<tr class="memdesc:ga66183732b5637b7519e673ab644fb307"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create autonomous selector.  <br /></td></tr>
+<tr class="separator:ga66183732b5637b7519e673ab644fb307"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0206ee21bbf67d8a0d2e8adae4ea081b" id="r_ga0206ee21bbf67d8a0d2e8adae4ea081b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__selector.html#ga0206ee21bbf67d8a0d2e8adae4ea081b">Selector</a> (std::vector&lt; <a class="el" href="structrd_1_1Selector_1_1routine.html">routine_t</a> &gt; autons)</td></tr>
 <tr class="memdesc:ga0206ee21bbf67d8a0d2e8adae4ea081b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create autonomous selector.  <br /></td></tr>
 <tr class="separator:ga0206ee21bbf67d8a0d2e8adae4ea081b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga36c84f580abfccd69640f042a924a4ab" id="r_ga36c84f580abfccd69640f042a924a4ab"><td class="memItemLeft" align="right" valign="top">

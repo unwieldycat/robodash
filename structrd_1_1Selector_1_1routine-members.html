@@ -6,7 +6,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=11" />
 		<meta name="generator" content="Doxygen 1.9.8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Robodash: Usage</title>
+		<title>Robodash: Member List</title>
 		<link href="tabs.css" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="jquery.js"></script>
 		<script type="text/javascript" src="dynsections.js"></script>
@@ -144,7 +144,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('usage.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('structrd_1_1Selector_1_1routine.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -169,62 +169,17 @@ $(document).ready(function(){initNavTree('usage.html',''); initResizable(); });
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">Usage</div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">rd::Selector::routine Member List</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Robodash has two parts: the core, and the toolkit.</p>
-<ul>
-<li>The core library is the system that enables interoperability between templates by providing a view-management system for LVGL. This API requires knowledge of LVGL. Compatible with C and C++.</li>
-<li>The toolkit is the set of provided class-based UI tools intended for end users of the library. These require no knowledge of LVGL and require minimal configuration. Only compatible with C++.</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md2"></a>
-Toolkit</h2>
-<p>All of the tools provided by Robodash are class-based, and are designed to be as simple as possible to use. The following example utilizes the autonomous selector and the on-screen console.</p>
-<div class="fragment"><div class="line"><a class="code hl_class" href="classrd_1_1Selector.html">rd::Selector</a> selector({</div>
-<div class="line">   {<span class="stringliteral">&quot;Auton 0&quot;</span>, &amp;auton0},</div>
-<div class="line">   {<span class="stringliteral">&quot;Auton 1&quot;</span>, &amp;simple_auton},</div>
-<div class="line">   {<span class="stringliteral">&quot;Skills Run&quot;</span>, &amp;skills}</div>
-<div class="line">});</div>
-<div class="line"> </div>
-<div class="line"><a class="code hl_class" href="classrd_1_1Console.html">rd::Console</a> console;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> initialize() {</div>
-<div class="line">   console.<a class="code hl_function" href="group__console.html#ga50b7cc2b4c81e8ffb5e525fd24415569">println</a>(<span class="stringliteral">&quot;Initializing robot...&quot;</span>);</div>
-<div class="line">   <span class="comment">// Robot stuff would happen...</span></div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> autonomous() {</div>
-<div class="line">   console.println(<span class="stringliteral">&quot;Running auton...&quot;</span>);</div>
-<div class="line">   selector.run_auton();</div>
-<div class="line">}</div>
-<div class="ttc" id="aclassrd_1_1Console_html"><div class="ttname"><a href="classrd_1_1Console.html">rd::Console</a></div><div class="ttdoc">Console class.</div><div class="ttdef"><b>Definition</b> console.hpp:26</div></div>
-<div class="ttc" id="aclassrd_1_1Selector_html"><div class="ttname"><a href="classrd_1_1Selector.html">rd::Selector</a></div><div class="ttdoc">Selector class.</div><div class="ttdef"><b>Definition</b> selector.hpp:29</div></div>
-<div class="ttc" id="agroup__console_html_ga50b7cc2b4c81e8ffb5e525fd24415569"><div class="ttname"><a href="group__console.html#ga50b7cc2b4c81e8ffb5e525fd24415569">rd::Console::println</a></div><div class="ttdeci">void println(std::string str)</div><div class="ttdoc">Print to the console with a newline.</div></div>
-</div><!-- fragment --><p>Documention for each class is linked on the topics page.</p>
-<h2><a class="anchor" id="autotoc_md3"></a>
-Core</h2>
-<p>The core library is the view management system for LVGL, and is designed to be as familliar as possible to someone already familliar with LVGL. Each view, represented by a memory pointer to an <code>rd_view_t</code>, exposes an LVGL object the size of the view area, which can be thought of as a screen. It is very important that any LVGL objects that are created in your template or user program are a child of this exposed object, <b>NOT <code>lv_scr_act()</code></b>, since robodash manages which view is active by hiding and unhiding the object cooresponding to each view.</p>
-<p>The name passed to each view will be the name that is displayed on screen in the view switcher and any alert dialogues spawned by the view.</p>
-<p>The following is an example of a simple view that displays a text label.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> opcontrol() {</div>
-<div class="line">   <a class="code hl_struct" href="structrd__view.html">rd_view_t</a> *view = <a class="code hl_function" href="group__core.html#gad825f912081674f39ae1f8d255f6eb84">rd_view_create</a>(<span class="stringliteral">&quot;custom view&quot;</span>);</div>
-<div class="line">   lv_label_t *label = lv_label_create(<a class="code hl_function" href="group__core.html#ga7aa13a1312f4232db533db0e40b1a5f0">rd_view_obj</a>(view));</div>
-<div class="line">   lv_label_set_text(label, <span class="stringliteral">&quot;example&quot;</span>);</div>
-<div class="line">   lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__core_html_ga7aa13a1312f4232db533db0e40b1a5f0"><div class="ttname"><a href="group__core.html#ga7aa13a1312f4232db533db0e40b1a5f0">rd_view_obj</a></div><div class="ttdeci">lv_obj_t * rd_view_obj(rd_view_t *view)</div><div class="ttdoc">Get the view's lvgl object.</div></div>
-<div class="ttc" id="agroup__core_html_gad825f912081674f39ae1f8d255f6eb84"><div class="ttname"><a href="group__core.html#gad825f912081674f39ae1f8d255f6eb84">rd_view_create</a></div><div class="ttdeci">rd_view_t * rd_view_create(const char *name)</div><div class="ttdoc">Create a view.</div></div>
-<div class="ttc" id="astructrd__view_html"><div class="ttname"><a href="structrd__view.html">rd_view</a></div><div class="ttdoc">Robodash view structure.</div><div class="ttdef"><b>Definition</b> core.h:34</div></div>
-</div><!-- fragment --><p>You can learn more about the core library at the <a class="el" href="group__core.html">Core</a> page.</p>
-<div class="section_buttons"></div><div class="section_buttons"><table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Previous   </th><th class="markdownTableHeadRight">Next    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><a class="el" href="installing.html">Installing</a>   </td><td class="markdownTableBodyRight"><a class="el" href="ui.html">User Interface</a>   </td></tr>
-</table>
-</div><div class="section_buttons"></div> </div></div><!-- contents -->
-</div><!-- PageDoc -->
+
+<p>This is the complete list of members for <a class="el" href="structrd_1_1Selector_1_1routine.html">rd::Selector::routine</a>, including all inherited members.</p>
+<table class="directory">
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>action</b> (defined in <a class="el" href="structrd_1_1Selector_1_1routine.html">rd::Selector::routine</a>)</td><td class="entry"><a class="el" href="structrd_1_1Selector_1_1routine.html">rd::Selector::routine</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>img</b> (defined in <a class="el" href="structrd_1_1Selector_1_1routine.html">rd::Selector::routine</a>)</td><td class="entry"><a class="el" href="structrd_1_1Selector_1_1routine.html">rd::Selector::routine</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>name</b> (defined in <a class="el" href="structrd_1_1Selector_1_1routine.html">rd::Selector::routine</a>)</td><td class="entry"><a class="el" href="structrd_1_1Selector_1_1routine.html">rd::Selector::routine</a></td><td class="entry"></td></tr>
+</table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

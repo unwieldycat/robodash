@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['list_0',['Bug List',['../bug.html',1,'']]]
+  ['usage_0',['Usage',['../usage.html',1,'']]],
+  ['user_20interface_1',['User Interface',['../ui.html',1,'']]]
 ];
