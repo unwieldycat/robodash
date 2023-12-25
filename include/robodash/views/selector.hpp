@@ -71,8 +71,6 @@ class Selector {
 	lv_obj_t *select_cont;
 	lv_obj_t *selected_label;
 	lv_obj_t *selected_img;
-	lv_obj_t *saved_toast;
-	lv_anim_t anim_toast;
 
 	std::string name;
 	std::vector<rd::Selector::routine_t> routines;
@@ -82,7 +80,6 @@ class Selector {
 	void sd_load();
 
 	static void select_cb(lv_event_t *event);
-	static void save_cb(lv_event_t *event);
 };
 
 } // namespace rd

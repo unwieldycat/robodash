@@ -103,6 +103,7 @@ void rd::Selector::select_cb(lv_event_t *event) {
 	if (selector == nullptr) return;
 
 	selector->selected_routine = routine;
+	selector->sd_save();
 
 	if (routine == nullptr) {
 		lv_label_set_text(selector->selected_label, "No routine\nselected");
@@ -126,16 +127,6 @@ void rd::Selector::select_cb(lv_event_t *event) {
 	lv_obj_clear_flag(selector->selected_img, LV_OBJ_FLAG_HIDDEN);
 }
 
-void rd::Selector::save_cb(lv_event_t *event) {
-	lv_obj_t *obj = lv_event_get_target(event);
-	rd::Selector *selector = (rd::Selector *)lv_obj_get_user_data(obj);
-	if (selector == nullptr) return;
-	selector->sd_save();
-
-	lv_obj_clear_flag(selector->saved_toast, LV_OBJ_FLAG_HIDDEN);
-	lv_anim_start(&selector->anim_toast);
-}
-
 // ============================== Constructor ============================== //
 
 rd::Selector::Selector(std::vector<routine_t> autons) : Selector("Auton Selector", autons) {}
@@ -150,10 +141,8 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) : 
 
 	lv_obj_t *routine_list = lv_list_create(view->obj);
 	lv_obj_set_size(routine_list, 228, 192);
-	lv_obj_align(routine_list, LV_ALIGN_BOTTOM_LEFT, 8, -8);
+	lv_obj_align(routine_list, LV_ALIGN_TOP_LEFT, 8, 40);
 	lv_obj_add_style(routine_list, &style_list, 0);
-
-	// FIXME: Figure out the layout of the image and label
 
 	lv_obj_t *selected_cont = lv_obj_create(view->obj);
 	lv_obj_add_style(selected_cont, &style_transp, 0);
@@ -165,15 +154,13 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) : 
 	);
 	lv_obj_set_flex_flow(selected_cont, LV_FLEX_FLOW_COLUMN);
 
+	selected_img = lv_img_create(selected_cont);
+	lv_obj_set_size(selected_img, 168, 168);
+	lv_obj_add_flag(selected_img, LV_OBJ_FLAG_HIDDEN);
+
 	selected_label = lv_label_create(selected_cont);
 	lv_label_set_text(selected_label, "No routine\nselected");
 	lv_obj_add_style(selected_label, &style_text_centered, 0);
-
-	selected_img = lv_img_create(selected_cont);
-	lv_obj_set_size(selected_img, 168, 168);
-	// lv_obj_set_style_bg_opa(selected_img, LV_OPA_COVER, 0);
-	// lv_obj_set_style_bg_color(selected_img, lv_color_hex(0xff0000), 0);
-	lv_obj_add_flag(selected_img, LV_OBJ_FLAG_HIDDEN);
 
 	lv_obj_t *nothing_btn = lv_list_add_btn(routine_list, NULL, "Nothing");
 	lv_obj_add_event_cb(nothing_btn, &select_cb, LV_EVENT_PRESSED, nullptr);
@@ -187,34 +174,12 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) : 
 	lv_obj_align(title, LV_ALIGN_TOP_LEFT, 8, 12);
 
 	if (pros::usd::is_installed()) {
-		saved_toast = lv_label_create(view->obj);
-		lv_label_set_text(saved_toast, "Saved to SD");
-		lv_obj_add_style(saved_toast, &style_text_centered, 0);
-		lv_obj_add_style(saved_toast, &style_text_small, 0);
-		lv_obj_align(saved_toast, LV_ALIGN_BOTTOM_RIGHT, -16, -16);
-		lv_obj_add_flag(saved_toast, LV_OBJ_FLAG_HIDDEN);
-
-		lv_obj_t *save_btn = lv_btn_create(view->obj);
-		lv_obj_set_size(save_btn, 64, 32);
-		lv_obj_align(save_btn, LV_ALIGN_BOTTOM_RIGHT, -172, -8);
-		lv_obj_add_event_cb(save_btn, &save_cb, LV_EVENT_PRESSED, NULL);
-		lv_obj_add_style(save_btn, &style_btn, 0);
-		lv_obj_add_style(save_btn, &style_btn_outline, 0);
-		lv_obj_add_style(save_btn, &style_btn_outline_pr, LV_STATE_PRESSED);
-		lv_obj_set_user_data(save_btn, this);
-
-		lv_obj_t *save_img = lv_img_create(save_btn);
-		lv_img_set_src(save_img, LV_SYMBOL_SAVE);
-		lv_obj_set_align(save_img, LV_ALIGN_CENTER);
+		lv_obj_t *save_icon = lv_label_create(view->obj);
+		lv_obj_add_style(save_icon, &style_text_medium, 0);
+		lv_obj_add_style(save_icon, &style_text_centered, 0);
+		lv_label_set_text(save_icon, LV_SYMBOL_SD_CARD "\nSD");
+		lv_obj_align(save_icon, LV_ALIGN_BOTTOM_MID, 16, -8);
 	}
-
-	lv_anim_init(&anim_toast);
-	lv_anim_set_var(&anim_toast, saved_toast);
-	lv_anim_set_time(&anim_toast, 255);
-	lv_anim_set_delay(&anim_toast, 3000);
-	lv_anim_set_exec_cb(&anim_toast, &anim_text_opa_cb);
-	lv_anim_set_deleted_cb(&anim_toast, &anim_del_cb);
-	lv_anim_set_values(&anim_toast, 255, 0);
 
 	// ----------------------------- Add autons ----------------------------- //
 
