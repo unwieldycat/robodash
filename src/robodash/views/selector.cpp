@@ -186,6 +186,10 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	// ----------------------------- Add autons ----------------------------- //
 
 	for (routine_t routine : new_routines) {
+		if (!routine.img.empty()) {
+			routine.img.insert(0, "S:");
+		}
+
 		routines.push_back(routine);
 	}
 
