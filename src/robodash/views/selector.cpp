@@ -1,6 +1,7 @@
 #include "selector.hpp"
 #include "api.h"
 #include "robodash/apix.h"
+#include "robodash/impl/styles.h"
 #include <cstring>
 
 const char *file_name = "/usd/rd_auton.txt";
@@ -163,6 +164,7 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	selected_label = lv_label_create(selected_cont);
 	lv_label_set_text(selected_label, "No routine\nselected");
 	lv_obj_add_style(selected_label, &style_text_centered, 0);
+	lv_obj_add_style(selected_label, &style_text_medium, 0);
 
 	lv_obj_t *nothing_btn = lv_list_add_btn(routine_list, NULL, "Nothing");
 	lv_obj_add_event_cb(nothing_btn, &select_cb, LV_EVENT_PRESSED, nullptr);
