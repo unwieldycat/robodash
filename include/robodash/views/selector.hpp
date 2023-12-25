@@ -17,8 +17,9 @@ namespace rd {
  * @brief A function selector
  * @image html selector.png
  *
- * A function selector for easily managing autonomous routines. Supports saving a configuration to
- * an SD card, and automatically loading it on the next run.
+ * A function selector for easily managing autonomous routines. If available, automatically saves
+ * the current configuration to an SD card and loads it on the next run. Also supports displaying
+ * images from the SD card.
  */
 
 /**
