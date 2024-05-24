@@ -79,16 +79,11 @@ typedef enum {
  *  Struct representing screen touch status, screen last x, screen last y, press count, release count.
  */
 typedef struct screen_touch_status_s {
-	/// Represents if the screen is being held, released, or pressed.
-	last_touch_e_t touch_status;
-	/// Represents the x value of the location of the touch.
-	int16_t x;
-	/// Represents the y value of the location of the touch.
-	int16_t y;
-	/// Represents how many times the screen has be pressed.
-	int32_t press_count;
-	/// Represents how many times the user released after a touch on the screen.
-	int32_t release_count;
+	last_touch_e_t touch_status; ///< Represents if the screen is being held, released, or pressed.
+	int16_t x; ///< Represents the x value of the location of the touch.
+	int16_t y; ///< Represents the y value of the location of the touch.
+	int32_t press_count; ///< Represents how many times the screen has be pressed.
+	int32_t release_count; ///< Represents how many times the user released after a touch on the screen.
 } screen_touch_status_s_t;
 
 #ifdef PROS_USE_SIMPLE_NAMES
@@ -97,7 +92,7 @@ typedef struct screen_touch_status_s {
 #define TEXT_MEDIUM pros::E_TEXT_MEDIUM
 #define TEXT_LARGE pros::E_TEXT_LARGE
 #define TEXT_MEDIUM_CENTER pros::E_TEXT_MEDIUM_CENTER
-#define TEXT_LARGE_CENTER pros::E_LARGE_CENTER
+#define TEXT_LARGE_CENTER pros::E_TEXT_LARGE_CENTER
 #define TOUCH_RELEASED pros::E_TOUCH_RELEASED
 #define TOUCH_PRESSED pros::E_TOUCH_PRESSED
 #define TOUCH_HELD pros::E_TOUCH_HELD
