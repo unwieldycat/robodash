@@ -28,7 +28,7 @@ var NAVTREE =
     [ "Installation", "installing.html", null ],
     [ "Usage", "usage.html", null ],
     [ "User Interface", "ui.html", [
-      [ "Alerts", "ui.html#autotoc_md4", null ]
+      [ "Alerts", "ui.html#autotoc_md8", null ]
     ] ],
     [ "Topics", "topics.html", "topics" ],
     [ "Classes", "annotated.html", [

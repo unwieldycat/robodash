@@ -106,7 +106,7 @@
 									<div id="projectname">
 										Robodash<span
 											id="projectnumber"
-											>&#160;2.2.0</span
+											>&#160;2.1.1</span
 										>
 									</div>
 									<div id="projectbrief">A GUI toolkit for PROS 4</div>
@@ -185,7 +185,7 @@ $(function(){initNavTree('usage.html',''); initResizable(true); });
 <li>The core library is the system that enables interoperability between templates by providing a view-management system for LVGL. This API requires knowledge of LVGL. Compatible with C and C++.</li>
 <li>The toolkit is the set of provided class-based UI tools intended for end users of the library. These require no knowledge of LVGL and require minimal configuration. Only compatible with C++.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2"></a>
+<h2><a class="anchor" id="autotoc_md6"></a>
 Toolkit</h2>
 <p>All of the tools provided by Robodash are class-based, and are designed to be as simple as possible to use. The following example utilizes the autonomous selector and the on-screen console.</p>
 <div class="fragment"><div class="line"><a class="code hl_class" href="classrd_1_1Selector.html">rd::Selector</a> selector({</div>
@@ -209,7 +209,7 @@ Toolkit</h2>
 <div class="ttc" id="aclassrd_1_1Selector_html"><div class="ttname"><a href="classrd_1_1Selector.html">rd::Selector</a></div><div class="ttdoc">Selector class.</div><div class="ttdef"><b>Definition</b> selector.hpp:29</div></div>
 <div class="ttc" id="agroup__console_html_ga50b7cc2b4c81e8ffb5e525fd24415569"><div class="ttname"><a href="group__console.html#ga50b7cc2b4c81e8ffb5e525fd24415569">rd::Console::println</a></div><div class="ttdeci">void println(std::string str)</div><div class="ttdoc">Print to the console with a newline.</div></div>
 </div><!-- fragment --><p>Documention for each class is linked on the topics page.</p>
-<h2><a class="anchor" id="autotoc_md3"></a>
+<h2><a class="anchor" id="autotoc_md7"></a>
 Core</h2>
 <p>The core library is the view management system for LVGL, and is designed to be as familliar as possible to someone already familliar with LVGL. Each view, represented by a memory pointer to an <code>rd_view_t</code>, exposes an LVGL object the size of the view area, which can be thought of as a screen. It is very important that any LVGL objects that are created in your template or user program are a child of this exposed object, <b>NOT <code>lv_scr_act()</code></b>, since robodash manages which view is active by hiding and unhiding the object cooresponding to each view.</p>
 <p>The name passed to each view will be the name that is displayed on screen in the view switcher and any alert dialogues spawned by the view.</p>

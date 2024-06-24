@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['image_0',['Image',['../classrd_1_1Image.html',1,'rd::Image'],['../group__image.html#ga4f1a26e44ab7ea69641e04946cf3f6bd',1,'rd::Image::Image(std::string path, std::string name=&quot;Image&quot;)'],['../group__image.html#gab91ac9ff8889a5a8b52887c507ebbba2',1,'rd::Image::Image(lv_img_dsc_t image_dsc, std::string name=&quot;Image&quot;)'],['../group__image.html',1,'Image']]],
-  ['image_2ehpp_1',['image.hpp',['../image_8hpp.html',1,'']]],
-  ['installation_2',['Installation',['../installing.html',1,'']]],
-  ['installing_20the_20template_3',['Installing the template',['../installing.html#autotoc_md1',1,'']]],
-  ['interface_4',['User Interface',['../ui.html',1,'']]]
+  ['filesystem_2eh_0',['filesystem.h',['../filesystem_8h.html',1,'']]],
+  ['focus_1',['focus',['../group__console.html#gabe06174e217c0391d488168839073581',1,'rd::Console::focus()'],['../group__image.html#ga317205da14ca86b86f2d1bd1bb310101',1,'rd::Image::focus()'],['../group__selector.html#ga8f824c347f67daf37463314b2cd5303c',1,'rd::Selector::focus()']]]
 ];

@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['prerequisites_0',['Prerequisites',['../installing.html#autotoc_md0',1,'']]],
-  ['print_1',['print',['../group__console.html#ga901c1b576599ae46096c7b4d90e757dc',1,'rd::Console']]],
-  ['printf_2',['printf',['../group__console.html#gac6d23173b88223b1f5ab365192e8ef89',1,'rd::Console']]],
-  ['println_3',['println',['../group__console.html#ga50b7cc2b4c81e8ffb5e525fd24415569',1,'rd::Console']]]
+  ['image_0',['Image',['../classrd_1_1Image.html',1,'rd::Image'],['../group__image.html#ga4f1a26e44ab7ea69641e04946cf3f6bd',1,'rd::Image::Image(std::string path, std::string name=&quot;Image&quot;)'],['../group__image.html#gab91ac9ff8889a5a8b52887c507ebbba2',1,'rd::Image::Image(lv_img_dsc_t image_dsc, std::string name=&quot;Image&quot;)'],['../group__image.html',1,'Image']]],
+  ['image_2ehpp_1',['image.hpp',['../image_8hpp.html',1,'']]],
+  ['installation_2',['Installation',['../installing.html',1,'']]],
+  ['interface_3',['User Interface',['../ui.html',1,'']]]
 ];
