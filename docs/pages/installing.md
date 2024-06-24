@@ -29,8 +29,8 @@ commands below in the Integrated Terminal.
 
 <div class="section_buttons">
  
-| Previous |                Next |
-|:---------|--------------------:|
-|          | [Usage](@ref usage) |
+| Previous          |                Next |
+|:------------------|--------------------:|
+| [Home](@ref index) | [Usage](@ref usage) |
  
 </div>
