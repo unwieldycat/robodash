@@ -1,31 +1,43 @@
 @page installing Installation
 
+@note If you only have the PROS VSCode extension installed, you must run
+commands in the PROS "Integrated Terminal", not your system terminal.
+
 ## Prerequisites
 
-- An installation of the PROS CLI or VSCode extension.
+Before you install robodash you must have the following:
 
-- A PROS 4 project. Robodash does not support PROS 3 due to the bundled LVGL
-  version.
+- An installation of the PROS CLI or VSCode extension
 
-- [liblvgl 8](https://github.com/purduesigbots/liblvgl). LVGL 5.3 is not
-  supported.
+- A PROS 4 project
 
-## Installing the template
+- [liblvgl 8](https://github.com/purduesigbots/liblvgl) added to your project
 
-@note If you only have the PROS VSCode extension installed, you must run the
-commands below in the Integrated Terminal.
+## Add the depot
 
-1. Download the latest template from the
-   [releases tab](https://github.com/unwieldycat/robodash/releases) on GitHub
+Before adding robodash to your project, you'll need to register the depot with the PROS CLI. A depot is a remote file that informs the PROS CLI of templates that exist and where they can be installed from. You can run the command below to add the depot.
 
-2. Open the download location and fetch the template with
-   `pros c fetch robodash@x.x.x.zip`. This registers the template with PROS
-   Conductor, the PROS project management tools.
+```
+pros c add-depot robodash https://raw.githubusercontent.com/unwieldycat/robodash/depot/stable.json
+```
 
-3. Open the project you wish to use the library in and install the template with
-   `pros c apply robodash@x.x.x`.
+### Or don't
 
-4. `#include "robodash/api.hpp"` in your project's `main.h` file
+Alternatively, you can download and register an individual version of robodash by downloading it from the releases tab on the GitHub page and registering it with `pros c fetch robodash@x.x.x.zip`. This is not recommended since you will have to manually repeat this step as robodash updates.
+
+## Apply to project
+
+Now let's add robodash to a project. Open the project you wish to use the robodash in and run the command below to apply it to your project.
+
+```
+pros c apply robodash
+```
+
+You can now add the following to your project's `main.h` file to use robodash.
+
+```cpp
+#include "robodash/api.hpp"
+```
 
 <div class="section_buttons">
  
