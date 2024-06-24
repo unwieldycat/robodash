@@ -1,0 +1,72 @@
+[
+  {
+    "metadata": {
+      "location": "https://github.com/unwieldycat/robodash/releases/download/v2.1.1/robodash%402.1.1.zip"
+    },
+    "name": "robodash",
+    "py/object": "pros.conductor.templates.base_template.BaseTemplate",
+    "supported_kernels": "^4.1.0",
+    "target": "v5",
+    "version": "2.1.1"
+  },
+  {
+    "metadata": {
+      "location": "https://github.com/unwieldycat/robodash/releases/download/v2.1.0/robodash%402.1.0.zip"
+    },
+    "name": "robodash",
+    "py/object": "pros.conductor.templates.base_template.BaseTemplate",
+    "supported_kernels": "^4.0.6",
+    "target": "v5",
+    "version": "2.1.0"
+  },
+  {
+    "metadata": {
+      "location": "https://github.com/unwieldycat/robodash/releases/download/v2.0.0/robodash%402.0.0.zip"
+    },
+    "name": "robodash",
+    "py/object": "pros.conductor.templates.base_template.BaseTemplate",
+    "supported_kernels": "^4.0.6",
+    "target": "v5",
+    "version": "2.0.0"
+  },
+  {
+    "metadata": {
+      "location": "https://github.com/unwieldycat/robodash/releases/download/v2.0.0-rc3/robodash%402.0.0.zip"
+    },
+    "name": "robodash",
+    "py/object": "pros.conductor.templates.base_template.BaseTemplate",
+    "supported_kernels": "^4.0.4",
+    "target": "v5",
+    "version": "2.0.0"
+  },
+  {
+    "metadata": {
+      "location": "https://github.com/unwieldycat/robodash/releases/download/v2.0.0-rc2/robodash%402.0.0.zip"
+    },
+    "name": "robodash",
+    "py/object": "pros.conductor.templates.base_template.BaseTemplate",
+    "supported_kernels": "^4.0.4",
+    "target": "v5",
+    "version": "2.0.0"
+  },
+  {
+    "metadata": {
+      "location": "https://github.com/unwieldycat/robodash/releases/download/v2.0.0-rc1/robodash%402.0.0.zip"
+    },
+    "name": "robodash",
+    "py/object": "pros.conductor.templates.base_template.BaseTemplate",
+    "supported_kernels": "^4.0.4",
+    "target": "v5",
+    "version": "2.0.0"
+  },
+  {
+    "metadata": {
+      "location": "https://github.com/unwieldycat/robodash/releases/download/v1.0.0/selectlib%401.0.0.zip"
+    },
+    "name": "selectlib",
+    "py/object": "pros.conductor.templates.base_template.BaseTemplate",
+    "supported_kernels": "^3.7.3",
+    "target": "v5",
+    "version": "1.0.0"
+  }
+]
