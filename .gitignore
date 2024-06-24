@@ -15,3 +15,6 @@ temp.log
 temp.errors
 *.ini
 .d/
+
+docs-output/
+.DS_Store
