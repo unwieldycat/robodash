@@ -15,6 +15,20 @@ Get started with robodash by reading
 ### Screenshots
 
 <details>
+<summary>Console Tool</summary>
+
+![The robodash image display](./docs/assets/console.png)
+
+</details>
+
+<details>
+<summary>Image Tool</summary>
+
+![The robodash image display](./docs/assets/image.png)
+
+</details>
+
+<details>
 <summary>Autonomous Selector Tool</summary>
 
 ![The robodash selector](./docs/assets/selector.png)
