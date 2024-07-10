@@ -16,5 +16,4 @@
 
 #include "api.h"
 #include "impl/assets.h"
-#include "impl/filesystem.h"
 #include "impl/styles.h"

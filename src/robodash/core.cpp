@@ -230,7 +230,6 @@ bool initialized = false;
 void initialize() {
 	if (initialized) return;
 
-	_init_fs();
 	_init_styles();
 
 	create_ui();
