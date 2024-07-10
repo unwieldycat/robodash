@@ -234,8 +234,7 @@ bool initialized = false;
 void initialize() {
 	if (initialized) return;
 
-	_init_styles();
-
+	create_styles();
 	create_ui();
 	create_anims();
 

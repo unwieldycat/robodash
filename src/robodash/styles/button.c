@@ -8,7 +8,7 @@ lv_style_t style_btn_primary_pr;
 lv_style_t style_btn_outline;
 lv_style_t style_btn_outline_pr;
 
-void _init_style_btn() {
+void create_btn_styles() {
 	// Base button
 	lv_style_init(&style_btn);
 	lv_style_set_radius(&style_btn, 16);

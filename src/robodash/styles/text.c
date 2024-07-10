@@ -9,7 +9,7 @@ lv_style_t style_text_medium;
 lv_style_t style_text_large;
 lv_style_t style_text_centered;
 
-void _init_style_text() {
+void create_text_styles() {
 	// Monospaced text
 	lv_style_init(&style_text_mono);
 	lv_style_set_text_color(&style_text_mono, color_text);
