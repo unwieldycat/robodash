@@ -37,7 +37,7 @@
 #include "core.h"
 
 #ifdef __cplusplus
-#include "views/console.hpp"
-#include "views/image.hpp"
-#include "views/selector.hpp"
+#include "widgets/console.hpp"
+#include "widgets/image.hpp"
+#include "widgets/selector.hpp"
 #endif

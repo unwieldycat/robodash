@@ -1,5 +1,6 @@
+#include "robodash/widgets/image.hpp"
 #include "api.h"
-#include "robodash/apix.h"
+#include "robodash/detail/styles.h"
 
 // ============================= Core Functions ============================= //
 

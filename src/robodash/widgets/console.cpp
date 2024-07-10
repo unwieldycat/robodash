@@ -1,5 +1,5 @@
-#include "console.hpp"
-#include "robodash/apix.h"
+#include "robodash/widgets/console.hpp"
+#include "robodash/detail/styles.h"
 
 // ============================= Core Functions ============================= //
 
