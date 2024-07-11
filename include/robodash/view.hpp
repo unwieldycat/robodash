@@ -82,6 +82,7 @@ class View {
 	lv_obj_t *btn_obj;
 	lv_obj_t *scr_obj;
 	std::vector<ViewFlag> flags;
+	std::string name;
 };
 
 } // namespace rd
