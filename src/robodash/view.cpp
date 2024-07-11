@@ -55,7 +55,7 @@ void rd::View::remove_flag(rd::ViewFlag flag) {
 	refresh();
 }
 
-void refresh() {}
+void rd::View::refresh() {}
 
 std::string rd::View::get_name() { return name; }
 
