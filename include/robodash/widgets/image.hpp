@@ -6,7 +6,7 @@
 
 #pragma once
 #include "liblvgl/lvgl.h"
-#include "robodash/core.h"
+#include "robodash/view.hpp"
 #include <string>
 
 namespace rd {
@@ -35,7 +35,7 @@ class Image {
 
 	/// @name Image Functions
   private:
-	rd_view_t *view;
+	rd::View view;
 
   public:
 	/**

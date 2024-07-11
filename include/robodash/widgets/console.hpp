@@ -6,7 +6,7 @@
 
 #pragma once
 #include "liblvgl/lvgl.h"
-#include "robodash/core.h"
+#include "robodash/view.hpp"
 #include <sstream>
 #include <string>
 
@@ -30,7 +30,7 @@ class Console {
 
 	/// @name Console Functions
   private:
-	rd_view_t *view;
+	rd::View view;
 
 	lv_obj_t *output;
 	lv_obj_t *output_cont;

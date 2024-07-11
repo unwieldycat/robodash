@@ -6,7 +6,7 @@
 
 #pragma once
 #include "liblvgl/lvgl.h"
-#include "robodash/core.h"
+#include "robodash/view.hpp"
 #include <functional>
 #include <string>
 #include <vector>
@@ -68,7 +68,7 @@ class Selector {
 	/// @}
 
   private:
-	rd_view_t *view;
+	rd::View view;
 
 	lv_obj_t *select_cont;
 	lv_obj_t *selected_label;
