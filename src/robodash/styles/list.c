@@ -1,4 +1,4 @@
-#include "robodash/apix.h"
+#include "robodash/detail/styles.h"
 
 // ================================== List ================================== //
 
@@ -6,7 +6,7 @@ lv_style_t style_list;
 lv_style_t style_list_btn;
 lv_style_t style_list_btn_pr;
 
-void _init_style_list() {
+void create_list_styles() {
 	// List
 	lv_style_init(&style_list);
 	lv_style_set_border_color(&style_list, color_border);

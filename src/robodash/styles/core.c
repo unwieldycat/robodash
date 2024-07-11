@@ -1,4 +1,4 @@
-#include "robodash/apix.h"
+#include "robodash/detail/styles.h"
 
 // ================================== Core ================================== //
 
@@ -9,7 +9,7 @@ lv_style_t style_core_list_btn;
 lv_style_t style_core_bg;
 lv_style_t style_core_shade;
 
-void _init_style_core() {
+void create_core_styles() {
 	// Sidebar button
 	lv_style_init(&style_core_button);
 	lv_style_set_pad_all(&style_core_button, 8);

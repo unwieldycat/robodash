@@ -1,4 +1,4 @@
-#include "robodash/apix.h"
+#include "robodash/detail/styles.h"
 
 // ============================= Miscellaneous ============================= //
 
@@ -6,7 +6,7 @@ lv_style_t style_bg;
 lv_style_t style_transp;
 lv_style_t style_alert;
 
-void _init_style_misc() {
+void create_misc_styles() {
 	// Background
 	lv_style_init(&style_bg);
 	lv_style_set_border_width(&style_bg, 0);

@@ -1,4 +1,8 @@
-#include "apix.h"
+#include "robodash/core.h"
+#include "liblvgl/lvgl.h"
+#include "robodash/detail/assets.h"
+#include "robodash/detail/styles.h"
+#include <memory>
 
 const int view_menu_width = 192;
 
@@ -230,9 +234,7 @@ bool initialized = false;
 void initialize() {
 	if (initialized) return;
 
-	_init_fs();
-	_init_styles();
-
+	create_styles();
 	create_ui();
 	create_anims();
 

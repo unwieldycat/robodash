@@ -1,4 +1,4 @@
-#include "robodash/apix.h"
+#include "robodash/detail/styles.h"
 
 // ================================= Colors ================================= //
 
@@ -16,7 +16,7 @@ lv_color_t color_bar;
 lv_color_t color_bar_dark;
 lv_color_t color_bar_outline;
 
-void _init_colors() {
+void create_colors() {
 	color_bg = lv_color_hsv_to_rgb(hue, 50, 10);
 	color_border = lv_color_hsv_to_rgb(hue, 25, 50);
 	color_shade = lv_color_hsv_to_rgb(hue, 50, 25);

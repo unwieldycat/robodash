@@ -5,7 +5,8 @@
  */
 
 #pragma once
-#include "robodash/api.h"
+#include "liblvgl/lvgl.h"
+#include "robodash/core.h"
 #include <functional>
 #include <string>
 #include <vector>

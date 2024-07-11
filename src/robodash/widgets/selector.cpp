@@ -1,7 +1,6 @@
-#include "selector.hpp"
+#include "robodash/widgets/selector.hpp"
 #include "api.h"
-#include "robodash/apix.h"
-#include "robodash/impl/styles.h"
+#include "robodash/detail/styles.h"
 #include <cstring>
 
 const char *file_name = "/usd/rd_auton.txt";

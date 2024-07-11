@@ -5,13 +5,13 @@
  */
 
 #pragma once
-#include "robodash/apix.h"
+#include "liblvgl/lvgl.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-extern void _init_styles();
+void create_styles();
 
 // ========================== Animation Callbacks ========================== //
 
@@ -34,23 +34,17 @@ extern lv_color_t color_bar;
 extern lv_color_t color_bar_dark;
 extern lv_color_t color_bar_outline;
 
-extern void _init_colors();
-
 // ============================= Miscellaneous ============================= //
 
 extern lv_style_t style_bg;
 extern lv_style_t style_transp;
 extern lv_style_t style_alert;
 
-extern void _init_style_misc();
-
 // ================================= Lists ================================= //
 
 extern lv_style_t style_list;
 extern lv_style_t style_list_btn;
 extern lv_style_t style_list_btn_pr;
-
-extern void _init_style_list();
 
 // ================================= Buttons ================================= //
 
@@ -60,8 +54,6 @@ extern lv_style_t style_btn_primary_pr;
 extern lv_style_t style_btn_outline;
 extern lv_style_t style_btn_outline_pr;
 
-extern void _init_style_btn();
-
 // ================================== Text ================================== //
 
 extern lv_style_t style_text_mono;
@@ -69,8 +61,6 @@ extern lv_style_t style_text_small;
 extern lv_style_t style_text_medium;
 extern lv_style_t style_text_large;
 extern lv_style_t style_text_centered;
-
-extern void _init_style_text();
 
 // ================================== Core ================================== //
 
@@ -80,8 +70,6 @@ extern lv_style_t style_core_list;
 extern lv_style_t style_core_list_btn;
 extern lv_style_t style_core_bg;
 extern lv_style_t style_core_shade;
-
-extern void _init_style_core();
 
 #ifdef __cplusplus
 }
