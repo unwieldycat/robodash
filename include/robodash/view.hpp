@@ -70,6 +70,14 @@ class View {
 	 */
 	operator lv_obj_t *();
 
+  protected:
+	/**
+	 * Refresh this view's behavior based on the current flags.
+	 *
+	 * Called when flags are modified.
+	 */
+	void refresh();
+
   private:
 	lv_obj_t *btn_obj;
 	lv_obj_t *scr_obj;
