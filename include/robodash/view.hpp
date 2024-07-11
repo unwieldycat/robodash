@@ -57,6 +57,13 @@ class View {
 	void remove_flag(ViewFlag flag);
 
 	/**
+	 * Get this view's name
+	 *
+	 * @return std::string
+	 */
+	std::string get_name();
+
+	/**
 	 * Get the LVGL object for this view
 	 *
 	 * @return lv_obj_t*
