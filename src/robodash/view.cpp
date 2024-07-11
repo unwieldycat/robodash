@@ -41,7 +41,10 @@ void rd::View::focus() {
 		lv_obj_clear_flag(anim_label, LV_OBJ_FLAG_HIDDEN);
 }
 
-void rd::View::add_flag(rd::ViewFlag flag) { flags.push_back(flag); }
+void rd::View::add_flag(rd::ViewFlag flag) {
+	flags.push_back(flag);
+	refresh();
+}
 
 bool rd::View::has_flag(rd::ViewFlag flag) {
 	return std::find(flags.begin(), flags.end(), flag) != flags.end();
@@ -49,7 +52,10 @@ bool rd::View::has_flag(rd::ViewFlag flag) {
 
 void rd::View::remove_flag(rd::ViewFlag flag) {
 	flags.erase(std::remove(flags.begin(), flags.end(), flag), flags.end());
+	refresh();
 }
+
+void refresh() {}
 
 std::string rd::View::get_name() { return name; }
 
