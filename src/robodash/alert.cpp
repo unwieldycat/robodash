@@ -13,12 +13,7 @@ void alert_cb(lv_event_t *event) {
 
 	if (lv_obj_get_child_cnt(alert_cont) == 0) {
 		lv_obj_add_flag(alert_cont, LV_OBJ_FLAG_HIDDEN);
-
-		if (current_view->has_flag(rd::ViewFlag::NoAnimation)) {
-			lv_obj_add_flag(shade, LV_OBJ_FLAG_HIDDEN);
-		} else {
-			lv_anim_start(&anim_shade_hide);
-		}
+		hide_shade();
 	}
 }
 
@@ -28,12 +23,7 @@ void rd::alert(std::string message) {
 
 void rd::alert(std::string message, rd::View &view) {
 	hide_menu();
-
-	if (lv_obj_has_flag(shade, LV_OBJ_FLAG_HIDDEN)) {
-		lv_obj_clear_flag(shade, LV_OBJ_FLAG_HIDDEN);
-		if (current_view->has_flag(ViewFlag::NoAnimation)) return;
-		lv_anim_start(&anim_shade_show);
-	}
+	show_shade();
 
 	lv_obj_clear_flag(alert_cont, LV_OBJ_FLAG_HIDDEN);
 
