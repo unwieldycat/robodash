@@ -26,7 +26,7 @@ void rd::alert(std::string message) {
 	// TODO: Implement
 }
 
-void rd::alert(std::string message, rd::View view) {
+void rd::alert(std::string message, rd::View &view) {
 	if (!lv_obj_has_flag(view_menu, LV_OBJ_FLAG_HIDDEN)) {
 		if (current_view->has_flag(ViewFlag::NoAnimation))
 			lv_obj_add_flag(view_menu, LV_OBJ_FLAG_HIDDEN);

@@ -17,6 +17,6 @@ void alert(std::string message);
  * @param message Message to display
  * @param view View to link back to
  */
-void alert(std::string message, View view);
+void alert(std::string message, View &view);
 
 } // namespace rd
