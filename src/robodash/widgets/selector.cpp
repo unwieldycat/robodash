@@ -131,22 +131,20 @@ void rd::Selector::select_cb(lv_event_t *event) {
 
 rd::Selector::Selector(std::vector<routine_t> autons) : Selector("Auton Selector", autons) {}
 
-rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
+rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) : view(name) {
 	this->name = name;
 	this->selected_routine = nullptr;
 
 	// ----------------------------- Create UI ----------------------------- //
 
-	this->view = rd_view_create(name.c_str());
+	lv_obj_set_style_bg_color(view, color_bg, 0);
 
-	lv_obj_set_style_bg_color(view->obj, color_bg, 0);
-
-	lv_obj_t *routine_list = lv_list_create(view->obj);
+	lv_obj_t *routine_list = lv_list_create(view);
 	lv_obj_set_size(routine_list, 228, 192);
 	lv_obj_align(routine_list, LV_ALIGN_TOP_LEFT, 8, 40);
 	lv_obj_add_style(routine_list, &style_list, 0);
 
-	lv_obj_t *selected_cont = lv_obj_create(view->obj);
+	lv_obj_t *selected_cont = lv_obj_create(view);
 	lv_obj_add_style(selected_cont, &style_transp, 0);
 	lv_obj_set_layout(selected_cont, LV_LAYOUT_FLEX);
 	lv_obj_set_size(selected_cont, 240, 240);
@@ -171,13 +169,13 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	lv_obj_add_style(nothing_btn, &style_list_btn, 0);
 	lv_obj_add_style(nothing_btn, &style_list_btn_pr, LV_STATE_PRESSED);
 
-	lv_obj_t *title = lv_label_create(view->obj);
+	lv_obj_t *title = lv_label_create(view);
 	lv_label_set_text(title, "Select autonomous routine");
 	lv_obj_add_style(title, &style_text_large, 0);
 	lv_obj_align(title, LV_ALIGN_TOP_LEFT, 8, 12);
 
 	if (pros::usd::is_installed()) {
-		lv_obj_t *save_icon = lv_label_create(view->obj);
+		lv_obj_t *save_icon = lv_label_create(view);
 		lv_obj_add_style(save_icon, &style_text_medium, 0);
 		lv_obj_add_style(save_icon, &style_text_centered, 0);
 		lv_label_set_text(save_icon, LV_SYMBOL_SD_CARD "\nSD");
@@ -212,4 +210,4 @@ void rd::Selector::run_auton() {
 	selected_routine->action();
 }
 
-void rd::Selector::focus() { rd_view_focus(this->view); }
+void rd::Selector::focus() { view.focus(); }

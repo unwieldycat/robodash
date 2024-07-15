@@ -34,10 +34,8 @@
 
 // ============================ Include Library ============================ //
 
-#include "core.h"
-
-#ifdef __cplusplus
+#include "alert.hpp"
+#include "view.hpp"
 #include "widgets/console.hpp"
 #include "widgets/image.hpp"
 #include "widgets/selector.hpp"
-#endif

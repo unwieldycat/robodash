@@ -3,12 +3,10 @@
 
 // ============================= Core Functions ============================= //
 
-rd::Console::Console(std::string name) {
-	this->view = rd_view_create(name.c_str());
+rd::Console::Console(std::string name) : view(name) {
+	lv_obj_set_style_bg_color(view, color_bg, 0);
 
-	lv_obj_set_style_bg_color(view->obj, color_bg, 0);
-
-	this->output_cont = lv_obj_create(view->obj);
+	this->output_cont = lv_obj_create(view);
 	lv_obj_set_width(output_cont, lv_pct(100));
 	lv_obj_set_height(output_cont, lv_pct(100));
 	lv_obj_align(output_cont, LV_ALIGN_CENTER, 0, 0);
@@ -38,4 +36,4 @@ void rd::Console::print(std::string str) {
 
 void rd::Console::println(std::string str) { this->print(str + "\n"); }
 
-void rd::Console::focus() { rd_view_focus(this->view); }
+void rd::Console::focus() { view.focus(); }
