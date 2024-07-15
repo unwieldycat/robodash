@@ -1,4 +1,4 @@
-#include "alert.hpp"
+#include "robodash/alert.hpp"
 #include "robodash/detail/gui.hpp"
 #include "robodash/detail/styles.h"
 #include "robodash/view.hpp"
