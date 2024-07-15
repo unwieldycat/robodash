@@ -27,12 +27,7 @@ void rd::alert(std::string message) {
 }
 
 void rd::alert(std::string message, rd::View &view) {
-	if (!lv_obj_has_flag(view_menu, LV_OBJ_FLAG_HIDDEN)) {
-		if (current_view->has_flag(ViewFlag::NoAnimation))
-			lv_obj_add_flag(view_menu, LV_OBJ_FLAG_HIDDEN);
-		else
-			lv_anim_start(&anim_sidebar_close);
-	}
+	hide_menu();
 
 	if (lv_obj_has_flag(shade, LV_OBJ_FLAG_HIDDEN)) {
 		lv_obj_clear_flag(shade, LV_OBJ_FLAG_HIDDEN);

@@ -1,3 +1,4 @@
+#include "robodash/detail/gui.hpp"
 #include "liblvgl/lvgl.h"
 #include "robodash/detail/assets.h"
 #include "robodash/detail/styles.h"
@@ -47,13 +48,8 @@ void view_focus_cb(lv_event_t *event) {
 }
 
 void views_btn_cb(lv_event_t *event) {
-	lv_obj_clear_flag(view_menu, LV_OBJ_FLAG_HIDDEN);
-	lv_obj_clear_flag(shade, LV_OBJ_FLAG_HIDDEN);
-
-	if (current_view->has_flag(rd::ViewFlag::NoAnimation)) return;
-
-	lv_anim_start(&anim_sidebar_open);
-	lv_anim_start(&anim_shade_show);
+	show_shade();
+	show_menu();
 }
 
 void close_cb(lv_event_t *event) {
@@ -63,22 +59,15 @@ void close_cb(lv_event_t *event) {
 
 	lv_obj_add_flag(alert_cont, LV_OBJ_FLAG_HIDDEN);
 
-	if (current_view->has_flag(rd::ViewFlag::NoAnimation)) {
-		lv_obj_add_flag(view_menu, LV_OBJ_FLAG_HIDDEN);
-		lv_obj_add_flag(shade, LV_OBJ_FLAG_HIDDEN);
-	} else {
-		lv_anim_start(&anim_sidebar_close);
-		lv_anim_start(&anim_shade_hide);
-	}
+	hide_shade();
+	hide_menu();
 }
 
 void alert_btn_cb(lv_event_t *event) {
 	if (!lv_obj_has_flag(alert_cont, LV_OBJ_FLAG_HIDDEN)) return;
 	lv_obj_add_flag(alert_btn, LV_OBJ_FLAG_HIDDEN);
 	lv_obj_clear_flag(alert_cont, LV_OBJ_FLAG_HIDDEN);
-	lv_obj_clear_flag(shade, LV_OBJ_FLAG_HIDDEN);
-	if (current_view->has_flag(rd::ViewFlag::NoAnimation)) return;
-	lv_anim_start(&anim_shade_show);
+	show_shade();
 }
 
 // =========================== UI Initialization =========================== //
@@ -208,6 +197,38 @@ void create_anims() {
 	lv_anim_set_values(&anim_shade_hide, 144, 0);
 	lv_anim_set_deleted_cb(&anim_shade_hide, &anim_del_cb);
 	lv_anim_set_values(&anim_shade_show, 0, 144);
+}
+
+// ============================== UI Functions ============================== //
+
+void hide_menu() {
+	if (lv_obj_has_flag(view_menu, LV_OBJ_FLAG_HIDDEN)) return;
+
+	if (current_view->has_flag(rd::ViewFlag::NoAnimation))
+		lv_obj_add_flag(view_menu, LV_OBJ_FLAG_HIDDEN);
+	else
+		lv_anim_start(&anim_sidebar_close);
+}
+
+void show_menu() {
+	if (!lv_obj_has_flag(view_menu, LV_OBJ_FLAG_HIDDEN)) return;
+	lv_obj_clear_flag(view_menu, LV_OBJ_FLAG_HIDDEN);
+	if (!current_view->has_flag(rd::ViewFlag::NoAnimation)) lv_anim_start(&anim_sidebar_open);
+}
+
+void hide_shade() {
+	if (lv_obj_has_flag(shade, LV_OBJ_FLAG_HIDDEN)) return;
+
+	if (current_view->has_flag(rd::ViewFlag::NoAnimation))
+		lv_obj_add_flag(shade, LV_OBJ_FLAG_HIDDEN);
+	else
+		lv_anim_start(&anim_shade_hide);
+}
+
+void show_shade() {
+	if (!lv_obj_has_flag(shade, LV_OBJ_FLAG_HIDDEN)) return;
+	lv_obj_clear_flag(shade, LV_OBJ_FLAG_HIDDEN);
+	if (!current_view->has_flag(rd::ViewFlag::NoAnimation)) lv_anim_start(&anim_shade_show);
 }
 
 // =============================== Initialize =============================== //
