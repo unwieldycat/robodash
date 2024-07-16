@@ -1,13 +1,11 @@
-@mainpage
-
-### Welcome to the Robodash docs!
+# Welcome to the Robodash docs!
 
 Robodash is a GUI toolkit for PROS 4 that provides a suite of easy to use GUI
 utilities and an API for interoperable LVGL-based user interfaces.
 
-To get started, visit the @ref installing page.
+To get started, visit the [Installing](guides/installing.md) page.
 
-### Why?
+## Why?
 
 Robodash was created to solve a problem with the V5 LCD -- it is incredibly
 underutilized. There are two parts to this issue: ease of use and sharing.
@@ -26,10 +24,13 @@ Robodash aims to solve these two issues by providing a set of easy to use GUI
 utilities for users, and an API for template developers to create LVGL GUIS that
 work in harmony with each other.
 
-<div class="section_buttons">
- 
-| Previous |                          Next |
-|:---------|------------------------------:|
-|          | [Installing](@ref installing) |
- 
-</div>
+```{toctree}
+:hidden:
+:caption: Getting Started
+:maxdepth: 2
+
+guides/installing.md
+guides/usage.md
+guides/ui.md
+
+```

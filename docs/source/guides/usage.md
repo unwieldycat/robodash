@@ -1,4 +1,4 @@
-@page usage Usage
+# Using Robodash
 
 Robodash has two parts: the core, and the toolkit.
 
@@ -63,12 +63,4 @@ void opcontrol() {
 }
 ```
 
-You can learn more about the core library at the @ref core page.
-
-<div class="section_buttons">
- 
-| Previous                      |                      Next |
-|:------------------------------|--------------------------:|
-| [Installing](@ref installing) | [User Interface](@ref ui) |
- 
-</div>
+You can learn more about the core library at the <!-- FIXME: link --> page.
