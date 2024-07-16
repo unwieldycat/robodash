@@ -9,6 +9,7 @@
 project = "Robodash"
 copyright = "2024, Thurston A Yates"
 author = "Thurston A Yates"
+release = "v2.1.1"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
