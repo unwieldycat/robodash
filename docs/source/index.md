@@ -26,6 +26,12 @@ work in harmony with each other.
 
 ```{toctree}
 :hidden:
+:caption: Links
+GitHub <https://github.com/unwieldycat/robodash>
+```
+
+```{toctree}
+:hidden:
 :caption: Getting Started
 :maxdepth: 2
 
