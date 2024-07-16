@@ -13,7 +13,7 @@ author = "Thurston A Yates"
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ["myst_parser"]
+extensions = ["myst_parser", "breathe"]
 
 templates_path = ["_templates"]
 exclude_patterns = []
@@ -42,3 +42,7 @@ myst_enable_extensions = [
     "substitution",
     "tasklist",
 ]
+
+breathe_projects = {"Robodash": "../doxygen/xml/"}
+
+breathe_default_project = "Robodash"
