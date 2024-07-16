@@ -1,7 +1,9 @@
-@page installing Installation
+# Installing
 
-@note If you only have the PROS VSCode extension installed, you must run
+:::{note}
+If you only have the PROS VSCode extension installed, you must run
 commands in the PROS "Integrated Terminal", not your system terminal.
+:::
 
 ## Prerequisites
 
@@ -38,11 +40,3 @@ You can now add the following to your project's `main.h` file to use robodash.
 ```cpp
 #include "robodash/api.hpp"
 ```
-
-<div class="section_buttons">
- 
-| Previous          |                Next |
-|:------------------|--------------------:|
-| [Home](@ref index) | [Usage](@ref usage) |
- 
-</div>
