@@ -34,3 +34,11 @@ guides/usage.md
 guides/ui.md
 
 ```
+
+```{toctree}
+:hidden:
+:caption: API Reference
+
+api/core.md
+api/views/index.md
+```

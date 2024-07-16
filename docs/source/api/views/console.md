@@ -1,0 +1,5 @@
+# Console
+
+```{doxygengroup} console
+:members:
+```
