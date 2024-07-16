@@ -25,6 +25,15 @@ exclude_patterns = []
 html_theme = "furo"
 html_static_path = ["_static"]
 
+html_theme_options = {
+    "light_css_variables": {
+        "color-brand-primary": "#FF67E3",
+    },
+    "dark_css_variables": {
+        "color-brand-primary": "#FF67E3",
+    },
+}
+
 # -- Extension configuration -------------------------------------------------
 
 myst_enable_extensions = [
