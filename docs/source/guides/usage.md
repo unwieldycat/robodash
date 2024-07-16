@@ -63,4 +63,4 @@ void opcontrol() {
 }
 ```
 
-You can learn more about the core library at the <!-- FIXME: link --> page.
+You can learn more about the core library at the [Core Reference](../api/core.md) page.
