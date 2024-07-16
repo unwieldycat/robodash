@@ -46,3 +46,13 @@ myst_enable_extensions = [
 breathe_projects = {"Robodash": "../doxygen/xml/"}
 
 breathe_default_project = "Robodash"
+
+
+# -- Run Doxygen -------------------------------------------------------------
+
+import subprocess, os
+
+read_the_docs_build = os.environ.get("READTHEDOCS", None) == "True"
+
+if read_the_docs_build:
+    subprocess.call("doxygen", shell=True)
