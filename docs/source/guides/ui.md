@@ -13,7 +13,7 @@ button or tap away.
 
 ![View selector](../img/view_selector.png)
 
-# Alerts
+## Alerts
 
 Some views may encounter an error and request attention by sending an alert.
 Alerts are placed front and center on screen.
