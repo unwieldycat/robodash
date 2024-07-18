@@ -1,5 +1,5 @@
 /**
- * @file api.h
+ * @file api.hpp
  * @brief API entrypoint for robodash
  *
  * Includes all necessary functions to use robodash.
