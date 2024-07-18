@@ -1,98 +1,9 @@
 #include "robodash/widgets/selector.hpp"
 #include "api.h"
 #include "robodash/detail/styles.h"
-#include <cstring>
+#include "robodash/util/kv_store.hpp"
 
-const char *file_name = "/usd/rd_auton.txt";
-
-// ============================= SD Card Saving ============================= //
-
-void rd::Selector::sd_save() {
-	FILE *save_file;
-
-	// Ensure the file exists
-	save_file = fopen(file_name, "a");
-	fclose(save_file);
-
-	// Open in read mode
-	save_file = fopen(file_name, "r");
-	if (!save_file) return;
-
-	// Get file size
-	fseek(save_file, 0L, SEEK_END);
-	int file_size = ftell(save_file);
-	rewind(save_file);
-
-	char new_text[file_size];
-	char line[256];
-	char saved_selector[256];
-
-	new_text[0] = '\0'; // THIS IS VERY IMPORTANT
-
-	// Find and remove keys for our selector
-	while (fgets(line, 256, save_file)) {
-		sscanf(line, "%[^:] \n", saved_selector);
-		if (saved_selector == this->name) continue;
-		strcat(new_text, line);
-	}
-
-	fclose(save_file);
-	save_file = fopen(file_name, "w");
-	fputs(new_text, save_file);
-
-	// Write save data
-	if (selected_routine != nullptr) {
-		const char *selector_name = this->name.c_str();
-		const char *routine_name = selected_routine->name.c_str();
-
-		char file_data[strlen(selector_name) + strlen(routine_name) + 2];
-		sprintf(file_data, "%s: %s\n", selector_name, routine_name);
-		fputs(file_data, save_file);
-	}
-
-	fclose(save_file);
-}
-
-void rd::Selector::sd_load() {
-	FILE *save_file;
-	save_file = fopen(file_name, "r");
-	if (!save_file) return;
-
-	// Read contents
-	char line[256];
-	char saved_selector[256];
-	char saved_name[256];
-
-	while (fgets(line, 256, save_file)) {
-		sscanf(line, "%[^:]: %[^\n\0]", saved_selector, saved_name);
-		if (saved_selector == this->name) break;
-	}
-
-	fclose(save_file);
-
-	// None selected or not our selector
-	if (strcmp(saved_name, "") == 0 || saved_selector != this->name) {
-		selected_routine = nullptr;
-		return;
-	}
-
-	for (rd::Selector::routine_t &r : routines) {
-		if (strcmp(r.name.c_str(), saved_name) == 0) selected_routine = &r;
-	}
-
-	if (selected_routine != nullptr) {
-		// Update routine label
-		char label_str[strlen(saved_name) + 20];
-		sprintf(label_str, "Selected routine:\n%s", selected_routine->name.c_str());
-		lv_label_set_text(selected_label, label_str);
-		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
-
-		if (selected_routine->img.empty() || !pros::usd::is_installed()) return;
-
-		lv_img_set_src(this->selected_img, selected_routine->img.c_str());
-		lv_obj_clear_flag(this->selected_img, LV_OBJ_FLAG_HIDDEN);
-	}
-}
+const std::string file_path = "/usd/robodash/selector.txt";
 
 // ============================== UI Callbacks ============================== //
 
@@ -103,7 +14,11 @@ void rd::Selector::select_cb(lv_event_t *event) {
 	if (selector == nullptr) return;
 
 	selector->selected_routine = routine;
-	selector->sd_save();
+
+	if (pros::usd::is_installed()) {
+		rd::util::KVStore kv_store(file_path);
+		kv_store.set(selector->name, selector->selected_routine->name);
+	}
 
 	if (routine == nullptr) {
 		lv_label_set_text(selector->selected_label, "No routine\nselected");
@@ -111,11 +26,8 @@ void rd::Selector::select_cb(lv_event_t *event) {
 		return;
 	}
 
-	const char *routine_name = routine->name.c_str();
-
-	char label_str[strlen(routine_name) + 20];
-	sprintf(label_str, "Selected routine:\n%s", routine_name);
-	lv_label_set_text(selector->selected_label, label_str);
+	std::string label_str = "Selected routine:\n" + routine->name;
+	lv_label_set_text(selector->selected_label, label_str.c_str());
 	lv_obj_align(selector->selected_label, LV_ALIGN_CENTER, 120, 0);
 
 	if (routine->img.empty() || !pros::usd::is_installed()) {
@@ -200,7 +112,26 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) : 
 		lv_obj_add_event_cb(new_btn, &select_cb, LV_EVENT_PRESSED, &routine);
 	}
 
-	if (pros::usd::is_installed()) sd_load();
+	if (pros::usd::is_installed()) {
+		rd::util::KVStore kv_store(file_path);
+		std::optional<std::string> saved_name = kv_store.get<std::string>(name);
+		if (!saved_name) return;
+
+		for (rd::Selector::routine_t &r : routines) {
+			if (r.name == saved_name.value()) selected_routine = &r;
+		}
+
+		if (selected_routine != nullptr) {
+			// Update routine label
+			std::string label_str = "Selected routine:\n" + saved_name.value();
+			lv_label_set_text(selected_label, label_str.c_str());
+
+			if (selected_routine->img.empty()) return;
+
+			lv_img_set_src(this->selected_img, selected_routine->img.c_str());
+			lv_obj_clear_flag(this->selected_img, LV_OBJ_FLAG_HIDDEN);
+		}
+	}
 }
 
 // ============================= Other Methods ============================= //
