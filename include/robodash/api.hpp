@@ -35,6 +35,7 @@
 // ============================ Include Library ============================ //
 
 #include "alert.hpp"
+#include "util/kv_store.hpp"
 #include "view.hpp"
 #include "widgets/console.hpp"
 #include "widgets/image.hpp"
