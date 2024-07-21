@@ -1,4 +1,4 @@
-# View API
+# View
 
 ```{doxygenenum} rd::ViewFlag
 
