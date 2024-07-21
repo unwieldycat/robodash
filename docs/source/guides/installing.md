@@ -38,5 +38,5 @@ pros c apply robodash
 You can now add the following to your project's `main.h` file to use robodash.
 
 ```cpp
-#include "robodash/api.hpp"
+#include "robodash/api.h"
 ```
