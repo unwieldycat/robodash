@@ -10,7 +10,7 @@ system to improve compatibility with templates that provide LVGL-powered
 GUIs.
 
 Get started with robodash by reading
-[the docs](https://unwieldycat.github.io/robodash/).
+[the docs](https://robodash.readthedocs.io/en/latest/).
 
 ### Screenshots
 
