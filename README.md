@@ -17,27 +17,27 @@ Get started with robodash by reading
 <details>
 <summary>Console Tool</summary>
 
-![The robodash image display](./docs/assets/console.png)
+![The robodash image display](./docs/source/img/console.png)
 
 </details>
 
 <details>
 <summary>Image Tool</summary>
 
-![The robodash image display](./docs/assets/image.png)
+![The robodash image display](./docs/source/img/image.png)
 
 </details>
 
 <details>
 <summary>Autonomous Selector Tool</summary>
 
-![The robodash selector](./docs/assets/selector.png)
+![The robodash selector](./docs/source/img/selector.png)
 
 </details>
 
 <details>
 <summary>View Selector</summary>
 
-![The robodash view switcher](./docs/assets/view_selector.png)
+![The robodash view switcher](./docs/source/img/view_selector.png)
 
 </details>
