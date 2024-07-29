@@ -19,3 +19,9 @@ jobs:
         with:
           lib_folder_name: robodash
           no_commit_hash: true
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.build.outputs.name }}
+          path: ${{ github.workspace }}/template/*
