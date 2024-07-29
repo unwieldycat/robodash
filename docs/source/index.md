@@ -35,7 +35,9 @@ GitHub <https://github.com/unwieldycat/robodash>
 :caption: Guides
 :maxdepth: 2
 
-guides/index.md
+guides/installing.md
+guides/usage/index.md
+guides/ui.md
 
 ```
 
