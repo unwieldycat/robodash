@@ -15,6 +15,7 @@ jobs:
 
       - name: Build template
         id: build
-        lib_folder_name: robodash
-        no_commit_hash: true
         uses: LemLib/pros-build@v2.0.1
+        with:
+          lib_folder_name: robodash
+          no_commit_hash: true
