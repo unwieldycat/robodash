@@ -1,0 +1,20 @@
+name: Build template
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build template
+        id: build
+        lib_folder_name: robodash
+        no_commit_hash: true
+        uses: LemLib/pros-build@v2.0.1
