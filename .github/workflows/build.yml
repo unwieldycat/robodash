@@ -1,0 +1,27 @@
+name: Build template
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build template
+        id: build
+        uses: LemLib/pros-build@v2.0.1
+        with:
+          lib_folder_name: robodash
+          no_commit_hash: true
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.build.outputs.name }}
+          path: ${{ github.workspace }}/template/*
