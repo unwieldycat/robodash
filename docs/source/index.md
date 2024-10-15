@@ -43,8 +43,8 @@ guides/ui.md
 
 ```{toctree}
 :hidden:
-:caption: API Reference
+:caption: Reference
 
-api/core.md
-api/views/index.md
+api/index.md
+LVGL 8.3 Docs <https://docs.lvgl.io/8.3/>
 ```
