@@ -40,7 +40,22 @@ preserved next time the program is run.
 
 ## Console
 
-<!-- TODO -->
+The [Console Widget](../api/views/console.md) provides a text display for
+quickly and easily displaying information for debugging. To create a console, we
+can construct it in our `main.cpp` file's global scope.
+
+```cpp
+rd::Console console;
+```
+
+We can now log information to the console with `console.print`,
+`console.println`, and `console.printf`, and we can clear the console with
+`console.clear`.
+
+```cpp
+console.println("Hello");
+console.printf("The robot's heading is %f\n", some_imu.get_heading());
+```
 
 ## Image
 
