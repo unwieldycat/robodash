@@ -21,8 +21,7 @@ function. The string is the name that appears on the display as the function's
 name, and the function is what is called when it is selected.
 
 Our example assumes we have three functions, `best_auton`, `simple_auton`, and
-`good_auton`. We hope your naming convention is better than this. These
-functions should take no arguments and return `void`.
+`good_auton`. These functions should take no arguments and return `void`.
 
 While the selector appears on the screen, we still need to make our selected
 routine run when our bot is in autonomous mode.
