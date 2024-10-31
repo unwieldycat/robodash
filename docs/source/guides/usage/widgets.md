@@ -4,9 +4,11 @@ Robodash provides a suite of simple, commonly used GUI widgets.
 
 ## Selector
 
-The [Selector Widget](../api/views/selector.md) is a function selector designed for managing autonomous runs.
+The [Selector Widget](../api/views/selector.md) is a function selector designed
+for managing autonomous runs.
 
-To use the selector we can construct it in the global scope of our `main.cpp` file.
+To use the selector we can construct it in the global scope of our `main.cpp`
+file.
 
 ```cpp
 rd::Selector selector({
@@ -26,7 +28,8 @@ Our example assumes we have three functions, `best_auton`, `simple_auton`, and
 While the selector appears on the screen, we still need to make our selected
 routine run when our bot is in autonomous mode.
 
-In your `main.cpp` file, call `selector.run_auton()` in your `autonomous` function.
+In your `main.cpp` file, call `selector.run_auton()` in your `autonomous`
+function.
 
 ```cpp
 void autonomous() {
