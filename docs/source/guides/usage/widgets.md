@@ -40,7 +40,7 @@ preserved next time the program is run.
 
 ## Console
 
-The [Console Widget](../api/views/console.md) provides a text display for
+The [Console Widget](../../api/views/console.md) provides a text display for
 quickly and easily displaying information for debugging. To create a console, we
 can construct it in our `main.cpp` file's global scope.
 
@@ -59,4 +59,22 @@ console.printf("The robot's heading is %f\n", some_imu.get_heading());
 
 ## Image
 
-<!-- TODO -->
+The [Image Widget](../../api/views/image.md) provides a way to display LVGL
+images to the LCD.
+
+Images displayed must be converted with the
+[LVGL image converter](https://lvgl.io/tools/imageconverter) for LVGL 8. You can
+convert the image to a C array and place it in your project's `src` directory,
+or convert it to a a binary file and load it onto a microSD card.
+
+To create an image, we can construct it with a path to an LVGL-converted
+`image.bin` file on a loaded SD card, or to an LVGL image variable. You also
+must pass a name to the image.
+
+```cpp
+// microSD approach
+rd::Image image1("S:/usd/logo.bin", "Team Logo");
+
+// C array approach
+rd::Image image2(team_logo, "Team Logo")
+```
