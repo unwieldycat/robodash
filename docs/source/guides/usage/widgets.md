@@ -4,8 +4,8 @@ Robodash provides a suite of simple, commonly used GUI widgets.
 
 ## Selector
 
-The [Selector Widget](../api/views/selector.md) is a function selector designed
-for managing autonomous runs.
+The [Selector Widget](../../api/views/selector.md) is a function selector
+designed for managing autonomous runs.
 
 To use the selector we can construct it in the global scope of our `main.cpp`
 file.
