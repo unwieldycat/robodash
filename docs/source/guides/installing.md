@@ -1,7 +1,9 @@
 # Installing
 
-:::{note} If you only have the PROS VSCode extension installed, you must run
-commands in the PROS "Integrated Terminal", not your system terminal. :::
+```{note}
+If you only have the PROS VSCode extension installed, you must run
+commands in the PROS "Integrated Terminal", not your system terminal.
+```
 
 ## Prerequisites
 
