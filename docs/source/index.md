@@ -38,7 +38,7 @@ GitHub <https://github.com/unwieldycat/robodash>
 guides/installing.md
 guides/usage.md
 guides/ui.md
-
+guides/faq.md
 ```
 
 ```{toctree}
