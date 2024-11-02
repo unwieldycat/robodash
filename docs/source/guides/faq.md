@@ -1,11 +1,15 @@
 # Frequently Asked Questions
 
+---
+
 **Why is Robodash frozen? The rest of the brain is still functional and the
 program is running.**
 
 You likely have an indefinite loop that doesn't yield to PROS' task scheduler
 with `pros::delay`, this hogs CPU time and never lets LVGL's tasks run. You
 should add a delay in any long-living loop, like your drive code.
+
+---
 
 **Is Robodash V5RC Legal?**
 
@@ -30,10 +34,14 @@ Reading this documentation, reading the source code, and asking questions on the
 Discord server will help you get an idea of how Robodash works and is
 implemented if you believe it is necessary.
 
+---
+
 **Is Robodash compatible with ___ template?**
 
 As long as the other template doesn't use the screen itself (without using
 Robodash), it is compatible with Robodash.
+
+---
 
 **Is Robodash compatible with LLEMU?**
 
