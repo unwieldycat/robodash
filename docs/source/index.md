@@ -28,6 +28,7 @@ work in harmony with each other.
 :hidden:
 :caption: Links
 GitHub <https://github.com/unwieldycat/robodash>
+Discord <https://discord.gg/qwPjaKSvS6>
 ```
 
 ```{toctree}
