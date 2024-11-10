@@ -48,10 +48,10 @@ class Image {
 	/**
 	 * @brief Create a new Image
 	 *
-	 * @param image_dsc LVGL image descriptor object
+	 * @param image_dsc Pointer to LVGL image descriptor object
 	 * @param name Name to display on screen
 	 */
-	Image(lv_img_dsc_t image_dsc, std::string name = "Image");
+	Image(lv_img_dsc_t *image_dsc, std::string name = "Image");
 
 	/**
 	 * @brief Set this view to the active view

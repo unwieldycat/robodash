@@ -71,13 +71,13 @@ convert the image to a C array and place it in your project's `src` directory,
 or convert it to a a binary file and load it onto a microSD card.
 
 To create an image, we can construct it with a path to an LVGL-converted
-`image.bin` file on a loaded SD card, or to an LVGL image variable. You also
-must pass a name to the image.
+`image.bin` file on a loaded SD card, or a pointer to an LVGL image variable.
+You also must pass a name to the image.
 
 ```cpp
 // microSD approach
 rd::Image image1("S:/usd/logo.bin", "Team Logo");
 
 // C array approach
-rd::Image image2(team_logo, "Team Logo")
+rd::Image image2(&team_logo, "Team Logo")
 ```
