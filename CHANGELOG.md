@@ -8,11 +8,11 @@ based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 Robodash 2.1.2 provides a fix for the image widget.
 
-> [!WARNING] This update has a breaking change
+> [!WARNING]
 >
-> When constructing an `rd::Image` with a C array, you must pass a pointer to
-> your `lv_img_dsc_t` instead of a reference. This is to prevent a dangling
-> pointer.
+> This update has a breaking change. When constructing an `rd::Image` with a C
+> array, you must pass a pointer to your `lv_img_dsc_t` instead of a reference.
+> This is to prevent a dangling pointer.
 
 ### Fixed
 
