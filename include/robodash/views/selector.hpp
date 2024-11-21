@@ -39,6 +39,8 @@ class Selector {
 		std::string img = "";
 	} routine_t;
 
+	typedef std::function<void(routine_t)> select_action_t;
+
 	/// @name Selector Functions
 
 	/**
@@ -60,6 +62,18 @@ class Selector {
 	void run_auton();
 
 	/**
+	 * Get the selected auton
+	 * @return Selected auton
+	 */
+	std::optional<routine_t> get_auton();
+
+	/**
+	 * @brief Add a selection callback
+	 * @param action The callback function
+	 */
+	void on_select(select_action_t callback);
+
+	/**
 	 * @brief Set this view to the active view
 	 */
 	void focus();
@@ -75,6 +89,7 @@ class Selector {
 
 	std::string name;
 	std::vector<rd::Selector::routine_t> routines;
+	std::vector<rd::Selector::select_action_t> select_callbacks;
 	rd::Selector::routine_t *selected_routine;
 
 	void sd_save();

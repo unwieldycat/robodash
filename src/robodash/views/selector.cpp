@@ -213,4 +213,13 @@ void rd::Selector::run_auton() {
 	selected_routine->action();
 }
 
+std::optional<rd::Selector::routine_t> rd::Selector::get_auton() {
+	if (selected_routine == nullptr) return;
+	return *selected_routine;
+}
+
+void rd::Selector::on_select(rd::Selector::select_action_t callback) {
+	select_callbacks.push_back(callback);
+}
+
 void rd::Selector::focus() { rd_view_focus(this->view); }
