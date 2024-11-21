@@ -80,7 +80,7 @@ void rd::Selector::sd_load() {
 	for (rd::Selector::routine_t &r : routines) {
 		if (strcmp(r.name.c_str(), saved_name) != 0) continue;
 		selected_routine = &r;
-		run_calllbacks();
+		run_callbacks();
 	}
 
 	if (selected_routine != nullptr) {
@@ -108,7 +108,7 @@ void rd::Selector::select_cb(lv_event_t *event) {
 	selector->selected_routine = routine;
 	selector->sd_save();
 
-	run_calllbacks();
+	selector->run_callbacks();
 
 	if (routine == nullptr) {
 		lv_label_set_text(selector->selected_label, "No routine\nselected");
@@ -212,7 +212,7 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 
 // ============================= Other Methods ============================= //
 
-void rd::Selector::run_calllbacks() {
+void rd::Selector::run_callbacks() {
 	for (select_action_t callback : this->select_callbacks) {
 		callback(*this->selected_routine);
 	}
