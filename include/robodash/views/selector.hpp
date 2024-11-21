@@ -95,6 +95,8 @@ class Selector {
 	void sd_save();
 	void sd_load();
 
+	void run_callbacks();
+
 	static void select_cb(lv_event_t *event);
 };
 
