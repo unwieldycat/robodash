@@ -3,7 +3,7 @@
 
 // ============================= Core Functions ============================= //
 
-rd::Image::Image(lv_img_dsc_t *image_dsc, std::string name) {
+rd::Image::Image(const lv_img_dsc_t *image_dsc, std::string name) {
 	this->view = rd_view_create(name.c_str());
 	lv_obj_t *image = lv_img_create(view->obj);
 	lv_img_set_src(image, image_dsc);
