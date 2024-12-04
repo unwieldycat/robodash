@@ -21,7 +21,16 @@ rd::Console console;
 
 // ========================= Competition Functions ========================= //
 
-void initialize() {}
+void initialize() {
+	// Selector callback example, prints selected auton to the console
+	selector.on_select([](std::optional<rd::Selector::routine_t> routine) {
+		if (routine == std::nullopt) {
+			std::cout << "No routine selected" << std::endl;
+		} else {
+			std::cout << "Selected Routine: " << routine.value().name << std::endl;
+		}
+	});
+}
 
 void disabled() {}
 

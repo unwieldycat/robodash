@@ -4,6 +4,15 @@ Changes to this project will be logged in this file. This project uses
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Format is loosely
 based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+# 2.2.0
+
+Robodash 2.2.0 provides selector enhancements.
+
+### Added
+
+- Autonomous selector callbacks (`rd::Selector::on_select`)
+- Autonomous selector getter (`rd::Selector::get_auton`)
+
 # 2.1.2
 
 Robodash 2.1.2 provides a fix for the image widget.
