@@ -214,7 +214,11 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 
 void rd::Selector::run_callbacks() {
 	for (select_action_t callback : this->select_callbacks) {
-		callback(*this->selected_routine);
+		if (this->selected_routine == nullptr) {
+			callback(std::nullopt);
+		} else {
+			callback(*this->selected_routine);
+		}
 	}
 }
 

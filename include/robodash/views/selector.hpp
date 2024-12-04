@@ -39,7 +39,7 @@ class Selector {
 		std::string img = "";
 	} routine_t;
 
-	typedef std::function<void(routine_t)> select_action_t;
+	typedef std::function<void(std::optional<routine_t>)> select_action_t;
 
 	/// @name Selector Functions
 
