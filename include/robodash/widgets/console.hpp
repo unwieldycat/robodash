@@ -1,9 +1,3 @@
-/**
- * @file console.hpp
- * @brief Robodash Console
- * @ingroup console
- */
-
 #pragma once
 #include "liblvgl/lvgl.h"
 #include "robodash/view.hpp"
@@ -13,22 +7,11 @@
 namespace rd {
 
 /**
- * @defgroup console Console
- * @brief A console for debugging
- * @image html console.png
- *
  * A GUI console for debugging. Emulates a standard console output.
- */
-
-/**
- * @brief Console class
- * @ingroup console
+ *
+ * @image html console.png
  */
 class Console {
-	/// @addtogroup console
-	/// @{
-
-	/// @name Console Functions
   private:
 	rd::View view;
 
@@ -38,33 +21,33 @@ class Console {
 
   public:
 	/**
-	 * @brief Create a new Console
+	 * Create a new Console
 	 *
 	 * @param name Name to display on screen
 	 */
 	Console(std::string name = "Console");
 
 	/**
-	 * @brief Clear all console lines
+	 * Clear all console lines
 	 */
 	void clear();
 
 	/**
-	 * @brief Print to the console
+	 * Print to the console
 	 *
 	 * @param str String to print to console
 	 */
 	void print(std::string str);
 
 	/**
-	 * @brief Print to the console with a newline
+	 * Print to the console with a newline
 	 *
 	 * @param str String to print to console
 	 */
 	void println(std::string str);
 
 	/**
-	 * @brief Print a formatted string to the console
+	 * Print a formatted string to the console
 	 *
 	 * @tparam Params
 	 * @param fmt Format string
@@ -77,11 +60,9 @@ class Console {
 	}
 
 	/**
-	 * @brief Set this view to the active view
+	 * Set this view to the active view
 	 */
 	void focus();
-
-	/// @}
 };
 
 } // namespace rd

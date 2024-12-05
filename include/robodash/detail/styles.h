@@ -1,9 +1,3 @@
-/**
- * @file styles.h
- * @brief Styles used by robodash
- * @internal
- */
-
 #pragma once
 #include "liblvgl/lvgl.h"
 

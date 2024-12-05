@@ -1,9 +1,3 @@
-/**
- * @file selector.hpp
- * @brief Robodash Selector
- * @ingroup selector
- */
-
 #pragma once
 #include "liblvgl/lvgl.h"
 #include "robodash/view.hpp"
@@ -14,24 +8,16 @@
 namespace rd {
 
 /**
- * @defgroup selector Selector
- * @brief A function selector
- * @image html selector.png
+ * An autonomous function selector
  *
  * A function selector for easily managing autonomous routines. If available, automatically saves
  * the current configuration to an SD card and loads it on the next run. Also supports displaying
  * images from the SD card.
- */
-
-/**
- * @brief Selector class
- * @ingroup selector
+ *
+ * @image html selector.png
  */
 class Selector {
-	/// @addtogroup selector
-	/// @{
   public:
-	/// @name Selector Typedefs
 	typedef std::function<void()> routine_action_t;
 
 	typedef struct routine {
@@ -40,32 +26,30 @@ class Selector {
 		std::string img = "";
 	} routine_t;
 
-	/// @name Selector Functions
-
 	/**
-	 * @brief Create autonomous selector
+	 * Create autonomous selector
+	 *
 	 * @param name Name of the autonomous selector
 	 * @param autons Vector of autonomous rotuines
 	 */
 	Selector(std::string name, std::vector<routine_t> autons);
 
 	/**
-	 * @brief Create autonomous selector
+	 * Create autonomous selector
+	 *
 	 * @param autons Vector of autonomous rotuines
 	 */
 	Selector(std::vector<routine_t> autons);
 
 	/**
-	 * @brief Run selected auton
+	 * Run selected auton
 	 */
 	void run_auton();
 
 	/**
-	 * @brief Set this view to the active view
+	 * Set this view to the active view
 	 */
 	void focus();
-
-	/// @}
 
   private:
 	rd::View view;

@@ -1,9 +1,3 @@
-/**
- * @file assets.h
- * @brief Images and fonts used by robodash
- * @internal
- */
-
 #pragma once
 #include "liblvgl/lvgl.h"
 
