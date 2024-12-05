@@ -69,7 +69,7 @@ class Selector {
 
 	/**
 	 * @brief Add a selection callback
-	 * @param action The callback function
+	 * @param callback The callback function
 	 */
 	void on_select(select_action_t callback);
 
