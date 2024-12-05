@@ -1,5 +1,0 @@
-# Image
-
-```{doxygengroup} image
-:members:
-```

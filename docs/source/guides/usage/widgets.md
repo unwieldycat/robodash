@@ -4,7 +4,7 @@ Robodash provides a suite of simple, commonly used GUI widgets.
 
 ## Selector
 
-The [Selector Widget](../../api/views/selector.md) is a function selector
+The [Selector Widget](../../api/widgets/selector.md) is a function selector
 designed for managing autonomous runs.
 
 To use the selector we can construct it in the global scope of our `main.cpp`
@@ -43,7 +43,7 @@ preserved next time the program is run.
 
 ## Console
 
-The [Console Widget](../../api/views/console.md) provides a text display for
+The [Console Widget](../../api/widgets/console.md) provides a text display for
 quickly and easily displaying information for debugging. To create a console, we
 can construct it in our `main.cpp` file's global scope.
 
@@ -62,7 +62,7 @@ console.printf("The robot's heading is %f\n", some_imu.get_heading());
 
 ## Image
 
-The [Image Widget](../../api/views/image.md) provides a way to display LVGL
+The [Image Widget](../../api/widgets/image.md) provides a way to display LVGL
 images to the LCD.
 
 Images displayed must be converted with the

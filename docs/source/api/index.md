@@ -1,6 +1,6 @@
 # API Reference
 
 ```{toctree}
-core.md
-views/index.md
+view.md
+widgets/index.md
 ```

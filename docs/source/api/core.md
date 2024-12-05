@@ -1,5 +1,0 @@
-# Core
-
-```{doxygengroup} core
-:members:
-```

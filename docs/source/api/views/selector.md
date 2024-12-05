@@ -1,5 +1,0 @@
-# Selector
-
-```{doxygengroup} selector
-:members:
-```

@@ -27,4 +27,4 @@ lv_label_set_text(label, "example");
 lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
 ```
 
-[Views API Reference](../../api/core.md) page.
+[Views API Reference](../../api/view.md) page.

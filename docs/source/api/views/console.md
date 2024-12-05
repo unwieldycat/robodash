@@ -1,5 +1,0 @@
-# Console
-
-```{doxygengroup} console
-:members:
-```
