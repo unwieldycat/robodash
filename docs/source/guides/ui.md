@@ -27,4 +27,4 @@ clicking the bell icon to reopen the alert menu.
 ![Alert button](../img/alert_button.png)
 
 If multiple alerts appear, you can view the remaining ones in this menu as well.
-The alert button will dissapear once all alerts are dismissed.
+The alert button will disappear once all alerts are dismissed.

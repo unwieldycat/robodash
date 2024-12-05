@@ -28,6 +28,7 @@ work in harmony with each other.
 :hidden:
 :caption: Links
 GitHub <https://github.com/unwieldycat/robodash>
+Discord <https://discord.gg/qwPjaKSvS6>
 ```
 
 ```{toctree}
@@ -38,13 +39,13 @@ GitHub <https://github.com/unwieldycat/robodash>
 guides/installing.md
 guides/usage.md
 guides/ui.md
-
+guides/faq.md
 ```
 
 ```{toctree}
 :hidden:
-:caption: API Reference
+:caption: Reference
 
-api/core.md
-api/views/index.md
+api/index.md
+LVGL 8.3 Docs <https://docs.lvgl.io/8.3/>
 ```

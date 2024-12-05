@@ -5,11 +5,9 @@
 
 // ============================= Core Functions ============================= //
 
-rd::Image::Image(lv_img_dsc_t image_dsc, std::string name) : view(name) {
-	if (!pros::usd::is_installed()) return;
-
+rd::Image::Image(lv_img_dsc_t *image_dsc, std::string name) : view(name) {
 	lv_obj_t *image = lv_img_create(view);
-	lv_img_set_src(image, &image_dsc);
+	lv_img_set_src(image, image_dsc);
 	lv_obj_align(image, LV_ALIGN_CENTER, 0, 0);
 
 	view.add_flag(ViewFlag::NoAnimation);

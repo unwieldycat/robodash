@@ -28,9 +28,11 @@ html_static_path = ["_static"]
 html_theme_options = {
     "light_css_variables": {
         "color-brand-primary": "#FF67E3",
+        "color-brand-content": "#FF67E3",
     },
     "dark_css_variables": {
         "color-brand-primary": "#FF67E3",
+        "color-brand-content": "#FF67E3",
     },
 }
 
