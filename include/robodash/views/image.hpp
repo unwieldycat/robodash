@@ -51,6 +51,14 @@ class Image {
 	 * @param image_dsc Pointer to LVGL image descriptor object
 	 * @param name Name to display on screen
 	 */
+	Image(lv_img_dsc_t *image_dsc, std::string name = "Image");
+
+	/**
+	 * @brief Create a new Image
+	 *
+	 * @param image_dsc Pointer to constant LVGL image descriptor object
+	 * @param name Name to display on screen
+	 */
 	Image(const lv_img_dsc_t *image_dsc, std::string name = "Image");
 
 	/**

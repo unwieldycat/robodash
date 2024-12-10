@@ -15,7 +15,7 @@ Robodash 2.2.0 provides selector enhancements.
 
 ### Fixed
 
-- `rd::Image` constructor for C array images required a `lv_img_dsc_t`, not a `const lv_img_dsc_t` (which LVGL outputs in its conversion).
+- `rd::Image` constructor for C array images required a `lv_img_dsc_t`, not a `const lv_img_dsc_t` (which LVGL outputs in its conversion). Added support for both.
 
 ## 2.1.2
 
