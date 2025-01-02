@@ -10,7 +10,7 @@
 #define ROBODASH
 #define RD_VERSION_MAJOR 2
 #define RD_VERSION_MINOR 1
-#define RD_VERSION_PATCH 1
+#define RD_VERSION_PATCH 2
 
 #include "liblvgl/lvgl.h"
 
