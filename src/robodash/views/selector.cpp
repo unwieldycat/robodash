@@ -1,5 +1,7 @@
 #include "selector.hpp"
 #include "api.h"
+#include "liblvgl/core/lv_obj_style.h"
+#include "liblvgl/font/lv_symbol_def.h"
 #include "robodash/apix.h"
 #include "robodash/impl/styles.h"
 #include <cstring>
@@ -104,6 +106,7 @@ void rd::Selector::select_cb(lv_event_t *event) {
 	if (selector == nullptr) return;
 
 	selector->selected_routine = routine;
+	selector->index = lv_obj_get_index(obj);
 	selector->sd_save();
 
 	if (routine == nullptr) {
@@ -128,11 +131,41 @@ void rd::Selector::select_cb(lv_event_t *event) {
 	lv_obj_clear_flag(selector->selected_img, LV_OBJ_FLAG_HIDDEN);
 }
 
+void rd::Selector::page_cb(lv_event_t *event) {
+	rd::Selector *selector = (rd::Selector *)lv_obj_get_user_data(lv_event_get_target(event));
+	char *pagedir = (char *)lv_event_get_user_data(event);
+	static int page;
+	if (selector->routines.size() == 0) return;
+
+	if (*pagedir < 2) {
+		page = selector->index;
+		if (*pagedir == true)
+			page = page == 0 ? selector->routines.size() : page - 1;
+		else
+			page = page == selector->routines.size() ? 0 : page + 1;
+		lv_event_send(
+		    lv_obj_get_child(selector->routine_list, page), LV_EVENT_CLICKED,
+		    page == 0 ? nullptr : &selector->routines[page - 1]
+		);
+	} else {
+		if (*pagedir - 2 == true) {
+			page = page == 0 ? selector->routines.size() : page - 4;
+			if (page < 0) page = 0;
+		} else {
+			page = page == selector->routines.size() ? 0 : page + 4;
+			if (page > selector->routines.size()) page = selector->routines.size();
+		}
+	}
+
+	lv_obj_scroll_to_view(lv_obj_get_child(selector->routine_list, page), LV_ANIM_ON);
+}
+
 // ============================== Constructor ============================== //
 
 rd::Selector::Selector(std::vector<routine_t> autons) : Selector("Auton Selector", autons) {}
 
 rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
+	static int pagetype[4] = {0, 1, 2, 3};
 	this->name = name;
 	this->selected_routine = nullptr;
 
@@ -142,12 +175,12 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 
 	lv_obj_set_style_bg_color(view->obj, color_bg, 0);
 
-	lv_obj_t *routine_list = lv_list_create(view->obj);
+	routine_list = lv_list_create(view->obj);
 	lv_obj_set_size(routine_list, 228, 192);
 	lv_obj_align(routine_list, LV_ALIGN_TOP_LEFT, 8, 40);
 	lv_obj_add_style(routine_list, &style_list, 0);
 
-	lv_obj_t *selected_cont = lv_obj_create(view->obj);
+	selected_cont = lv_obj_create(view->obj);
 	lv_obj_add_style(selected_cont, &style_transp, 0);
 	lv_obj_set_layout(selected_cont, LV_LAYOUT_FLEX);
 	lv_obj_set_size(selected_cont, 240, 240);
@@ -157,17 +190,51 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	);
 	lv_obj_set_flex_flow(selected_cont, LV_FLEX_FLOW_COLUMN);
 
-	selected_img = lv_img_create(selected_cont);
-	lv_obj_set_size(selected_img, 168, 168);
-	lv_obj_add_flag(selected_img, LV_OBJ_FLAG_HIDDEN);
-
 	selected_label = lv_label_create(selected_cont);
 	lv_label_set_text(selected_label, "No routine\nselected");
 	lv_obj_add_style(selected_label, &style_text_centered, 0);
 	lv_obj_add_style(selected_label, &style_text_medium, 0);
 
+	selected_img = lv_img_create(selected_cont);
+	lv_obj_set_size(selected_img, 168, 168);
+	lv_obj_add_flag(selected_img, LV_OBJ_FLAG_HIDDEN);
+
+	lv_obj_t *up_btn = lv_img_create(view->obj);
+	lv_obj_add_event_cb(up_btn, &page_cb, LV_EVENT_CLICKED, &pagetype[1]);
+	lv_obj_set_user_data(up_btn, this);
+	lv_obj_add_flag(up_btn, LV_OBJ_FLAG_CLICKABLE);
+	lv_obj_set_style_text_opa(up_btn, 128, LV_STATE_PRESSED);
+	lv_img_set_src(up_btn, LV_SYMBOL_UP);
+	lv_obj_align(up_btn, LV_ALIGN_CENTER, 16, -16);
+
+	lv_obj_t *down_btn = lv_img_create(view->obj);
+	lv_obj_add_event_cb(down_btn, &page_cb, LV_EVENT_CLICKED, &pagetype[0]);
+	lv_obj_set_user_data(down_btn, this);
+	lv_obj_add_flag(down_btn, LV_OBJ_FLAG_CLICKABLE);
+	lv_obj_set_style_text_opa(down_btn, 128, LV_STATE_PRESSED);
+	lv_img_set_src(down_btn, LV_SYMBOL_DOWN);
+	lv_obj_align(down_btn, LV_ALIGN_CENTER, 16, 26);
+
+	lv_obj_t *upup_btn = lv_img_create(view->obj);
+	lv_obj_add_event_cb(upup_btn, &page_cb, LV_EVENT_CLICKED, &pagetype[3]);
+	lv_obj_set_user_data(upup_btn, this);
+	lv_obj_add_flag(upup_btn, LV_OBJ_FLAG_CLICKABLE);
+	lv_obj_set_style_text_opa(upup_btn, 128, LV_STATE_PRESSED);
+	lv_obj_set_style_text_line_space(upup_btn, -10, LV_PART_MAIN);
+	lv_img_set_src(upup_btn, LV_SYMBOL_UP "\n" LV_SYMBOL_UP);
+	lv_obj_align(upup_btn, LV_ALIGN_CENTER, 16, -41);
+
+	lv_obj_t *downdown_btn = lv_img_create(view->obj);
+	lv_obj_add_event_cb(downdown_btn, &page_cb, LV_EVENT_CLICKED, &pagetype[2]);
+	lv_obj_set_user_data(downdown_btn, this);
+	lv_obj_add_flag(downdown_btn, LV_OBJ_FLAG_CLICKABLE);
+	lv_obj_set_style_text_opa(downdown_btn, 128, LV_STATE_PRESSED);
+	lv_obj_set_style_text_line_space(downdown_btn, -10, LV_PART_MAIN);
+	lv_img_set_src(downdown_btn, LV_SYMBOL_DOWN "\n" LV_SYMBOL_DOWN);
+	lv_obj_align(downdown_btn, LV_ALIGN_CENTER, 16, 51);
+
 	lv_obj_t *nothing_btn = lv_list_add_btn(routine_list, NULL, "Nothing");
-	lv_obj_add_event_cb(nothing_btn, &select_cb, LV_EVENT_PRESSED, nullptr);
+	lv_obj_add_event_cb(nothing_btn, &select_cb, LV_EVENT_CLICKED, nullptr);
 	lv_obj_set_user_data(nothing_btn, this);
 	lv_obj_add_style(nothing_btn, &style_list_btn, 0);
 	lv_obj_add_style(nothing_btn, &style_list_btn_pr, LV_STATE_PRESSED);
@@ -197,10 +264,13 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 
 	for (routine_t &routine : routines) {
 		lv_obj_t *new_btn = lv_list_add_btn(routine_list, NULL, routine.name.c_str());
+		_init_colors_custom(routine.color_hue);
 		lv_obj_add_style(new_btn, &style_list_btn, 0);
 		lv_obj_add_style(new_btn, &style_list_btn_pr, LV_STATE_PRESSED);
+		lv_obj_set_style_bg_color(new_btn, color_bg_custom, 0);
+		lv_obj_set_style_bg_color(new_btn, color_shade_custom, LV_STATE_PRESSED);
 		lv_obj_set_user_data(new_btn, this);
-		lv_obj_add_event_cb(new_btn, &select_cb, LV_EVENT_PRESSED, &routine);
+		lv_obj_add_event_cb(new_btn, &select_cb, LV_EVENT_CLICKED, &routine);
 	}
 
 	if (pros::usd::is_installed()) sd_load();
