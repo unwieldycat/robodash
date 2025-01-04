@@ -7,6 +7,7 @@
 #pragma once
 #include "robodash/api.h"
 #include <functional>
+#include <optional>
 #include <string>
 #include <vector>
 

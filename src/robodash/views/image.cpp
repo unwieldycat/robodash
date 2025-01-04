@@ -12,7 +12,7 @@ rd::Image::Image(const lv_img_dsc_t *image_dsc, std::string name) {
 }
 
 rd::Image::Image(lv_img_dsc_t *image_dsc, std::string name)
-    : Image(const_cast<lv_img_dsc_t *>(image_dsc), name) {}
+    : Image(const_cast<const lv_img_dsc_t *>(image_dsc), name) {}
 
 rd::Image::Image(std::string path, std::string name) {
 	if (!pros::usd::is_installed()) return;
