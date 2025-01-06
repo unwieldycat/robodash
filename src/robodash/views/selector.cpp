@@ -219,23 +219,23 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	lv_img_set_src(down_btn, LV_SYMBOL_DOWN);
 	lv_obj_align(down_btn, LV_ALIGN_CENTER, 16, 26);
 
-	lv_obj_t *upup_btn = lv_img_create(view->obj);
-	lv_obj_add_event_cb(upup_btn, &page_cb, LV_EVENT_CLICKED, &pagetype[3]);
-	lv_obj_set_user_data(upup_btn, this);
-	lv_obj_add_flag(upup_btn, LV_OBJ_FLAG_CLICKABLE);
-	lv_obj_set_style_text_opa(upup_btn, 128, LV_STATE_PRESSED);
-	lv_obj_set_style_text_line_space(upup_btn, -10, LV_PART_MAIN);
-	lv_img_set_src(upup_btn, LV_SYMBOL_UP "\n" LV_SYMBOL_UP);
-	lv_obj_align(upup_btn, LV_ALIGN_CENTER, 16, -41);
+	lv_obj_t *pg_up_btn = lv_img_create(view->obj);
+	lv_obj_add_event_cb(pg_up_btn, &page_cb, LV_EVENT_CLICKED, &pagetype[3]);
+	lv_obj_set_user_data(pg_up_btn, this);
+	lv_obj_add_flag(pg_up_btn, LV_OBJ_FLAG_CLICKABLE);
+	lv_obj_set_style_text_opa(pg_up_btn, 128, LV_STATE_PRESSED);
+	lv_obj_set_style_text_line_space(pg_up_btn, -10, LV_PART_MAIN);
+	lv_img_set_src(pg_up_btn, LV_SYMBOL_UP "\n" LV_SYMBOL_UP);
+	lv_obj_align(pg_up_btn, LV_ALIGN_CENTER, 16, -41);
 
-	lv_obj_t *downdown_btn = lv_img_create(view->obj);
-	lv_obj_add_event_cb(downdown_btn, &page_cb, LV_EVENT_CLICKED, &pagetype[2]);
-	lv_obj_set_user_data(downdown_btn, this);
-	lv_obj_add_flag(downdown_btn, LV_OBJ_FLAG_CLICKABLE);
-	lv_obj_set_style_text_opa(downdown_btn, 128, LV_STATE_PRESSED);
-	lv_obj_set_style_text_line_space(downdown_btn, -10, LV_PART_MAIN);
-	lv_img_set_src(downdown_btn, LV_SYMBOL_DOWN "\n" LV_SYMBOL_DOWN);
-	lv_obj_align(downdown_btn, LV_ALIGN_CENTER, 16, 51);
+	lv_obj_t *pg_down_btn = lv_img_create(view->obj);
+	lv_obj_add_event_cb(pg_down_btn, &page_cb, LV_EVENT_CLICKED, &pagetype[2]);
+	lv_obj_set_user_data(pg_down_btn, this);
+	lv_obj_add_flag(pg_down_btn, LV_OBJ_FLAG_CLICKABLE);
+	lv_obj_set_style_text_opa(pg_down_btn, 128, LV_STATE_PRESSED);
+	lv_obj_set_style_text_line_space(pg_down_btn, -10, LV_PART_MAIN);
+	lv_img_set_src(pg_down_btn, LV_SYMBOL_DOWN "\n" LV_SYMBOL_DOWN);
+	lv_obj_align(pg_down_btn, LV_ALIGN_CENTER, 16, 51);
 
 	lv_obj_t *nothing_btn = lv_list_add_btn(routine_list, NULL, "Nothing");
 	lv_obj_add_event_cb(nothing_btn, &select_cb, LV_EVENT_CLICKED, nullptr);
