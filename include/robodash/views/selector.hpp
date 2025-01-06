@@ -37,6 +37,7 @@ class Selector {
 	typedef struct routine {
 		std::string name;
 		routine_action_t action;
+		int color_hue = 200;
 		std::string img = "";
 	} routine_t;
 
@@ -84,10 +85,12 @@ class Selector {
   private:
 	rd_view_t *view;
 
-	lv_obj_t *select_cont;
+	lv_obj_t *routine_list;
+	lv_obj_t *selected_cont;
 	lv_obj_t *selected_label;
 	lv_obj_t *selected_img;
 
+	uint32_t index;
 	std::string name;
 	std::vector<rd::Selector::routine_t> routines;
 	std::vector<rd::Selector::select_action_t> select_callbacks;
@@ -99,6 +102,7 @@ class Selector {
 	void run_callbacks();
 
 	static void select_cb(lv_event_t *event);
+	static void page_cb(lv_event_t *event);
 };
 
 } // namespace rd
