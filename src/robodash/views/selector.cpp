@@ -227,6 +227,7 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	lv_obj_set_style_text_line_space(pg_up_btn, -10, LV_PART_MAIN);
 	lv_img_set_src(pg_up_btn, LV_SYMBOL_UP "\n" LV_SYMBOL_UP);
 	lv_obj_align(pg_up_btn, LV_ALIGN_CENTER, 16, -41);
+	lv_obj_add_flag(pg_up_btn, LV_OBJ_FLAG_HIDDEN);
 
 	lv_obj_t *pg_down_btn = lv_img_create(view->obj);
 	lv_obj_add_event_cb(pg_down_btn, &page_cb, LV_EVENT_CLICKED, &pagetype[2]);
@@ -236,6 +237,7 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	lv_obj_set_style_text_line_space(pg_down_btn, -10, LV_PART_MAIN);
 	lv_img_set_src(pg_down_btn, LV_SYMBOL_DOWN "\n" LV_SYMBOL_DOWN);
 	lv_obj_align(pg_down_btn, LV_ALIGN_CENTER, 16, 51);
+	lv_obj_add_flag(pg_down_btn, LV_OBJ_FLAG_HIDDEN);
 
 	lv_obj_t *nothing_btn = lv_list_add_btn(routine_list, NULL, "Nothing");
 	lv_obj_add_event_cb(nothing_btn, &select_cb, LV_EVENT_CLICKED, nullptr);
@@ -275,6 +277,11 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 		lv_obj_set_style_bg_color(new_btn, color_shade_custom, LV_STATE_PRESSED);
 		lv_obj_set_user_data(new_btn, this);
 		lv_obj_add_event_cb(new_btn, &select_cb, LV_EVENT_CLICKED, &routine);
+	}
+
+	if (routines.size() > 3) {
+		lv_obj_clear_flag(pg_down_btn, LV_OBJ_FLAG_HIDDEN);
+		lv_obj_clear_flag(pg_up_btn, LV_OBJ_FLAG_HIDDEN);
 	}
 
 	if (pros::usd::is_installed()) sd_load();
