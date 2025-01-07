@@ -103,6 +103,8 @@ class Selector {
 
 	static void select_cb(lv_event_t *event);
 	static void page_cb(lv_event_t *event);
+	static void pg_up_cb(lv_event_t *event);
+	static void pg_down_cb(lv_event_t *event);
 };
 
 } // namespace rd

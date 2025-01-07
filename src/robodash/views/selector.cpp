@@ -141,6 +141,7 @@ void rd::Selector::page_cb(lv_event_t *event) {
 	static int page;
 	if (selector->routines.size() == 0) return;
 
+	// TODO: Factor out up/down logic into a separate function
 	if (*pagedir < 2) {
 		page = selector->index;
 		if (*pagedir == true)
@@ -151,17 +152,21 @@ void rd::Selector::page_cb(lv_event_t *event) {
 		    lv_obj_get_child(selector->routine_list, page), LV_EVENT_CLICKED,
 		    page == 0 ? nullptr : &selector->routines[page - 1]
 		);
-	} else {
-		if (*pagedir - 2 == true) {
-			page = page == 0 ? selector->routines.size() : page - 4;
-			if (page < 0) page = 0;
-		} else {
-			page = page == selector->routines.size() ? 0 : page + 4;
-			if (page > selector->routines.size()) page = selector->routines.size();
-		}
 	}
 
 	lv_obj_scroll_to_view(lv_obj_get_child(selector->routine_list, page), LV_ANIM_ON);
+}
+
+void rd::Selector::pg_up_cb(lv_event_t *event) {
+	rd::Selector *selector = (rd::Selector *)lv_obj_get_user_data(lv_event_get_target(event));
+	lv_coord_t scroll_y = lv_obj_get_height(selector->routine_list);
+	lv_obj_scroll_by_bounded(selector->routine_list, 0, scroll_y, LV_ANIM_ON);
+}
+
+void rd::Selector::pg_down_cb(lv_event_t *event) {
+	rd::Selector *selector = (rd::Selector *)lv_obj_get_user_data(lv_event_get_target(event));
+	lv_coord_t scroll_y = lv_obj_get_height(selector->routine_list) * -1;
+	lv_obj_scroll_by_bounded(selector->routine_list, 0, scroll_y, LV_ANIM_ON);
 }
 
 // ============================== Constructor ============================== //
@@ -220,7 +225,7 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	lv_obj_align(down_btn, LV_ALIGN_CENTER, 16, 26);
 
 	lv_obj_t *pg_up_btn = lv_img_create(view->obj);
-	lv_obj_add_event_cb(pg_up_btn, &page_cb, LV_EVENT_CLICKED, &pagetype[3]);
+	lv_obj_add_event_cb(pg_up_btn, &pg_up_cb, LV_EVENT_CLICKED, NULL);
 	lv_obj_set_user_data(pg_up_btn, this);
 	lv_obj_add_flag(pg_up_btn, LV_OBJ_FLAG_CLICKABLE);
 	lv_obj_set_style_text_opa(pg_up_btn, 128, LV_STATE_PRESSED);
@@ -230,7 +235,7 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	lv_obj_add_flag(pg_up_btn, LV_OBJ_FLAG_HIDDEN);
 
 	lv_obj_t *pg_down_btn = lv_img_create(view->obj);
-	lv_obj_add_event_cb(pg_down_btn, &page_cb, LV_EVENT_CLICKED, &pagetype[2]);
+	lv_obj_add_event_cb(pg_down_btn, &pg_down_cb, LV_EVENT_CLICKED, NULL);
 	lv_obj_set_user_data(pg_down_btn, this);
 	lv_obj_add_flag(pg_down_btn, LV_OBJ_FLAG_CLICKABLE);
 	lv_obj_set_style_text_opa(pg_down_btn, 128, LV_STATE_PRESSED);
