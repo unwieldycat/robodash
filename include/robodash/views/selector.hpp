@@ -37,8 +37,8 @@ class Selector {
 	typedef struct routine {
 		std::string name;
 		routine_action_t action;
-		int color_hue = 200;
 		std::string img = "";
+		int color_hue = 200;
 	} routine_t;
 
 	typedef std::function<void(std::optional<routine_t>)> select_action_t;
