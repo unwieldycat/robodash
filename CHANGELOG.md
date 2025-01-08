@@ -4,6 +4,18 @@ Changes to this project will be logged in this file. This project uses
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Format is loosely
 based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 2.3.0
+
+Robodash 2.3.0 improves the selector UI.
+
+### Added
+
+- An indication for what auton in the selector list is currently selected
+- `color_hue` parameter to autons, which places a color chip next to the auton's name in the list.
+- Page up / page down buttons to the selector, making scrolling easier when there's many autons.
+- Up / down buttons to the selector, providing an alternate way to select autons in the list.
+- `rd::Selector::next_auton` and `rd::Selector::prev_auton` functions to enable user-defined methods to control the selector, like hardware buttons or dials.
+
 ## 2.2.0
 
 Robodash 2.2.0 provides selector enhancements.
