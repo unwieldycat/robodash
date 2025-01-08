@@ -260,6 +260,7 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 
 	for (routine_t &routine : routines) {
 		lv_obj_t *new_btn = lv_list_add_btn(routine_list, NULL, routine.name.c_str());
+		// TODO: Make custom colors more visible
 		_init_colors_custom(routine.color_hue);
 		lv_obj_add_style(new_btn, &style_list_btn, 0);
 		lv_obj_add_style(new_btn, &style_list_btn_pr, LV_STATE_PRESSED);
