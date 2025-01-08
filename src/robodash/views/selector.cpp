@@ -3,6 +3,7 @@
 #include "liblvgl/core/lv_event.h"
 #include "liblvgl/core/lv_obj_style.h"
 #include "liblvgl/core/lv_obj_tree.h"
+#include "liblvgl/extra/widgets/list/lv_list.h"
 #include "liblvgl/font/lv_symbol_def.h"
 #include "robodash/apix.h"
 #include "robodash/impl/styles.h"
@@ -88,16 +89,13 @@ void rd::Selector::sd_load() {
 	}
 
 	if (selected_routine != nullptr) {
-		// Update routine label
-		char label_str[strlen(saved_name) + 20];
-		sprintf(label_str, "Selected routine:\n%s", selected_routine->name.c_str());
-		lv_label_set_text(selected_label, label_str);
-		lv_obj_align(selected_label, LV_ALIGN_CENTER, 120, 0);
-
-		if (selected_routine->img.empty() || !pros::usd::is_installed()) return;
-
-		lv_img_set_src(this->selected_img, selected_routine->img.c_str());
-		lv_obj_clear_flag(this->selected_img, LV_OBJ_FLAG_HIDDEN);
+		for (int id = 0; id < lv_obj_get_child_cnt(routine_list); id++) {
+			lv_obj_t *list_child = lv_obj_get_child(routine_list, id);
+			if (list_child == nullptr) continue;
+			if (strcmp(lv_list_get_btn_text(routine_list, list_child), saved_name) != 0) continue;
+			lv_event_send(list_child, LV_EVENT_CLICKED, selected_routine);
+			break;
+		}
 	}
 }
 
