@@ -73,24 +73,16 @@ void rd::Selector::sd_load() {
 
 	// None selected or not our selector
 	if (strcmp(saved_name, "") == 0 || saved_selector != this->name) {
-		selected_routine = nullptr;
 		return;
 	}
 
-	for (rd::Selector::routine_t &r : routines) {
-		if (strcmp(r.name.c_str(), saved_name) != 0) continue;
-		selected_routine = &r;
-		run_callbacks();
-	}
-
-	if (selected_routine != nullptr) {
-		for (int id = 0; id < lv_obj_get_child_cnt(routine_list); id++) {
-			lv_obj_t *list_child = lv_obj_get_child(routine_list, id);
-			if (list_child == nullptr) continue;
-			if (strcmp(lv_list_get_btn_text(routine_list, list_child), saved_name) != 0) continue;
-			lv_event_send(list_child, LV_EVENT_CLICKED, selected_routine);
-			break;
-		}
+	// Press button for selected auton
+	for (int id = 0; id < lv_obj_get_child_cnt(routine_list); id++) {
+		lv_obj_t *list_child = lv_obj_get_child(routine_list, id);
+		if (list_child == nullptr) continue;
+		if (strcmp(lv_list_get_btn_text(routine_list, list_child), saved_name) != 0) continue;
+		lv_event_send(list_child, LV_EVENT_CLICKED, selected_routine);
+		break;
 	}
 }
 
