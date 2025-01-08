@@ -38,7 +38,7 @@ class Selector {
 		std::string name;
 		routine_action_t action;
 		std::string img = "";
-		int color_hue = 200;
+		int color_hue = -1;
 	} routine_t;
 
 	typedef std::function<void(std::optional<routine_t>)> select_action_t;
