@@ -1,10 +1,5 @@
 #include "selector.hpp"
 #include "api.h"
-#include "liblvgl/core/lv_event.h"
-#include "liblvgl/core/lv_obj_style.h"
-#include "liblvgl/core/lv_obj_tree.h"
-#include "liblvgl/extra/widgets/list/lv_list.h"
-#include "liblvgl/font/lv_symbol_def.h"
 #include "robodash/apix.h"
 #include "robodash/impl/styles.h"
 #include <cstring>
@@ -170,7 +165,6 @@ void rd::Selector::down_cb(lv_event_t *event) {
 rd::Selector::Selector(std::vector<routine_t> autons) : Selector("Auton Selector", autons) {}
 
 rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
-	static int pagetype[4] = {0, 1, 2, 3};
 	this->name = name;
 	this->selected_routine = nullptr;
 
@@ -203,6 +197,8 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	selected_img = lv_img_create(selected_cont);
 	lv_obj_set_size(selected_img, 168, 168);
 	lv_obj_add_flag(selected_img, LV_OBJ_FLAG_HIDDEN);
+
+	// TODO: Make the list buttons have bigger hitboxes, and adapt based on SD card icon presence
 
 	lv_obj_t *up_btn = lv_img_create(view->obj);
 	lv_obj_add_event_cb(up_btn, &up_cb, LV_EVENT_CLICKED, nullptr);
