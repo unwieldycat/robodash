@@ -1,6 +1,8 @@
 #include "selector.hpp"
 #include "api.h"
+#include "liblvgl/core/lv_event.h"
 #include "liblvgl/core/lv_obj_style.h"
+#include "liblvgl/core/lv_obj_tree.h"
 #include "liblvgl/font/lv_symbol_def.h"
 #include "robodash/apix.h"
 #include "robodash/impl/styles.h"
@@ -108,10 +110,16 @@ void rd::Selector::select_cb(lv_event_t *event) {
 	if (selector == nullptr) return;
 
 	selector->selected_routine = routine;
-	selector->index = lv_obj_get_index(obj);
 	selector->sd_save();
 
 	selector->run_callbacks();
+
+	// Clear other checked buttons, make this auton's button the checked one
+	for (int id = 0; id < lv_obj_get_child_cnt(selector->routine_list); id++) {
+		lv_obj_t *list_child = lv_obj_get_child(selector->routine_list, id);
+		lv_obj_clear_state(list_child, LV_STATE_CHECKED);
+	}
+	lv_obj_add_state(obj, LV_STATE_CHECKED);
 
 	if (routine == nullptr) {
 		lv_label_set_text(selector->selected_label, "No routine\nselected");
@@ -135,28 +143,6 @@ void rd::Selector::select_cb(lv_event_t *event) {
 	lv_obj_clear_flag(selector->selected_img, LV_OBJ_FLAG_HIDDEN);
 }
 
-void rd::Selector::page_cb(lv_event_t *event) {
-	rd::Selector *selector = (rd::Selector *)lv_obj_get_user_data(lv_event_get_target(event));
-	char *pagedir = (char *)lv_event_get_user_data(event);
-	static int page;
-	if (selector->routines.size() == 0) return;
-
-	// TODO: Factor out up/down logic into a separate function
-	if (*pagedir < 2) {
-		page = selector->index;
-		if (*pagedir == true)
-			page = page == 0 ? selector->routines.size() : page - 1;
-		else
-			page = page == selector->routines.size() ? 0 : page + 1;
-		lv_event_send(
-		    lv_obj_get_child(selector->routine_list, page), LV_EVENT_CLICKED,
-		    page == 0 ? nullptr : &selector->routines[page - 1]
-		);
-	}
-
-	lv_obj_scroll_to_view(lv_obj_get_child(selector->routine_list, page), LV_ANIM_ON);
-}
-
 void rd::Selector::pg_up_cb(lv_event_t *event) {
 	rd::Selector *selector = (rd::Selector *)lv_obj_get_user_data(lv_event_get_target(event));
 	lv_coord_t scroll_y = lv_obj_get_height(selector->routine_list);
@@ -167,6 +153,18 @@ void rd::Selector::pg_down_cb(lv_event_t *event) {
 	rd::Selector *selector = (rd::Selector *)lv_obj_get_user_data(lv_event_get_target(event));
 	lv_coord_t scroll_y = lv_obj_get_height(selector->routine_list) * -1;
 	lv_obj_scroll_by_bounded(selector->routine_list, 0, scroll_y, LV_ANIM_ON);
+}
+
+void rd::Selector::up_cb(lv_event_t *event) {
+	rd::Selector *selector = (rd::Selector *)lv_obj_get_user_data(lv_event_get_target(event));
+	if (!selector) return;
+	selector->prev_auton();
+}
+
+void rd::Selector::down_cb(lv_event_t *event) {
+	rd::Selector *selector = (rd::Selector *)lv_obj_get_user_data(lv_event_get_target(event));
+	if (!selector) return;
+	selector->next_auton();
 }
 
 // ============================== Constructor ============================== //
@@ -209,7 +207,7 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	lv_obj_add_flag(selected_img, LV_OBJ_FLAG_HIDDEN);
 
 	lv_obj_t *up_btn = lv_img_create(view->obj);
-	lv_obj_add_event_cb(up_btn, &page_cb, LV_EVENT_CLICKED, &pagetype[1]);
+	lv_obj_add_event_cb(up_btn, &up_cb, LV_EVENT_CLICKED, nullptr);
 	lv_obj_set_user_data(up_btn, this);
 	lv_obj_add_flag(up_btn, LV_OBJ_FLAG_CLICKABLE);
 	lv_obj_set_style_text_opa(up_btn, 128, LV_STATE_PRESSED);
@@ -217,7 +215,7 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	lv_obj_align(up_btn, LV_ALIGN_CENTER, 16, -16);
 
 	lv_obj_t *down_btn = lv_img_create(view->obj);
-	lv_obj_add_event_cb(down_btn, &page_cb, LV_EVENT_CLICKED, &pagetype[0]);
+	lv_obj_add_event_cb(down_btn, &down_cb, LV_EVENT_CLICKED, nullptr);
 	lv_obj_set_user_data(down_btn, this);
 	lv_obj_add_flag(down_btn, LV_OBJ_FLAG_CLICKABLE);
 	lv_obj_set_style_text_opa(down_btn, 128, LV_STATE_PRESSED);
@@ -249,6 +247,7 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	lv_obj_set_user_data(nothing_btn, this);
 	lv_obj_add_style(nothing_btn, &style_list_btn, 0);
 	lv_obj_add_style(nothing_btn, &style_list_btn_pr, LV_STATE_PRESSED);
+	lv_obj_add_state(nothing_btn, LV_STATE_CHECKED);
 
 	lv_obj_t *title = lv_label_create(view->obj);
 	lv_label_set_text(title, "Select autonomous routine");
@@ -293,6 +292,50 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 }
 
 // ============================= Other Methods ============================= //
+
+void rd::Selector::next_auton(bool wrap_around) {
+	for (int id = 0; id < lv_obj_get_child_cnt(routine_list); id++) {
+		lv_obj_t *list_child = lv_obj_get_child(routine_list, id);
+		if (!lv_obj_has_state(list_child, LV_STATE_CHECKED)) continue;
+
+		if (id == lv_obj_get_child_cnt(routine_list) - 1) {
+			if (!wrap_around) return;
+			// nullptr because the "Nothing" button is always first, and doesnt have user data
+			lv_event_send(lv_obj_get_child(routine_list, 0), LV_EVENT_CLICKED, nullptr);
+		} else {
+			lv_obj_t *next_child = lv_obj_get_child(routine_list, id + 1);
+			if (next_child == nullptr) return;
+			lv_event_send(next_child, LV_EVENT_CLICKED, &routines[id + 1]);
+		}
+
+		return;
+	}
+}
+
+void rd::Selector::prev_auton(bool wrap_around) {
+	lv_obj_t *prev_child = nullptr;
+	int child_count = lv_obj_get_child_cnt(routine_list);
+	for (int id = 0; id < child_count; id++) {
+		lv_obj_t *list_child = lv_obj_get_child(routine_list, id);
+		if (!lv_obj_has_state(list_child, LV_STATE_CHECKED)) {
+			prev_child = list_child;
+			continue;
+		};
+
+		if (id == 0) {
+			if (!wrap_around) return;
+			lv_event_send(
+			    lv_obj_get_child(routine_list, child_count - 1), LV_EVENT_CLICKED,
+			    &routines[child_count - 1]
+			);
+		} else {
+			if (prev_child == nullptr) return;
+			lv_event_send(prev_child, LV_EVENT_CLICKED, &routines[id - 1]);
+		}
+
+		return;
+	}
+}
 
 void rd::Selector::run_callbacks() {
 	for (select_action_t callback : this->select_callbacks) {

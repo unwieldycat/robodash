@@ -76,6 +76,22 @@ class Selector {
 	void on_select(select_action_t callback);
 
 	/**
+	 * @brief Select the next auton in the list
+	 * @param wrap_around Whether to wrap around to the beginning once the last auton is reached
+	 *
+	 * Selects the next auton in the list for use with physical buttons such as limit switches.
+	 */
+	void next_auton(bool wrap_around = true);
+
+	/**
+	 * @brief Select the previous auton in the list
+	 * @param wrap_around Whether to wrap around to the end once the first auton is reached
+	 *
+	 * Selects the previous auton in the list for use with physical buttons such as limit switches.
+	 */
+	void prev_auton(bool wrap_around = true);
+
+	/**
 	 * @brief Set this view to the active view
 	 */
 	void focus();
@@ -90,7 +106,6 @@ class Selector {
 	lv_obj_t *selected_label;
 	lv_obj_t *selected_img;
 
-	uint32_t index;
 	std::string name;
 	std::vector<rd::Selector::routine_t> routines;
 	std::vector<rd::Selector::select_action_t> select_callbacks;
@@ -102,7 +117,8 @@ class Selector {
 	void run_callbacks();
 
 	static void select_cb(lv_event_t *event);
-	static void page_cb(lv_event_t *event);
+	static void up_cb(lv_event_t *event);
+	static void down_cb(lv_event_t *event);
 	static void pg_up_cb(lv_event_t *event);
 	static void pg_down_cb(lv_event_t *event);
 };
