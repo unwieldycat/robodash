@@ -233,6 +233,7 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	lv_obj_set_user_data(nothing_btn, this);
 	lv_obj_add_style(nothing_btn, &style_list_btn, 0);
 	lv_obj_add_style(nothing_btn, &style_list_btn_pr, LV_STATE_PRESSED);
+	lv_obj_add_style(nothing_btn, &style_list_btn_ch, LV_STATE_CHECKED);
 	lv_obj_add_state(nothing_btn, LV_STATE_CHECKED);
 
 	lv_obj_t *title = lv_label_create(view->obj);
@@ -263,6 +264,7 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 
 		lv_obj_add_style(new_btn, &style_list_btn, 0);
 		lv_obj_add_style(new_btn, &style_list_btn_pr, LV_STATE_PRESSED);
+		lv_obj_add_style(new_btn, &style_list_btn_ch, LV_STATE_CHECKED);
 		lv_obj_set_user_data(new_btn, this);
 		lv_obj_add_event_cb(new_btn, &select_cb, LV_EVENT_CLICKED, &routine);
 

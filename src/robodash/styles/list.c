@@ -5,6 +5,7 @@
 lv_style_t style_list;
 lv_style_t style_list_btn;
 lv_style_t style_list_btn_pr;
+lv_style_t style_list_btn_ch;
 
 void _init_style_list() {
 	// List
@@ -31,4 +32,8 @@ void _init_style_list() {
 	// List button pressed
 	lv_style_init(&style_list_btn_pr);
 	lv_style_set_bg_color(&style_list_btn_pr, color_shade);
+
+	// List button pressed
+	lv_style_init(&style_list_btn_ch);
+	lv_style_set_bg_color(&style_list_btn_ch, lv_color_darken(color_shade, 64));
 }
