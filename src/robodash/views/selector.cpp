@@ -278,6 +278,7 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 			lv_obj_set_style_radius(color_chip, 4, 0);
 			lv_obj_align(color_chip, LV_ALIGN_RIGHT_MID, -4, 8);
 			lv_obj_clear_flag(color_chip, LV_OBJ_FLAG_SCROLLABLE);
+			lv_obj_clear_flag(color_chip, LV_OBJ_FLAG_CLICKABLE);
 		}
 	}
 
