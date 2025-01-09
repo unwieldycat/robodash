@@ -234,6 +234,7 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	lv_obj_add_style(nothing_btn, &style_list_btn, 0);
 	lv_obj_add_style(nothing_btn, &style_list_btn_pr, LV_STATE_PRESSED);
 	lv_obj_add_style(nothing_btn, &style_list_btn_ch, LV_STATE_CHECKED);
+	lv_obj_set_style_transform_width(nothing_btn, -8, 0);
 	lv_obj_add_state(nothing_btn, LV_STATE_CHECKED);
 
 	lv_obj_t *title = lv_label_create(view->obj);
@@ -265,6 +266,7 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 		lv_obj_add_style(new_btn, &style_list_btn, 0);
 		lv_obj_add_style(new_btn, &style_list_btn_pr, LV_STATE_PRESSED);
 		lv_obj_add_style(new_btn, &style_list_btn_ch, LV_STATE_CHECKED);
+		lv_obj_set_style_transform_width(new_btn, -8, 0);
 		lv_obj_set_user_data(new_btn, this);
 		lv_obj_add_event_cb(new_btn, &select_cb, LV_EVENT_CLICKED, &routine);
 
@@ -272,7 +274,7 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 			lv_obj_t *color_chip = lv_obj_create(new_btn);
 			lv_obj_set_size(color_chip, 16, 16);
 			lv_obj_set_style_bg_color(
-			    color_chip, lv_color_hsv_to_rgb(routine.color_hue, 100, 100), 0
+			    color_chip, lv_color_hsv_to_rgb(routine.color_hue, 75, 80), 0
 			);
 			lv_obj_set_style_border_opa(color_chip, LV_OPA_0, 0);
 			lv_obj_set_style_radius(color_chip, 4, 0);
