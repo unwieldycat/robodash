@@ -190,44 +190,75 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	lv_obj_set_size(selected_img, 168, 168);
 	lv_obj_add_flag(selected_img, LV_OBJ_FLAG_HIDDEN);
 
-	// TODO: Make the list buttons have bigger hitboxes, and adapt based on SD card icon presence
+	// Routine list button cluster
+	lv_obj_t *list_btns = lv_obj_create(view->obj);
+	lv_obj_add_style(list_btns, &style_transp, 0);
+	lv_obj_set_size(list_btns, 32, 192);
+	lv_obj_align(list_btns, LV_ALIGN_TOP_LEFT, 236, 40);
+	lv_obj_clear_flag(list_btns, LV_OBJ_FLAG_SCROLLABLE);
+	lv_obj_set_layout(list_btns, LV_LAYOUT_FLEX);
+	lv_obj_set_flex_flow(list_btns, LV_FLEX_FLOW_COLUMN);
+	lv_obj_set_flex_align(
+	    list_btns, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER
+	);
 
-	lv_obj_t *up_btn = lv_img_create(view->obj);
-	lv_obj_add_event_cb(up_btn, &up_cb, LV_EVENT_CLICKED, nullptr);
-	lv_obj_set_user_data(up_btn, this);
-	lv_obj_add_flag(up_btn, LV_OBJ_FLAG_CLICKABLE);
-	lv_obj_set_style_text_opa(up_btn, 128, LV_STATE_PRESSED);
-	lv_img_set_src(up_btn, LV_SYMBOL_UP);
-	lv_obj_align(up_btn, LV_ALIGN_CENTER, 16, -16);
-
-	lv_obj_t *down_btn = lv_img_create(view->obj);
-	lv_obj_add_event_cb(down_btn, &down_cb, LV_EVENT_CLICKED, nullptr);
-	lv_obj_set_user_data(down_btn, this);
-	lv_obj_add_flag(down_btn, LV_OBJ_FLAG_CLICKABLE);
-	lv_obj_set_style_text_opa(down_btn, 128, LV_STATE_PRESSED);
-	lv_img_set_src(down_btn, LV_SYMBOL_DOWN);
-	lv_obj_align(down_btn, LV_ALIGN_CENTER, 16, 26);
-
-	lv_obj_t *pg_up_btn = lv_img_create(view->obj);
+	// Up page button
+	lv_obj_t *pg_up_btn = lv_btn_create(list_btns);
+	lv_obj_add_style(pg_up_btn, &style_transp, 0);
+	lv_obj_set_size(pg_up_btn, 32, 32);
 	lv_obj_add_event_cb(pg_up_btn, &pg_up_cb, LV_EVENT_CLICKED, NULL);
 	lv_obj_set_user_data(pg_up_btn, this);
-	lv_obj_add_flag(pg_up_btn, LV_OBJ_FLAG_CLICKABLE);
-	lv_obj_set_style_text_opa(pg_up_btn, 128, LV_STATE_PRESSED);
-	lv_obj_set_style_text_line_space(pg_up_btn, -10, LV_PART_MAIN);
-	lv_img_set_src(pg_up_btn, LV_SYMBOL_UP "\n" LV_SYMBOL_UP);
-	lv_obj_align(pg_up_btn, LV_ALIGN_CENTER, 16, -41);
 	lv_obj_add_flag(pg_up_btn, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_set_flex_grow(pg_up_btn, 1);
 
-	lv_obj_t *pg_down_btn = lv_img_create(view->obj);
+	lv_obj_t *pg_up_img = lv_img_create(pg_up_btn);
+	lv_obj_align(pg_up_img, LV_ALIGN_CENTER, 0, 0);
+	lv_img_set_src(pg_up_img, LV_SYMBOL_UP "\n" LV_SYMBOL_UP);
+	lv_obj_set_style_text_opa(pg_up_img, 128, LV_STATE_PRESSED);
+	lv_obj_set_style_text_line_space(pg_up_img, -10, LV_PART_MAIN);
+
+	// Up button
+	lv_obj_t *up_btn = lv_btn_create(list_btns);
+	lv_obj_add_style(up_btn, &style_transp, 0);
+	lv_obj_set_size(up_btn, 32, 32);
+	lv_obj_add_event_cb(up_btn, &up_cb, LV_EVENT_CLICKED, NULL);
+	lv_obj_set_user_data(up_btn, this);
+	lv_obj_set_flex_grow(up_btn, 1);
+
+	lv_obj_t *up_img = lv_img_create(up_btn);
+	lv_obj_align(up_img, LV_ALIGN_CENTER, 0, 0);
+	lv_img_set_src(up_img, LV_SYMBOL_UP);
+	lv_obj_set_style_text_opa(up_img, 128, LV_STATE_PRESSED);
+
+	// Down button
+	lv_obj_t *down_btn = lv_btn_create(list_btns);
+	lv_obj_add_style(down_btn, &style_transp, 0);
+	lv_obj_set_size(down_btn, 32, 32);
+	lv_obj_add_event_cb(down_btn, &down_cb, LV_EVENT_CLICKED, NULL);
+	lv_obj_set_user_data(down_btn, this);
+	lv_obj_set_flex_grow(down_btn, 1);
+
+	lv_obj_t *down_img = lv_img_create(down_btn);
+	lv_obj_align(down_img, LV_ALIGN_CENTER, 0, 0);
+	lv_img_set_src(down_img, LV_SYMBOL_DOWN);
+	lv_obj_set_style_text_opa(down_img, 128, LV_STATE_PRESSED);
+
+	// Down page button
+	lv_obj_t *pg_down_btn = lv_btn_create(list_btns);
+	lv_obj_add_style(pg_down_btn, &style_transp, 0);
+	lv_obj_set_size(pg_down_btn, 32, 32);
 	lv_obj_add_event_cb(pg_down_btn, &pg_down_cb, LV_EVENT_CLICKED, NULL);
 	lv_obj_set_user_data(pg_down_btn, this);
-	lv_obj_add_flag(pg_down_btn, LV_OBJ_FLAG_CLICKABLE);
-	lv_obj_set_style_text_opa(pg_down_btn, 128, LV_STATE_PRESSED);
-	lv_obj_set_style_text_line_space(pg_down_btn, -10, LV_PART_MAIN);
-	lv_img_set_src(pg_down_btn, LV_SYMBOL_DOWN "\n" LV_SYMBOL_DOWN);
-	lv_obj_align(pg_down_btn, LV_ALIGN_CENTER, 16, 51);
 	lv_obj_add_flag(pg_down_btn, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_set_flex_grow(pg_down_btn, 1);
 
+	lv_obj_t *pg_down_img = lv_img_create(pg_down_btn);
+	lv_obj_align(pg_down_img, LV_ALIGN_CENTER, 0, 0);
+	lv_img_set_src(pg_down_img, LV_SYMBOL_DOWN "\n" LV_SYMBOL_DOWN);
+	lv_obj_set_style_text_opa(pg_down_img, 128, LV_STATE_PRESSED);
+	lv_obj_set_style_text_line_space(pg_down_img, -10, LV_PART_MAIN);
+
+	// Nothing auton
 	lv_obj_t *nothing_btn = lv_list_add_btn(routine_list, NULL, "Nothing");
 	lv_obj_add_event_cb(nothing_btn, &select_cb, LV_EVENT_CLICKED, nullptr);
 	lv_obj_set_user_data(nothing_btn, this);
@@ -243,11 +274,10 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	lv_obj_align(title, LV_ALIGN_TOP_LEFT, 8, 12);
 
 	if (pros::usd::is_installed()) {
-		lv_obj_t *save_icon = lv_label_create(view->obj);
+		lv_obj_t *save_icon = lv_label_create(list_btns);
 		lv_obj_add_style(save_icon, &style_text_medium, 0);
 		lv_obj_add_style(save_icon, &style_text_centered, 0);
 		lv_label_set_text(save_icon, LV_SYMBOL_SD_CARD "\nSD");
-		lv_obj_align(save_icon, LV_ALIGN_BOTTOM_MID, 16, -8);
 	}
 
 	// ----------------------------- Add autons ----------------------------- //
