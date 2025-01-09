@@ -12,9 +12,9 @@ Robodash 2.3.0 improves the selector UI.
 
 - An indication for what auton in the selector list is currently selected
 - `color_hue` parameter to autons, which places a color chip next to the auton's name in the list.
-- Page up / page down buttons to the selector, making scrolling easier when there's many autons.
+- Page up / page down buttons to the selector if it's scrollable, making scrolling easier when there's many autons.
 - Up / down buttons to the selector, providing an alternate way to select autons in the list.
-- `rd::Selector::next_auton` and `rd::Selector::prev_auton` functions to enable user-defined methods to control the selector, like hardware buttons or dials.
+- `rd::Selector::next_auton` and `rd::Selector::prev_auton` functions for user-defined methods to control the selector, enabling hardware buttons or dials.
 
 ## 2.2.0
 
