@@ -209,12 +209,12 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	lv_obj_add_event_cb(pg_up_btn, &pg_up_cb, LV_EVENT_CLICKED, NULL);
 	lv_obj_set_user_data(pg_up_btn, this);
 	lv_obj_add_flag(pg_up_btn, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_set_style_text_opa(pg_up_btn, 128, LV_STATE_PRESSED);
 	lv_obj_set_flex_grow(pg_up_btn, 1);
 
 	lv_obj_t *pg_up_img = lv_img_create(pg_up_btn);
 	lv_obj_align(pg_up_img, LV_ALIGN_CENTER, 0, 0);
 	lv_img_set_src(pg_up_img, LV_SYMBOL_UP "\n" LV_SYMBOL_UP);
-	lv_obj_set_style_text_opa(pg_up_img, 128, LV_STATE_PRESSED);
 	lv_obj_set_style_text_line_space(pg_up_img, -10, LV_PART_MAIN);
 
 	// Up button
@@ -223,12 +223,12 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	lv_obj_set_size(up_btn, 32, 32);
 	lv_obj_add_event_cb(up_btn, &up_cb, LV_EVENT_CLICKED, NULL);
 	lv_obj_set_user_data(up_btn, this);
+	lv_obj_set_style_text_opa(up_btn, 128, LV_STATE_PRESSED);
 	lv_obj_set_flex_grow(up_btn, 1);
 
 	lv_obj_t *up_img = lv_img_create(up_btn);
 	lv_obj_align(up_img, LV_ALIGN_CENTER, 0, 0);
 	lv_img_set_src(up_img, LV_SYMBOL_UP);
-	lv_obj_set_style_text_opa(up_img, 128, LV_STATE_PRESSED);
 
 	// Down button
 	lv_obj_t *down_btn = lv_btn_create(list_btns);
@@ -236,12 +236,12 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	lv_obj_set_size(down_btn, 32, 32);
 	lv_obj_add_event_cb(down_btn, &down_cb, LV_EVENT_CLICKED, NULL);
 	lv_obj_set_user_data(down_btn, this);
+	lv_obj_set_style_text_opa(down_btn, 128, LV_STATE_PRESSED);
 	lv_obj_set_flex_grow(down_btn, 1);
 
 	lv_obj_t *down_img = lv_img_create(down_btn);
 	lv_obj_align(down_img, LV_ALIGN_CENTER, 0, 0);
 	lv_img_set_src(down_img, LV_SYMBOL_DOWN);
-	lv_obj_set_style_text_opa(down_img, 128, LV_STATE_PRESSED);
 
 	// Down page button
 	lv_obj_t *pg_down_btn = lv_btn_create(list_btns);
@@ -250,12 +250,12 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) {
 	lv_obj_add_event_cb(pg_down_btn, &pg_down_cb, LV_EVENT_CLICKED, NULL);
 	lv_obj_set_user_data(pg_down_btn, this);
 	lv_obj_add_flag(pg_down_btn, LV_OBJ_FLAG_HIDDEN);
+	lv_obj_set_style_text_opa(pg_down_btn, 128, LV_STATE_PRESSED);
 	lv_obj_set_flex_grow(pg_down_btn, 1);
 
 	lv_obj_t *pg_down_img = lv_img_create(pg_down_btn);
 	lv_obj_align(pg_down_img, LV_ALIGN_CENTER, 0, 0);
 	lv_img_set_src(pg_down_img, LV_SYMBOL_DOWN "\n" LV_SYMBOL_DOWN);
-	lv_obj_set_style_text_opa(pg_down_img, 128, LV_STATE_PRESSED);
 	lv_obj_set_style_text_line_space(pg_down_img, -10, LV_PART_MAIN);
 
 	// Nothing auton
