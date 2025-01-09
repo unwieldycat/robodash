@@ -30,15 +30,11 @@ extern lv_color_t color_primary_dark;
 extern lv_color_t color_text;
 extern lv_color_t color_red;
 
-extern lv_color_t color_bg_custom;
-extern lv_color_t color_shade_custom;
-
 extern lv_color_t color_bar;
 extern lv_color_t color_bar_dark;
 extern lv_color_t color_bar_outline;
 
 extern void _init_colors();
-extern void _init_colors_custom(int Hue);
 
 // ============================= Miscellaneous ============================= //
 
