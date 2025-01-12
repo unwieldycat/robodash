@@ -1,3 +1,4 @@
+#include "liblvgl/misc/lv_color.h"
 #include "robodash/apix.h"
 
 // ================================= Colors ================================= //
