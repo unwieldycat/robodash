@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "Robodash"
-copyright = "2024, Thurston A Yates"
+copyright = "2025, Thurston A Yates"
 author = "Thurston A Yates"
 
 # -- General configuration ---------------------------------------------------

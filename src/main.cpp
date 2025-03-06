@@ -6,14 +6,16 @@
 void best_auton() { std::cout << "Running best auton" << std::endl; }
 void simple_auton() { std::cout << "Running simple auton " << std::endl; }
 void good_auton() { std::cout << "Running good auton" << std::endl; }
+void skills() { std::cout << "Running skills" << std::endl; }
 
 // ================================= Views ================================= //
 
 // Create robodash selector
 rd::Selector selector({
-    {"Best auton", &best_auton},
-    {"Simple auton", &simple_auton},
-    {"Good auton", &good_auton},
+    {"Best auton", &best_auton, "", 0},
+    {"Simple auton", &simple_auton, "", 220},
+    {"Good auton", &good_auton, "", 100},
+    {"Skills", &skills},
 });
 
 // Create robodash console
@@ -21,7 +23,16 @@ rd::Console console;
 
 // ========================= Competition Functions ========================= //
 
-void initialize() {}
+void initialize() {
+	// Selector callback example, prints selected auton to the console
+	selector.on_select([](std::optional<rd::Selector::routine_t> routine) {
+		if (routine == std::nullopt) {
+			std::cout << "No routine selected" << std::endl;
+		} else {
+			std::cout << "Selected Routine: " << routine.value().name << std::endl;
+		}
+	});
+}
 
 void disabled() {}
 

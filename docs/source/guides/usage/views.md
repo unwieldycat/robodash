@@ -1,4 +1,4 @@
-## Views
+# Views
 
 Robodash provides the views API for other LVGL-powered GUIs to plug into its
 view-management system.

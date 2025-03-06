@@ -39,6 +39,7 @@ extern lv_style_t style_alert;
 extern lv_style_t style_list;
 extern lv_style_t style_list_btn;
 extern lv_style_t style_list_btn_pr;
+extern lv_style_t style_list_btn_ch;
 
 // ================================= Buttons ================================= //
 
