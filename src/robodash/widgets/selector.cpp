@@ -109,7 +109,7 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) : 
 	lv_obj_add_flag(selected_img, LV_OBJ_FLAG_HIDDEN);
 
 	// Routine list button cluster
-	lv_obj_t *list_btns = lv_obj_create(view->obj);
+	lv_obj_t *list_btns = lv_obj_create(view);
 	lv_obj_add_style(list_btns, &style_transp, 0);
 	lv_obj_set_size(list_btns, 32, 192);
 	lv_obj_align(list_btns, LV_ALIGN_TOP_LEFT, 236, 40);
