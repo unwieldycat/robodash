@@ -19,16 +19,16 @@ namespace rd {
  */
 class Selector {
   public:
-	typedef std::function<void()> routine_action_t;
+	using RoutineAction = std::function<void()>;
 
-	typedef struct routine {
+	struct Routine {
 		std::string name;
-		routine_action_t action;
-		std::string img = "";
+		RoutineAction action;
+		std::string image = "";
 		int color_hue = -1;
-	} routine_t;
+	};
 
-	typedef std::function<void(std::optional<routine_t>)> select_action_t;
+	using SelectAction = std::function<void(std::optional<Routine>)>;
 
 	/**
 	 * Create autonomous selector
@@ -36,14 +36,14 @@ class Selector {
 	 * @param name Name of the autonomous selector
 	 * @param autons Vector of autonomous rotuines
 	 */
-	Selector(std::string name, std::vector<routine_t> autons);
+	Selector(std::string name, std::vector<Routine> autons);
 
 	/**
 	 * Create autonomous selector
 	 *
 	 * @param autons Vector of autonomous rotuines
 	 */
-	Selector(std::vector<routine_t> autons);
+	Selector(std::vector<Routine> autons);
 
 	/**
 	 * Run selected auton
@@ -55,14 +55,14 @@ class Selector {
 	 *
 	 * @return Selected auton
 	 */
-	std::optional<routine_t> get_auton();
+	std::optional<Routine> get_auton();
 
 	/**
 	 * Add a selection callback
 	 *
 	 * @param callback The callback function
 	 */
-	void on_select(select_action_t callback);
+	void on_select(SelectAction callback);
 
 	/**
 	 * Select the next auton in the list
@@ -96,9 +96,9 @@ class Selector {
 	lv_obj_t *selected_img;
 
 	std::string name;
-	std::vector<rd::Selector::routine_t> routines;
-	std::vector<rd::Selector::select_action_t> select_callbacks;
-	rd::Selector::routine_t *selected_routine;
+	std::vector<rd::Selector::Routine> routines;
+	std::vector<rd::Selector::SelectAction> select_callbacks;
+	rd::Selector::Routine *selected_routine;
 
 	void run_callbacks();
 

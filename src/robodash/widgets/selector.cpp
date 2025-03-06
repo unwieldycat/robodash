@@ -9,7 +9,7 @@ const std::string file_path = "/usd/robodash/selector.txt";
 
 void rd::Selector::select_cb(lv_event_t *event) {
 	lv_obj_t *obj = lv_event_get_target(event);
-	rd::Selector::routine_t *routine = (rd::Selector::routine_t *)lv_event_get_user_data(event);
+	rd::Selector::Routine *routine = (rd::Selector::Routine *)lv_event_get_user_data(event);
 	rd::Selector *selector = (rd::Selector *)lv_obj_get_user_data(obj);
 	if (selector == nullptr) return;
 
@@ -39,12 +39,12 @@ void rd::Selector::select_cb(lv_event_t *event) {
 	lv_label_set_text(selector->selected_label, label_str.c_str());
 	lv_obj_align(selector->selected_label, LV_ALIGN_CENTER, 120, 0);
 
-	if (routine->img.empty() || !pros::usd::is_installed()) {
+	if (routine->image.empty() || !pros::usd::is_installed()) {
 		lv_obj_add_flag(selector->selected_img, LV_OBJ_FLAG_HIDDEN);
 		return;
 	}
 
-	lv_img_set_src(selector->selected_img, routine->img.c_str());
+	lv_img_set_src(selector->selected_img, routine->image.c_str());
 	lv_obj_clear_flag(selector->selected_img, LV_OBJ_FLAG_HIDDEN);
 }
 
@@ -74,9 +74,9 @@ void rd::Selector::down_cb(lv_event_t *event) {
 
 // ============================== Constructor ============================== //
 
-rd::Selector::Selector(std::vector<routine_t> autons) : Selector("Auton Selector", autons) {}
+rd::Selector::Selector(std::vector<Routine> autons) : Selector("Auton Selector", autons) {}
 
-rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) : view(name) {
+rd::Selector::Selector(std::string name, std::vector<Routine> new_routines) : view(name) {
 	this->name = name;
 	this->selected_routine = nullptr;
 
@@ -200,15 +200,15 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) : 
 
 	// ----------------------------- Add autons ----------------------------- //
 
-	for (routine_t routine : new_routines) {
-		if (!routine.img.empty()) {
-			routine.img.insert(0, "S:");
+	for (Routine routine : new_routines) {
+		if (!routine.image.empty()) {
+			routine.image.insert(0, "S:");
 		}
 
 		routines.push_back(routine);
 	}
 
-	for (routine_t &routine : routines) {
+	for (Routine &routine : routines) {
 		lv_obj_t *new_btn = lv_list_add_btn(routine_list, NULL, routine.name.c_str());
 
 		lv_obj_add_style(new_btn, &style_list_btn, 0);
@@ -246,7 +246,10 @@ rd::Selector::Selector(std::string name, std::vector<routine_t> new_routines) : 
 		for (int id = 0; id < lv_obj_get_child_cnt(routine_list); id++) {
 			lv_obj_t *list_child = lv_obj_get_child(routine_list, id);
 			if (list_child == nullptr) continue;
-			if (strcmp(lv_list_get_btn_text(routine_list, list_child), saved_name.value().c_str()) != 0) continue;
+			if (strcmp(
+			        lv_list_get_btn_text(routine_list, list_child), saved_name.value().c_str()
+			    ) != 0)
+				continue;
 			lv_event_send(list_child, LV_EVENT_CLICKED, selected_routine);
 			break;
 		}
@@ -300,7 +303,7 @@ void rd::Selector::prev_auton(bool wrap_around) {
 }
 
 void rd::Selector::run_callbacks() {
-	for (select_action_t callback : this->select_callbacks) {
+	for (SelectAction callback : this->select_callbacks) {
 		if (this->selected_routine == nullptr) {
 			callback(std::nullopt);
 		} else {
@@ -314,12 +317,12 @@ void rd::Selector::run_auton() {
 	selected_routine->action();
 }
 
-std::optional<rd::Selector::routine_t> rd::Selector::get_auton() {
+std::optional<rd::Selector::Routine> rd::Selector::get_auton() {
 	if (selected_routine == nullptr) return std::nullopt;
 	return *selected_routine;
 }
 
-void rd::Selector::on_select(rd::Selector::select_action_t callback) {
+void rd::Selector::on_select(rd::Selector::SelectAction callback) {
 	select_callbacks.push_back(callback);
 }
 

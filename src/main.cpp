@@ -25,7 +25,7 @@ rd::Console console;
 
 void initialize() {
 	// Selector callback example, prints selected auton to the console
-	selector.on_select([](std::optional<rd::Selector::routine_t> routine) {
+	selector.on_select([](std::optional<rd::Selector::Routine> routine) {
 		if (routine == std::nullopt) {
 			std::cout << "No routine selected" << std::endl;
 		} else {
