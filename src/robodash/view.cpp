@@ -43,7 +43,7 @@ void rd::View::focus() {
 
 void rd::View::add_flag(rd::ViewFlag flag) {
 	flags.push_back(flag);
-	refresh();
+	flags_update();
 }
 
 bool rd::View::has_flag(rd::ViewFlag flag) {
@@ -52,10 +52,10 @@ bool rd::View::has_flag(rd::ViewFlag flag) {
 
 void rd::View::remove_flag(rd::ViewFlag flag) {
 	flags.erase(std::remove(flags.begin(), flags.end(), flag), flags.end());
-	refresh();
+	flags_update();
 }
 
-void rd::View::refresh() {
+void rd::View::flags_update() {
 	if (has_flag(ViewFlag::Hidden)) {
 		lv_obj_add_flag(this->btn_obj, LV_OBJ_FLAG_HIDDEN);
 	} else {
