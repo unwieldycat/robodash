@@ -1,5 +1,5 @@
 #include "robodash/widgets/image.hpp"
-#include "api.h"
+#include "robodash/detail/platform.h"
 #include "robodash/detail/styles.h"
 #include "robodash/view.hpp"
 
@@ -17,7 +17,7 @@ rd::Image::Image(lv_img_dsc_t *image_dsc, std::string name)
     : Image(const_cast<const lv_img_dsc_t *>(image_dsc), name) {}
 
 rd::Image::Image(std::string path, std::string name) : view(name) {
-	if (!pros::usd::is_installed()) return;
+	if (!rd::detail::platform::sd_installed()) return;
 
 	lv_obj_t *image = lv_img_create(view);
 	lv_img_set_src(image, ("S:" + path).c_str());

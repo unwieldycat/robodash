@@ -1,5 +1,5 @@
 #include "robodash/widgets/selector.hpp"
-#include "api.h"
+#include "robodash/detail/platform.h"
 #include "robodash/detail/styles.h"
 #include "robodash/util/kv_store.hpp"
 
@@ -15,7 +15,7 @@ void rd::Selector::select_cb(lv_event_t *event) {
 
 	selector->selected_routine = routine;
 
-	if (pros::usd::is_installed()) {
+	if (rd::detail::platform::sd_installed()) {
 		rd::util::KVStore kv_store(file_path);
 		kv_store.set(selector->name, selector->selected_routine->name);
 	}
@@ -39,7 +39,7 @@ void rd::Selector::select_cb(lv_event_t *event) {
 	lv_label_set_text(selector->selected_label, label_str.c_str());
 	lv_obj_align(selector->selected_label, LV_ALIGN_CENTER, 120, 0);
 
-	if (routine->image.empty() || !pros::usd::is_installed()) {
+	if (routine->image.empty() || !rd::detail::platform::sd_installed()) {
 		lv_obj_add_flag(selector->selected_img, LV_OBJ_FLAG_HIDDEN);
 		return;
 	}
@@ -191,7 +191,7 @@ rd::Selector::Selector(std::string name, std::vector<Routine> new_routines) : vi
 	lv_obj_add_style(title, &style_text_large, 0);
 	lv_obj_align(title, LV_ALIGN_TOP_LEFT, 8, 12);
 
-	if (pros::usd::is_installed()) {
+	if (rd::detail::platform::sd_installed()) {
 		lv_obj_t *save_icon = lv_label_create(list_btns);
 		lv_obj_add_style(save_icon, &style_text_medium, 0);
 		lv_obj_add_style(save_icon, &style_text_centered, 0);
@@ -237,7 +237,7 @@ rd::Selector::Selector(std::string name, std::vector<Routine> new_routines) : vi
 		lv_obj_clear_flag(pg_up_btn, LV_OBJ_FLAG_HIDDEN);
 	}
 
-	if (pros::usd::is_installed()) {
+	if (rd::detail::platform::sd_installed()) {
 		rd::util::KVStore kv_store(file_path);
 		std::optional<std::string> saved_name = kv_store.get<std::string>(name);
 		if (!saved_name) return;
