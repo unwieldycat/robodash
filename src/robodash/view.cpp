@@ -36,9 +36,9 @@ void rd::View::focus() {
 	lv_obj_clear_flag(this->scr_obj, LV_OBJ_FLAG_HIDDEN);
 
 	if (this->has_flag(ViewFlag::NoAnimation))
-		lv_obj_add_flag(anim_label, LV_OBJ_FLAG_HIDDEN);
-	else
 		lv_obj_clear_flag(anim_label, LV_OBJ_FLAG_HIDDEN);
+	else
+		lv_obj_add_flag(anim_label, LV_OBJ_FLAG_HIDDEN);
 }
 
 void rd::View::add_flag(rd::ViewFlag flag) {
