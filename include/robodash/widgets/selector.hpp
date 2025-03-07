@@ -1,6 +1,7 @@
 #pragma once
 #include "liblvgl/lvgl.h"
 #include "robodash/view.hpp"
+#include "robodash/widgets/widget.hpp"
 #include <functional>
 #include <optional>
 #include <string>
@@ -17,7 +18,7 @@ namespace rd {
  *
  * @image html selector.png
  */
-class Selector {
+class Selector : public Widget {
   public:
 	using RoutineAction = std::function<void()>;
 

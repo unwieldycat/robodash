@@ -1,6 +1,7 @@
 #pragma once
 #include "liblvgl/lvgl.h"
 #include "robodash/view.hpp"
+#include "robodash/widgets/widget.hpp"
 #include <string>
 
 namespace rd {
@@ -18,7 +19,7 @@ namespace rd {
  *
  * @image html image.png
  */
-class Image {
+class Image : public Widget {
   private:
 	rd::View view;
 
