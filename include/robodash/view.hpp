@@ -9,7 +9,11 @@ namespace rd {
  * Flags to alter the behavior of a view
  */
 enum class ViewFlag {
+	/// Disables robodash animations for this view
 	NoAnimation,
+
+	/// Hides this view's button in the sidebar
+	Hidden,
 };
 
 /**
