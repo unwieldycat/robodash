@@ -55,7 +55,19 @@ void rd::View::remove_flag(rd::ViewFlag flag) {
 	refresh();
 }
 
-void rd::View::refresh() {}
+void rd::View::refresh() {
+	if (has_flag(ViewFlag::Hidden)) {
+		lv_obj_add_flag(this->btn_obj, LV_OBJ_FLAG_HIDDEN);
+	} else {
+		lv_obj_clear_flag(this->btn_obj, LV_OBJ_FLAG_HIDDEN);
+	}
+
+	if (has_flag(ViewFlag::NoAnimation) && current_view == this) {
+		lv_obj_clear_flag(this->scr_obj, LV_OBJ_FLAG_HIDDEN);
+	} else {
+		lv_obj_add_flag(this->scr_obj, LV_OBJ_FLAG_HIDDEN);
+	}
+}
 
 std::string rd::View::get_name() { return name; }
 
