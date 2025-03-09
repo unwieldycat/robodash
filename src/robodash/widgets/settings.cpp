@@ -12,6 +12,17 @@ rd::Settings::Settings(std::string name) : view(name) {
 	lv_label_set_text(title_label, name.c_str());
 	lv_obj_align(title_label, LV_ALIGN_TOP_MID, 0, 12);
 
+	// TODO: Display only when change occurs
+	lv_obj_t *save_btn = lv_btn_create(view);
+	lv_obj_set_size(save_btn, 64, 32);
+	lv_obj_align(save_btn, LV_ALIGN_TOP_LEFT, 4, 4);
+	lv_obj_add_style(save_btn, &style_core_button, 0);
+	lv_obj_add_style(save_btn, &style_core_button_pr, LV_STATE_PRESSED);
+
+	lv_obj_t *save_label = lv_label_create(save_btn);
+	lv_label_set_text(save_label, "Save " LV_SYMBOL_SAVE);
+	lv_obj_align(save_label, LV_ALIGN_CENTER, 0, 0);
+
 	settings_cont = lv_obj_create(view);
 	lv_obj_set_size(settings_cont, lv_pct(100), 192);
 	lv_obj_align(settings_cont, LV_ALIGN_CENTER, 0, 0);
