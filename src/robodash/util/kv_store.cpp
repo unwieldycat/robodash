@@ -1,3 +1,4 @@
+#pragma once
 #include "robodash/util/kv_store.hpp"
 #include <exception>
 #include <fstream>
