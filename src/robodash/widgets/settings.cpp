@@ -4,14 +4,22 @@
 #include "robodash/detail/styles.h"
 
 rd::Settings::Settings(std::string name) : view(name) {
+	lv_obj_set_style_bg_color(view, color_bg, 0);
+
+	lv_obj_t *title_label = lv_label_create(view);
+	lv_obj_add_style(title_label, &style_text_large, 0);
+	lv_obj_add_style(title_label, &style_text_centered, 0);
+	lv_label_set_text(title_label, name.c_str());
+	lv_obj_align(title_label, LV_ALIGN_TOP_MID, 0, 12);
+
 	settings_cont = lv_obj_create(view);
-	lv_obj_set_size(settings_cont, lv_pct(100), lv_pct(100));
+	lv_obj_set_size(settings_cont, lv_pct(100), 192);
 	lv_obj_align(settings_cont, LV_ALIGN_CENTER, 0, 0);
 	lv_obj_add_style(settings_cont, &style_transp, 0);
 	lv_obj_set_layout(settings_cont, LV_LAYOUT_FLEX);
 	lv_obj_set_flex_flow(settings_cont, LV_FLEX_FLOW_COLUMN);
 	lv_obj_set_flex_align(
-	    settings_cont, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_START
+	    settings_cont, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER
 	);
 }
 
