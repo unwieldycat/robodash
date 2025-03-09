@@ -1,5 +1,6 @@
 #pragma once
 #include "robodash/view.hpp"
+#include <memory>
 
 namespace rd {
 
@@ -25,7 +26,7 @@ class Settings {
 	 * @param default_value Default value of the toggle
 	 * @return Toggle state
 	 */
-	bool &toggle(std::string key, bool default_value);
+	std::shared_ptr<bool> toggle(std::string key, bool default_value);
 
 	/**
 	 * Declare a dropdown setting
@@ -35,7 +36,7 @@ class Settings {
 	 * @param default_value Default value of the dropdown
 	 * @return Dropdown state
 	 */
-	std::string &
+	std::shared_ptr<std::string>
 	dropdown(std::string key, std::vector<std::string> values, std::string default_value);
 
 	/**
@@ -48,7 +49,8 @@ class Settings {
 	 * @param default_value Default value of the slider
 	 * @return Slider state
 	 */
-	double &slider(std::string key, double min, double max, double step, double default_value);
+	std::shared_ptr<double>
+	slider(std::string key, double min, double max, double step, double default_value);
 
 	/**
 	 * Declare an increment setting
@@ -59,7 +61,7 @@ class Settings {
 	 * @param default_value Default value of the increment
 	 * @return Increment state
 	 */
-	int &increment(std::string key, int min, int max, int default_value);
+	std::shared_ptr<int> increment(std::string key, int min, int max, int default_value);
 
 	void focus();
 
@@ -69,6 +71,7 @@ class Settings {
 	lv_obj_t *settings_cont;
 
 	void toggle_cb(lv_event_t *event);
+	lv_obj_t *create_setting_cont(std::string key);
 };
 
 } // namespace rd
