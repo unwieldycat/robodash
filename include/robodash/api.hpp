@@ -33,3 +33,4 @@
 #include "widgets/console.hpp"
 #include "widgets/image.hpp"
 #include "widgets/selector.hpp"
+#include "widgets/settings.hpp"
