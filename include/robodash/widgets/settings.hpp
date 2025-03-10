@@ -86,7 +86,8 @@ class Settings {
 
 	std::vector<CallbackType> callbacks;
 
-	void toggle_cb(lv_event_t *event);
+	static void toggle_cb(lv_event_t *event);
+
 	lv_obj_t *create_setting_cont(std::string key);
 };
 

@@ -51,6 +51,14 @@ lv_obj_t *rd::Settings::create_setting_cont(std::string key) {
 	return setting_cont;
 }
 
+void rd::Settings::toggle_cb(lv_event_t *event) {
+	lv_obj_t *toggle = lv_event_get_target(event);
+	lv_state_t value = lv_obj_get_state(toggle);
+	bool state = value == LV_STATE_CHECKED;
+	ToggleCallback *callback = static_cast<ToggleCallback *>(lv_event_get_user_data(event));
+	(*callback)(state);
+}
+
 // ============================ Public Functions ============================ //
 
 void rd::Settings::toggle(std::string key, bool default_value, ToggleCallback callback) {
@@ -58,6 +66,9 @@ void rd::Settings::toggle(std::string key, bool default_value, ToggleCallback ca
 	lv_obj_t *setting_toggle = lv_switch_create(setting_cont);
 	lv_obj_set_size(setting_toggle, 48, 24);
 	lv_obj_align(setting_toggle, LV_ALIGN_RIGHT_MID, -8, 0);
+
+	callbacks.push_back(callback);
+	lv_obj_add_event_cb(setting_toggle, &toggle_cb, LV_EVENT_VALUE_CHANGED, &callbacks.back());
 }
 
 void rd::Settings::dropdown(
