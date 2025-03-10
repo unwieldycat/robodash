@@ -1,6 +1,6 @@
 #pragma once
 #include "robodash/view.hpp"
-#include <memory>
+#include <functional>
 
 namespace rd {
 
@@ -24,9 +24,9 @@ class Settings {
 	 *
 	 * @param key Name of the toggle
 	 * @param default_value Default value of the toggle
-	 * @return Toggle state
+	 * @param callback Callback function to run when the toggle changes
 	 */
-	std::shared_ptr<bool> toggle(std::string key, bool default_value);
+	void toggle(std::string key, bool default_value, std::function<void(bool)> callback);
 
 	/**
 	 * Declare a dropdown setting
@@ -34,10 +34,12 @@ class Settings {
 	 * @param key Name of the dropdown
 	 * @param values Values for the dropdown
 	 * @param default_value Default value of the dropdown
-	 * @return Dropdown state
+	 * @param callback Callback function to run when the dropdown changes
 	 */
-	std::shared_ptr<std::string>
-	dropdown(std::string key, std::vector<std::string> values, std::string default_value);
+	void dropdown(
+	    std::string key, std::vector<std::string> values, std::string default_value,
+	    std::function<void(std::string &)> callback
+	);
 
 	/**
 	 * Declare a slider setting
@@ -47,10 +49,12 @@ class Settings {
 	 * @param max Maximum value of the slider
 	 * @param step Amount to increment the slider by
 	 * @param default_value Default value of the slider
-	 * @return Slider state
+	 * @param callback Callback function to run when the slider changes
 	 */
-	std::shared_ptr<double>
-	slider(std::string key, double min, double max, double step, double default_value);
+	void slider(
+	    std::string key, double min, double max, double step, double default_value,
+	    std::function<void(double)> callback
+	);
 
 	/**
 	 * Declare an increment setting
@@ -59,9 +63,11 @@ class Settings {
 	 * @param min Minimum value of the increment
 	 * @param max Maximum value of the increment
 	 * @param default_value Default value of the increment
-	 * @return Increment state
+	 * @param callback Callback function to run when the increment changes
 	 */
-	std::shared_ptr<int> increment(std::string key, int min, int max, int default_value);
+	void increment(
+	    std::string key, int min, int max, int default_value, std::function<void(int)> callback
+	);
 
 	void focus();
 

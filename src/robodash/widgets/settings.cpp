@@ -47,37 +47,36 @@ lv_obj_t *rd::Settings::create_setting_cont(std::string key) {
 	return setting_cont;
 }
 
-std::shared_ptr<bool> rd::Settings::toggle(std::string key, bool default_value) {
+void rd::Settings::toggle(std::string key, bool default_value, std::function<void(bool)> callback) {
 	lv_obj_t *setting_cont = create_setting_cont(key);
 	lv_obj_t *setting_toggle = lv_switch_create(setting_cont);
 	lv_obj_set_size(setting_toggle, 48, 24);
 	lv_obj_align(setting_toggle, LV_ALIGN_RIGHT_MID, -8, 0);
-
-	return std::make_shared<bool>(true);
 }
 
-std::shared_ptr<std::string> rd::Settings::dropdown(
-    std::string key, std::vector<std::string> values, std::string default_value
+void rd::Settings::dropdown(
+    std::string key, std::vector<std::string> values, std::string default_value,
+    std::function<void(std::string &)> callback
 ) {
 	lv_obj_t *setting_cont = create_setting_cont(key);
 	lv_obj_t *setting_dropdown = lv_dropdown_create(setting_cont);
 	lv_obj_set_size(setting_dropdown, 96, 24);
 	lv_obj_align(setting_dropdown, LV_ALIGN_RIGHT_MID, -8, 0);
-
-	return std::make_shared<std::string>("stub");
 }
 
-std::shared_ptr<double>
-rd::Settings::slider(std::string key, double min, double max, double step, double default_value) {
+void rd::Settings::slider(
+    std::string key, double min, double max, double step, double default_value,
+    std::function<void(double)> callback
+) {
 	lv_obj_t *setting_cont = create_setting_cont(key);
 	lv_obj_t *setting_slider = lv_slider_create(setting_cont);
 	lv_obj_set_size(setting_slider, 96, 8);
 	lv_obj_align(setting_slider, LV_ALIGN_RIGHT_MID, -8, 0);
-
-	return std::make_shared<double>(0.0);
 }
 
-std::shared_ptr<int> rd::Settings::increment(std::string key, int min, int max, int default_value) {
+void rd::Settings::increment(
+    std::string key, int min, int max, int default_value, std::function<void(int)> callback
+) {
 	lv_obj_t *setting_cont = create_setting_cont(key);
 
 	lv_obj_t *increment_cont = lv_obj_create(setting_cont);
@@ -104,8 +103,6 @@ std::shared_ptr<int> rd::Settings::increment(std::string key, int min, int max, 
 	lv_obj_t *up_label = lv_label_create(up_btn);
 	lv_label_set_text(up_label, LV_SYMBOL_PLUS);
 	lv_obj_align(up_label, LV_ALIGN_CENTER, 0, 0);
-
-	return std::make_shared<int>(0);
 }
 
 void rd::Settings::focus() { view.focus(); }
