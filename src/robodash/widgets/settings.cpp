@@ -53,7 +53,7 @@ lv_obj_t *rd::Settings::create_setting_cont(std::string key) {
 
 // ============================ Public Functions ============================ //
 
-void rd::Settings::toggle(std::string key, bool default_value, std::function<void(bool)> callback) {
+void rd::Settings::toggle(std::string key, bool default_value, ToggleCallback callback) {
 	lv_obj_t *setting_cont = create_setting_cont(key);
 	lv_obj_t *setting_toggle = lv_switch_create(setting_cont);
 	lv_obj_set_size(setting_toggle, 48, 24);
@@ -62,7 +62,7 @@ void rd::Settings::toggle(std::string key, bool default_value, std::function<voi
 
 void rd::Settings::dropdown(
     std::string key, std::vector<std::string> values, std::string default_value,
-    std::function<void(std::string &)> callback
+    DropdownCallback callback
 ) {
 	lv_obj_t *setting_cont = create_setting_cont(key);
 	lv_obj_t *setting_dropdown = lv_dropdown_create(setting_cont);
@@ -72,7 +72,7 @@ void rd::Settings::dropdown(
 
 void rd::Settings::slider(
     std::string key, double min, double max, double step, double default_value,
-    std::function<void(double)> callback
+    SliderCallback callback
 ) {
 	lv_obj_t *setting_cont = create_setting_cont(key);
 	lv_obj_t *setting_slider = lv_slider_create(setting_cont);
@@ -81,7 +81,7 @@ void rd::Settings::slider(
 }
 
 void rd::Settings::increment(
-    std::string key, int min, int max, int default_value, std::function<void(int)> callback
+    std::string key, int min, int max, int default_value, IncrementCallback callback
 ) {
 	lv_obj_t *setting_cont = create_setting_cont(key);
 

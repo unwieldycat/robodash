@@ -1,6 +1,7 @@
 #pragma once
 #include "robodash/view.hpp"
 #include <functional>
+#include <variant>
 
 namespace rd {
 
@@ -12,6 +13,11 @@ namespace rd {
  */
 class Settings {
   public:
+	using ToggleCallback = std::function<void(bool)>;
+	using DropdownCallback = std::function<void(std::string &)>;
+	using SliderCallback = std::function<void(double)>;
+	using IncrementCallback = std::function<void(int)>;
+
 	/**
 	 * Create a new settings widget
 	 *
@@ -26,7 +32,7 @@ class Settings {
 	 * @param default_value Default value of the toggle
 	 * @param callback Callback function to run when the toggle changes
 	 */
-	void toggle(std::string key, bool default_value, std::function<void(bool)> callback);
+	void toggle(std::string key, bool default_value, ToggleCallback callback);
 
 	/**
 	 * Declare a dropdown setting
@@ -38,7 +44,7 @@ class Settings {
 	 */
 	void dropdown(
 	    std::string key, std::vector<std::string> values, std::string default_value,
-	    std::function<void(std::string &)> callback
+	    DropdownCallback callback
 	);
 
 	/**
@@ -53,7 +59,7 @@ class Settings {
 	 */
 	void slider(
 	    std::string key, double min, double max, double step, double default_value,
-	    std::function<void(double)> callback
+	    SliderCallback callback
 	);
 
 	/**
@@ -65,9 +71,8 @@ class Settings {
 	 * @param default_value Default value of the increment
 	 * @param callback Callback function to run when the increment changes
 	 */
-	void increment(
-	    std::string key, int min, int max, int default_value, std::function<void(int)> callback
-	);
+	void
+	increment(std::string key, int min, int max, int default_value, IncrementCallback callback);
 
 	void focus();
 
@@ -75,6 +80,11 @@ class Settings {
 	rd::View view;
 
 	lv_obj_t *settings_cont;
+
+	using CallbackType =
+	    std::variant<ToggleCallback, DropdownCallback, SliderCallback, IncrementCallback>;
+
+	std::vector<CallbackType> callbacks;
 
 	void toggle_cb(lv_event_t *event);
 	lv_obj_t *create_setting_cont(std::string key);
