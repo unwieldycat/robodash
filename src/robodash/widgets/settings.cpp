@@ -3,6 +3,8 @@
 #include "liblvgl/lvgl.h"
 #include "robodash/detail/styles.h"
 
+// ============================== Constructor ============================== //
+
 rd::Settings::Settings(std::string name) : view(name) {
 	lv_obj_set_style_bg_color(view, color_bg, 0);
 
@@ -34,6 +36,8 @@ rd::Settings::Settings(std::string name) : view(name) {
 	);
 }
 
+// =========================== Private Functions =========================== //
+
 lv_obj_t *rd::Settings::create_setting_cont(std::string key) {
 	lv_obj_t *setting_cont = lv_obj_create(settings_cont);
 	lv_obj_set_size(setting_cont, lv_pct(80), 32);
@@ -46,6 +50,8 @@ lv_obj_t *rd::Settings::create_setting_cont(std::string key) {
 
 	return setting_cont;
 }
+
+// ============================ Public Functions ============================ //
 
 void rd::Settings::toggle(std::string key, bool default_value, std::function<void(bool)> callback) {
 	lv_obj_t *setting_cont = create_setting_cont(key);
