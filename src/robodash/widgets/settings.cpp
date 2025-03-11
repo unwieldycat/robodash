@@ -53,8 +53,7 @@ lv_obj_t *rd::Settings::create_setting_cont(std::string key) {
 
 void rd::Settings::toggle_cb(lv_event_t *event) {
 	lv_obj_t *toggle = lv_event_get_target(event);
-	lv_state_t value = lv_obj_get_state(toggle);
-	bool state = value == LV_STATE_CHECKED;
+	bool state = lv_obj_has_state(toggle, LV_STATE_CHECKED);
 	ToggleCallback *callback = static_cast<ToggleCallback *>(lv_event_get_user_data(event));
 	(*callback)(state);
 }
