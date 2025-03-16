@@ -1,9 +1,60 @@
 #pragma once
 #include "robodash/view.hpp"
 #include <functional>
+#include <memory>
 #include <variant>
 
 namespace rd {
+
+/**
+ * Representation of a setting value
+ *
+ * @tparam T
+ */
+template <typename T> class SettingValue {
+	friend class Settings;
+
+  public:
+	// Delete the default constructor
+	SettingValue() = delete;
+
+	// Delete the copy constructor (should only be passed by reference)
+	SettingValue(const SettingValue &) = delete;
+
+	/**
+	 * Get the value of this setting
+	 *
+	 * @return T
+	 */
+	T get() { return *value; }
+
+	/**
+	 * Get the pointer for this setting's value
+	 *
+	 * @return std::shared_ptr<T>
+	 */
+	std::shared_ptr<T> ptr() { return value; }
+
+	/**
+	 * Register a callback to run when the setting changes
+	 *
+	 * @param callback
+	 */
+	void on_change(std::function<void(T)> callback) { callbacks.push_back(callback); }
+
+	/**
+	 * Get the value of this setting through casting
+	 *
+	 * @return T
+	 */
+	T operator T() { return *value; }
+
+  private:
+	SettingValue(std::shared_ptr<T> value) : value(value) {}
+
+	std::shared_ptr<T> value;
+	std::vector<std::function<void(T)>> callbacks;
+};
 
 /**
  * A settings menu widget to customize robot behavior on the fly
@@ -13,11 +64,6 @@ namespace rd {
  */
 class Settings {
   public:
-	using ToggleCallback = std::function<void(bool)>;
-	using DropdownCallback = std::function<void(std::string &)>;
-	using SliderCallback = std::function<void(double)>;
-	using IncrementCallback = std::function<void(int)>;
-
 	/**
 	 * Create a new settings widget
 	 *
@@ -32,7 +78,7 @@ class Settings {
 	 * @param default_value Default value of the toggle
 	 * @param callback Callback function to run when the toggle changes
 	 */
-	void toggle(std::string key, bool default_value, ToggleCallback callback);
+	SettingValue<bool> &toggle(std::string key, bool default_value);
 
 	/**
 	 * Declare a dropdown setting
@@ -42,10 +88,8 @@ class Settings {
 	 * @param default_value Default value of the dropdown
 	 * @param callback Callback function to run when the dropdown changes
 	 */
-	void dropdown(
-	    std::string key, std::vector<std::string> values, std::string default_value,
-	    DropdownCallback callback
-	);
+	SettingValue<std::string> &
+	dropdown(std::string key, std::vector<std::string> values, std::string default_value);
 
 	/**
 	 * Declare a slider setting
@@ -57,10 +101,8 @@ class Settings {
 	 * @param default_value Default value of the slider
 	 * @param callback Callback function to run when the slider changes
 	 */
-	void slider(
-	    std::string key, double min, double max, double step, double default_value,
-	    SliderCallback callback
-	);
+	SettingValue<double> &
+	slider(std::string key, double min, double max, double step, double default_value);
 
 	/**
 	 * Declare an increment setting
@@ -71,8 +113,7 @@ class Settings {
 	 * @param default_value Default value of the increment
 	 * @param callback Callback function to run when the increment changes
 	 */
-	void
-	increment(std::string key, int min, int max, int default_value, IncrementCallback callback);
+	SettingValue<int> &increment(std::string key, int min, int max, int default_value);
 
 	void focus();
 
@@ -80,11 +121,6 @@ class Settings {
 	rd::View view;
 
 	lv_obj_t *settings_cont;
-
-	using CallbackType =
-	    std::variant<ToggleCallback, DropdownCallback, SliderCallback, IncrementCallback>;
-
-	std::vector<CallbackType> callbacks;
 
 	static void toggle_cb(lv_event_t *event);
 
