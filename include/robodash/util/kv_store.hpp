@@ -23,7 +23,7 @@ class KVStore {
 	 *
 	 * @param file
 	 */
-	KVStore(std::string file);
+	KVStore();
 
 	/**
 	 * Set a value
@@ -80,8 +80,21 @@ class KVStore {
 		return default_value;
 	}
 
+	/**
+	 * Read file from SD card into KVStore
+	 *
+	 * @param file_path File path
+	 */
+	void read(std::string file_path);
+
+	/**
+	 * Write KVStore to file on SD card
+	 *
+	 * @param file_path File path
+	 */
+	void write(std::string file_path);
+
   private:
-	void load();
 	std::optional<std::pair<std::string, std::string>> parse_line(std::string line);
 	std::optional<VType> parse_value(std::string value);
 
@@ -90,7 +103,6 @@ class KVStore {
 	    std::is_same<std::string, T>, std::is_same<char, T>, std::is_same<int, T>,
 	    std::is_same<double, T>, std::is_same<bool, T>>::type;
 
-	std::string file_path;
 	std::map<std::string, VType> data;
 };
 

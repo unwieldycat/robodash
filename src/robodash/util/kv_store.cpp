@@ -1,5 +1,6 @@
 #pragma once
 #include "robodash/util/kv_store.hpp"
+#include "robodash/detail/platform.h"
 #include <exception>
 #include <fstream>
 #include <functional>
@@ -25,32 +26,9 @@ struct ConversionVisitor {
 
 // ========================= KVStore Implementation ========================= //
 
-rd::util::KVStore::KVStore(std::string file) : file_path(file) { load(); }
+rd::util::KVStore::KVStore() {}
 
-void rd::util::KVStore::set(std::string key, rd::util::VType value) {
-	std::stringstream buffer;
-	std::ifstream file_in(file_path);
-	std::string line;
-
-	while (std::getline(file_in, line)) {
-		std::optional<std::pair<std::string, std::string>> parsed_line = parse_line(line);
-		if (parsed_line.has_value()) {
-			std::string saved_key = parsed_line.value().first;
-			if (saved_key == key) continue;
-		}
-
-		buffer << line << std::endl;
-	}
-
-	buffer << key << ": " << std::visit(ConversionVisitor(), value) << std::endl;
-	file_in.close();
-
-	std::ofstream file_out(file_path);
-	file_out << buffer.rdbuf();
-	file_out.close();
-
-	load();
-}
+void rd::util::KVStore::set(std::string key, rd::util::VType value) { data.emplace(key, value); }
 
 std::optional<rd::util::VType> rd::util::KVStore::get(std::string key) {
 	std::map<std::string, VType>::iterator iter = data.find(key);
@@ -58,8 +36,17 @@ std::optional<rd::util::VType> rd::util::KVStore::get(std::string key) {
 	return iter->second;
 }
 
-void rd::util::KVStore::load() {
-	std::ifstream file(file_path);
+void rd::util::KVStore::read(std::string file_path) {
+	if (!rd::detail::platform::sd_installed()) {
+		return;
+	}
+
+	std::fstream file(file_path, std::ios::in);
+
+	if (!file.is_open()) {
+		return;
+	}
+
 	std::string line;
 
 	while (std::getline(file, line)) {
@@ -72,6 +59,24 @@ void rd::util::KVStore::load() {
 		if (!value.has_value()) continue;
 		data.emplace(key, value.value());
 	}
+}
+
+void rd::util::KVStore::write(std::string file_path) {
+	if (!rd::detail::platform::sd_installed()) {
+		return;
+	}
+
+	std::fstream file_out(file_path, std::ios::out | std::ios::trunc);
+
+	if (!file_out.is_open()) {
+		return;
+	}
+
+	for (auto &[key, value] : data) {
+		file_out << key << ": " << std::visit(ConversionVisitor(), value) << std::endl;
+	}
+
+	file_out.close();
 }
 
 std::optional<std::pair<std::string, std::string>> rd::util::KVStore::parse_line(std::string line) {
