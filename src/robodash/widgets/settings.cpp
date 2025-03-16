@@ -54,25 +54,19 @@ lv_obj_t *rd::Settings::create_setting_cont(std::string key) {
 void rd::Settings::toggle_cb(lv_event_t *event) {
 	lv_obj_t *toggle = lv_event_get_target(event);
 	bool state = lv_obj_has_state(toggle, LV_STATE_CHECKED);
-	ToggleCallback *callback = static_cast<ToggleCallback *>(lv_event_get_user_data(event));
-	(*callback)(state);
 }
 
 // ============================ Public Functions ============================ //
 
-void rd::Settings::toggle(std::string key, bool default_value, ToggleCallback callback) {
+rd::SettingValue<bool> &rd::Settings::toggle(std::string key, bool default_value) {
 	lv_obj_t *setting_cont = create_setting_cont(key);
 	lv_obj_t *setting_toggle = lv_switch_create(setting_cont);
 	lv_obj_set_size(setting_toggle, 48, 24);
 	lv_obj_align(setting_toggle, LV_ALIGN_RIGHT_MID, -8, 0);
-
-	callbacks.push_back(callback);
-	lv_obj_add_event_cb(setting_toggle, &toggle_cb, LV_EVENT_VALUE_CHANGED, &callbacks.back());
 }
 
-void rd::Settings::dropdown(
-    std::string key, std::vector<std::string> values, std::string default_value,
-    DropdownCallback callback
+rd::SettingValue<std::string> &rd::Settings::dropdown(
+    std::string key, std::vector<std::string> values, std::string default_value
 ) {
 	lv_obj_t *setting_cont = create_setting_cont(key);
 	lv_obj_t *setting_dropdown = lv_dropdown_create(setting_cont);
@@ -80,19 +74,16 @@ void rd::Settings::dropdown(
 	lv_obj_align(setting_dropdown, LV_ALIGN_RIGHT_MID, -8, 0);
 }
 
-void rd::Settings::slider(
-    std::string key, double min, double max, double step, double default_value,
-    SliderCallback callback
-) {
+rd::SettingValue<double> &
+rd::Settings::slider(std::string key, double min, double max, double step, double default_value) {
 	lv_obj_t *setting_cont = create_setting_cont(key);
 	lv_obj_t *setting_slider = lv_slider_create(setting_cont);
 	lv_obj_set_size(setting_slider, 96, 8);
 	lv_obj_align(setting_slider, LV_ALIGN_RIGHT_MID, -8, 0);
 }
 
-void rd::Settings::increment(
-    std::string key, int min, int max, int default_value, IncrementCallback callback
-) {
+rd::SettingValue<int> &
+rd::Settings::increment(std::string key, int min, int max, int default_value) {
 	lv_obj_t *setting_cont = create_setting_cont(key);
 
 	lv_obj_t *increment_cont = lv_obj_create(setting_cont);
