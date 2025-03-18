@@ -66,6 +66,24 @@ void rd::util::KVStore::write(std::string file_path) {
 		return;
 	}
 
+	// If the file already exists store unknown entries
+	std::fstream file_in(file_path, std::ios::in);
+	std::stringstream unknown_entries;
+	if (file_in.is_open()) {
+		std::string line;
+		while (std::getline(file_in, line)) {
+			std::optional<std::pair<std::string, std::string>> parsed_line = parse_line(line);
+			if (!parsed_line.has_value()) continue;
+			std::string key = parsed_line.value().first;
+
+			std::map<std::string, VType>::iterator iter = data.find(key);
+			if (iter == data.end()) {
+				unknown_entries << line << std::endl;
+			}
+		}
+		file_in.close();
+	}
+
 	std::fstream file_out(file_path, std::ios::out | std::ios::trunc);
 
 	if (!file_out.is_open()) {
@@ -75,6 +93,8 @@ void rd::util::KVStore::write(std::string file_path) {
 	for (auto &[key, value] : data) {
 		file_out << key << ": " << std::visit(ConversionVisitor(), value) << std::endl;
 	}
+
+	file_out << unknown_entries.rdbuf() << std::endl;
 
 	file_out.close();
 }
