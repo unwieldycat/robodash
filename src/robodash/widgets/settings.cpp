@@ -58,6 +58,10 @@ void rd::Settings::toggle_cb(lv_event_t *event) {
 
 // ============================ Public Functions ============================ //
 
+void rd::Settings::button(std::string key, std::function<void()> callback) {
+	// TODO: Implement
+}
+
 rd::SettingValue<bool> &rd::Settings::toggle(std::string key, bool default_value) {
 	lv_obj_t *setting_cont = create_setting_cont(key);
 	lv_obj_t *setting_toggle = lv_switch_create(setting_cont);

@@ -72,6 +72,14 @@ class Settings {
 	Settings(std::string name = "Settings");
 
 	/**
+	 * Create a button that runs a function when pressed
+	 *
+	 * @param key Name of the button
+	 * @param callback Callback function to run when the button is pressed
+	 */
+	void button(std::string key, std::function<void()> callback);
+
+	/**
 	 * Declare a toggle setting
 	 *
 	 * @param key Name of the toggle
