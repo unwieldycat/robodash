@@ -91,7 +91,15 @@ void lv_obj_remove_style(struct _lv_obj_t * obj, lv_style_t * style, lv_style_se
  */
 static inline void lv_obj_remove_style_all(struct _lv_obj_t * obj)
 {
+
+#ifdef __cplusplus
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-enum-enum-conversion"
+#endif
     lv_obj_remove_style(obj, NULL, LV_PART_ANY | LV_STATE_ANY);
+#ifdef __cplusplus
+#pragma GCC diagnostic pop
+#endif
 }
 
 /**
