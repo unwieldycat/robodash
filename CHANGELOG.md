@@ -4,6 +4,14 @@ Changes to this project will be logged in this file. This project uses
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Format is loosely
 based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 2.3.1
+
+This release upgrades to liblvgl 8.3.9 and PROS 4.2.1
+
+### Fixes
+
+- Builds on PROS 4.2.1+ failing.
+
 ## 2.3.0
 
 Robodash 2.3.0 improves the selector UI.
