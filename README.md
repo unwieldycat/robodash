@@ -1,10 +1,6 @@
 > [!IMPORTANT]
-> ### Maintenance mode
-> This project will not recieve further feature updates as I, the author of robodash,
-> am no longer competing in the VEX V5RC competition and want to focus my energy elsewhere.
->
-> Patches will be provided for an additional year, if there is a bug you need fixed do not
-> hesitate to create an issue.
+> ### Deprecated
+> This project is no longer maintained.
 
 # robodash
 
